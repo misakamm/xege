@@ -1,0 +1,46 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>key_msg 结构体</title>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">键盘鼠标输入函数</a>-＞key_msg 结构体</font>
+
+<font size="5" color="#0000FF"><strong>功能：</strong></font>
+这个结构体用于保存键盘消息
+
+<font size="5" color="#0000FF"><strong>声明：</strong></font>
+<pre><font color=#0000FF>typedef struct </font>key_msg {
+    <font color=#800080>UINT </font>msg;
+    <font color=#800080>UINT </font>key;
+    <font color=#800080>UINT </font>flags;
+}key_msg;
+</pre>
+
+<font size="5" color="#0000FF"><strong>成员：</strong></font>
+msg
+指定鼠标消息类型，可为以下值：
+<table width="100%" border="1" align="center">
+<tr><td bgcolor="#8080FF">值</td><td bgcolor="#8080FF">含义</td></tr>
+<tr><td>key_msg_down</td><td>键盘按下消息。</td></tr>
+<tr><td>key_msg_up</td><td>键盘弹起消息。</td></tr>
+<tr><td>key_msg_char</td><td>键盘字符输入消息。</td></tr>
+</table>
+
+key
+如果是按下和弹起的消息，则表示按键虚拟键码，否则为gbk编码字符消息
+flags
+按键参数，可能为以下值的组合：
+<table width="100%" border="1" align="center">
+<tr><td bgcolor="#8080FF">值</td><td bgcolor="#8080FF">含义</td></tr>
+<tr><td>key_flag_shift</td><td>同时按下了shift</td></tr>
+<tr><td>key_flag_ctrl</td><td>同时按下了control</td></tr>
+</table>
+
+<font size="5" color="#0000FF"><strong>示例：</strong></font>
+（无）
+
+</pre>
+
+</body>
+

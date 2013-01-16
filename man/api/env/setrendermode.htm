@@ -1,0 +1,28 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>setrendermode</title>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">绘图环境相关函数</a>-＞setrendermode</font>
+
+<font size="5" color="#0000FF"><strong>功能：</strong></font>
+这个函数用于设置更新窗口的模式，模式有两种，自动更新和手动更新
+
+<font size="5" color="#0000FF"><strong>声明：</strong></font>
+<pre><font color=#0000FF>void </font><font color=#008080>setrendermode</font>(rendermode_e mode);</pre>
+<font size="5" color="#0000FF"><strong>参数：</strong></font>
+mode
+值可能为RENDER_AUTO或者RENDER_MANUAL，前者自动（默认值），后者手动
+自动模式用于简单绘图，手动模式用于制作动画或者游戏
+所谓手动模式，即需要调用delay_fps/delay_ms等带有等待特性的函数时才会更新窗口
+
+返回值：
+（无）
+
+示例：
+（无）
+</pre>
+
+</body>
+

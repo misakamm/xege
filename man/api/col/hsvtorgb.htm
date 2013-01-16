@@ -1,0 +1,45 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>hsv2rgb</title>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">颜色表示及相关函数</a>-＞hsv2rgb</font>
+
+<font size="5" color="#0000FF"><strong>功能：</strong></font>
+该函数用于转换 HSV 颜色为 RGB 颜色。
+
+<font size="5" color="#0000FF"><strong>声明：</strong></font>
+<pre><font color=#800080>color_t </font><font color=#008080>hsv2rgb</font>(
+    <font color=#0000FF>float </font><font color=#800080>H</font>,
+    <font color=#0000FF>float </font><font color=#800080>S</font>,
+    <font color=#0000FF>float </font><font color=#800080>V
+</font>);
+</pre>
+
+<font size="5" color="#0000FF"><strong>参数：</strong></font>
+H
+原 HSL 颜色模型的 Hue(色相) 分量，0 ≤ H ＜ 360。
+S
+原 HSL 颜色模型的 Saturation(饱和度) 分量，0 ≤ S ≤ 1。
+V
+原 HSL 颜色模型的 Value(明度) 分量，0 ≤ L ≤ 1。
+
+<font size="5" color="#0000FF"><strong>返回值：</strong></font>
+对应的 RGB 颜色。
+
+<font size="5" color="#0000FF"><strong>说明：</strong></font>
+HSV 又称 HSB。
+HSV 的颜色模型如图所示：
+<img src="hsv.jpg">
+H 是英文 Hue 的首字母，表示色相，即组成可见光谱的单色。红色在 0 度，绿色在 120 度，蓝色在 240 度，以此方向过渡。
+S 是英文 Saturation 的首字母，表示饱和度，等于 0 时为灰色。在最大饱和度 1 时，每一色相具有最纯的色光。
+V 是英文 Value 的首字母，表示明度，等于 0 时为黑色，在最大明度 1 时，是色彩最鲜明的状态。
+
+<font size="5" color="#0000FF"><strong>示例：</strong></font>
+HSV 颜色模型类似于 HSL，示例程序19中的“彩虹”是 HSL 模型的操作范例，可以参考。
+
+</pre>
+
+</body>
+

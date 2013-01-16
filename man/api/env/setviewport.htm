@@ -1,0 +1,57 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>setviewport</title>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">绘图环境相关函数</a>-＞setviewport</font>
+
+<font size="5" color="#0000FF"><strong>功能：</strong></font>
+这个函数用于设置当前视图。并且，将坐标原点移动到新的视图的 (0, 0) 位置。
+
+<font size="5" color="#0000FF"><strong>声明：</strong></font>
+<pre><font color=#0000FF>void </font><font color=#008080>setviewport</font>(
+    <font color=#0000FF>int </font>left,
+    <font color=#0000FF>int </font>top,
+    <font color=#0000FF>int </font>right,
+    <font color=#0000FF>int </font>bottom,
+    <font color=#0000FF>int </font>clip = 1,
+    <font color=#800080>PIMAGE</font> pimg = <font color=#800080>NULL
+</font>);
+</pre>
+
+<font size="5" color="#0000FF"><strong>参数：</strong></font>
+left
+视图的左部 x 坐标。
+top
+视图的上部 y 坐标。(left, top) 将成为新的原点。
+right
+视图的右部 x 坐标。
+bottom
+视图的下部 y 坐标。（right-1, bottom-1) 是视图的右下角坐标。
+clip
+视图的裁剪标志。如果为真，所有超出视图区域的绘图都会被裁剪掉。
+pimg
+要设置的图片
+
+返回值：
+（无）
+
+<font size="5" color="#0000FF"><strong>示例：</strong></font>
+<pre><font color=#FF0000>#include </font><font color=#FF00FF>"graphics.h"
+</font><font color=#0000FF>int </font><font color=#FF0000>main</font>()
+{
+    <font color=#008080>initgraph</font>(640, 480);
+    <font color=#008080>setviewport</font>(100, 100, 200, 200);
+    <font color=#008080>rectangle</font>(0, 0, 200, 200);
+    <font color=#008080>getch</font>();
+    <font color=#008080>closegraph</font>();
+    <font color=#0000FF>return </font>0;
+}</pre>
+注意：
+右端点和下端点取不到，上端点和左端点能取到。另外，这函数的最后一个参数为一个IMAGE*的指针，是一个可选参数，如果不填，则设置到当前页。如果填上，则设置到指定的IMAGE。
+
+</pre>
+
+</body>
+

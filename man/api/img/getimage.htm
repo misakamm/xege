@@ -1,0 +1,59 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>getimage</title>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">图像处理相关函数</a>-＞getimage</font>
+
+<font size="5" color="#0000FF"><strong>功能：</strong></font>
+这个函数的四个重载分别用于从屏幕 / 文件 / 资源 / IMAGE 对象中获取图像
+
+<font size="5" color="#0000FF"><strong>声明：</strong></font>
+<pre><font color=#008000>// 从屏幕获取图像
+</font><font color=#0000FF>void </font><font color=#008080>getimage</font>(
+    <font color=#800080>PIMAGE </font>pDstImg,   <font color=#008000>// 保存图像的 IMAGE 对象指针
+    </font><font color=#0000FF>int </font>srcX,         <font color=#008000>// 要获取图像的区域左上角 x 坐标
+    </font><font color=#0000FF>int </font>srcY,         <font color=#008000>// 要获取图像的区域左上角 y 坐标
+    </font><font color=#0000FF>int </font>srcWidth,     <font color=#008000>// 要获取图像的区域宽度
+    </font><font color=#0000FF>int </font>srcHeight     <font color=#008000>// 要获取图像的区域高度
+</font>);
+<font color=#008000>// 从图片文件获取图像(png/bmp/jpg/gif/emf/wmf/ico)
+</font><font color=#0000FF>void </font><font color=#008080>getimage</font>(
+    <font color=#800080>PIMAGE </font>pDstImg,       <font color=#008000>// 保存图像的 IMAGE 对象指针
+    </font><font color=#800080>LPCTSTR </font>pImgFile,     <font color=#008000>// 图片文件名
+    </font><font color=#0000FF>int </font>zoomWidth = 0,    <font color=#008000>// 设定图像缩放至的宽度（0 表示默认宽度，不缩放）
+    </font><font color=#0000FF>int </font>zoomHeight = 0    <font color=#008000>// 设定图像缩放至的高度（0 表示默认高度，不缩放）
+</font>);
+<font color=#008000>// 从资源文件获取图像(png/bmp/jpg/gif/emf/wmf/ico)
+</font><font color=#0000FF>void </font><font color=#008080>getimage</font>(
+    <font color=#800080>PIMAGE </font>pDstImg,       <font color=#008000>// 保存图像的 IMAGE 对象指针
+    </font><font color=#800080>LPCTSTR </font>pResType,     <font color=#008000>// 资源类型
+    </font><font color=#800080>LPCTSTR </font>pResName,     <font color=#008000>// 资源名称
+    </font><font color=#0000FF>int </font>zoomWidth = 0,    <font color=#008000>// 设定图像缩放至的宽度（0 表示默认宽度，不缩放）
+    </font><font color=#0000FF>int </font>zoomHeight = 0    <font color=#008000>// 设定图像缩放至的高度（0 表示默认高度，不缩放）
+</font>);
+<font color=#008000>// 从另一个 IMAGE 对象中获取图像
+</font><font color=#0000FF>void </font><font color=#008080>getimage</font>(
+    <font color=#800080>PIMAGE </font>pDstImg,       <font color=#008000>// 保存图像的 IMAGE 对象指针
+    </font><font color=#0000FF>const </font><font color=#800080>IMAGE </font>*pSrcImg, <font color=#008000>// 源图像 IMAGE 对象
+    </font><font color=#0000FF>int </font>srcX,             <font color=#008000>// 要获取图像的区域左上角 x 坐标
+    </font><font color=#0000FF>int </font>srcY,             <font color=#008000>// 要获取图像的区域左上角 y 坐标
+    </font><font color=#0000FF>int </font>srcWidth,         <font color=#008000>// 要获取图像的区域宽度
+    </font><font color=#0000FF>int </font>srcHeight         <font color=#008000>// 要获取图像的区域高度
+</font>);</pre>
+
+<font size="5" color="#0000FF"><strong>参数：</strong></font>
+pimg
+（详见各重载函数原型内的注释）
+
+<font size="5" color="#0000FF"><strong>返回值：</strong></font>
+（无）
+
+<font size="5" color="#0000FF"><strong>示例：</strong></font>
+请参考 putimage 函数示例。
+
+</pre>
+
+</body>
+

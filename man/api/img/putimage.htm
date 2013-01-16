@@ -1,0 +1,120 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>putimage</title>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">图像处理相关函数</a>-＞putimage</font>
+
+<font size="5" color="#0000FF"><strong>功能：</strong></font>
+这个函数的几个重载用于在屏幕或另一个图像上绘制指定图像。
+
+<font size="5" color="#0000FF"><strong>声明：</strong></font>
+<pre><font color=#008000>// 绘制图像到屏幕
+</font><font color=#0000FF>void </font><font color=#008080>putimage</font>(
+    <font color=#0000FF>int </font>dstX,              <font color=#008000>// 绘制位置的 x 坐标
+    </font><font color=#0000FF>int </font>dstY,              <font color=#008000>// 绘制位置的 y 坐标
+    </font><font color=#800080>PIMAGE </font>pSrcImg,        <font color=#008000>// 要绘制的 IMAGE 对象指针
+    </font><font color=#800080>DWORD </font>dwRop = <font color=#800080>SRCCOPY  </font><font color=#008000>// 三元光栅操作码（详见备注）
+</font>);
+<font color=#008000>// 绘制图像到屏幕(指定宽高)
+</font><font color=#0000FF>void </font><font color=#008080>putimage</font>(
+    <font color=#0000FF>int </font>dstX,              <font color=#008000>// 绘制位置的 x 坐标
+    </font><font color=#0000FF>int </font>dstY,              <font color=#008000>// 绘制位置的 y 坐标
+    </font><font color=#0000FF>int </font>dstWidth,          <font color=#008000>// 绘制的宽度
+    </font><font color=#0000FF>int </font>dstHeight,         <font color=#008000>// 绘制的高度
+    </font><font color=#800080>PIMAGE </font>pSrcImg,        <font color=#008000>// 要绘制的 IMAGE 对象指针
+    </font><font color=#0000FF>int </font>srcX,              <font color=#008000>// 绘制内容在 IMAGE 对象中的左上角 x 坐标
+    </font><font color=#0000FF>int </font>srcY,              <font color=#008000>// 绘制内容在 IMAGE 对象中的左上角 y 坐标
+    </font><font color=#800080>DWORD </font>dwRop = <font color=#800080>SRCCOPY  </font><font color=#008000>// 三元光栅操作码（详见备注）
+</font>);
+<font color=#008000>// 绘制图像到屏幕(拉伸)
+</font><font color=#0000FF>void </font><font color=#008080>putimage</font>(
+    <font color=#0000FF>int </font>dstX,              <font color=#008000>// 绘制位置的 x 坐标
+    </font><font color=#0000FF>int </font>dstY,              <font color=#008000>// 绘制位置的 y 坐标
+    </font><font color=#0000FF>int </font>dstWidth,          <font color=#008000>// 绘制的宽度
+    </font><font color=#0000FF>int </font>dstHeight,         <font color=#008000>// 绘制的高度
+    </font><font color=#800080>PIMAGE </font>pSrcImg,        <font color=#008000>// 要绘制的 IMAGE 对象指针
+    </font><font color=#0000FF>int </font>srcX,              <font color=#008000>// 绘制内容在 IMAGE 对象中的左上角 x 坐标
+    </font><font color=#0000FF>int </font>srcY,              <font color=#008000>// 绘制内容在 IMAGE 对象中的左上角 y 坐标
+    </font><font color=#0000FF>int </font>srcWidth,          <font color=#008000>// 绘制内容在源 IMAGE 对象中的宽度
+    </font><font color=#0000FF>int </font>srcHeight,         <font color=#008000>// 绘制内容在源 IMAGE 对象中的高度
+    </font><font color=#800080>DWORD </font>dwRop = <font color=#800080>SRCCOPY  </font><font color=#008000>// 三元光栅操作码（详见备注）
+</font>);
+<font color=#008000>// 绘制图像到另一图像
+</font><font color=#0000FF>void </font><font color=#008080>putimage</font>(
+    <font color=#800080>PIMAGE </font>pDstImg,        <font color=#008000>// 目标 IMAGE 对象指针
+    </font><font color=#0000FF>int </font>dstX,              <font color=#008000>// 绘制位置的 x 坐标
+    </font><font color=#0000FF>int </font>dstY,              <font color=#008000>// 绘制位置的 y 坐标
+    </font><font color=#800080>PIMAGE </font>pSrcImg,        <font color=#008000>// 源 IMAGE 对象指针
+    </font><font color=#800080>DWORD </font>dwRop = <font color=#800080>SRCCOPY  </font><font color=#008000>// 三元光栅操作码（详见备注）
+</font>);
+<font color=#008000>// 绘制图像到另一图像(指定宽高)
+</font><font color=#0000FF>void </font><font color=#008080>putimage</font>(
+    <font color=#800080>PIMAGE </font>pDstImg,        <font color=#008000>// 目标 IMAGE 对象指针
+    </font><font color=#0000FF>int </font>dstX,              <font color=#008000>// 绘制位置的 x 坐标
+    </font><font color=#0000FF>int </font>dstY,              <font color=#008000>// 绘制位置的 y 坐标
+    </font><font color=#0000FF>int </font>dstWidth,          <font color=#008000>// 绘制的宽度
+    </font><font color=#0000FF>int </font>dstHeight,         <font color=#008000>// 绘制的高度
+    </font><font color=#800080>PIMAGE </font>pSrcImg,        <font color=#008000>// 源 IMAGE 对象指针
+    </font><font color=#0000FF>int </font>srcX,              <font color=#008000>// 绘制内容在源 IMAGE 对象中的左上角 x 坐标
+    </font><font color=#0000FF>int </font>srcY,              <font color=#008000>// 绘制内容在源 IMAGE 对象中的左上角 y 坐标
+    </font><font color=#800080>DWORD </font>dwRop = <font color=#800080>SRCCOPY  </font><font color=#008000>// 三元光栅操作码（详见备注）
+</font>);
+<font color=#008000>// 绘制图像到另一图像(拉伸)
+</font><font color=#0000FF>void </font><font color=#008080>putimage</font>(
+    <font color=#800080>PIMAGE </font>pDstImg,        <font color=#008000>// 目标 IMAGE 对象指针
+    </font><font color=#0000FF>int </font>dstX,              <font color=#008000>// 绘制位置的 x 坐标
+    </font><font color=#0000FF>int </font>dstY,              <font color=#008000>// 绘制位置的 y 坐标
+    </font><font color=#0000FF>int </font>dstWidth,          <font color=#008000>// 绘制的宽度
+    </font><font color=#0000FF>int </font>dstHeight,         <font color=#008000>// 绘制的高度
+    </font><font color=#800080>PIMAGE </font>pSrcImg,        <font color=#008000>// 源 IMAGE 对象指针
+    </font><font color=#0000FF>int </font>srcX,              <font color=#008000>// 绘制内容在源 IMAGE 对象中的左上角 x 坐标
+    </font><font color=#0000FF>int </font>srcY,              <font color=#008000>// 绘制内容在源 IMAGE 对象中的左上角 y 坐标
+    </font><font color=#0000FF>int </font>srcWidth,          <font color=#008000>// 绘制内容在源 IMAGE 对象中的宽度
+    </font><font color=#0000FF>int </font>srcHeight,         <font color=#008000>// 绘制内容在源 IMAGE 对象中的高度
+    </font><font color=#800080>DWORD </font>dwRop = <font color=#800080>SRCCOPY  </font><font color=#008000>// 三元光栅操作码（详见备注）
+</font>);</pre>
+
+<font size="5" color="#0000FF"><strong>参数：</strong></font>
+（详见各重载函数原型内的注释）
+备注：
+三元光栅操作码（即位操作模式），支持全部的 256 种三元光栅操作码，常用的几种如下：
+<table width="100%" border="1" align="center">
+<tr><td bgcolor="#8080FF">值</td><td bgcolor="#8080FF">含义</td></tr>
+<tr><td>DSTINVERT</td><td>绘制出的像素颜色 = NOT 屏幕颜色</td></tr>
+<tr><td>MERGECOPY</td><td>绘制出的像素颜色 = 图像颜色 AND 当前填充颜色</td></tr>
+<tr><td>MERGEPAINT</td><td>绘制出的像素颜色 = 屏幕颜色 OR (NOT 图像颜色)</td></tr>
+<tr><td>NOTSRCCOPY</td><td>绘制出的像素颜色 = NOT 图像颜色</td></tr>
+<tr><td>NOTSRCERASE</td><td>绘制出的像素颜色 = NOT (屏幕颜色 OR 图像颜色)</td></tr>
+<tr><td>PATCOPY</td><td>绘制出的像素颜色 = 当前填充颜色</td></tr>
+<tr><td>PATINVERT</td><td>绘制出的像素颜色 = 屏幕颜色 XOR 当前填充颜色</td></tr>
+<tr><td>PATPAINT</td><td>绘制出的像素颜色 = 屏幕颜色 OR ((NOT 图像颜色) OR 当前填充颜色)</td></tr>
+<tr><td>SRCAND</td><td>绘制出的像素颜色 = 屏幕颜色 AND 图像颜色</td></tr>
+<tr><td>SRCCOPY</td><td>绘制出的像素颜色 = 图像颜色</td></tr>
+<tr><td>SRCERASE</td><td>绘制出的像素颜色 = (NOT 屏幕颜色) AND 图像颜色</td></tr>
+<tr><td>SRCINVERT</td><td>绘制出的像素颜色 = 屏幕颜色 XOR 图像颜色</td></tr>
+<tr><td>SRCPAINT</td><td>绘制出的像素颜色 = 屏幕颜色 OR 图像颜色
+</table>
+
+注：1. AND / OR / NOT / XOR 为布尔位运算。2. "屏幕颜色"指绘制所经过的屏幕像素点的颜色。3. "图像颜色"是指通过 IMAGE 对象中的图像的颜色。4. "当前填充颜色"是指通过 setfillstyle 设置的用于当前填充的颜色。5. 查看全部的三元光栅操作码请详见：三元光栅操作码。
+
+<font size="5" color="#0000FF"><strong>返回值：</strong></font>
+（无）
+
+<font size="5" color="#0000FF"><strong>示例：</strong></font>
+以下局部代码读取 c:\test.jpg 绘制在屏幕左上角：
+<pre><font color=#800080>PIMAGE </font>img = <font color=#008080>newimage</font>();
+<font color=#008080>getimage</font>(img, <font color=#FF00FF>"c:\\test.jpg"</font>);
+<font color=#008080>putimage</font>(0, 0, img);
+<font color=#008080>delimage</font>(img);
+以下局部代码将屏幕 (0,0) 起始的长宽各 100 像素的图像拷贝至 (200,200) 位置：
+<font color=#800080>PIMAGE </font>img = <font color=#008080>newimage</font>();
+<font color=#008080>getimage</font>(img, 0, 0, 100, 100);
+<font color=#008080>putimage</font>(200, 200, img);</pre>
+<font color=#008080>delimage</font>(img);
+
+</pre>
+
+</body>
+

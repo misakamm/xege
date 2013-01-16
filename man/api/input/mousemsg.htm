@@ -1,0 +1,67 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>MOUSEMSG 结构体</title>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">键盘鼠标输入函数</a>-＞MOUSEMSG 结构体</font>
+
+<font size="5" color="#0000FF"><strong>功能：</strong></font>
+这个结构体用于保存鼠标消息
+
+<font size="5" color="#0000FF"><strong>声明：</strong></font>
+<pre><font color=#0000FF>struct </font><font color=#800080>MOUSEMSG
+</font>{
+    <font color=#800080>UINT </font>uMsg;      <font color=#008000>// 当前鼠标消息
+    </font><font color=#0000FF>int </font>mkCtrl;     <font color=#008000>// Ctrl 键是否按下
+    </font><font color=#0000FF>int </font>mkShift;    <font color=#008000>// Shift 键是否按下
+    </font><font color=#0000FF>int </font>mkLButton;  <font color=#008000>// 鼠标左键是否按下
+    </font><font color=#0000FF>int </font>mkMButton;  <font color=#008000>// 鼠标中键是否按下
+    </font><font color=#0000FF>int </font>mkRButton;  <font color=#008000>// 鼠标右键是否按下
+    </font><font color=#0000FF>int </font>x;          <font color=#008000>// 当前鼠标 x 坐标
+    </font><font color=#0000FF>int </font>y;          <font color=#008000>// 当前鼠标 y 坐标
+    </font><font color=#0000FF>int </font>wheel;      <font color=#008000>// 鼠标滚轮滚动值
+</font>};</pre>
+
+<font size="5" color="#0000FF"><strong>成员：</strong></font>
+uMsg：
+指定鼠标消息类型，可为以下值：
+<table width="100%" border="1" align="center">
+<tr><td bgcolor="#8080FF">值</td><td bgcolor="#8080FF">含义</td></tr>
+<tr><td>WM_MOUSEMOVE</td><td>鼠标移动消息。</td></tr>
+<tr><td>WM_MOUSEWHEEL</td><td>鼠标滚轮拨动消息。</td></tr>
+<tr><td>WM_LBUTTONDOWN</td><td>左键按下消息。</td></tr>
+<tr><td>WM_LBUTTONUP</td><td>左键弹起消息。</td></tr>
+<tr><td>WM_LBUTTONDBLCLK</td><td>左键双击消息。</td></tr>
+<tr><td>WM_MBUTTONDOWN</td><td>中键按下消息。</td></tr>
+<tr><td>WM_MBUTTONUP</td><td>中键弹起消息。</td></tr>
+<tr><td>WM_MBUTTONDBLCLK</td><td>中键双击消息。</td></tr>
+<tr><td>WM_RBUTTONDOWN</td><td>右键按下消息。</td></tr>
+<tr><td>WM_RBUTTONUP</td><td>右键弹起消息。</td></tr>
+<tr><td>WM_RBUTTONDBLCLK</td><td>右键双击消息。
+</table>
+
+mkCtrl
+Ctrl 键是否按下
+mkShift
+Shift 键是否按下
+mkLButton
+鼠标左键是否按下
+mkMButton
+鼠标中键是否按下
+mkRButton
+鼠标右键是否按下
+x
+当前鼠标 x 坐标
+y
+当前鼠标 y 坐标
+wheel
+鼠标滚轮滚动值，一般情况下为 120 的倍数或者约数。
+
+<font size="5" color="#0000FF"><strong>示例：</strong></font>
+（无）
+
+</pre>
+
+</body>
+

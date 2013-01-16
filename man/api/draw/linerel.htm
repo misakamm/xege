@@ -1,0 +1,38 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>linerel</title>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">绘制图形相关函数</a>-＞linerel</font>
+
+<font size="5" color="#0000FF"><strong>功能：</strong></font>
+这个函数用于画线。
+
+<font size="5" color="#0000FF"><strong>声明：</strong></font>
+<pre><font color=#0000FF>void </font><font color=#008080>linerel</font>(
+    <font color=#0000FF>int </font>dx,
+    <font color=#0000FF>int </font>dy,
+    <font color=#800080>PIMAGE</font> pimg = <font color=#800080>NULL
+</font>);
+</pre>
+
+<font size="5" color="#0000FF"><strong>参数：</strong></font>
+dx
+从“当前点”cx开始画线，沿 x 轴偏移 dx，终点为cx+dx（终点本身画不到）。
+
+dy
+从“当前点”cy开始画线，沿 y 轴偏移 dy，终点为cy+dy（终点本身画不到）。
+
+<font size="5" color="#0000FF"><strong>返回值：</strong></font>
+（无）
+
+<font size="5" color="#0000FF"><strong>示例：</strong></font>
+（无）
+
+其它说明：另有高速版的linerel_f函数，参数一样，作用一样，但不进行相对坐标变换和边界检查（如果越界绘图，要么画错地方，要么程序结果莫名其妙，甚至直接崩溃），并且必须在窗口锁定绘图模式下才能使用，否则将发生不可预知的结果。
+
+</pre>
+
+</body>
+

@@ -1,0 +1,45 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>hsl2rgb</title>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">颜色表示及相关函数</a>-＞hsl2rgb</font>
+
+<font size="5" color="#0000FF"><strong>功能：</strong></font>
+该函数用于转换 HSL 颜色为 RGB 颜色。
+
+<font size="5" color="#0000FF"><strong>声明：</strong></font>
+<pre><font color=#800080>color_t </font><font color=#008080>hsl2rgb</font>(
+    <font color=#0000FF>float </font><font color=#800080>H</font>,
+    <font color=#0000FF>float </font><font color=#800080>S</font>,
+    <font color=#0000FF>float </font><font color=#800080>L
+</font>);
+</pre>
+
+<font size="5" color="#0000FF"><strong>参数：</strong></font>
+H
+原 HSL 颜色模型的 Hue(色相) 分量，0 ≤ H ＜ 360。
+S
+原 HSL 颜色模型的 Saturation(饱和度) 分量，0 ≤ S ≤ 1。
+L
+原 HSL 颜色模型的 Lightness(亮度) 分量，0 ≤ L ≤ 1。
+
+<font size="5" color="#0000FF"><strong>返回值：</strong></font>
+对应的 RGB 颜色。
+
+<font size="5" color="#0000FF"><strong>说明：</strong></font>
+HSL 又称 HLS。
+HSL 的颜色模型如图所示：
+<img src="hsl.jpg">
+H 是英文 Hue 的首字母，表示色相，即组成可见光谱的单色。红色在 0 度，绿色在 120 度，蓝色在 240 度，以此方向过渡。
+S 是英文 Saturation 的首字母，表示饱和度，等于 0 时为灰色。在最大饱和度 1 时，具有最纯的色光。
+L 是英文 Lightness 的首字母，表示亮度，等于 0 时为黑色，等于 0.5 时是色彩最鲜明的状态，等于 1 时为白色。
+
+<font size="5" color="#0000FF"><strong>示例：</strong></font>
+请参见示例程序19中的“彩虹”。
+
+</pre>
+
+</body>
+

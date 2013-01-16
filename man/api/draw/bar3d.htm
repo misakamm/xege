@@ -1,0 +1,62 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>bar3d</title>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">绘制图形相关函数</a>-＞bar3d</font>
+
+<font size="5" color="#0000FF"><strong>功能：</strong></font>
+这个函数用于画有边框三维填充矩形。其中，填充颜色由setfillstyle函数决定
+
+<font size="5" color="#0000FF"><strong>声明：</strong></font>
+<pre><font color=#0000FF>void </font><font color=#008080>bar3d</font>(
+    <font color=#0000FF>int </font>left,
+    <font color=#0000FF>int </font>top,
+    <font color=#0000FF>int </font>right,
+    <font color=#0000FF>int </font>bottom,
+    <font color=#0000FF>int </font>depth,
+    <font color=#0000FF>bool </font>topflag,
+    <font color=#800080>PIMAGE</font> pimg = <font color=#800080>NULL
+</font>);
+</pre>
+
+<font size="5" color="#0000FF"><strong>参数：</strong></font>
+left
+矩形左部 x 坐标。
+
+top
+矩形上部 y 坐标。
+
+right
+矩形右部 x 坐标（该点取不到，实际右边界为right-1）。
+
+bottom
+矩形下部 y 坐标（该点取不到，实际下边界为bottom-1）。
+
+depth
+矩形深度。
+
+topflag
+为 false 时，将不画矩形的三维顶部。该选项可用来画堆叠的三维矩形。
+
+<font size="5" color="#0000FF"><strong>返回值：</strong></font>
+（无）
+
+<font size="5" color="#0000FF"><strong>示例：</strong></font>
+<pre><font color=#FF0000>#include </font><font color=#FF00FF>"graphics.h"
+
+</font><font color=#0000FF>int </font><font color=#FF0000>main</font>()
+{
+    <font color=#008080>initgraph</font>(600, 400);
+    <font color=#008080>setfillstyle</font>(<font color=#800080>RED</font>);
+    <font color=#008080>bar3d</font>(100, 100, 150, 150, 20, 1);
+    <font color=#008080>getch</font>();
+    <font color=#0000FF>return </font>0;
+}</pre>
+<font size="5" color="#0000FF"><strong>示例效果：</strong></font>
+<img src="bar3d.gif">
+</pre>
+
+</body>
+

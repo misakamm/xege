@@ -1,0 +1,123 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>setfont</title>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">文字输出相关函数</a>-＞setfont</font>
+
+<font size="5" color="#0000FF"><strong>功能：</strong></font>
+这个函数用于设置当前字体样式。
+
+<font size="5" color="#0000FF"><strong>声明：</strong></font>
+<pre><font color=#0000FF>void </font><font color=#008080>setfont</font>(
+    <font color=#0000FF>int </font>nHeight,
+    <font color=#0000FF>int </font>nWidth,
+    <font color=#800080>LPCSTR </font>lpszFace,
+    <font color=#800080>PIMAGE</font> pimg = <font color=#800080>NULL
+</font>);
+<font color=#0000FF>void </font><font color=#008080>setfont</font>(
+    <font color=#0000FF>int </font>nHeight,
+    <font color=#0000FF>int </font>nWidth,
+    <font color=#800080>LPCSTR </font>lpszFace,
+    <font color=#0000FF>int </font>nEscapement,
+    <font color=#0000FF>int </font>nOrientation,
+    <font color=#0000FF>int </font>nWeight,
+    <font color=#0000FF>bool </font>bItalic,
+    <font color=#0000FF>bool </font>bUnderline,
+    <font color=#0000FF>bool </font>bStrikeOut,
+    <font color=#800080>PIMAGE</font> pimg = <font color=#800080>NULL
+</font>);
+<font color=#0000FF>void </font><font color=#008080>setfont</font>(
+    <font color=#0000FF>int </font>nHeight,
+    <font color=#0000FF>int </font>nWidth,
+    <font color=#800080>LPCSTR </font>lpszFace,
+    <font color=#0000FF>int </font>nEscapement,
+    <font color=#0000FF>int </font>nOrientation,
+    <font color=#0000FF>int </font>nWeight,
+    <font color=#0000FF>bool </font>bItalic,
+    <font color=#0000FF>bool </font>bUnderline,
+    <font color=#0000FF>bool </font>bStrikeOut,
+    <font color=#800080>BYTE </font>fbCharSet,
+    <font color=#800080>BYTE </font>fbOutPrecision,
+    <font color=#800080>BYTE </font>fbClipPrecision,
+    <font color=#800080>BYTE </font>fbQuality,
+    <font color=#800080>BYTE </font>fbPitchAndFamily,
+    <font color=#800080>PIMAGE</font> pimg = <font color=#800080>NULL
+</font>);
+
+<font color=#0000FF>void </font><font color=#008080>setfont</font>(
+    <font color=#0000FF>const </font><font color=#800080>LOGFONT </font>*font,
+    <font color=#800080>PIMAGE</font> pimg = <font color=#800080>NULL
+</font>);</pre>
+
+<font size="5" color="#0000FF"><strong>参数：</strong></font>
+nHeight
+指定高度（逻辑单位）。如果为正，表示指定的高度包括字体的默认行距；如果为负，表示指定的高度只是字符的高度。
+nWidth
+字符的平均宽度（逻辑单位）。如果为 0，则比例自适应。
+lpszFace
+字体名称。对于此参数均有LPCSTR和LPCWSTR两个版本，以上函数声明仅列出一种。提供两个接口是为了方便能同时使用两种不同的字符集。
+nEscapement
+字符串的书写角度，单位 0.1 度。
+nOrientation
+每个字符的书写角度，单位 0.1 度。
+nWeight
+字符的笔画粗细，范围 0~1000。0 表示默认粗细。使用数字或下表中定义的宏均可：
+<table width="100%" border="1" align="center">
+<tr><td>宏</td><td>粗细值</td></tr>
+<tr><td>FW_DONTCARE</td><td>0</td></tr>
+<tr><td>FW_THIN</td><td>100</td></tr>
+<tr><td>FW_EXTRALIGHT</td><td>200</td></tr>
+<tr><td>FW_ULTRALIGHT</td><td>200</td></tr>
+<tr><td>FW_LIGHT</td><td>300</td></tr>
+<tr><td>FW_NORMAL</td><td>400</td></tr>
+<tr><td>FW_REGULAR</td><td>400</td></tr>
+<tr><td>FW_MEDIUM</td><td>500</td></tr>
+<tr><td>FW_SEMIBOLD</td><td>600</td></tr>
+<tr><td>FW_DEMIBOLD</td><td>600</td></tr>
+<tr><td>FW_BOLD</td><td>700</td></tr>
+<tr><td>FW_EXTRABOLD</td><td>800</td></tr>
+<tr><td>FW_ULTRABOLD</td><td>800</td></tr>
+<tr><td>FW_HEAVY</td><td>900</td></tr>
+<tr><td>FW_BLACK</td><td>900
+</table>
+bItalic
+是否斜体，true / false。
+bUnderline
+是否有下划线，true / false。
+bStrikeOut
+是否有删除线，true / false。
+fbCharSet
+指定字符集(详见 LOGFONT 结构体)。
+fbOutPrecision
+指定文字的输出精度(详见 LOGFONT 结构体)。
+fbClipPrecision
+指定文字的剪辑精度(详见 LOGFONT 结构体)。
+fbQuality
+指定文字的输出质量(详见 LOGFONT 结构体)。
+fbPitchAndFamily
+指定以常规方式描述字体的字体系列(详见 LOGFONT 结构体)。
+font
+指向 LOGFONT 结构体的指针。
+
+<font size="5" color="#0000FF"><strong>返回值：</strong></font>
+（无）
+
+<font size="5" color="#0000FF"><strong>示例：</strong></font>
+<pre><font color=#008000>// 设置当前字体为高 16 像素的“宋体”（忽略行距）。
+</font><font color=#008080>setfont</font>(-16, 0,<font color=#FF00FF>"宋体"</font>);
+<font color=#008080>outtextxy</font>(0, 0,<font color=#FF00FF>"测试"</font>);
+<font color=#008000>// 设置输出效果为抗锯齿（LOGFONTA是MBCS版本，LOGFONTW是UTF16版本）
+</font><font color=#800080>LOGFONTA </font>f;
+<font color=#008080>getfont</font>(&amp;f);                          <font color=#008000>// 获取当前字体设置
+</font>f.lfHeight = 48;                      <font color=#008000>// 设置字体高度为 48（包含行距）
+</font><font color=#008080>strcpy</font>(f.lfFaceName, <font color=#FF00FF>"黑体"</font>);         <font color=#008000>// 设置字体为“黑体”
+</font>f.lfQuality = <font color=#800080>ANTIALIASED_QUALITY</font>;    <font color=#008000>// 设置输出效果为抗锯齿  
+</font><font color=#008080>setfont</font>(&amp;f);                          <font color=#008000>// 设置字体样式
+</font><font color=#008080>outtextxy</font>(0,50,<font color=#FF00FF>"抗锯齿效果"</font>);</pre>
+
+</pre>
+
+</body>
+

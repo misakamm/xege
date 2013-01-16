@@ -1,0 +1,52 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>setwritemode</title>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">绘制图形相关函数</a>-＞setwritemode</font>
+
+<font size="5" color="#0000FF"><strong>功能：</strong></font>
+这个函数用于设置绘图位操作模式。
+
+<font size="5" color="#0000FF"><strong>声明：</strong></font>
+<pre><font color=#0000FF>void </font><font color=#008080>setwritemode</font>(
+    <font color=#0000FF>int </font>mode.
+    <font color=#800080>PIMAGE</font> pimg = <font color=#800080>NULL
+</font>);</pre>
+
+<font size="5" color="#0000FF"><strong>参数：</strong></font>
+mode
+二元光栅操作码（即位操作模式），支持全部的 16 种二元光栅操作码，罗列如下：
+<table width="100%" border="1" align="center">
+<tr><td>位操作模式</td><td>描述</td></tr>
+<tr><td>R2_BLACK</td><td>绘制出的像素颜色 = 黑色</td></tr>
+<tr><td>R2_COPYPEN</td><td>绘制出的像素颜色 = 当前颜色（默认）</td></tr>
+<tr><td>R2_MASKNOTPEN</td><td>绘制出的像素颜色 = 屏幕颜色 AND (NOT 当前颜色)</td></tr>
+<tr><td>R2_MASKPEN</td><td>绘制出的像素颜色 = 屏幕颜色 AND 当前颜色</td></tr>
+<tr><td>R2_MASKPENNOT</td><td>绘制出的像素颜色 = (NOT 屏幕颜色) AND 当前颜色</td></tr>
+<tr><td>R2_MERGENOTPEN</td><td>绘制出的像素颜色 = 屏幕颜色 OR (NOT 当前颜色)</td></tr>
+<tr><td>R2_MERGEPEN</td><td>绘制出的像素颜色 = 屏幕颜色 OR 当前颜色</td></tr>
+<tr><td>R2_MERGEPENNOT</td><td>绘制出的像素颜色 = (NOT 屏幕颜色) OR 当前颜色</td></tr>
+<tr><td>R2_NOP</td><td>绘制出的像素颜色 = 屏幕颜色</td></tr>
+<tr><td>R2_NOT</td><td>绘制出的像素颜色 = NOT 屏幕颜色</td></tr>
+<tr><td>R2_NOTCOPYPEN</td><td>绘制出的像素颜色 = NOT 当前颜色</td></tr>
+<tr><td>R2_NOTMASKPEN</td><td>绘制出的像素颜色 = NOT (屏幕颜色 AND 当前颜色)</td></tr>
+<tr><td>R2_NOTMERGEPEN</td><td>绘制出的像素颜色 = NOT (屏幕颜色 OR 当前颜色)</td></tr>
+<tr><td>R2_NOTXORPEN</td><td>绘制出的像素颜色 = NOT (屏幕颜色 XOR 当前颜色)</td></tr>
+<tr><td>R2_WHITE</td><td>绘制出的像素颜色 = 白色</td></tr>
+<tr><td>R2_XORPEN</td><td>绘制出的像素颜色 = 屏幕颜色 XOR 当前颜色</td></tr>
+</table>
+
+注：1. AND / OR / NOT / XOR 为布尔位运算。2. "屏幕颜色"指绘制所经过的屏幕像素点的颜色。3. "当前颜色"是指通过 setcolor 设置的用于当前绘制的颜色。
+
+<font size="5" color="#0000FF"><strong>返回值：</strong></font>
+（无）
+
+<font size="5" color="#0000FF"><strong>示例：</strong></font>
+（无）
+
+</pre>
+
+</body>
+

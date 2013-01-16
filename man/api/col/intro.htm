@@ -1,0 +1,40 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>颜色表示</title>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">颜色表示及相关函数</a>-＞颜色表示</font>
+设置绘图色有以下几种办法：
+1. 用 16 进制的颜色表示，形式为：
+0xrrggbb (rr=红，gg=绿，bb=蓝)
+
+2. 用预定义颜色，如下：
+
+<table width="100%" border="1" align="center">
+<tr><td bgcolor="#8080FF">常量值</td><td bgcolor="#8080FF">值</td><td bgcolor="#8080FF">颜色值</td><td bgcolor="#8080FF">常量值</td><td bgcolor="#8080FF">值</td><td bgcolor="#8080FF">颜色</td></tr>
+<tr><td>BLACK值</td><td>0值</td><td>黑值</td><td>DARKGRAY值</td><td>0x545454值</td><td>深灰</td></tr>
+<tr><td>BLUE值</td><td>0x0000A8值</td><td>蓝值</td><td>LIGHTBLUE值</td><td>0x5454FC值</td><td>亮蓝</td></tr>
+<tr><td>GREEN值</td><td>0x00A800值</td><td>绿值</td><td>LIGHTGREEN值</td><td>0x54FC54值</td><td>亮绿</td></tr>
+<tr><td>CYAN值</td><td>0x00A8A8值</td><td>青值</td><td>LIGHTCYAN值</td><td>0x54FCFC值</td><td>亮青</td></tr>
+<tr><td>RED值</td><td>0xA80000值</td><td>值</td><td>LIGHTRED值</td><td>0xFC5454值</td><td>亮红</td></tr>
+<tr><td>MAGENTA值</td><td>0xA800A8值</td><td>紫值</td><td>LIGHTMAGENTA值</td><td>0xFC54FC值</td><td>亮紫</td></tr>
+<tr><td>BROWN值</td><td>0xA8A800值</td><td>棕值</td><td>YELLOW值</td><td>0xFCFC54值</td><td>黄</td></tr>
+<tr><td>LIGHTGRAY值</td><td>0xA8A8A8值</td><td>浅灰值</td><td>WHITE值</td><td>0xFCFCFC值</td><td>白</td></tr>
+</table>
+
+3. 用 EGERGB 宏合成颜色。详见 EGERGB。
+
+4. 用 hsl2rgb、hsv2rgb 转换其他色彩模型到 RGB 颜色。详见 hsl2rgb、hsv2rgb。
+
+示例：
+以下是部分设置前景色的方法：
+<pre><font color=#008080>setcolor</font>(0xff0000);
+<font color=#008080>setcolor</font>(<font color=#800080>BLUE</font>);
+<font color=#008080>setcolor</font>(<font color=#800080>EGERGB</font>(0, 0, 255));
+<font color=#008080>setcolor</font>(<font color=#008080>hsl2rgb</font>(240, 1, 0.5));</pre>
+
+</pre>
+
+</body>
+

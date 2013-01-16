@@ -1,0 +1,146 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>logfont</title>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">文字输出相关函数</a>-＞LOGFONT 结构体</font>
+
+<font size="5" color="#0000FF"><strong>功能：</strong></font>
+这个结构体定义了字体的属性。
+
+<font size="5" color="#0000FF"><strong>声明：</strong></font>
+<pre><font color=#0000FF>struct </font><font color=#800080>LOGFONT </font>{
+    <font color=#800080>LONG </font>lfHeight;
+    <font color=#800080>LONG </font>lfWidth 
+    <font color=#800080>LONG </font>lfEscapement;
+    <font color=#800080>LONG </font>lfOrientation;
+    <font color=#800080>LONG </font>lfWeight;
+    <font color=#800080>BYTE </font>lfItalic;
+    <font color=#800080>BYTE </font>lfUnderline;
+    <font color=#800080>BYTE </font>lfStrikeOut;
+    <font color=#800080>BYTE </font>lfCharSet;
+    <font color=#800080>BYTE </font>lfOutPrecision;
+    <font color=#800080>BYTE </font>lfClipPrecision;
+    <font color=#800080>BYTE </font>lfQuality;
+    <font color=#800080>BYTE </font>lfPitchAndFamily;
+    <font color=#800080>TCHAR </font>lfFaceName[<font color=#800080>LF_FACESIZE</font>];
+};</pre>
+
+<font size="5" color="#0000FF"><strong>成员</strong></font>
+lfHeight
+指定高度（逻辑单位）。
+如果为正，表示指定的高度是字体的完整高度；如果为负，表示指定的高度不包含tmInternalLeading的高度。也就是说相同绝对值下，负的比正的会稍高一些；而实际输出的字体高度，正数时精确匹配，负数时，和实际略有偏差，绝对值比实际的略小。
+lfWidth
+指定字符的平均宽度（逻辑单位）。如果为 0，则比例自适应。
+lfEscapement
+字符串的书写角度，单位 0.1 度，默认为 0。
+lfOrientation
+每个字符的书写角度，单位 0.1 度，默认为 0。
+lfWeight
+字符的笔画粗细，范围 0~1000，0 表示默认粗细，使用数字或下表中定义的宏均可。
+<table width="100%" border="1" align="center">
+<tr><td bgcolor="#8080FF">宏</td><td bgcolor="#8080FF">粗细值</td></tr>
+<tr><td>FW_DONTCARE</td><td>0</td></tr>
+<tr><td>FW_THIN</td><td>100</td></tr>
+<tr><td>FW_EXTRALIGHT</td><td>200</td></tr>
+<tr><td>FW_ULTRALIGHT</td><td>200</td></tr>
+<tr><td>FW_LIGHT</td><td>300</td></tr>
+<tr><td>FW_NORMAL</td><td>400</td></tr>
+<tr><td>FW_REGULAR</td><td>400</td></tr>
+<tr><td>FW_MEDIUM</td><td>500</td></tr>
+<tr><td>FW_SEMIBOLD</td><td>600</td></tr>
+<tr><td>FW_DEMIBOLD</td><td>600</td></tr>
+<tr><td>FW_BOLD</td><td>700</td></tr>
+<tr><td>FW_EXTRABOLD</td><td>800</td></tr>
+<tr><td>FW_ULTRABOLD</td><td>800</td></tr>
+<tr><td>FW_HEAVY</td><td>900</td></tr>
+<tr><td>FW_BLACK</td><td>900
+</table>
+
+lfItalic
+指定字体是否是斜体。
+lfUnderline
+指定字体是否有下划线。
+lfStrikeOut
+指定字体是否有删除线。
+lfCharSet
+指定字符集。以下是预定义的值：
+ANSI_CHARSET
+BALTIC_CHARSET
+CHINESEBIG5_CHARSET
+DEFAULT_CHARSET
+EASTEUROPE_CHARSET
+GB2312_CHARSET
+GREEK_CHARSET
+HANGUL_CHARSET
+MAC_CHARSET
+OEM_CHARSET
+RUSSIAN_CHARSET
+SHIFTJIS_CHARSET
+SYMBOL_CHARSET
+TURKISH_CHARSET
+其中，OEM_CHARSET 表示字符集依赖本地操作系统。
+DEFAULT_CHARSET 表示字符集基于本地操作系统。例如，系统位置是 English (United States),字符集将设置为 ANSI_CHARSET。
+
+lfOutPrecision
+指定文字的输出精度。输出精度定义输出与所请求的字体高度、宽度、字符方向、行距、间距和字体类型相匹配必须达到的匹配程度。可以是以下值：
+<table width="100%" border="1" align="center">
+<tr><td bgcolor="#8080FF">值</td><td bgcolor="#8080FF">含义</td></tr>
+<tr><td>OUT_DEFAULT_PRECIS</td><td>指定默认的映射行为。</td></tr>
+<tr><td>OUT_DEVICE_PRECIS</td><td>当系统包含多个名称相同的字体时，指定设备字体。</td></tr>
+<tr><td>OUT_OUTLINE_PRECIS</td><td>指定字体映射选择 TrueType 和其它的 outline-based 字体。</td></tr>
+<tr><td>OUT_RASTER_PRECIS</td><td>当系统包含多个名称相同的字体时，指定光栅字体（即点阵字体）。</td></tr>
+<tr><td>OUT_STRING_PRECIS</td><td>这个值并不能用于指定字体映射，只是指定点阵字体枚举数据。</td></tr>
+<tr><td>OUT_STROKE_PRECIS</td><td>这个值并不能用于指定字体映射，只是指定 TrueType 和其他的 outline-based 字体，以及矢量字体的枚举数据。</td></tr>
+<tr><td>OUT_TT_ONLY_PRECIS</td><td>指定字体映射只选择 TrueType 字体。如果系统中没有安装 TrueType 字体，将选择默认操作。</td></tr>
+<tr><td>OUT_TT_PRECIS</td><td>当系统包含多个名称相同的字体时，指定 TrueType 字体。
+</table>
+lfClipPrecision
+指定文字的剪辑精度。剪辑精度定义如何剪辑字符的一部分位于剪辑区域之外的字符。可以是以下值： 
+<table width="100%" border="1" align="center">
+<tr><td bgcolor="#8080FF">值</td><td bgcolor="#8080FF">含义</td></tr>
+<tr><td>CLIP_DEFAULT_PRECIS</td><td>指定默认的剪辑行为。</td></tr>
+<tr><td>CLIP_STROKE_PRECIS</td><td>这个值并不能用于指定字体映射，只是指定光栅（即点阵）、矢量或 TrueType 字体的枚举数据。</td></tr>
+<tr><td>CLIP_EMBEDDED</td><td>当使用内嵌的只读字体时，必须指定这个标志。</td></tr>
+<tr><td>CLIP_LH_ANGLES</td><td>如果指定了该值，所有字体的旋转都依赖于坐标系统的方向是逆时针或顺时针。如果没有指定该值，设备字体始终逆时针旋转，但是其它字体的旋转依赖于坐标系统的方向。该设置影响 lfOrientation 参数的效果。
+</table>
+lfQuality
+指定文字的输出质量。输出质量定义图形设备界面 (GDI) 必须尝试将逻辑字体属性与实际物理字体的字体属性进行匹配的仔细程度。可以是以下值：
+<table width="100%" border="1" align="center">
+<tr><td bgcolor="#8080FF">值</td><td bgcolor="#8080FF">含义</td></tr>
+<tr><td>ANTIALIASED_QUALITY</td><td>指定输出质量是抗锯齿的（如果字体支持）。</td></tr>
+<tr><td>DEFAULT_QUALITY</td><td>指定输出质量不重要。</td></tr>
+<tr><td>DRAFT_QUALITY</td><td>草稿质量。字体的显示质量是不重要的。对于光栅字体（即点阵字体），缩放是有效的，这就意味着可以使用更多的尺寸，但是显示质量并不高。如果需要，粗体、斜体、下划线和删除线字体会被合成。</td></tr>
+<tr><td>NONANTIALIASED_QUALITY</td><td>指定输出质量不是抗锯齿的。</td></tr>
+<tr><td>PROOF_QUALITY</td><td>正稿质量。指定字体质量比匹配字体属性更重要。对于光栅字体（即点阵字体），缩放是无效的，会选用其最接近的字体大小。虽然选中 PROOF_QUALITY 时字体大小不能精确地映射，但是输出质量很高，并且不会有畸变现象。如果需要，粗体、斜体、下划线和删除线字体会被合成。
+</table>
+如果 ANTIALIASED_QUALITY 和 NONANTIALIASED_QUALITY 都未被选择，抗锯齿效果将依赖于控制面板中字体抗锯齿的设置。
+
+lfPitchAndFamily
+指定以常规方式描述字体的字体系列。字体系列描述大致的字体外观。字体系列用于在所需精确字体不可用时指定字体。
+1~2 位指定字体间距，可以是以下值：
+<table width="100%" border="1" align="center">
+<tr><td bgcolor="#8080FF">值</td><td bgcolor="#8080FF">含义</td></tr>
+<tr><td>DEFAULT_PITCH</td><td>指定默认间距。</td></tr>
+<tr><td>FIXED_PITCH</td><td>指定固定间距。</td></tr>
+<tr><td>VARIABLE_PITCH</td><td>指定可变间距。
+</table>
+4~7 位指定字体系列，可以是以下值：
+<table width="100%" border="1" align="center">
+<tr><td bgcolor="#8080FF">值</td><td bgcolor="#8080FF">含义</td></tr>
+<tr><td>FF_DECORATIVE</td><td>指定特殊字体。例如 Old English。</td></tr>
+<tr><td>FF_DONTCARE</td><td>指定字体系列不重要。</td></tr>
+<tr><td>FF_MODERN</td><td>指定具有或不具有衬线的等宽字体。例如，Pica、Elite 和 Courier New 都是等宽字体。</td></tr>
+<tr><td>FF_ROMAN</td><td>指定具有衬线的等比字体。例如 MS Serif。</td></tr>
+<tr><td>FF_SCRIPT</td><td>指定设计为类似手写体的字体。例如 Script 和 Cursive。</td></tr>
+<tr><td>FF_SWISS</td><td>指定不具有衬线的等比字体。例如 MS Sans Serif。
+</table>
+字体间距和字体系列可以用布尔运算符 OR 连接(即符号 |)。
+lfFaceName
+字体名称，名称不得超过 31 个字符。如果是空字符串，系统将使用第一个满足其它属性的字体。
+
+</pre>
+
+</body>
+

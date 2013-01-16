@@ -1,0 +1,28 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>random</title>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">随机函数</a>-＞random</font>
+
+<font size="5" color="#0000FF"><strong>功能：</strong></font>
+这个函数用于生成某范围内的随机整数
+
+<font size="5" color="#0000FF"><strong>声明：</strong></font>
+<pre><font color=#0000FF>unsigned int </font><font color=#008080>random</font>(<font color=#0000FF>unsigned int </font>n = 0);</pre>
+<font size="5" color="#0000FF"><strong>参数：</strong></font>
+n
+生成0至n-1之间的整数。
+如果n为0，则返回0 - 0xFFFFFFFF的整数。
+
+<font size="5" color="#0000FF"><strong>返回值：</strong></font>
+返回一个随机整数。
+
+<font size="5" color="#0000FF"><strong>其它说明：</strong></font>
+建议不要使用stdlib里的rand函数，而改用本函数。本函数使用专业的随机数生成算法，随机性远超系统的rand函数。另，千万不要自己random() % n的方式取获得一个范围内的随机数，请使用random(n)，切记。本随机序列的初始化只能调用randomize函数，不能使用srand。
+
+</pre>
+
+</body>
+

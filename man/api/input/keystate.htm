@@ -1,0 +1,29 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>keystate</title>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">其它函数</a>-＞keystate</font>
+
+<font size="5" color="#0000FF"><strong>功能：</strong></font>
+这个函数用于判断某按键是否被按下。
+
+<pre><font color=#0000FF>int </font><font color=#008080>keystate</font>(<font color=#0000FF>int </font>key);</pre>
+<font size="5" color="#0000FF"><strong>参数：</strong></font>
+key
+虚拟键码，一个Windows定义的，能与键盘按键一一对应的码表。如果是字母键或者数字键，则其虚拟键码与ASCII字符值相同，比如'A'键，它的虚拟键码也是'A'，但不能是'a'。小键盘上的数字则用类似VK_NUMPAD3的宏表示，详细可以查看VK_XXX这一系列宏的定义。
+
+返回值：
+返回非0表示这个按键按下了，返回0表示没有按下。该函数全局有效，即使窗口没有得到输入焦点，一样照样取得键盘的实际状态。
+
+示例：
+<pre><font color=#0000FF>if </font>(<font color=#008080>keystate</font>(<font color=#800080>VK_ESCAPE</font>))
+{
+    <font color=#008000>// ESC键按下了
+</font>}</pre>
+
+</pre>
+
+</body>
+

@@ -1,0 +1,37 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>drawbezier</title>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">绘制图形相关函数</a>-＞drawbezier</font>
+
+<font size="5" color="#0000FF"><strong>功能：</strong></font>
+这个函数用于画bezier曲线。边线颜色由setcolor函数决定
+
+<font size="5" color="#0000FF"><strong>声明：</strong></font>
+<pre><font color=#0000FF>void </font><font color=#008080>drawbezier</font>(
+    <font color=#0000FF>int </font>numpoints,
+    <font color=#0000FF>const int </font>*polypoints,
+    <font color=#800080>PIMAGE</font> pimg = <font color=#800080>NULL
+</font>);
+</pre>
+
+<font size="5" color="#0000FF"><strong>参数：</strong></font>
+numpoints
+多边形点的个数，需要是被3除余1的数，如果不是，则忽略最后面若干个点。
+
+polypoints
+每个点的坐标（依次两个分别为x,y），数组元素个数为 numpoints * 2。
+每一条bezier曲线由两个端点和两个控制点组成，相邻两条则共用端点。
+
+<font size="5" color="#0000FF"><strong>返回值：</strong></font>
+（无）
+
+<font size="5" color="#0000FF"><strong>示例：</strong></font>
+（无）
+
+</pre>
+
+</body>
+

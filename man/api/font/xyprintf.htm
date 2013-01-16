@@ -1,0 +1,46 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>xyprintf</title>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">文字输出相关函数</a>-＞xyprintf</font>
+
+<font size="5" color="#0000FF"><strong>功能：</strong></font>
+这个函数用于在指定位置格式化输出字符串。
+
+<font size="5" color="#0000FF"><strong>声明：</strong></font>
+<pre><font color=#0000FF>void </font><font color=#008080>xyprintf</font>(
+    <font color=#0000FF>int </font>x,
+    <font color=#0000FF>int </font>y,
+    <font color=#800080>LPCSTR </font>textstring,
+    ...
+</font>);
+<font color=#0000FF>void </font><font color=#008080>xyprintf</font>(
+    <font color=#0000FF>int </font>x,
+    <font color=#0000FF>int </font>y,
+    <font color=#800080>LPCWSTR </font>textstring,
+    ...
+</font>);
+</pre>
+
+<font size="5" color="#0000FF"><strong>参数：</strong></font>
+x
+字符串输出时头字母的 x 轴的坐标值
+y
+字符串输出时头字母的 y 轴的坐标值。
+textstring
+要输出的字符串的指针。
+...
+要输出的内容的参数，类似printf。
+
+<font size="5" color="#0000FF"><strong>返回值：</strong></font>
+（无）
+
+<font size="5" color="#0000FF"><strong>示例：</strong></font>
+无
+
+</pre>
+
+</body>
+

@@ -1,0 +1,52 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>setlinestyle</title>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">绘制图形相关函数</a>-＞setlinestyle</font>
+
+<font size="5" color="#0000FF"><strong>功能：</strong></font>
+这个函数用于设置当前线形。
+
+<font size="5" color="#0000FF"><strong>声明：</strong></font>
+<pre><font color=#0000FF>void </font><font color=#008080>setlinestyle</font>(
+    <font color=#0000FF>int </font>linestyle,
+    <font color=#800080>WORD </font>upattern = <font color=#800080>NULL</font>,
+    <font color=#0000FF>int </font>thickness = 1,
+    <font color=#800080>PIMAGE</font> pimg = <font color=#800080>NULL
+</font>);
+</pre>
+
+<font size="5" color="#0000FF"><strong>参数：</strong></font>
+linestyle
+线型，可以是以下值：
+<table width="100%" border="1" align="center">
+<tr><td>值</td><td>含义</td></tr>
+<tr><td>SOLID_LINE</td><td>线形为实线。</td></tr>
+<tr><td>CENTER_LINE</td><td>线形为：－－－－－－－－－－－－</td></tr>
+<tr><td>DOTTED_LINE</td><td>线形为：●●●●●●●●●●●●</td></tr>
+<tr><td>DASHED_LINE</td><td>线形为：－●－●－●－●－●－●</td></tr>
+<tr><td>NULL_LINE</td><td>线形为不可见。</td></tr>
+<tr><td>USERBIT_LINE</td><td>线形样式是自定义的，依赖于 upattern 参数。</td></tr>
+</table>
+
+upattern
+自定义线形数据。
+自定义规则：该数据为 WORD 类型，共 16 个二进制位，每位为 1 表示画线，为 0 表示空白。从低位到高位表示从起始到终止的方向。
+仅当线型为 PS_USERSTYLE 时该参数有效。
+
+thickness
+线形宽度。
+
+<font size="5" color="#0000FF"><strong>返回值：</strong></font>
+（无）
+
+<font size="5" color="#0000FF"><strong>示例：</strong></font>
+设置线形为点划线： setlinestyle(PS_DASHDOT);
+设置线形为宽度 3 像素的虚线： setlinestyle(PS_DASH, NULL, 3);
+
+</pre>
+
+</body>
+

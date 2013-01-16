@@ -1,0 +1,57 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>initgraph</title>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">绘图环境相关函数</a>-＞initgraph</font>
+
+<font size="5" color="#0000FF"><strong>功能：</strong></font>
+这个函数用于初始化绘图环境。
+
+<font size="5" color="#0000FF"><strong>声明：</strong></font>
+<pre><font color=#0000FF>void </font><font color=#008080>initgraph</font>(
+    <font color=#0000FF>int </font>Width,
+    <font color=#0000FF>int </font>Height,
+    <font color=#0000FF>int </font>Flag = <font color=#800080>INIT_DEFAULT
+</font>);
+<font color=#0000FF>void </font><font color=#008080>initgraph</font>(
+    <font color=#0000FF>int</font>* gdriver,
+    <font color=#0000FF>int</font>* gmode,
+    <font color=#0000FF>char</font>* path
+); <font color=#008000>// 兼容 Borland C++ 3.1 的重载，不建议使用。
+</font></pre>
+
+<font size="5" color="#0000FF"><strong>参数：</strong></font>
+Width
+绘图环境的宽度。如果为-1，则使用屏幕的宽度
+
+Height
+绘图环境的高度。如果为-1，则使用屏幕的高度
+
+Style
+请留空，为保留参数
+
+
+<font size="5" color="#0000FF"><strong>返回值：</strong></font>
+（无）
+
+示例：
+<pre><font color=#FF0000>#include </font><font color=#FF00FF>"graphics.h"
+</font><font color=#0000FF>int </font><font color=#FF0000>main</font>()
+{
+    <font color=#008080>initgraph</font>(640, 480);
+    <font color=#008080>circle</font>(200, 200, 100);
+    <font color=#008080>getch</font>();
+    <font color=#008080>cleardevice</font>();
+    <font color=#008080>getch</font>();
+    <font color=#008080>closegraph</font>();
+    <font color=#0000FF>return </font>0;
+}
+</pre>
+
+
+</pre>
+
+</body>
+

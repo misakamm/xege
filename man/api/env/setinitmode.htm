@@ -1,0 +1,42 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>setinitmode</title>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">绘图环境相关函数</a>-＞setinitmode</font>
+
+<font size="5" color="#0000FF"><strong>功能：</strong></font>
+这个函数用于设置初始化图形的选项和模式。
+
+<font size="5" color="#0000FF"><strong>声明：</strong></font>
+<pre><font color=#0000FF>void </font><font color=#008080>setinitmode</font>(<font color=#0000FF>int </font>mode, <font color=#0000FF>int </font>x = <font color=#800080>CW_USEDEFAULT</font>, <font color=#0000FF>int </font>y = <font color=#800080>CW_USEDEFAULT</font>);</pre>
+
+<font size="5" color="#0000FF"><strong>参数：</strong></font>
+mode
+初始化模式，是二进制组合的值。如果为INIT_DEFAULT 表示使用默认值。
+可以使用的值的组合：
+INIT_NOBORDER 为无边框窗口
+INIT_CHILD 为子窗口（需要使用attachHWND指定要依附的父窗口，此函数不另说明）
+INIT_TOPMOST 使窗口总在最前
+INIT_WITHLOGO 使initgraph的时候显示开场动画logo
+INIT_NOFORCEEXIT 使关闭窗口的时候不强制退出程序，但窗口会消失，需要配合is_run函数
+
+x, y
+初始化时窗口左上角在屏幕的坐标，默认为系统分配。
+
+<font size="5" color="#0000FF"><strong>返回值：</strong></font>
+（无）
+
+<font size="5" color="#0000FF"><strong>说明：</strong></font>
+本函数只能在initgraph前调用。
+
+<font size="5" color="#0000FF"><strong>示例：</strong></font>
+（无）
+</pre>
+
+
+</pre>
+
+</body>
+

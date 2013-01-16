@@ -1,0 +1,51 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>inputbox_getline</title>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">其它函数</a>-＞inputbox_getline</font>
+
+<font size="5" color="#0000FF"><strong>功能：</strong></font>
+使用对话框让用户输入一个字符串
+
+<font size="5" color="#0000FF"><strong>声明：</strong></font>
+<pre><font color=#0000FF>int </font><font color=#008080>inputbox_getline</font>(<font color=#800080>LPCSTR  </font>title, <font color=#800080>LPCSTR  </font>text, <font color=#800080>LPSTR  </font>buf, <font color=#0000FF>int </font>len);
+<font color=#0000FF>int </font><font color=#008080>inputbox_getline</font>(<font color=#800080>LPCWSTR </font>title, <font color=#800080>LPCWSTR </font>text, <font color=#800080>LPWSTR </font>buf, <font color=#0000FF>int </font>len);</pre>
+
+<font size="5" color="#0000FF"><strong>参数：</strong></font>
+title
+对话框标题
+
+text
+对话框内显示的提示文字，可以使用'\n'或者'\t'进行格式控制。
+
+buf
+用于接收输入的字符串指针，指向一个缓冲区
+
+len
+指定buf指向的缓冲区的大小，同时也会限制在对话框里输入的最大长度
+
+<font size="5" color="#0000FF"><strong>返回值：</strong></font>
+返回1表示输入有效，buf中的内容为用户所输入的数据，返回0表示输入无效，同时buf清空。
+
+<font size="5" color="#0000FF"><strong>示例：</strong></font>
+<pre><font color=#FF0000>#include </font><font color=#FF00FF>"graphics.h"
+
+</font><font color=#0000FF>int </font><font color=#FF0000>main</font>()
+{
+    <font color=#008080>initgraph</font>(640, 480);
+    <font color=#0000FF>char </font>str[100];
+    <font color=#008080>inputbox_getline</font>(<font color=#FF00FF>"这是一个对话框"</font>,
+                    <font color=#FF00FF>"请随便\n输入一串字符，输入完请回车"</font>,
+                    str,
+                    <font color=#0000FF>sizeof</font>(str)/<font color=#0000FF>sizeof</font>(*str));
+    <font color=#008080>outtextxy</font>(0, 0, str);
+    <font color=#008080>getch</font>();
+    <font color=#0000FF>return </font>0;
+}</pre>
+
+</pre>
+
+</body>
+

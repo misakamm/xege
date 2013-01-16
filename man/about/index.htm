@@ -1,0 +1,256 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>关于本EGE图形库</title>
+</head>
+<body>
+
+<pre><font size="4"><a href="../index.htm">主页</a>-＞关于本EGE图形库</font>
+
+<font size="5" color="#0000FF"><strong>相关信息：</strong></font>
+作者：misakamm
+主页：<a href="http://tcgraphics.sourceforge.net">http://tcgraphics.sourceforge.net</a>
+Blog：<a href="http://blog.misakamm.org">http://blog.misakamm.org</a>
+Mail：misakamm[at]gmail[dot]com
+
+<font size="5" color="#0000FF"><strong>更新历史：</strong></font>
+13.01
+★对mouse_msg友好化
+
+12.12
+★增加putimage_withalpha
+★修正ege_puttexture贴图bug
+
+12.11
+★增加对VC2012的支持
+★发布文件分类方式调整
+
+12.08
+★delay_fps/delay_jfps增加浮点帧率支持
+★修正文档已知错误
+
+12.06
+★新增函数xyprintf/rectprintf
+★修正png处理alpha为0的像素的方案
+★修正对带alpha的图片的贴图支持
+★增加离线示例和在线示例
+★vs2010编译错误修正
+★rgb2gray函数修正
+
+12.05
+★inputbox_getline函数修正
+★mousemove消息参数修正
+★增加发布包中的示例
+
+12.04
+★库函数调整较大，去除所有大写字母开头的函数，旧程序基本都需要改动才能正常编译
+★mingw编译参数有变，增加链接库msimg32
+★不允许使用IMAGE，全部改用PIMAGE，使用newimage/delimage构造和删除
+★颜色全部统一为ARGB格式，不要使用宏RGB，要用EGERGB代替（否则红蓝颠倒）
+★增加带aa的绘图
+★增加渐变填充
+★增加纹理概念，增加简单的纹理贴图
+★修正若干bugs（主要的是鼠标移动消息参数不正确）
+★文档增加动画示例
+★增加支持64位静态库（仅vc9/vc10）
+★去除原有的编译警告
+★增加部分函数过时警告，不屏蔽vs的过时警告
+★示例代码更新及增加
+★增加邮件列表通讯讨论https://lists.sourceforge.net/lists/listinfo/tcgraphics-faqs
+
+12.03 stable 稳定版 svn89
+★调整版本命名方式（年.月，像12.03即12年三月发布）
+★调整编译参数
+★默认标题风格调整
+★源代码目录结构调整
+
+2012年：
+0107：
+★对objc++编译做兼容
+★部分函数风格调整
+★增加控件button（未完善，测试版）
+
+2011年：
+0724：
+★Bug修正
+★解决在vs2010下编译不正确的问题
+★fix 在 linux wine下窗口移动困难的问题
+
+0602：
+★增加GUI
+★修正部分png读取错误
+★调整getkey函数，增加配对的kbmsg函数
+★增加getmouse函数
+★增加setcaption函数
+★版本更新为20110602 V1.0.1 Beta
+
+0520：
+★调整头文件，以使兼容性更好，减少链接出错
+★GetFPS函数去掉参数
+★版本更新为20110520 V0.3.8 Release
+
+0416：
+★增加png图片格式的读写函数（读取仍然用getimage，保存用savepng）
+★增加压缩解压函数（ege_compress/ege_uncompress/ege_uncompress_size）
+★版本更新为20110416 V0.3.8 Beta
+
+0414：
+★修正拖动时，窗口可能会漂移的问题
+★重绘效率优化
+★增加 INIT_LOCKWINDOW
+★批量绘图函数改名为窗口锁定函数（WindowLock/WindowUpdate/WindowUnlock），原函数仍然能使用
+★IMAGE 类增加 getdc 接口以便GDI操作（仅可用于Blt操作其它操作慎用）
+★VC6库改用/MT编译以便多线程编程
+★版本更新为20110414 V0.3.7 Release
+
+0401：
+★增加drawlines和drawbezier函数，优化drawpoly的效率
+★增加对设置为屏幕保护程序的支持
+★增加安装程序
+★增加WM_MOUSEWHEEL宏定义以防在VC6上编译出错
+★文档更新
+★版本更新为20110401 V0.3.6 Release
+
+0321：
+★更名为EGE，取代原EGE（Easy Graphics Engine）库
+★增加旋转缩放贴图函数（接口还可能变化，暂不推荐使用）
+★增加窗口尺寸自动修正（在分辨率变小强制窗口尺寸变小了，再变回大分辨率的时候）
+★版本更新为20110321 V0.3.5 Release
+
+0129：
+★修正头文件一个类型错误的问题
+★增加saveimage函数，用来保存图片（目前只支持bmp）
+★版本号更新为20110129 V0.3.4 Release
+
+2010年以前的更新记录：
+
+1213：
+★增加对基本音频播放的支持（wav, mp3, midi）
+★版本号更新为20101213 V0.3.3 Release
+
+1212：
+★更新文档
+★增加独立下载库和帮助文档
+★版本号更新为20101207 V0.3.2 Release
+
+1207：
+★修正图形更新同步时可能偶然发生无法更新的情况
+★增加setbkcolor_f函数，功能是仅设置背景颜色，
+  仅当调用cleardevice时才使用这个颜色一次性清除屏幕
+★提升了重绘性能，并修正一个资源泄露的问题
+★增加swappage函数，实现双缓冲模式
+
+1122：
+★调整GetMousePos初始化坐标
+★修正鼠标滚轮坐标不正确的问题
+★随机函数改用专业算法，并增加randomf函数
+★增加3D数学函数
+★增加3D向量类
+★修正文档错误，补充没加到文档的函数
+★版本号改为20101122 V0.3.1 Release
+
+1118：
+★修正了三个新贴图函数的BUG
+★增加了outtextrect, setfontbkcolor
+★增加了logo显示
+★修正鼠标消息接收时内容不全的问题
+★修正多次开关批量绘图时可能会卡死的BUG
+★相应更新文档
+★版本号改为20101118 V0.3.0 Release
+
+1113：
+★对imagefilter_blurring函数调整参数次序，并增加默认参数，以使其使用更方便
+★优化透明，半透明贴图效率
+
+1111：
+★增加三个函数支持透明/半透明贴图(putimage_transparent, putimage_alphablend, putimage_alphatransparent)
+★增加图像模糊函数(imagefilter_blurring)
+★版本号改为20101111 V0.2.5 Gamma
+
+1101：
+★调整putpixels，使得效率更高一些
+★修正部分绘图函数如rectangle不空心的BUG
+★增加INITGRAPH宏，以便于使用全局IMAGE时，抢先初始化
+★相应更新文档
+★版本号改为20101101 V0.2.4 Gamma
+
+1023：
+★增加putpixels函数，便于批量画点时提升速度
+★修正setbkcolor函数颜色不正确的BUG
+
+1013：
+★增加GetHInstance函数，以便作为读入资源时的参数
+★调整closegraph，以便close后再次init
+★修正setviewport在某个版本里误编辑的问题导致区域失效
+★textwidth和textheight增加单字符版本
+★修正总是隐藏控制台无法故意显示的问题
+★增加KEYMSG_FIRSTDOWN，便于实现按键按下一次仅响应一次的需求
+★修正相应的俄罗斯方块例子（因增加了KEYMSG_FIRSTDOWN的原因）
+
+1010：
+★增加ShowMouse函数，以控制鼠标是否隐藏
+★增加对VC2005的支持（不带SP1，打了SP1的不能编译通过，其实为了更稳定建议直接用VC2008）
+★增加IMAGE对象有效性检查，以便更容易发现指针错误
+★相应更新文档，并修正文档中部分已发现的问题
+★调整initgraph，允许二次调用，并修改窗口大小（这时原内容会擦除，但除了size和viewport以外，其它属性不变）
+★修正批量画图多次调用时可能发生的死锁问题
+★增加初始化IMAGE在initgraph之前会直接报错并强制关闭程序
+★版本号改为20101010 V0.2.2 Gamma
+
+0930：
+★调整delay_fps，使得帧数更稳定些
+★修正getch, kbhit带参数时的一些问题
+★改为使用SHOW_CONSOLE才显示控制台窗口，默认不显示，详见PDF内“超简单的使用预览”
+★增加getpixel_f, putpixel_f，为原函数的加速版（但调用时有风险，但其实原来的已经足够快，现在的已经快不了多少）
+★增加API_Sleep函数用于调用原来的原版Sleep函数
+★增加delay_jfps用于自动控制跳帧（跳多少看流畅程度，如果绘图不复杂计算量少，一般不会跳）
+★GetFPS函数增加一个可选参数，以便得到实际绘图帧率（在跳帧模式下）
+★增加一些方便在CFree下编程的特性，如WinMain，详见PDF内“超简单的使用预览”
+★基本完成pdf，并加入了几个比较好的程序源代码，包含一个俄罗斯方块程序
+★版本名改为20101001  V0.2 Gamma
+
+0928：
+★前一次修改后对效率的调整和优化
+★修正InputBoxGetLine, getch, GetMouseMsg的BUG
+★调整延迟函数的逻辑，使得在相同帧率下能更流畅
+★增加fclock函数
+★增加mingw3.4.5编译器使用的静态库，即能支持在CFree下编译
+★增加pdf格式的说明文档（测试版，部分函数还没有补充完成）
+★版本名改为0.2 Beta
+
+0926：
+★大幅修改，使程序不会因为鼠标拖动而停下
+★即使不调用delay族函数也会更新窗口，只是并不流畅，所以如果你想要流畅动画，推荐手工调用delay族函数
+★增加GetFPS函数，可以随时获取当前帧率
+★GetLineInputBox 更名为 InputBoxGetLine，以便于增加类似InputBoxGetNumber时，相同前缀容易查找
+★getch和kbhit改为宏，以防与conio.h库冲突，当包含conio.h时，会自动忽略
+★版本名改为0.2 Alpha
+注：delay族函数在graphics.h头文件的最顶处有相关的说明，就是指Sleep, delay, delay_ms, delay_fps, getch, GetMouseMsg
+
+0923：
+★修正getch的行为，以保持非特殊按键键码与CRT(C Run-Time)的getch一致
+
+0922：
+★增加GetLineInputBox在图形界面下进行字符串输入，使用回车确认输入，ESC取消输入（输入为空）
+★扩展getch和kbhit函数，使得能根据参数把按键放开的事件也能取得，两个函数需要组合使用
+
+0921：
+★增加void setinitmode(int mode, int x = CW_USEDEFAULT, int y = CW_USEDEFAULT)
+第一个参数mode=0为普通窗口，1为无边框窗口，xy是初始窗口坐标，mode为1时，用于方便全屏模式
+此函数必须在initgraph前调用，否则无效
+★initgraph函数，若窗口大小均指定为-1,-1，则使用屏幕大小，用于方便全屏，全屏后可用getwidth和getheight取得窗口大小
+★VC下使用HIDE_CONSOLE可以使控制台窗口彻底消失，使用方法如下：
+#define HIDE_CONSOLE
+#include "graphics.h"
+要注意的是，#define HIDE_CONSOLE必须在graphics.h的前面
+★改为Beta版本
+
+0920：
+★修正若干BUG
+
+0918：
+★第一版发布测试
+
+</pre>
+
+</body>
+</html>

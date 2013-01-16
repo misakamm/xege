@@ -1,0 +1,58 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>mouse_msg 结构体</title>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">键盘鼠标输入函数</a>-＞mouse_msg 结构体</font>
+
+<font size="5" color="#0000FF"><strong>功能：</strong></font>
+这个结构体用于保存鼠标消息
+
+<font size="5" color="#0000FF"><strong>声明：</strong></font>
+<pre><font color=#0000FF>typedef struct </font>mouse_msg {
+    <font color=#800080>UINT </font>msg;
+    <font color=#800080>INT  </font>x;
+    <font color=#800080>INT  </font>y;
+    <font color=#800080>UINT </font>flags;
+    <font color=#800080>INT  </font>wheel;
+}mouse_msg;
+</pre>
+
+<font size="5" color="#0000FF"><strong>成员：</strong></font>
+x
+当前鼠标 x 坐标
+y
+当前鼠标 y 坐标
+
+is_move()
+是否鼠标移动消息，类型为bool
+is_down()
+是否鼠标按键按下消息，类型为bool
+is_up()
+是否鼠标按键放开消息，类型为bool
+
+is_left()
+是否鼠标左键消息，类型为bool
+is_mid()
+是否鼠标中键消息，类型为bool
+is_right()
+是否鼠标右键消息，类型为bool
+
+is_wheel()
+是否鼠标滚轮滚动消息，类型为bool
+wheel
+鼠标滚轮滚动值，一般情况下为 120 的倍数或者约数。
+
+msg
+不建议直接访问
+flags
+不建议直接访问
+
+<font size="5" color="#0000FF"><strong>示例：</strong></font>
+参见入门基础示例15
+
+</pre>
+
+</body>
+

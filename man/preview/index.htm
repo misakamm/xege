@@ -1,0 +1,53 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>使用预览</title>
+</head>
+<body>
+
+<pre><font size="4"><a href="../index.htm">主页</a>-＞使用预览</font>
+
+　　使用上，基本和 Turbo C 没太大区别。启动 Visual C++6.0，
+创建一个控制台项目（Win32 Console Application），选择空项目，
+<img src='vc6.jpg'>
+然后新建"C++ Source File"项，
+<img src='vc62.jpg'>
+然后在那个cpp里写代码就行了。
+看一个画圆的例子吧：
+<pre><font color=#FF0000>#include </font><font color=#FF00FF>"graphics.h"      </font><font color=#008000>// 就是需要引用这个图形库
+</font><font color=#0000FF>int </font><font color=#FF0000>main</font>()
+{
+    <font color=#008080>initgraph</font>(640, 480);   <font color=#008000>// 初始化为640*480大小的窗口，这里和TC 略有区别
+    </font><font color=#008080>circle</font>(200, 200, 100); <font color=#008000>// 画圆，圆心(200, 200)，半径100
+    </font><font color=#008080>getch</font>();               <font color=#008000>// 等待用户按键，按任意键继续
+    </font><font color=#008080>closegraph</font>();          <font color=#008000>// 关闭图形界面
+    </font><font color=#0000FF>return </font>0;
+}</pre>
+　　呵呵，很简单吧。
+　　不过还是有不少区别的，比如颜色上，TC 只有 16 色，而这个库支持了真彩色。
+还有，这个库增加了鼠标、键盘扩展、双缓冲、批量绘图、读取图片（点阵或矢量）等功能。
+　　另外，如果你希望运行时完全不带控制台窗口，如果在VC下，默认就是去掉控制台窗口。
+但如果你需要显示出来的话，你可以把#define SHOW_CONSOLE写在#include "graphics.h"的前面，例如：
+<pre><font color=#FF0000>#define </font><font color=#800080>SHOW_CONSOLE
+</font><font color=#FF0000>#include </font><font color=#FF00FF>"graphics.h"
+</font><font color=#0000FF>int </font><font color=#FF0000>main</font>()
+{
+    <font color=#008080>initgraph</font>(640, 480);
+    <font color=#008080>getch</font>();
+    <font color=#008080>closegraph</font>();
+    <font color=#0000FF>return </font>0;
+}</pre>
+但，如果你用的是CFree，那把main改成WinMain即可实现控制台窗口的隐藏，如下替换一下即可：
+<pre><font color=#FF0000>#include </font><font color=#FF00FF>"graphics.h"
+</font><font color=#0000FF>int </font><font color=#FF0000>WinMain</font>() <font color=#008000>// 这里在graphics.h里已经定义了宏自动把它展开成合法的声明，以减免声明的麻烦
+</font>{
+    <font color=#008080>initgraph</font>(640, 480);
+    <font color=#008080>getch</font>();
+    <font color=#008080>closegraph</font>();
+    <font color=#0000FF>return </font>0;
+}</pre>
+当然，你在VC上也直接这样写也可以，因为也会自动帮你替换回main，所以直接写WinMain可以两边通用。
+
+</pre>
+
+</body>
+</html>

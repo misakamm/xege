@@ -1,0 +1,45 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>imagefilter_blurring</title>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">图像处理相关函数</a>-＞imagefilter_blurring</font>
+
+<font size="5" color="#0000FF"><strong>功能：</strong></font>
+这个函数用于对一图片区域进行模糊滤镜操作
+
+<font size="5" color="#0000FF"><strong>声明：</strong></font>
+<pre><font color=#0000FF>int </font><font color=#008080>imagefilter_blurring </font>(
+    <font color=#800080>PIMAGE </font>imgdest,
+    <font color=#0000FF>int </font>intensity,
+    <font color=#0000FF>int </font>alpha,
+    <font color=#0000FF>int </font>nXOriginDest = 0,
+    <font color=#0000FF>int </font>nYOriginDest = 0,
+    <font color=#0000FF>int </font>nWidthDest = 0,
+    <font color=#0000FF>int </font>nHeightDest = 0
+);</pre>
+
+<font size="5" color="#0000FF"><strong>参数：</strong></font>
+imgdest
+要进行模糊操作的图片，如果为NULL则表示操作窗口上的图片
+
+intensity
+模糊度，值越大越模糊。当值在 0x0 - 0x7F之间时，为四向模糊；当值在 0x80 - 0xFF之间时，为八向模糊，运算量会大一倍
+
+alpha
+图像亮度。取值为0x100表示亮度不变，取值为0x0表示图像变成纯黑
+
+nXOriginDest, nYOriginDest, nWidthDest, nHeightDest
+描述要进行此操作的矩形区域。如果nWidthDest和nHeightDest 为0，表示操作整张图片。
+
+<font size="5" color="#0000FF"><strong>返回值：</strong></font>
+成功返回0，否则返回非0，若imgdest传入错误，会引发运行时异常。
+
+<font size="5" color="#0000FF"><strong>示例：</strong></font>
+（无）。
+
+</pre>
+
+</body>
+

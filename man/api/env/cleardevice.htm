@@ -1,0 +1,43 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>cleardevice</title>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">绘图环境相关函数</a>-＞cleardevice</font>
+
+<font size="5" color="#0000FF"><strong>功能：</strong></font>
+这个函数用于清除画面内容。具体的，是用当前背景色清空画面。
+
+<font size="5" color="#0000FF"><strong>声明：</strong></font>
+<pre><font color=#0000FF>void </font><font color=#008080>cleardevice</font>(
+    <font color=#800080>PIMAGE</font> pimg = <font color=#800080>NULL
+</font>);
+</pre>
+
+<font size="5" color="#0000FF"><strong>参数：</strong></font>
+pimg
+指定要清除的PIMAGE，可选参数。如果不填本参数，则清除屏幕。
+
+<font size="5" color="#0000FF"><strong>返回值：</strong></font>
+（无）
+
+<font size="5" color="#0000FF"><strong>示例：</strong></font>
+<pre><font color=#FF0000>#include </font><font color=#FF00FF>"graphics.h"
+</font><font color=#0000FF>int </font><font color=#FF0000>main</font>()
+{
+    <font color=#008080>initgraph</font>(640, 480);
+    <font color=#008080>circle</font>(200, 200, 100);
+    <font color=#008080>getch</font>();
+    <font color=#008080>cleardevice</font>();
+    <font color=#008080>getch</font>();
+    <font color=#008080>closegraph</font>();
+    <font color=#0000FF>return </font>0;
+}
+</pre>
+
+
+</pre>
+
+</body>
+

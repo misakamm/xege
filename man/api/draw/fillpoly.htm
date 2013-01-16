@@ -1,0 +1,83 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>fillpoly</title>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">绘制图形相关函数</a>-＞fillpoly</font>
+
+<font size="5" color="#0000FF"><strong>功能：</strong></font>
+这个函数用于画填充的多边形。边线颜色由setcolor函数决定，填充颜色由setfillstyle函数决定
+
+<font size="5" color="#0000FF"><strong>声明：</strong></font>
+<pre><font color=#0000FF>void </font><font color=#008080>fillpoly</font>(
+    <font color=#0000FF>int </font>numpoints,
+    <font color=#0000FF>const int </font>*polypoints,
+    <font color=#800080>PIMAGE</font> pimg = <font color=#800080>NULL
+</font>);
+</pre>
+
+<font size="5" color="#0000FF"><strong>参数：</strong></font>
+numpoints
+多边形点的个数。
+
+polypoints
+每个点的坐标，数组元素个数为 numpoints * 2。
+该函数会自动连接多边形首尾。
+
+<font size="5" color="#0000FF"><strong>返回值：</strong></font>
+（无）
+
+<font size="5" color="#0000FF"><strong>示例：</strong></font>
+（无）
+
+<font size="5" color="#0000FF"><strong>说明：</strong></font>
+如果这个多边形发生自相交，那么自交次数为奇数的区域则不填充，偶数次的填充，不自交就是偶数次。不过这样说明相信非常难理解，以下给个例子：
+<pre><font color=#FF0000>#include </font><font color=#FF00FF>"graphics.h"
+</font><font color=#0000FF>int </font><font color=#FF0000>main</font>()
+{
+    <font color=#008080>initgraph</font>(600, 400);
+    <font color=#008080>setfillstyle</font>(<font color=#800080>RED</font>);
+    <font color=#0000FF>int </font>pt[] = {
+        0,   0,
+        100, 0,
+        100, 100,
+        10,  10,
+        90,  10,
+        0,   100,
+    };
+    <font color=#008080>fillpoly</font>(6, pt);
+    <font color=#008080>getch</font>();
+    <font color=#0000FF>return </font>0;
+}</pre>
+运行结果：
+<img src="fillpoly1.gif">
+第二个例子：
+<pre><font color=#FF0000>#include </font><font color=#FF00FF>"graphics.h"
+
+</font><font color=#0000FF>int </font><font color=#FF0000>main</font>()
+{
+    <font color=#008080>initgraph</font>(600, 400);
+    <font color=#008080>setfillstyle</font>(<font color=#800080>RED</font>);
+    <font color=#0000FF>int </font>pt[] = {
+        0,   0,
+        100, 0,
+        100, 100,
+        0,   100,
+        0,   0,
+        100, 0,
+        100, 120,
+        0,   100,
+    };
+    <font color=#008080>fillpoly</font>(8, pt);
+    <font color=#008080>getch</font>();
+    <font color=#0000FF>return </font>0;
+}
+</pre>
+运行结果：
+<img src="fillpoly2.gif">
+
+</pre>
+
+</body>
+

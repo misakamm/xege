@@ -1,0 +1,34 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>getfps</title>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">其它函数</a>-＞getfps</font>
+
+<font size="5" color="#0000FF"><strong>功能：</strong></font>
+这个函数用于获取当前刷新率。
+
+<font size="5" color="#0000FF"><strong>声明：</strong></font>
+<pre><font color=#0000FF>float </font><font color=#008080>getfps</font>(
+    <font color=#0000FF>int </font>flag = 1
+);</pre>
+
+<font size="5" color="#0000FF"><strong>参数：</strong></font>
+flag
+仅能为0或者1，如果为1，查询的是逻辑帧数；如果为0，查询的是渲染帧数。两者之差可以得到无效帧数（被跳过渲染的帧数，仅在调用delay_jfps会产生）。如果没有调用过delay_jfps，那么两者无区别。
+
+<font size="5" color="#0000FF"><strong>返回值：</strong></font>
+返回当前刷新率。
+
+<font size="5" color="#0000FF"><strong>说明：</strong></font>
+FPS（Frames Per Second）：每秒传输帧数。通常，这个帧数在动画或者游戏里，至少要达到30才能基本流畅。现代液晶显示器均使用60FPS的刷新率，所以，如果你希望在你的显示器上达到最佳效果，那你需要至少60FPS。
+而使内部FPS计数增加的方式是当你绘图后，调用delay族函数，如：delay, delay_ms, delay_fps, Sleep，否则你不调用这些函数时，FPS永远为0而不会变化。
+
+<font size="5" color="#0000FF"><strong>示例：</strong></font>
+参见示例程序中的“星空”
+
+</pre>
+
+</body>
+

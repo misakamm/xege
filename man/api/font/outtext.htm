@@ -1,0 +1,55 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>outtext</title>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">文字输出相关函数</a>-＞outtext</font>
+
+<font size="5" color="#0000FF"><strong>功能：</strong></font>
+这个函数用于在当前位置输出字符串。
+
+<font size="5" color="#0000FF"><strong>声明：</strong></font>
+<pre><font color=#0000FF>void </font><font color=#008080>outtext</font>(
+    <font color=#800080>LPCSTR </font>textstring,
+    <font color=#800080>PIMAGE</font> pimg = <font color=#800080>NULL
+</font>);
+<font color=#0000FF>void </font><font color=#008080>outtext</font>(
+    <font color=#800080>CHAR </font>c,
+    <font color=#800080>PIMAGE</font> pimg = <font color=#800080>NULL
+</font>);
+<font color=#0000FF>void </font><font color=#008080>outtext</font>(
+    <font color=#800080>LPCWSTR </font>textstring,
+    <font color=#800080>PIMAGE</font> pimg = <font color=#800080>NULL
+</font>);
+<font color=#0000FF>void </font><font color=#008080>outtext</font>(
+    <font color=#800080>WCHAR </font>c,
+    <font color=#800080>PIMAGE</font> pimg = <font color=#800080>NULL
+</font>);</pre>
+
+<font size="5" color="#0000FF"><strong>参数：</strong></font>
+textstring
+要输出的字符串的指针。
+
+c
+要输出的字符。
+
+<font size="5" color="#0000FF"><strong>返回值：</strong></font>
+（无）
+
+<font size="5" color="#0000FF"><strong>示例：</strong></font>
+<pre><font color=#008000>// 输出字符串
+</font><font color=#0000FF>char </font>s[] = <font color=#FF00FF>"Hello World"</font>;
+<font color=#008080>outtext</font>(s);
+<font color=#008000>// 输出字符
+</font><font color=#0000FF>char </font>c = <font color=#FF00FF>'A'</font>;
+<font color=#008080>outtext</font>(c);
+<font color=#008000>// 输出数值，先将数字格式化输出为字符串
+</font><font color=#0000FF>char </font>s[5];
+<font color=#008080>sprintf</font>(s, <font color=#FF00FF>"%d"</font>, 1024);
+<font color=#008080>outtext</font>(s);</pre>
+
+</pre>
+
+</body>
+
