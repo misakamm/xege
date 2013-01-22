@@ -19,8 +19,11 @@ mode
 INIT_NOBORDER 为无边框窗口
 INIT_CHILD 为子窗口（需要使用attachHWND指定要依附的父窗口，此函数不另说明）
 INIT_TOPMOST 使窗口总在最前
+INIT_RENDERMANUAL 手动更新标志，即调用delay_fps/delay_ms等会等待操作的函数时会更新窗口，否则保持窗口内容
 INIT_WITHLOGO 使initgraph的时候显示开场动画logo
 INIT_NOFORCEEXIT 使关闭窗口的时候不强制退出程序，但窗口会消失，需要配合is_run函数
+INIT_DEFAULT 默认参数，不调用本函数时即使用此参数
+INIT_ANIMATION 是INIT_DEFAULT, INIT_RENDERMANUAL, INIT_NOFORCEEXIT的组合，用于动画编写
 
 x, y
 初始化时窗口左上角在屏幕的坐标，默认为系统分配。
