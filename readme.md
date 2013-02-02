@@ -1,16 +1,16 @@
 EGE (Easy Graphics Engine)
 ===========================================================
-HomePage1     http://misakamm.github.com/xege<br />
-HomePage2     http://misakamm.bitbucket.org/index.htm<br />
-HomePage3     http://tcgraphics.sourceforge.net<br />
-HomePage4     http://tcgraphics.svn.sourceforge.net/viewvc/tcgraphics/index.htm<br />
-mail list     https://lists.sourceforge.net/lists/listinfo/tcgraphics-faqs<br />
-teiba1        http://tieba.baidu.com/f?kw=ege%C4%EF<br />
-teiba2        http://tieba.baidu.com/f?kw=ege<br />
-resource      http://code.google.com/p/misaka/downloads/list<br />
-Blog:         http://blog.misakamm.org<br />
-E-Mail:       mailto:misakamm[at gmail com]<br />
-QQ:           moegirl[at misakamm org]<br />
+> HomePage1     http://misakamm.github.com/xege<br />
+> HomePage2     http://misakamm.bitbucket.org/index.htm<br />
+> HomePage3     http://tcgraphics.sourceforge.net<br />
+> HomePage4     http://tcgraphics.svn.sourceforge.net/viewvc/tcgraphics/trunk/index.htm<br />
+> mail list     https://lists.sourceforge.net/lists/listinfo/tcgraphics-faqs<br />
+> teiba1        http://tieba.baidu.com/f?kw=ege%C4%EF<br />
+> teiba2        http://tieba.baidu.com/f?kw=ege<br />
+> resource      http://code.google.com/p/misaka/downloads/list<br />
+> Blog:         http://blog.misakamm.org<br />
+> E-Mail:       misakamm[at gmail com]<br />
+> QQ:           moegirl[at misakamm org]<br />
 详细帮助文档，在压缩包里的man目录下，用浏览器打开index.htm就可以看到了
 
 
@@ -36,15 +36,15 @@ ege图形库的优点<br />
 ege简要使用说明
 -----------------------------------------------------------
 　　目前模拟了绝大多数 BGI 的绘图函数。使用上，基本的绘图函数和 TC / BC 没太大区别。看一个画圆的例子吧：<br />
-		\#include "graphics.h" // 就是需要引用这个图形库
-		int main()
-		{
-		    initgraph(640, 480); // 初始化，显示一个窗口，这里和 TC 略有区别
-		    circle(200, 200, 100); // 画圆，圆心(200, 200)，半径 100
-		    getch(); // 暂停一下等待用户按键
-		    closegraph(); // 关闭图形界面
-		    return 0;
-		}
+\#include "graphics.h" // 就是需要引用这个图形库<br />
+int main()<br />
+{<br />
+    initgraph(640, 480); // 初始化，显示一个窗口，这里和 TC 略有区别<br />
+    circle(200, 200, 100); // 画圆，圆心(200, 200)，半径 100<br />
+    getch(); // 暂停一下等待用户按键<br />
+    closegraph(); // 关闭图形界面<br />
+    return 0;<br />
+}<br />
 　　呵呵，很简单吧。更详细的请参阅ege文档。
 
 ege的将来
