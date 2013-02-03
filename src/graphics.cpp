@@ -380,7 +380,7 @@ peekkey(_graph_setting* pg) {
 
 	while (msg_pop(&(pg->msgkey_queue), &msg)) {
 		if (msg.message == WM_CHAR || msg.message == WM_KEYDOWN) {
-			if (msg.message == WM_KEYDOWN && (msg.wParam == ' ' || msg.wParam >= '0' && msg.wParam < 0x70 || msg.wParam >= 0xBA && msg.wParam < 0xE0 || msg.wParam >= VK_SHIFT && msg.wParam < VK_PAUSE)) {
+			if (msg.message == WM_KEYDOWN && (msg.wParam == key_esc || msg.wParam == ' ' || msg.wParam >= '0' && msg.wParam < 0x70 || msg.wParam >= 0xBA && msg.wParam < 0xE0 || msg.wParam >= VK_SHIFT && msg.wParam < VK_PAUSE)) {
 				continue;
 			}
 			msg_un_pop(&(pg->msgkey_queue));
