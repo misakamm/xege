@@ -143,7 +143,6 @@ delay_ms(long ms) {
 	struct _graph_setting * pg = &graph_setting;
 	egeControlBase* &root = pg->egectrl_root;
 	pg->skip_timer_mark = true;
-	//LeaveCriticalSection(&pg->cs_callbackmessage);
 	if (ms == 0) {
 		if (pg->update_mark_count < UPDATE_MAX_CALL) {
 			ege_sleep(1);
@@ -158,7 +157,6 @@ delay_ms(long ms) {
 			}
 		}
 		pg->delay_ms_dwLast = get_highfeq_time_ls(pg) * 1000.0;
-		//EnterCriticalSection(&pg->cs_callbackmessage);
 		pg->skip_timer_mark = false;
 		return;
 	}
@@ -200,13 +198,7 @@ delay_ms(long ms) {
 			pg->delay_ms_dwLast += delay_time;
 		}
 	}
-	//EnterCriticalSection(&pg->cs_callbackmessage);
 	pg->skip_timer_mark = false;
-	//{   //防区域锁死无法更新的临时方案
-	//    int l,t,r,b,c;
-	//    getviewport(&l, &t, &r, &b, &c);
-	//    setviewport(l, t, r, b, c);
-	//}
 }
 
 /*
@@ -225,7 +217,6 @@ delay_fps(double fps) {
 	struct _graph_setting * pg = &graph_setting;
 	egeControlBase* &root = pg->egectrl_root;
 	pg->skip_timer_mark = true;
-	//LeaveCriticalSection(&pg->cs_callbackmessage);
 	double delay_time = 1000.0 / fps;
 	double avg_max_time = delay_time * 10.0; // 误差时间在这个数值以内做平衡
 	double dw = get_highfeq_time_ls(pg) * 1000.0;
@@ -254,13 +245,7 @@ delay_fps(double fps) {
 			pg->delay_fps_dwLast += delay_time;
 		}
 	}
-	//EnterCriticalSection(&pg->cs_callbackmessage);
 	pg->skip_timer_mark = false;
-	//{   //防区域锁死无法更新的临时方案
-	//    int l,t,r,b,c;
-	//    getviewport(&l, &t, &r, &b, &c);
-	//    setviewport(l, t, r, b, c);
-	//}
 }
 
 /*
@@ -279,7 +264,6 @@ delay_jfps(double fps) {
 	struct _graph_setting * pg = &graph_setting;
 	egeControlBase* &root = pg->egectrl_root;
 	pg->skip_timer_mark = true;
-	//LeaveCriticalSection(&pg->cs_callbackmessage);
 	double delay_time = 1000.0/fps;
 	double avg_max_time = delay_time * 10.0;
 	double dw = get_highfeq_time_ls(pg) * 1000.0;
@@ -312,13 +296,7 @@ delay_jfps(double fps) {
 			pg->delay_fps_dwLast += delay_time;
 		}
 	}
-	//EnterCriticalSection(&pg->cs_callbackmessage);
 	pg->skip_timer_mark = false;
-	//{   //防区域锁死无法更新的临时方案
-	//    int l,t,r,b,c;
-	//    getviewport(&l, &t, &r, &b, &c);
-	//    setviewport(l, t, r, b, c);
-	//}
 }
 
 int showmouse(int bShow) {
@@ -1706,10 +1684,8 @@ setvisualpage(int page) {
 void
 swappage() {
 	struct _graph_setting * pg = &graph_setting;
-	EnterCriticalSection(&pg->cs_render);
 	setvisualpage(pg->active_page);
 	setactivepage(1 - pg->active_page);
-	LeaveCriticalSection(&pg->cs_render);
 }
 
 void
@@ -1837,10 +1813,6 @@ setviewport(int left, int top, int right, int bottom, int clip, PIMAGE pimg) {
 	//OffsetViewportOrgEx(img->m_hDC, img->m_vpt.left, img->m_vpt.top, NULL);
 	SetViewportOrgEx(img->m_hDC, img->m_vpt.left, img->m_vpt.top, NULL);
 
-	//if (pimg == NULL && pg->lock_window)
-	//{
-	//    LeaveCriticalSection(&pg->cs_render);
-	//}
 	CONVERT_IMAGE_END;
 }
 
@@ -2300,15 +2272,15 @@ inputbox_getline(LPCWSTR title, LPCWSTR text, LPWSTR buf, int len) {
 	IMAGE bg;
 	IMAGE window;
 	int w = 400, h = 300, x = (getwidth() - w) / 2, y = (getheight() - h) / 2;
-	bool b_batchdraw_on = false;
+	bool lock_window = false;
 	int ret = 0;
 
 	bg.getimage(0, 0, getwidth(), getheight());
 	window.createimage(w, h);
 	buf[0] = 0;
 
-	b_batchdraw_on = pg->lock_window;
-	if (!b_batchdraw_on) {
+	lock_window = pg->lock_window;
+	if (!lock_window) {
 		setrendermode(RENDER_MANUAL);
 	}
 
@@ -2361,7 +2333,7 @@ inputbox_getline(LPCWSTR title, LPCWSTR text, LPWSTR buf, int len) {
 	}
 	ret = len;
 	putimage(0, 0, &bg);
-	if (!b_batchdraw_on) {
+	if (!lock_window) {
 		setrendermode(RENDER_AUTO);
 	}
 	getflush();

@@ -514,6 +514,20 @@ typedef enum key_code_e {
 	key_control_r   = 0xa3,
 	key_menu_l      = 0xa4,
 	key_menu_r      = 0xa5,
+
+	key_semicolon   = 0xba,
+	key_plus        = 0xbb,
+	key_comma       = 0xbc,
+	key_minus       = 0xbd,
+	key_period      = 0xbe,
+	key_slash       = 0xbf,
+	key_tilde       = 0xc0,
+	key_lbrace      = 0xdb,
+	key_backslash   = 0xdc,
+	key_rbrace      = 0xdd,
+	key_quote       = 0xde,
+
+	key_ime_process = 0xe5,
 }key_code_e;
 
 typedef enum key_msg_e {

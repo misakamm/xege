@@ -21,6 +21,7 @@
 
 #define _GRAPH_LIB_BUILD_
 #include "ege.h"
+#include "thread_queue.h"
 
 #ifndef ERROR_SUCCESS
 #define ERROR_SUCCESS 0
@@ -73,31 +74,23 @@
 #define IFATODOB(A, B)  ( (A) && (B, 0) )
 #define IFNATODOB(A, B) ( (A) || (B, 0) )
 
-#define CONVERT_IMAGE(pimg) ( IFNATODOB(graph_setting.lock_window, EnterCriticalSection(&graph_setting.cs_render)), ((size_t)(pimg)<0x20 ?\
+#define CONVERT_IMAGE(pimg) ( ((size_t)(pimg)<0x20 ?\
 		((pimg) ?\
 			(IFATODOB(((size_t)(pimg)&0xF)==(size_t)graph_setting.visual_page, graph_setting.update_mark_count -= 1), graph_setting.img_page[(size_t)(pimg) & 0xF])\
 		: (IFATODOB(graph_setting.visual_page==graph_setting.active_page, graph_setting.update_mark_count -= 1) , graph_setting.imgtarget))\
 	: pimg) )
 
-#define CONVERT_IMAGE_CONST(pimg) ( IFNATODOB(graph_setting.lock_window, EnterCriticalSection(&graph_setting.cs_render)), (size_t)(pimg)<0x20 ?\
+#define CONVERT_IMAGE_CONST(pimg) ( (size_t)(pimg)<0x20 ?\
 		((pimg) ?\
 			graph_setting.img_page[(size_t)(pimg) & 0xF]\
 		: graph_setting.imgtarget)\
 	: pimg)
 
-#define CONVERT_IMAGE_F(pimg) ((size_t)(pimg)<0x20 ?\
-	((pimg) ?\
-	(IFATODOB(((size_t)(pimg)&0xF)==(size_t)graph_setting.visual_page, graph_setting.update_mark_count -= 1), graph_setting.img_page[(size_t)(pimg) & 0xF])\
-	: (IFATODOB(graph_setting.visual_page==graph_setting.active_page, graph_setting.update_mark_count -= 1) , graph_setting.imgtarget))\
-	: pimg)
+#define CONVERT_IMAGE_F(pimg) CONVERT_IMAGE(pimg)
 
-#define CONVERT_IMAGE_F_CONST(pimg) ((size_t)(pimg)<0x20 ?\
-	((pimg) ?\
-	graph_setting.img_page[(size_t)(pimg) & 0xF]\
-	: graph_setting.imgtarget)\
-	: pimg)
+#define CONVERT_IMAGE_F_CONST(pimg) CONVERT_IMAGE_CONST(pimg)
 
-#define CONVERT_IMAGE_END ( IFNATODOB(graph_setting.lock_window, LeaveCriticalSection(&graph_setting.cs_render)))
+#define CONVERT_IMAGE_END
 
 #ifndef DEFAULT_CHARSET
 #define DEFAULT_CHARSET ANSI_CHARSET
@@ -170,12 +163,6 @@ struct EGEMSG {
 	UINT        flag;
 };
 
-struct msg_queue{
-	EGEMSG  msg_Queue[QUEUE_LEN]; //消息列表
-	int     msg_pt_w, msg_pt_r;
-	EGEMSG  msg_last;
-};
-
 // 定义图像对象
 class IMAGE
 {
@@ -220,6 +207,7 @@ public:
 
 	int  createimage(int width, int height);
 	int  resize(int width, int height);
+	void copyimage(const PIMAGE pSrcImg);
 	void getimage(int srcX, int srcY, int srcWidth, int srcHeight);
 	void getimage(const PIMAGE pSrcImg, int srcX, int srcY, int srcWidth, int srcHeight);
 	int  getimage(LPCSTR pImgFile, int zoomWidth = 0, int zoomHeight = 0);
@@ -367,6 +355,7 @@ struct _graph_setting {
 	int     active_page;
 	PIMAGE  imgtarget;
 	PIMAGE  imgtarget_set;
+	PIMAGE  img_timer_update;
 
 	HINSTANCE instance;
 	HWND    hwnd;
@@ -382,10 +371,8 @@ struct _graph_setting {
 	bool    timer_stop_mark;
 	bool    skip_timer_mark;
 
-	msg_queue msgkey_queue, msgmouse_queue;
+	thread_queue<EGEMSG> *msgkey_queue, *msgmouse_queue;
 
-	CRITICAL_SECTION cs_msgqueue, cs_callbackmessage;
-	CRITICAL_SECTION cs_render;
 	HANDLE threadui_handle;
 
 
@@ -393,9 +380,7 @@ struct _graph_setting {
 	int mouse_state_l, mouse_state_m, mouse_state_r;
 	int mouse_last_x, mouse_last_y;
 	int mouse_lastclick_x, mouse_lastclick_y;
-	//int mouse_click_cnt_l, mouse_click_cnt_m, mouse_click_cnt_r;
 	int mouse_lastup_x, mouse_lastup_y;
-	//int g_up_cnt_l, g_up_cnt_m, g_up_cnt_r;
 	int mouse_show;
 
 	LPMSG_KEY_PROC callback_key;

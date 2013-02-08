@@ -597,6 +597,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\thread_queue.h"
+				>
+			</File>
+			<File
 				RelativePath=".\tutorial.cpp"
 				>
 			</File>

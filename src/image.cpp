@@ -258,6 +258,19 @@ IMAGE::operator = (const IMAGE &img) {
 }
 
 void
+IMAGE::copyimage(const PIMAGE pSrcImg) {
+	inittest(L"IMAGE::copyimage");
+	const PIMAGE img = CONVERT_IMAGE_CONST(pSrcImg);
+	int ret = 0;
+	if (m_width != img->m_width || m_height != img->m_height)
+		ret = newimage(0, img->m_width, img->m_height);
+	if (ret == 0) {
+		memcpy(getbuffer(), img->getbuffer(), m_width * m_height * 4); // 4 byte per pixel
+	}
+	CONVERT_IMAGE_END;
+}
+
+void
 IMAGE::getimage(const PIMAGE pSrcImg, int srcX, int srcY, int srcWidth, int srcHeight) {
 	inittest(L"IMAGE::getimage");
 	const PIMAGE img = CONVERT_IMAGE_CONST(pSrcImg);
