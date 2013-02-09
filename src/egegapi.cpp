@@ -19,7 +19,7 @@
 
 namespace ege {
 
-int dealmessage(_graph_setting* pg, int getmsg);
+int dealmessage(_graph_setting* pg, bool force_update);
 void guiupdate(_graph_setting* pg, egeControlBase* &root);
 float _GetFPS(int add);
 int getflush();
@@ -146,9 +146,8 @@ delay_ms(long ms) {
 	if (ms == 0) {
 		if (pg->update_mark_count < UPDATE_MAX_CALL) {
 			ege_sleep(1);
-			pg->update_mark_count = 0;
 			root->draw(NULL);
-			dealmessage(pg, 1);
+			dealmessage(pg, FORCE_UPDATE);
 			root->update();
 			{
 				int l,t,r,b,c;
@@ -180,16 +179,14 @@ delay_ms(long ms) {
 		root->draw(NULL);
 		while (dw + delay_time >= get_highfeq_time_ls(pg) * 1000.0) {
 			if ( f <= 0 || pg->update_mark_count < UPDATE_MAX_CALL) {
-				pg->update_mark_count = 0;
-				dealmessage(pg, 1);
+				dealmessage(pg, FORCE_UPDATE);
 				f = 256;
 			} else {
 				ege_sleep((int)(dw + delay_time - get_highfeq_time_ls(pg) * 1000.0));
 			}
 			f -= 1;
 		}
-		pg->update_mark_count = 0;
-		dealmessage(pg, 1);
+		dealmessage(pg, FORCE_UPDATE);
 		dw = get_highfeq_time_ls(pg) * 1000.0;
 		guiupdate(pg, root);
 		if (pg->delay_ms_dwLast + 200.0 <= dw || pg->delay_ms_dwLast > dw) {
@@ -235,8 +232,7 @@ delay_fps(double fps) {
 				ege_sleep((int)(dw + delay_time - get_highfeq_time_ls(pg) * 1000.0));
 			} while (dw + delay_time >= get_highfeq_time_ls(pg) * 1000.0);
 		}
-		pg->update_mark_count = 0;
-		dealmessage(pg, !nloop);
+		dealmessage(pg, FORCE_UPDATE);
 		dw = get_highfeq_time_ls(pg) * 1000.0;
 		guiupdate(pg, root);
 		if (pg->delay_fps_dwLast + delay_time + avg_max_time <= dw || pg->delay_fps_dwLast > dw) {
@@ -283,8 +279,7 @@ delay_jfps(double fps) {
 			bSleep = 1;
 		}
 		if (bSleep) {
-			pg->update_mark_count = 0;
-			dealmessage(pg, !nloop);
+			dealmessage(pg, FORCE_UPDATE);
 		} else {
 			_GetFPS(-0x100);
 		}

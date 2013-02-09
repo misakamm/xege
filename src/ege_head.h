@@ -76,13 +76,13 @@
 
 #define CONVERT_IMAGE(pimg) ( ((size_t)(pimg)<0x20 ?\
 		((pimg) ?\
-			(IFATODOB(((size_t)(pimg)&0xF)==(size_t)graph_setting.visual_page, graph_setting.update_mark_count -= 1), graph_setting.img_page[(size_t)(pimg) & 0xF])\
-		: (IFATODOB(graph_setting.visual_page==graph_setting.active_page, graph_setting.update_mark_count -= 1) , graph_setting.imgtarget))\
+			(graph_setting.img_page[(size_t)(pimg) & 0xF])\
+		: (--graph_setting.update_mark_count, graph_setting.imgtarget))\
 	: pimg) )
 
 #define CONVERT_IMAGE_CONST(pimg) ( (size_t)(pimg)<0x20 ?\
 		((pimg) ?\
-			graph_setting.img_page[(size_t)(pimg) & 0xF]\
+			(graph_setting.img_page[(size_t)(pimg) & 0xF])\
 		: graph_setting.imgtarget)\
 	: pimg)
 
@@ -152,6 +152,11 @@ GradientFill(
 #endif
 
 namespace ege {
+
+enum dealmessage_update {
+	NORMAL_UPDATE = false,
+	FORCE_UPDATE = true,
+};
 
 struct EGEMSG {
 	HWND        hwnd;

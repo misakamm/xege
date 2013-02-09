@@ -219,10 +219,8 @@ graphupdate(_graph_setting* pg) {
 
 /*private function*/
 int
-dealmessage(_graph_setting* pg, int getmsg) {
-	//MSG msg;
-
-	if (pg->update_mark_count <= 0) {
+dealmessage(_graph_setting* pg, bool force_update) {
+	if (force_update || pg->update_mark_count <= 0) {
 		graphupdate(pg);
 	}
 	return !pg->exit_window;
@@ -331,7 +329,7 @@ getflush() {
 	EGEMSG msg;
 	int lastkey = 0;
 	if (pg->msgkey_queue->empty()) {
-		dealmessage(pg, 1);
+		dealmessage(pg, NORMAL_UPDATE);
 	}
 	if (! pg->msgkey_queue->empty()) {
 		while (pg->msgkey_queue->pop(msg)) {
@@ -423,7 +421,6 @@ getkey() {
 
 	{
 		int key = 0;
-		//dealmessage(pg, 1); //如果之前有kbhit此句会使动画不流畅，事实上这句没必要加
 		do {
 			key = _getkey(pg);
 			if (key) {
@@ -449,7 +446,7 @@ flushkey() {
 	struct _graph_setting * pg = &graph_setting;
 	EGEMSG msg;
 	if (pg->msgkey_queue->empty()) {
-		dealmessage(pg, 1);
+		dealmessage(pg, NORMAL_UPDATE);
 	}
 	if (! pg->msgkey_queue->empty()) {
 		while (pg->msgkey_queue->pop(msg)) {
@@ -499,7 +496,7 @@ peekmouse(_graph_setting* pg) {
 	EGEMSG msg = {0};
 
 	if (pg->msgmouse_queue->empty()) {
-		dealmessage(pg, 1);
+		dealmessage(pg, NORMAL_UPDATE);
 	}
 	while (pg->msgmouse_queue->pop(msg)) {
 		pg->msgmouse_queue->unpop();
@@ -513,7 +510,7 @@ flushmouse() {
 	struct _graph_setting * pg = &graph_setting;
 	EGEMSG msg;
 	if (pg->msgmouse_queue->empty()) {
-		dealmessage(pg, 1);
+		dealmessage(pg, NORMAL_UPDATE);
 	}
 	if (! pg->msgmouse_queue->empty()) {
 		while (pg->msgmouse_queue->pop(msg)) {
@@ -792,7 +789,10 @@ static
 void
 on_timer(struct _graph_setting * pg, HWND hwnd, unsigned id) {
 	if (!pg->skip_timer_mark && id == RENDER_TIMER_ID) {
-		on_repaint(pg, hwnd, NULL);
+		if (pg->update_mark_count <= 0) {
+			pg->update_mark_count = UPDATE_MAX_CALL;
+			on_repaint(pg, hwnd, NULL);
+		}
 		if (pg->timer_stop_mark) {
 			pg->timer_stop_mark = false;
 			pg->skip_timer_mark = true;
