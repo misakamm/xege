@@ -1,15 +1,14 @@
 /*
 * EGE (Easy Graphics Engine)
 * FileName      graphics.cpp
-* HomePage      http://tcgraphics.sourceforge.net
-* BBS           http://easyx.uueasy.com
+* HomePage1     http://misakamm.github.com/xege
+* HomePage2     http://misakamm.bitbucket.org/index.htm
+* HomePage3     http://tcgraphics.sourceforge.net
 * teiba1        http://tieba.baidu.com/f?kw=ege
 * teiba2        http://tieba.baidu.com/f?kw=ege%C4%EF
-* resource      http://code.google.com/p/misaka/downloads/list
 * Blog:         http://blog.misakamm.org
-* Doc:          http://tcgraphics.svn.sourceforge.net/viewvc/tcgraphics/trunk/man/index.htm
-* ofLine Doc    http://tcgraphics.svn.sourceforge.net/viewvc/tcgraphics/trunk/man/ege.chm
 * E-Mail:       mailto:misakamm[at gmail com]
+* QQ:           moegirl[at misakamm org]
 
 编译说明：编译为动态库时，需要定义 PNG_BULIDDLL，以导出dll函数
 
@@ -44,7 +43,7 @@
 	#define COMPILER_VER TEXT("GCC") GCC_VER SYSBITS
 #endif
 
-#define EGE_TITLE TEXT("EGE13.01 ") COMPILER_VER
+#define EGE_TITLE TEXT("EGE13.02 ") COMPILER_VER
 
 #ifndef _ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH
 #define _ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH
@@ -97,12 +96,12 @@ namespace ege {
 
 struct _graph_setting& graph_setting = *(struct _graph_setting*)malloc(sizeof(struct _graph_setting));
 
-static bool g_has_init = false;
-static DWORD g_windowstyle = WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU|WS_MINIMIZEBOX|WS_CLIPCHILDREN|WS_VISIBLE;
-static DWORD g_windowexstyle = WS_EX_LEFT|WS_EX_LTRREADING;
-static int g_windowpos_x = CW_USEDEFAULT;
-static int g_windowpos_y = CW_USEDEFAULT;
-static int g_initoption  = INIT_DEFAULT, g_initcall = 0;
+static bool     g_has_init = false;
+static DWORD    g_windowstyle = WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU|WS_MINIMIZEBOX|WS_CLIPCHILDREN|WS_VISIBLE;
+static DWORD    g_windowexstyle = WS_EX_LEFT|WS_EX_LTRREADING;
+static int      g_windowpos_x = CW_USEDEFAULT;
+static int      g_windowpos_y = CW_USEDEFAULT;
+static int      g_initoption  = INIT_DEFAULT, g_initcall = 0;
 static HWND     g_attach_hwnd = 0;
 
 #ifdef __cplusplus

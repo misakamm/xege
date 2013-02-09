@@ -1,13 +1,12 @@
 /*********************************************************
 * EGE (Easy Graphics Engine)
 * FileName      ege.h
-* HomePage      http://tcgraphics.sourceforge.net
+* HomePage1     http://misakamm.github.com/xege
+* HomePage2     http://misakamm.bitbucket.org/index.htm
+* HomePage3     http://tcgraphics.sourceforge.net
 * teiba1        http://tieba.baidu.com/f?kw=ege
 * teiba2        http://tieba.baidu.com/f?kw=ege%C4%EF
-* resource      http://code.google.com/p/misaka/downloads/list
 * Blog:         http://blog.misakamm.org
-* Doc:          http://tcgraphics.svn.sourceforge.net/viewvc/tcgraphics/trunk/man/index.htm
-* ofLine Doc    http://tcgraphics.svn.sourceforge.net/viewvc/tcgraphics/trunk/man/ege.chm
 * E-Mail:       mailto:misakamm[at gmail com]
 * QQ:           moegirl[at misakamm org]
 *
