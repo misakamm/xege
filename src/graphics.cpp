@@ -464,16 +464,8 @@ keystate(int key) {
 	}
 	SHORT s = GetKeyState(key);
 	if ( ((USHORT)s & 0x8000) == 0 ) {
-		if (key >= key_back) {
-			pg->keystatemap[key] = 0;
-		}
-	} else {
-		pg->keystatemap[key] = 1;
-		return 1;
+		pg->keystatemap[key] = 0;
 	}
-	//if (pg->keystatemap[key] == 0) {
-	//    return 0;
-	//}
 	return pg->keystatemap[key];
 }
 
