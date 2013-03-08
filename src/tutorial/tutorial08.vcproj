@@ -557,7 +557,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\ege_common.h"
+				>
+			</File>
+			<File
 				RelativePath="..\ege_head.h"
+				>
+			</File>
+			<File
+				RelativePath="..\ege_sbt.h"
 				>
 			</File>
 			<File

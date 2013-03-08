@@ -12,10 +12,11 @@
 #include "ege_head.h"
 
 #include <math.h>
+#include <stdarg.h>
 
 #include "lpng/zlib.h"
 #include "ege/sys_edit.h"
-#include <stdarg.h>
+#include "ege_common.h"
 
 namespace ege {
 

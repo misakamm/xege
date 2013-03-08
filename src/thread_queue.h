@@ -4,6 +4,8 @@
 
 #define QUEUE_LEN 1024
 
+namespace ege {
+
 class Lock
 {
 public:
@@ -78,3 +80,5 @@ private:
 	T _last;
 	int _r, _w;
 };
+
+}
