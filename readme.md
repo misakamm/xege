@@ -1,5 +1,6 @@
 EGE (Easy Graphics Engine)
 ===========================================================
+> MainPage      http://xege.org<br />
 > HomePage1     http://misakamm.github.com/xege<br />
 > HomePage2     http://misakamm.bitbucket.org/index.htm<br />
 > HomePage3     http://tcgraphics.sourceforge.net<br />
