@@ -825,15 +825,23 @@ void EGEAPI ellipse(int x, int y, int stangle, int endangle, int xradius, int yr
 void EGEAPI fillellipse(int x, int y, int xradius, int yradius, PIMAGE pimg = NULL);                       // 画填充椭圆
 void EGEAPI sector(int x, int y, int stangle, int endangle, int xradius, int yradius, PIMAGE pimg = NULL); // 画填充椭圆扇形
 
+void EGEAPI arcf(float x, float y, float stangle, float endangle, float radius, PIMAGE pimg = NULL);                    // 画圆弧
+void EGEAPI circlef(float x, float y, float radius, PIMAGE pimg = NULL);                                                // 画圆
+void EGEAPI pieslicef(float x, float y, float stangle, float endangle, float radius, PIMAGE pimg = NULL);               // 画填充圆扇形
+void EGEAPI ellipsef(float x, float y, float stangle, float endangle, float xradius, float yradius, PIMAGE pimg = NULL);// 画椭圆弧线
+void EGEAPI fillellipsef(float x, float y, float xradius, float yradius, PIMAGE pimg = NULL);                           // 画填充椭圆
+void EGEAPI sectorf(float x, float y, float stangle, float endangle, float xradius, float yradius, PIMAGE pimg = NULL); // 画填充椭圆扇形
+
 void EGEAPI bar(int left, int top, int right, int bottom, PIMAGE pimg = NULL);                             // 画无边框填充矩形
 void EGEAPI bar3d(int left, int top, int right, int bottom, int depth, int topflag, PIMAGE pimg = NULL);   // 画有边框三维填充矩形
 
-void EGEAPI drawpoly(int numpoints, const int *polypoints, PIMAGE pimg = NULL);    // 画多边形
-void EGEAPI drawlines(int numlines, const int *polypoints, PIMAGE pimg = NULL);    // 画多条不连续线（扩展函数）
-void EGEAPI drawbezier(int numpoints, const int *polypoints, PIMAGE pimg = NULL);  // 画bezier曲线（扩展函数）
-void EGEAPI fillpoly(int numpoints, const int *polypoints, PIMAGE pimg = NULL);    // 画填充的多边形
+void EGEAPI drawpoly(int numpoints, const int *polypoints, PIMAGE pimg = NULL);     // 画多边形
+void EGEAPI drawlines(int numlines, const int *polypoints, PIMAGE pimg = NULL);     // 画多条不连续线（扩展函数）
+void EGEAPI drawbezier(int numpoints, const int *polypoints, PIMAGE pimg = NULL);   // 画bezier曲线（扩展函数）
+void EGEAPI fillpoly(int numpoints, const int *polypoints, PIMAGE pimg = NULL);     // 画填充的多边形
 void EGEAPI fillpoly_gradient(int numpoints, const ege_colpoint* polypoints, PIMAGE pimg = NULL); // 画渐变填充的多边形
-void EGEAPI floodfill(int x, int y, int border, PIMAGE pimg = NULL);               // 填充区域
+void EGEAPI floodfill(int x, int y, int border, PIMAGE pimg = NULL);                // 按边界颜色填充区域
+void EGEAPI floodfillsurface(int x, int y, color_t areacolor, PIMAGE pimg = NULL);  // 按起始点颜色填充区域
 
 // 高级绘图函数（带AA）
 // ege new_api

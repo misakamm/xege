@@ -203,7 +203,7 @@ IMAGE::newimage(HDC hdc, int width, int height) {
 				setcolor(LIGHTGRAY, this);
 				setbkcolor(BLACK, this);
 				SetBkMode(dc, OPAQUE); //TRANSPARENT);
-				setfillstyle(0, SOLID_FILL, this);
+				setfillstyle(SOLID_FILL, 0, this);
 				setlinestyle(PS_SOLID, 0, 1, this);
 				settextjustify(LEFT_TEXT, TOP_TEXT, this);
 				ege_enable_aa(false, this);

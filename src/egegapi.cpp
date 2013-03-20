@@ -784,8 +784,18 @@ arc(int x, int y, int stangle, int endangle, int radius, PIMAGE pimg) {
 }
 
 void
+arcf(float x, float y, float stangle, float endangle, float radius, PIMAGE pimg) {
+	ellipsef(x, y, stangle, endangle, radius, radius, pimg);
+}
+
+void
 circle(int x, int y, int radius, PIMAGE pimg) {
 	ellipse(x, y, 0, 360, radius, radius, pimg);
+}
+
+void
+circlef(float x, float y, float radius, PIMAGE pimg) {
+	ellipsef(x, y, 0.0f, 360.0f, radius, radius, pimg);
 }
 
 void
@@ -808,8 +818,32 @@ ellipse(int x, int y, int stangle, int endangle, int xradius, int yradius, PIMAG
 }
 
 void
+ellipsef(float x, float y, float stangle, float endangle, float xradius, float yradius, PIMAGE pimg) {
+	PIMAGE img = CONVERT_IMAGE(pimg);
+
+	double sr = stangle/180.0*PI, er = endangle/180.0*PI;
+
+	if (img) {
+		Arc(img->m_hDC,
+		(int)(x-xradius), (int)(y-yradius),
+		(int)(x+xradius), (int)(y+yradius),
+		(int)(x + xradius*cos(sr)),
+		(int)(y - yradius*sin(sr)),
+		(int)(x + xradius*cos(er)),
+		(int)(y - yradius*sin(er))
+		);
+	}
+	CONVERT_IMAGE_END;
+}
+
+void
 pieslice(int x, int y, int stangle, int endangle, int radius, PIMAGE pimg) {
 	sector(x, y, stangle, endangle, radius, radius, pimg);
+}
+
+void
+pieslicef(float x, float y, float stangle, float endangle, float radius, PIMAGE pimg) {
+	sectorf(x, y, stangle, endangle, radius, radius, pimg);
 }
 
 void
@@ -828,6 +862,21 @@ sector(int x, int y, int stangle, int endangle, int xradius, int yradius, PIMAGE
 }
 
 void
+sectorf(float x, float y, float stangle, float endangle, float xradius, float yradius, PIMAGE pimg) {
+	PIMAGE img = CONVERT_IMAGE(pimg);
+	double sr = stangle/180.0*PI, er = endangle/180.0*PI;
+	if (img) {
+		Pie(img->m_hDC,
+			(int)(x-xradius), (int)(y-yradius),
+			(int)(x+xradius), (int)(y+yradius),
+			(int)(x + xradius*cos(sr)), (int)(y - yradius*sin(sr)),
+			(int)(x + xradius*cos(er)), (int)(y - yradius*sin(er))
+			);
+	}
+	CONVERT_IMAGE_END;
+}
+
+void
 fillellipse(int x, int y, int xradius, int yradius, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
@@ -835,6 +884,19 @@ fillellipse(int x, int y, int xradius, int yradius, PIMAGE pimg) {
 			img->m_hDC,
 			x-xradius, y-yradius,
 			x+xradius, y+yradius
+			);
+	}
+	CONVERT_IMAGE_END;
+}
+
+void
+fillellipsef(float x, float y, float xradius, float yradius, PIMAGE pimg) {
+	PIMAGE img = CONVERT_IMAGE(pimg);
+	if (img) {
+		Ellipse(
+			img->m_hDC,
+			(int)(x-xradius), (int)(y-yradius),
+			(int)(x+xradius), (int)(y+yradius)
 			);
 	}
 	CONVERT_IMAGE_END;
@@ -958,6 +1020,15 @@ floodfill(int x, int y, int border, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
 		FloodFill(img->m_hDC, x, y, RGBTOBGR(border));
+	}
+	CONVERT_IMAGE_END;
+}
+
+void
+floodfillsurface(int x, int y, color_t areacolor, PIMAGE pimg) {
+	PIMAGE img = CONVERT_IMAGE(pimg);
+	if (img) {
+		ExtFloodFill(img->m_hDC, x, y, RGBTOBGR(areacolor), FLOODFILLSURFACE);
 	}
 	CONVERT_IMAGE_END;
 }

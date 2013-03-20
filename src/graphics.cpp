@@ -705,7 +705,7 @@ init_instance(HINSTANCE hInstance, int nCmdShow) {
 	} //*/
 
 
-	pg->exit_window = FALSE;
+	pg->exit_window = 0;
 	ShowWindow(pg->hwnd, nCmdShow);
 	if (g_windowexstyle & WS_EX_TOPMOST) {
 		SetWindowPos(pg->hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOSIZE|SWP_NOMOVE);
@@ -811,7 +811,7 @@ on_paint(struct _graph_setting * pg, HWND hwnd) {
 static
 void
 on_destroy(struct _graph_setting * pg) {
-	pg->exit_window = TRUE;
+	pg->exit_window = 1;
 	if (pg->dc) {
 		ReleaseDC(pg->hwnd, pg->window_dc);
 		// release objects, not finish
@@ -1249,6 +1249,8 @@ initgraph(int *gdriver, int *gmode, char *path) {
 		pg->exit_window = 0;
 		init_img_page(pg);
 	} else {
+		pg->exit_flag = 0;
+		pg->exit_window = 0;
 		setmode(*gdriver, *gmode);
 		init_img_page(pg);
 		return ;
