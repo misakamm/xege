@@ -237,8 +237,6 @@ class Set
 {
 public:
 	class iterator {
-		friend class Set;
-		friend class reverse_iterator;
 	public:
 		iterator(SBT<T>& t, sbt_int_t it) {
 			_t = &t;
@@ -270,15 +268,25 @@ public:
 		operator != (const iterator &it) {
 			return _it != it._it;
 		}
-	private:
+		sbt_int_t
+		index() const {
+			return _it;
+		}
+		void
+		erase() {
+			if (0 <= index() && index() < _t->size()) {
+				_t->remove_select(_it);
+			}
+		}
+	protected:
 		sbt_int_t _it;
 		SBT<T>* _t;
 	};
-	class reverse_iterator {
+	class reverse_iterator : public iterator {
 	public:
-		reverse_iterator(SBT<T>& t, sbt_int_t it) : _it(t, it) {
+		reverse_iterator(SBT<T>& t, sbt_int_t it) : iterator(t, it) {
 		}
-		reverse_iterator(const reverse_iterator &rit) : _it(rit._it._t, rit._it) {
+		reverse_iterator(const reverse_iterator &rit) : iterator(rit._it._t, rit._it) {
 		}
 		reverse_iterator&
 		operator ++ () {
@@ -290,10 +298,6 @@ public:
 			++_it;
 			return *this;
 		}
-		T&
-		operator* () {
-			return *_it;
-		}
 		bool
 		operator == (const reverse_iterator &rit) {
 			return _it == rit._it;
@@ -302,8 +306,6 @@ public:
 		operator != (const reverse_iterator &rit) {
 			return _it != rit._it;
 		}
-	private:
-		iterator _it;
 	};
 public:
 	Set() : m_set() {
@@ -349,10 +351,11 @@ public:
 	}
 	void
 	erase(iterator it) {
-		if (0 <= it._it && it._it < it._t->size()) {
-			iterator ret = it;
-			it._t->remove_select(it._it);
-		}
+		it.erase();
+	}
+	void
+	erase(reverse_iterator it) {
+		it.erase();
 	}
 	void
 	erase(const T& obj) {
