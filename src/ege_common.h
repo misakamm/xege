@@ -1,6 +1,6 @@
 #pragma once
 
-#include <algorithm>
+//#include <algorithm>
 
 //#define EGE_SBT_SIMPLE
 #ifdef EGE_SBT_SIMPLE
@@ -251,6 +251,10 @@ public:
 		operator + (sbt_int_t i) {
 			return iterator(*_t, _it + i);
 		}
+		iterator
+		operator - (sbt_int_t i) {
+			return iterator(*_t, _it - i);
+		}
 		iterator&
 		operator -- () {
 			--_it;
@@ -262,11 +266,11 @@ public:
 		}
 		bool
 		operator == (const iterator &it) {
-			return _it == it._it;
+			return _t == it._t && _it == it._it;
 		}
 		bool
 		operator != (const iterator &it) {
-			return _it != it._it;
+			return _t != it._t || _it != it._it;
 		}
 		sbt_int_t
 		index() const {
@@ -286,25 +290,31 @@ public:
 	public:
 		reverse_iterator(SBT<T>& t, sbt_int_t it) : iterator(t, it) {
 		}
-		reverse_iterator(const reverse_iterator &rit) : iterator(rit._it._t, rit._it) {
-		}
 		reverse_iterator&
 		operator ++ () {
-			--_it;
+			--iterator::_it;
 			return *this;
 		}
 		reverse_iterator&
 		operator -- () {
-			++_it;
+			++iterator::_it;
 			return *this;
+		}
+		iterator
+		operator + (sbt_int_t i) {
+			return iterator(*iterator::_t, iterator::_it - i);
+		}
+		iterator
+		operator - (sbt_int_t i) {
+			return iterator(*iterator::_t, iterator::_it + i);
 		}
 		bool
 		operator == (const reverse_iterator &rit) {
-			return _it == rit._it;
+			return iterator::_t == rit._t && iterator::_it == rit._it;
 		}
 		bool
 		operator != (const reverse_iterator &rit) {
-			return _it != rit._it;
+			return iterator::_t != rit._t || iterator::_it != rit._it;
 		}
 	};
 public:
