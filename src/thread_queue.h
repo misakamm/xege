@@ -34,7 +34,7 @@ public:
 	void push(const T& d_) {
 		Lock lock(&_section);
 		int w = (_w + 1) % QUEUE_LEN;
-		_queue[w] = d_;
+		_queue[_w] = d_;
 		if (w == _r)
 			_r = (_r + 1) % QUEUE_LEN;
 		_w = w;
