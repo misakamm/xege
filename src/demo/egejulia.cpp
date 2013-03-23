@@ -86,7 +86,7 @@ int iterToColor(double iter)
     return (int)(fabs(fmod(iter + 255, 510) - 255));
 }
 
-COLORREF colorMap(COMPLEX z, int iteration)
+color_t colorMap(COMPLEX z, int iteration)
 {
     double r = z.re * z.re + z.im * z.im;
     r = iteration + logmap[(int)(r * col_ins)];
@@ -228,7 +228,7 @@ int MDraw(double fromx, double fromy, double tox, double toy)
                     g_mi[y][x] = k;
                     /*
                     {
-                        COLORREF c = 0;
+                        color_t c = 0;
                         c = colorMap(p.z, p.iter);
                         putpixel(x, y, c);
                     }// */
@@ -290,14 +290,14 @@ int JDraw(COMPLEX c, double fromx, double fromy, double tox, double toy, double 
             ++ret;
             if ( st->ed )
             {
-                COLORREF c = 0;
+                color_t c = 0;
                 c = colorMap(z, st->iter);
                 putpixel(x, y, c);
                 g_updatepoint += 1;
             }
             else if (st->iter == 1)
             {
-                COLORREF c = 0;
+                color_t c = 0;
                 //c = colorMap(z, st->iter);
                 putpixel_f(x, y, c);
             }
@@ -341,7 +341,7 @@ int JDrawA(COMPLEX c, double fromx, double fromy, double tox, double toy)
                 ret ++;
                 if (p.ed)
                 {
-                    COLORREF c = 0;
+                    color_t c = 0;
                     c = colorMap(p.z, k);
                     putpixel(x, y, c);
                     g_updatepoint += 1;

@@ -52,7 +52,7 @@ public:
 
         {
             int w = geth() / 2;
-            COLORREF col = ege::hsv2rgb((float)random(360), 1.0f, 1.0f);
+            color_t col = ege::hsv2rgb((float)random(360), 1.0f, 1.0f);
             setbkcolor_f(col);
             cleardevice();
             settarget(filter());
@@ -121,7 +121,7 @@ private:
     int m_capmouse;
     int m_capx, m_capy;
     graph m_graph[4];
-    COLORREF m_col;
+    color_t m_col;
 };
 
 // 最简单的继承示例

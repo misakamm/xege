@@ -74,8 +74,16 @@ DWORD MUSIC::OpenFile(LPCSTR _szStr) {
 	mciERR = mciSendCommandA(
 		0,
 		MCI_OPEN,
-		MCI_NOTIFY|MCI_OPEN_ELEMENT,
+		MCI_OPEN_SHAREABLE|MCI_NOTIFY|MCI_OPEN_ELEMENT,
 		(DWORD_PTR)&mci_p);
+
+	if (mciERR != ERROR_SUCCESS) {
+		mciERR = mciSendCommandA(
+			0,
+			MCI_OPEN,
+			MCI_NOTIFY|MCI_OPEN_ELEMENT,
+			(DWORD_PTR)&mci_p);
+	}
 
 	if (mciERR == ERROR_SUCCESS) {
 		m_DID = mci_p.wDeviceID;
@@ -116,8 +124,16 @@ DWORD MUSIC::OpenFile(LPCWSTR _szStr) {
 	mciERR = mciSendCommandW(
 		0,
 		MCI_OPEN,
-		MCI_NOTIFY|MCI_OPEN_ELEMENT,
+		MCI_OPEN_SHAREABLE|MCI_NOTIFY|MCI_OPEN_ELEMENT,
 		(DWORD_PTR)&mci_p);
+
+	if (mciERR != ERROR_SUCCESS) {
+		mciERR = mciSendCommandW(
+			0,
+			MCI_OPEN,
+			MCI_NOTIFY|MCI_OPEN_ELEMENT,
+			(DWORD_PTR)&mci_p);
+	}
 
 	if (mciERR == ERROR_SUCCESS) {
 		m_DID = mci_p.wDeviceID;

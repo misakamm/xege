@@ -43,18 +43,18 @@ public:
     const char* font() const {
         return m_face;
     }
-    void color(COLORREF color) {
+    void color(color_t color) {
         m_color = color;
         redraw();
     }
-    COLORREF color() const {
+    color_t color() const {
         return m_color;
     }
-    void bkcolor(COLORREF color) {
+    void bkcolor(color_t color) {
         m_bkcolor = color;
         redraw();
     }
-    COLORREF bkcolor() const {
+    color_t bkcolor() const {
         return m_bkcolor;
     }
     void transparent(bool t) {
@@ -107,8 +107,8 @@ public:
 protected:
     char m_caption[1024];
     char m_face[32];
-    COLORREF m_color;
-    COLORREF m_bkcolor;
+    color_t m_color;
+    color_t m_bkcolor;
     int m_alpha;
     bool m_transparent;
     int m_fontheight;

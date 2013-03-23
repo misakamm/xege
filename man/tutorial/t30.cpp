@@ -44,7 +44,7 @@ public:
 
 		_img = ege::newimage(_r * 2, _r * 2);
 
-		COLORREF col = ege::hsv2rgb(myrand(360.0f), 1.0f, 1.0f);
+		color_t col = ege::hsv2rgb(myrand(360.0f), 1.0f, 1.0f);
 		ege::setcolor(col, _img);
 		ege::setfillcolor(col, _img);
 

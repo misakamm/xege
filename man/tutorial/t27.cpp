@@ -41,7 +41,7 @@ void initobj(AniObj* obj)
 
 	obj->img = newimage(obj->r * 2, obj->r * 2);
 
-	COLORREF col = hsv2rgb(myrand(360.0f), 1.0f, 1.0f);
+	color_t col = hsv2rgb(myrand(360.0f), 1.0f, 1.0f);
 	setcolor(col, obj->img);
 	setfillcolor(col, obj->img);
 

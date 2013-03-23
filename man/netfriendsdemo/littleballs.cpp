@@ -20,7 +20,7 @@ struct Ball {
     float x,y;
     float dx,dy;
     float radius;
-    COLORREF color;
+    color_t color;
 } ball[500];
 
 float Ball::dir = 0.0f;
