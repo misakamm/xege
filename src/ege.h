@@ -961,10 +961,10 @@ int EGEAPI getheight(PIMAGE pimg = NULL);          // 获取图片高度
 int EGEAPI getx(PIMAGE pimg = NULL);               // 获取当前 x 坐标
 int EGEAPI gety(PIMAGE pimg = NULL);               // 获取当前 y 坐标
 
-PIMAGE EGEAPI newimage(); // 创建PIMAGE
-PIMAGE EGEAPI newimage(int width, int height); // 创建PIMAGE
-void   EGEAPI delimage(PIMAGE pImg); // 创建PIMAGE
-void*  EGEAPI getbuffer(PIMAGE pImg);
+PIMAGE      EGEAPI newimage(); // 创建PIMAGE
+PIMAGE      EGEAPI newimage(int width, int height); // 创建PIMAGE
+void        EGEAPI delimage(PIMAGE pImg); // 创建PIMAGE
+color_t*    EGEAPI getbuffer(PIMAGE pImg);
 
 int  EGEAPI resize(PIMAGE pDstImg, int width, int height); //重设尺寸
 void EGEAPI getimage(PIMAGE pDstImg, int srcX, int srcY, int srcWidth, int srcHeight);             // 从屏幕获取图像

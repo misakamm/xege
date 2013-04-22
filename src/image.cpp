@@ -2714,7 +2714,7 @@ delimage(PIMAGE pImg) {
 	delete pImg;
 }
 
-void* getbuffer(PIMAGE pImg) {
+color_t* getbuffer(PIMAGE pImg) {
 	PIMAGE img = CONVERT_IMAGE_CONST(pImg);
 	CONVERT_IMAGE_END;
 	return img->getbuffer();
