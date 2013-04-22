@@ -6,9 +6,8 @@
 * HomePage3     http://tcgraphics.sourceforge.net
 * teiba1        http://tieba.baidu.com/f?kw=ege
 * teiba2        http://tieba.baidu.com/f?kw=ege%C4%EF
-* Blog:         http://blog.misakamm.org
+* Blog:         http://misakamm.com
 * E-Mail:       mailto:misakamm[at gmail com]
-* QQ:           moegirl[at misakamm org]
 *
 * FileName: graphics.h
 * 在 VC 下模拟 Borland BGI 绘图库，实现简单的绘图之余，扩展了较复杂的绘图能力

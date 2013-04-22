@@ -6,9 +6,8 @@
 * HomePage3     http://tcgraphics.sourceforge.net
 * teiba1        http://tieba.baidu.com/f?kw=ege
 * teiba2        http://tieba.baidu.com/f?kw=ege%C4%EF
-* Blog:         http://blog.misakamm.org
+* Blog:         http://misakamm.com
 * E-Mail:       mailto:misakamm[at gmail com]
-* QQ:           moegirl[at misakamm org]
 
 编译说明：编译为动态库时，需要定义 PNG_BULIDDLL，以导出dll函数
 
@@ -43,7 +42,7 @@
 	#define COMPILER_VER TEXT("GCC") GCC_VER SYSBITS
 #endif
 
-#define EGE_TITLE TEXT("EGE13.03 ") COMPILER_VER
+#define EGE_TITLE TEXT("EGE13.04 ") COMPILER_VER
 
 #ifndef _ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH
 #define _ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH
