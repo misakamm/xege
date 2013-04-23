@@ -13,12 +13,11 @@
 比如，vc2008的include路径类似“Microsoft Visual Studio 9.0\VC\include”，
 而lib路径类似“Microsoft Visual Studio 9.0\VC\lib”，vc2010和2008一样。
 vc6的话，是“Microsoft Visual Studio\VC98\Include”和“Microsoft Visual Studio\VC98\Lib”
-然后再把lib目录下对应编译器名目录下的文件，复制到你的编译器安装目录下的lib目录内。比如你的是vc6，那就把\lib\vc6\下的复制过去。
+然后再把lib目录下对应<font color=#F00>编译器名目录下</font>的文件，复制到你的编译器安装目录下的lib目录内。比如你的是vc6，那就把\lib\vc6\下的复制过去。
 
-如果你还是不明白复制到哪里，那请看这个表达：
-copy "include\*.*" to "Microsoft Visual Studio 9.0\VC\include\"
-copy "lib\*.*" to "Microsoft Visual Studio 9.0\VC\lib\"
-前面的"include\*.*"是安装包里的文件
+如果你还是不明白复制到哪里，那请看这个表达（以vs2008为例）：
+copy "include\*" to "Microsoft Visual Studio 9.0\VC\include\"
+copy "lib\vc2008\*" to "Microsoft Visual Studio 9.0\VC\lib\"
 
 复制了这些文件后，就已经安装完成了。
 然后，如果是VC或者VS，那么要建立一个工程
@@ -52,7 +51,10 @@ copy "lib\*.*" to "Microsoft Visual Studio 9.0\VC\lib\"
 
 
 
-至于在MinGW下的编译问题，会麻烦一些，如果你懂使用命令行编译，那么需要用如下指令编译：
+至于在MinGW下的编译问题，会麻烦一些，同样首先是复制include和lib下的东西，要注意版本问题。
+本版本能直接支持的基于MinGW的IDE有：
+C-Free5(MinGW3.4.5), CodeLite5.1(MinGW4.7.1), Code::Blocks12.11(MinGW4.7.1), Dev-C++5.4.0(MinGW4.7.2)
+如果你懂使用命令行编译，那么需要用如下指令编译：
 g++ yourfile.cpp -lgraphics -lgdi32 -limm32 -lmsimg32 -lole32 -loleaut32 -lwinmm -luuid -mwindows
 其中yourfile.cpp是你要编译的cpp文件
 
@@ -60,7 +62,8 @@ g++ yourfile.cpp -lgraphics -lgdi32 -limm32 -lmsimg32 -lole32 -loleaut32 -lwinmm
 主要需要设置两样东西：
 一是建立Win32 Application工程（目的是让它以-mwindows来编译，这个选项很重要）
 二是要添加链接库
-<font color=#FF0000 size=5>需要加入graphics, gdi32, imm32, msimg32, ole32, oleaut32, winmm, uuid共8个</font>
+<font color=#FF0000 size=5>需要依次加入graphics, gdi32, imm32, msimg32, ole32, oleaut32, winmm, uuid共8个</font>
+注意次序不正确可能会引起编译错误
 
 例如在Code::Blocks下（需要建立project），在菜单 - Project - build options，设置Linker选项，如图：
 <img src="cb.png">
