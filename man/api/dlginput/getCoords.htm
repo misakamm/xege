@@ -1,0 +1,45 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>getString</title>
+    <style type="text/css">
+<!--
+.cpp1-identifier {color: #000000; }
+.cpp1-reservedword {color: #0000FF; }
+.cpp1-space {background-color: #FFFFFF; }
+-->
+    </style>
+    </head>
+<body>
+<p><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">对话框输入函数</a>-＞getCoords</font></p>
+<p> <font size="5" color="#0000FF"><strong>功能：</strong></font> <br>
+  显示对话框，让用户输入几组坐标。用户一次输入一组坐标，即两个坐标值，坐标值之间用逗号分隔，例如： 10,25 </p>
+<p><font size="5" color="#0000FF"><strong>声明：</strong></font><br>
+  <code><span style="font: 16pt YaHei Consolas Hybrid;"><span class="cpp1-reservedword">int*</span><span class="cpp1-space"> getCoords(</span><span class="cpp1-reservedword">int</span><span class="cpp1-space"> coords[], </span><span class="cpp1-reservedword">unsigned</span> <span class="cpp1-reservedword">int</span><span class="cpp1-space"> pairs, </span><span class="cpp1-space"> LPCSTR
+  title = &quot;Input
+Coordinations&quot;);</span></span></code></p>
+<p><font size="5" color="#0000FF"><strong>参数：</strong></font> <br>
+coords[]: 存储用户输入的坐标：coords[0]:x1, coords[1]:y1; coords[2]:x2, coords[3]:y2;......<br>
+pairs: 想要输入的坐标对的数量。该函数可以按照调用者制定的数量不断要求用户输入坐标对<br>
+title:    对话框的标题。 <br>
+</p>
+<p><font size="5" color="#0000FF"><strong>返回值：</strong></font> <br>
+  返回指向coords数组的指针。 </p>
+<p><font size="5" color="#0000FF"><strong>示例：</strong></font></p>
+<div><font color=#FF0000>#include </font><font color=#FF00FF>"graphics.h"<br>
+</font><font color=#0000FF>int </font><font color=#FF0000>main</font>() {<br>
+ <font color=#008080> &#160; initgraph</font>(640,
+480); <br>
+<br>
+<font color=#0000FF>&#160; int </font>coords[4]; <br>
+<font color=#008080>&#160; getCoords</font>(coords, <font color=#0000FF>sizeof</font>(coords)/<font color=#0000FF>sizeof</font>(int)/2,
+<font color=#FF00FF>"请输入坐标"</font>); <br>
+  <font color=#008080>&#160; line</font>(coords[0],
+  coords[1], coords[2], coords[3]); <font color=#008080><br>
+  <br>
+  &#160; ege::getch</font>(); <br>
+  <font color=#0000FF>&#160; return </font>0;
+  <br>
+}</div>
+<p>&nbsp;</p>
+</body>
+
