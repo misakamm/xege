@@ -1,3 +1,15 @@
+/*
+** Filename: ege.h
+** version:  13.04.01-20150207
+*/
+/***************************************************************************
+** 20150203 by cyd AT bupt dot edu dot cn
+** 关于用VC2013编译时的问题
+** 由于原作者misakamm在 ege.h 中 使用#pragma指定了链接库，并且将所有版本号
+** 大_MSC_VER于1700的VC编译器全部指定为使用 graphics12.lib，导致编译失败。
+** 因此，在本版ege.h中，将相关的代码做了处理。
+****************************************************************************/
+
 /*********************************************************
 * EGE (Easy Graphics Engine)
 * FileName      ege.h
@@ -31,6 +43,9 @@
 * ★合理地使用delay_ms/delay_fps函数，可以减少你的程序占用的CPU，否则一个都没有调用同时也没有getch/getmouse的话，程序将占满一个CPU的时间
 ****************************************************************************/
 
+
+#include <stdlib.h>
+#include <stdio.h>
 #ifndef _EGE_H_
 #define _EGE_H_
 
@@ -70,56 +85,36 @@
 #endif
 #endif
 
+/* 20150203 by cyd@bupt.edu.cn 
+VC内部版本号    宏的值           VC发行版编号
+MS VC++ 13.0 _MSC_VER = 1900 (Visual C++ 2015)
+MS VC++ 12.0 _MSC_VER = 1800 (Visual C++ 2013)
+MS VC++ 11.0 _MSC_VER = 1700 (Visual C++ 2012)
+MS VC++ 10.0 _MSC_VER = 1600 (Visual C++ 2010)
+MS VC++ 9.0  _MSC_VER = 1500 (Visual C++ 2008)
+MS VC++ 8.0  _MSC_VER = 1400 (Visual C++ 2005)
+MS VC++ 7.1  _MSC_VER = 1310 (Visual C++ 7.1)
+MS VC++ 7.0  _MSC_VER = 1300 (Visual C++ 7.0)
+MS VC++ 6.0  _MSC_VER = 1200 (Visual C++ 6.0)
+MS VC++ 5.0  _MSC_VER = 1100 (Visual C++ 5.0)
+*/
+/* 20150329 by cyd AT bupt dot edu dot cn 
+** 将所有VC工程中（graphicsXX.vcxproj）中的“ProjectName”字段从“graphicsXX”改为
+** “graphics”，这样不论哪个版本的Visual Studio编译出来的库文件名字都是graphics.lib（
+** 32位）以及graphics64.lib（64位）
+** 在下面针对VC++的链接库也就容易处理了
+*/
 #if !defined(_GRAPH_LIB_BUILD_) && !defined(_GRAPH_NO_LIB_)
 	#ifdef _MSC_VER
 		#ifdef _WIN64
-			#if (_MSC_VER >= 1700)
-				#if 0 && defined(_DLL)
-					#pragma comment(lib,"graphics1264d.lib")
-				#else
-					#pragma comment(lib,"graphics1264.lib")
-				#endif
-			#elif (_MSC_VER >= 1600)
-				#if 0 && defined(_DLL)
-					#pragma comment(lib,"graphics1064d.lib")
-				#else
-					#pragma comment(lib,"graphics1064.lib")
-				#endif
-			#elif (_MSC_VER >= 1500)
-				#if 0 && defined(_DLL)
-					#pragma comment(lib,"graphics0864d.lib")
-				#else
-					#pragma comment(lib,"graphics0864.lib")
-				#endif
-			#elif (_MSC_VER > 1200)
-				#pragma comment(lib,"graphics05.lib")
-			#else
+			#if (_MSC_VER >= 1400)  //VS2008及之后的版本支持64位
+				//要求编译器自动链接下面的库文件，无需程序员手动指定
+				#pragma comment(lib,"graphics64.lib")
+			#else											//VS2005及更老的版本，都不支持x64，包括VC6。
 				#pragma comment(lib,"graphics.lib")
 			#endif
-		#else
-			#if (_MSC_VER >= 1700)
-				#if 0 && defined(_DLL)
-					#pragma comment(lib,"graphics12d.lib")
-				#else
-					#pragma comment(lib,"graphics12.lib")
-				#endif
-			#elif (_MSC_VER >= 1600)
-				#if 0 && defined(_DLL)
-					#pragma comment(lib,"graphics10d.lib")
-				#else
-					#pragma comment(lib,"graphics10.lib")
-				#endif
-			#elif (_MSC_VER >= 1500)
-				#if 0 && defined(_DLL)
-					#pragma comment(lib,"graphics08d.lib")
-				#else
-					#pragma comment(lib,"graphics08.lib")
-				#endif
-			#elif (_MSC_VER > 1200)
-				#pragma comment(lib,"graphics05.lib")
-			#else
-				#pragma comment(lib,"graphics.lib")
-			#endif
+		#else //以下为32位编译环境
+			#pragma comment(lib,"graphics.lib")
 		#endif
 		#if _MSC_VER >= 1700
 			#ifdef _DEBUG
@@ -253,7 +248,7 @@ namespace ege {
 const double PI = 3.1415926535897932384626;
 
 enum graphics_drivers {     /* define graphics drivers */
-	DETECT,         /* requests autodetection */
+	DETECT,         /* requests auto detection */
 	CGA, MCGA, EGA, EGA64, EGAMONO, IBM8514,/* 1 - 6 */
 	HERCMONO, ATT400, VGA, PC3270,          /* 7 - 10 */
 	TRUECOLOR, TRUECOLORSIZE,
@@ -623,8 +618,13 @@ typedef struct ege_colpoint {
 }ege_colpoint;
 
 // 鼠标消息
+#if defined(__GNUC__) 
+//GCC要求__attribute__放到struct关键字后面，否则编译会有提示
+struct EGE_DEPRECATE(MOUSEMSG) MOUSEMSG {
+#else    
 EGE_DEPRECATE(MOUSEMSG)
 struct MOUSEMSG {
+#endif
 	UINT uMsg;              // 当前鼠标消息
 	bool mkCtrl;            // Ctrl 键是否按下
 	bool mkShift;           // Shift 键是否按下
@@ -1282,6 +1282,34 @@ double          EGEAPI randomf();
 int EGEAPI inputbox_getline(LPCSTR  title, LPCSTR  text, LPSTR  buf, int len);  //弹出对话框，让用户输入，当前程序运行暂停，返回非0表示输入有效，0为无效
 int EGEAPI inputbox_getline(LPCWSTR title, LPCWSTR text, LPWSTR buf, int len);  //弹出对话框，让用户输入，当前程序运行暂停，返回非0表示输入有效，0为无效
 
+
+/*
+** ege图形库的输入增强函数。
+** 以下5个函数，是为了帮助C语言初学者解决数字字符输入解析的问题
+** Programmer: zsd@bupt (blacketzsd AT qq dot com) 2013/06/01
+** Modifier:   cyd@bupt (cyd AT bupt dot edu dot cn) 2015/02/07
+*/
+
+//限制输入为整形的输入框，可改变 对话框提示文字；返回输入的整数
+int EGEAPI getInteger(LPCSTR text = "Input an integer and press ENTER");
+
+//限制输入为浮点数的输入框，可改变 对话框提示文字；返回输入的浮点数
+double EGEAPI getDouble(LPCSTR text = "Input a float and press ENTER");
+
+//限制输入内容长度的字符串输入框，可改变 对话框提示文字；输入的字符串存放在 buf 中，函数返回 buf地址
+LPSTR EGEAPI getString(LPSTR buf, int length, LPCSTR text = "Input a string and press ENTER");
+
+//限制输入为字符的输入框，可改变 对话框提示文字；返回输入的字符
+char getChar(LPCSTR text = "Input a character and press ENTER");
+
+//限制输入格式为点的坐标的输入框，可改变 对话框的标题
+//每个点的坐标有两个：x,y；可以称为一个坐标对
+//coords:   存储用户输入的坐标：coords[0]:x1, coords[1]:y1; coords[2]:x2, coords[3]:y2;......
+//pairs:    想要输入的坐标对的数量。该函数可以按照调用者制定的数量不断要求用户输入坐标对
+//title:    对话框的标题
+//返回值：指向coords[]数组的指针 
+int* getCoords(int* const coords, unsigned int pairs, LPCSTR title = "Input Coordinations");
+/* End of ege图形库的输入增强函数 */
 
 //键盘处理函数
 int     EGEAPI kbmsg();

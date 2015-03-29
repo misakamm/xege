@@ -16,33 +16,12 @@
 本文件定义平台密切相关的操作及接口
 */
 
-//编译器版本，目前仅支持vc6/vc2008/vc2010/vc2012/mingw
-#ifdef _WIN64
-#define SYSBITS TEXT("x64")
-#else
-#define SYSBITS TEXT("x86")
-#endif
-
-#ifdef _MSC_VER
-	#if (_MSC_VER >= 1700)
-		#define COMPILER_VER TEXT("VC2012") SYSBITS
-	#elif (_MSC_VER >= 1600)
-		#define COMPILER_VER TEXT("VC2010") SYSBITS
-	#elif (_MSC_VER >= 1500)
-		#define COMPILER_VER TEXT("VC2008") SYSBITS
-	#elif (_MSC_VER > 1200)
-		#define COMPILER_VER TEXT("VC2005") SYSBITS
-	#else
-		#define COMPILER_VER TEXT("VC6") SYSBITS
-	#endif
-#else
-	#define TOSTRING_(x) #x
-	#define TOSTRING(x) TOSTRING_(x)
-	#define GCC_VER TEXT(TOSTRING(__GNUC__)) TEXT(".") TEXT(TOSTRING(__GNUC_MINOR__))
-	#define COMPILER_VER TEXT("GCC") GCC_VER SYSBITS
-#endif
-
-#define EGE_TITLE TEXT("EGE13.04 ") COMPILER_VER
+/*
+** Modified by cyd@20150329
+** Extract the codes related with compiler version to a seperate header
+** ==> version.h
+*/
+#include "version.h"
 
 #ifndef _ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH
 #define _ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH

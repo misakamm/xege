@@ -13,6 +13,8 @@
 
 #include <math.h>
 #include <stdarg.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 #include "lpng/zlib.h"
 #include "ege/sys_edit.h"
@@ -2406,6 +2408,181 @@ inputbox_getline(LPCWSTR title, LPCWSTR text, LPWSTR buf, int len) {
 	getflush();
 	return ret;
 }
+
+/*
+** ege图形库的输入增强函数。 
+** 以下5个函数，是为了帮助C语言初学者解决数字字符输入解析的问题
+** Programmer: zsd@bupt (blacketzsd AT qq dot com) 2013/06/01
+** Modifier:   cyd@bupt (cyd AT bupt dot edu dot cn) 2015/02/07
+*/
+
+
+int 
+getInteger(LPCSTR text)
+{
+	int out;
+	setfont(20, 0, "黑体");
+	setfontbkcolor(getbkcolor());
+	setbkmode(OPAQUE);
+	char str[100];
+#ifdef DEBUG
+	char temp[100];
+#endif
+	for ( ; ; )
+	{
+		inputbox_getline("Input Integer",
+						text,
+						str,
+						sizeof(str) / sizeof(*str));		
+		out = atoi(str);
+
+
+		if (0 == out && (str[0] < 48 || str[0] > 57)) /*若首字符不为数字，且返回值为0，表示输入有误*/
+		{
+			outtextxy(0, 460, "Error! please retry!");
+			delay_ms(1000);
+			outtextxy(0, 460, "                                ");
+		}
+		else
+		{
+#ifdef DEBUG
+			 sprintf(temp, "Your input is: %d", out);
+			 outtextxy(0, 460, temp);
+			 delay_ms(1000);
+			 outtextxy(0, 460, "                              ");
+#endif
+			 break;
+		}
+	}
+	return out;
+}
+
+/* min positive value */
+#define FLT_MIN 1.175494351e-38F 
+/* max value */
+#define FLT_MAX 3.402823466e+38F 
+/* smallest such that 1.0+FLT_EPSILON != 1.0 */ 
+#define FLT_EPSILON 1.192092896e-07F
+	 
+double 
+getDouble(LPCSTR text)
+{
+	double out;
+	setfont(20, 0, "黑体");
+	setfontbkcolor(getbkcolor());
+	setbkmode(OPAQUE);
+	char str[100];
+#ifdef DEBUG
+	char temp[100];
+#endif
+	 for( ; ; )
+	{
+		inputbox_getline("Input Float",
+						text,
+						str,
+						sizeof(str) / sizeof(*str));		
+		out = atof(str);
+
+		if ((fabs(out-0.0) < FLT_EPSILON) && (str[0] < 48 || str[0] > 57)) /*若首字符不为数字，且返回值为0.0，表示输入有误*/
+		{
+			 outtextxy(0, 460, "Error! please retry!");
+			 delay_ms(1000);
+			 outtextxy(0, 460, "                              ");
+		}
+		else
+		{
+#ifdef DEBUG			 
+			 sprintf(temp, "Your input is: %f", out);
+			 outtextxy(0, 460, temp);
+			 delay_ms(1000);
+			 outtextxy(0, 460, "                              ");
+#endif			 
+			 break;
+		}
+	}
+	return out;
+}
+
+LPSTR 
+getString(LPSTR buf, int length, LPCSTR text)
+{	
+	setfont(20, 0, "黑体");
+	setfontbkcolor(getbkcolor());
+	setbkmode(OPAQUE);
+	inputbox_getline("Input String",
+				text,
+				buf,
+				length+1);
+	return buf;
+}
+
+char 
+getChar(LPCSTR text)
+{
+	char str[2];
+	inputbox_getline("Input Character",
+					text,
+					str,
+					2);
+	return str[0];
+}
+
+int* 
+getCoords(int* const coords, unsigned int pairs, LPCSTR title)
+{
+	setfont(20, 0, "黑体");
+	setfontbkcolor(getbkcolor());
+	setbkmode(OPAQUE);
+	char temp[100];
+	char description[100];
+	int count = pairs;
+	for (; pairs>0;)
+	{
+		sprintf(description, "Inputting...\n Input the %d coords pair (eg: 13,14）.\n ENTER to input the next pair or finish\n", count - pairs + 1);
+		inputbox_getline(title,description,temp,sizeof(temp));
+		for (int k = 0, n = 0, m = 2 * (count - pairs); temp[k] != '\0'; k++)
+		{
+			if(temp[k] == ',')
+			{
+				coords[m] = n;
+				m++;
+				n = 0;	
+			}
+			else if (47<(int)temp[k] && (int)temp[k]<58)
+			{
+				n = 10*n + (int)temp[k] -48;
+			}
+			else
+			{
+				outtextxy(0,460,"Error! please retry!");
+				delay_ms(1000);
+				outtextxy(0,460,"                             ");
+				break;
+			}
+			if(temp[k+1] == '\0')
+			{
+				if(m%2 ==1)
+				{
+					coords[m] = n;
+					outtextxy(0,460,"Success!");
+					pairs--;
+					delay_ms(1000);
+					outtextxy(0,460,"                           ");
+				}
+				else
+				{
+					outtextxy(0,460,"Error! please retry!");
+					delay_ms(1000);
+					outtextxy(0,460,"                           ");
+					break;
+				}
+			}
+		}
+	}
+	return coords;
+}
+
+/* End of ege图形库的输入增强函数 */
 
 float
 _GetFPS(int add) {//获取帧数

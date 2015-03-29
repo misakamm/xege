@@ -1,8 +1,9 @@
 #include ../Makefile.in.Linux
-include Makefile.in.MINGW32_NT-5.0 #$(shell uname)
+include Makefile.in.MINGW32_NT #$(shell uname)
 #include ..\Makefile.in.$(shell uname)
 
-CXXFLAGS= $(AGGCXXFLAGS) -L/usr/include/
+# CXXFLAGS= $(AGGCXXFLAGS) -L/usr/include/
+CXXFLAGS= $(AGGCXXFLAGS) -L/usr/include/ -m64
 
 SRC_CXX=\
 graphics.cpp \
