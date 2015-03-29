@@ -1,0 +1,15 @@
+2015-03-29 [version 13.04.02 released]
+	* Fix: Dev-C++ compiler complaints: the GCC __attribute__ should follow 'struct'
+	* Misc: add ChangeLog, AUTHORS, COPYING, README
+	
+2015-02-09 [version 13.04.01 released]
+	* Feature: add 5 functions to enhance input which is needed by newbies of C/C++
+	* Fix: add VC++2013 support
+	* Fix: remove VC++6.0 support
+	* Fix: support mingw-4.7.2 / mingw-4.8.1 / mingw64-3.3.0(gcc 4.9.2)
+	* Misc: reorgnize the batch scripts of building ege lib
+	
+~2015 [version 13.04]
+    * Author: misakamm[at gmail com]
+	* Blog:   http://misakamm.com
+	* Homepage: http://misakamm.github.com/xege/
