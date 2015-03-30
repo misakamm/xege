@@ -8,10 +8,14 @@ REM We set default ege version below
 set egever=13.04.02
 
 REM Tools we use to make ege release package
-set compressor=7z.exe a -t7z -mx=9 -ms=on
+REM The following line can select proper compress algorithm according
+REM   to the filename extension of the archive files
+set compressor=7z.exe a -mx=9
+REM If we need compress to .7z, use the follow line
+REM set compressor=7z.exe a -t7z -mx=9 -ms=on
 
 REM Files to compress
-set filerelease=AUTHORS ChangeLog CONTRIBUTORS COPYING README VERSION include lib man demo publish.bat 7z.exe
+set filerelease=AUTHORS ChangeLog CONTRIBUTORS COPYING README VERSION include lib man demo publish.bat 7z.exe 7z.dll
 set filefull=%filerelease% src
 
 REM Try to read version from file VERSION
@@ -36,18 +40,26 @@ echo.New version is %egever%
 echo.  Start packing ......
 
 set pubpath=publish\%egever%
-set pkgfull=ege-%egever%-full.7z
-set pkgrelease=ege-%egever%-release.7z
+set pkg7zrelease=ege-%egever%-release.7z
+set pkg7zfull=ege-%egever%-full.7z
+set pkgziprelease=ege-%egever%-release.zip
+set pkgzipfull=ege-%egever%-full.zip
 mkdir "%pubpath%" 1>nul 2>nul
 if %errorlevel% GEQ 2 echo.Error when making dir: %pubpath% & goto :end
 echo.  Removing old packages ......
-del /Q "%pubpath%\%pkgfull%" 1>nul 2>nul
-del /Q "%pubpath%\%pkgrelease%" 1>nul 2>nul
-echo.  Packing %pkgrelease% ......
-%compressor% "%pubpath%\%pkgrelease%" %filerelease% 1>nul
-echo.  Packing %pkgfull% ......
-%compressor% "%pubpath%\%pkgfull%" %filefull% 1>nul
+del /Q "%pubpath%\%pkg7zrelease%" 1>nul 2>nul
+del /Q "%pubpath%\%pkg7zfull%" 1>nul 2>nul
+del /Q "%pubpath%\%pkgziprelease%" 1>nul 2>nul
+del /Q "%pubpath%\%pkgzipfull%" 1>nul 2>nul
 
+echo.  Packing %pkg7zrelease% ......
+%compressor% "%pubpath%\%pkg7zrelease%" %filerelease% 1>nul
+echo.  Packing %pkg7zfull% ......
+%compressor% "%pubpath%\%pkg7zfull%" %filefull% 1>nul
+echo.  Packing %pkgziprelease% ......
+%compressor% "%pubpath%\%pkgziprelease%" %filerelease% 1>nul
+echo.  Packing %pkgzipfull% ......
+%compressor% "%pubpath%\%pkgzipfull%" %filefull% 1>nul
 echo.
 echo.Please see %pubpath%\ to find the packages
 echo.
