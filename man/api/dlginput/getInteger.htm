@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>getInteger</title>
+<style type="text/css">
+<!--
+.cpp1-identifier {color: #000000; }
+.cpp1-reservedword {color: #0000FF; }
+.cpp1-space {background-color: #FFFFFF; }
+-->
+</style>
+</head>
+
+<body>
+<p><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">对话框输入函数</a>-＞getInteger</font></p>
+<p> <font size="5" color="#0000FF"><strong>功能：</strong></font> <br />
+  显示对话框，让用户输入一个整数</p>
+<p><font size="5" color="#0000FF"><strong>声明：</strong></font><br />
+  <code><span style="font: 16pt YaHei Consolas Hybrid;"><span class="cpp1-reservedword">int</span><span class="cpp1-space"> getInteger(LPCSTR
+text = &quot;Input an integer and press ENTER&quot;);</span></span></code></p>
+<p><font size="5" color="#0000FF"><strong>参数：</strong></font> <br />
+  text 对话框内显示的提示文字，可以使用'\n'或者'\t'进行格式控制。 <br />
+</p>
+<p><font size="5" color="#0000FF"><strong>返回值：</strong></font> <br />
+  返回用户输入的整数。 </p>
+<p><font size="5" color="#0000FF"><strong>示例：</strong></font></p>
+<div><font color="#FF0000">#include </font><font color="#FF00FF">&quot;graphics.h&quot;<br />
+  </font><font color="#0000FF">int </font><font color="#FF0000">main</font>()
+  {<br />
+  <font color="#008080"> &#160; initgraph</font>(640, 480); <br />
+  <br />
+  <font color="#0000FF">&#160; int  </font>x; <br />
+  <font color="#008080">&#160; </font><font color="#0000FF"></font>x = <font color="#008080">getInteger</font>(); <br />
+    <font color="#008080">&#160; xyprintf</font>(0, 0, &quot;%d&quot;, x); <font color="#008080"><br />
+    <br />
+  &#160; ege::getch</font>(); <br />
+  <font color="#0000FF">&#160; return </font>0; <br />
+  }</div>
+<p>&nbsp;</p>
+</body>
+</html>
