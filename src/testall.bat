@@ -3,6 +3,8 @@ call setenv
 
 set COMPILER=
 
+call setup
+
 call testvc6
 if %ErrorLevel% == 0 (
 	rem SUCCESS
@@ -24,12 +26,13 @@ if %ErrorLevel% == 0 (
 	goto end1
 )
 
-call testmingw64
+call testmingw48
 if %ErrorLevel% == 0 (
 	rem SUCCESS
 ) else (
 	goto end1
 )
+
 
 call testvc9
 if %ErrorLevel% == 0 (
@@ -39,6 +42,20 @@ if %ErrorLevel% == 0 (
 )
 
 call testvc10
+if %ErrorLevel% == 0 (
+	rem SUCCESS
+) else (
+	goto end1
+)
+
+call testvc12
+if %ErrorLevel% == 0 (
+	rem SUCCESS
+) else (
+	goto end1
+)
+
+call testvc13
 if %ErrorLevel% == 0 (
 	rem SUCCESS
 ) else (

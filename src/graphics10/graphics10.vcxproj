@@ -167,7 +167,7 @@
       <OmitDefaultLibName>true</OmitDefaultLibName>
     </ClCompile>
     <Lib>
-      <OutputFile>$(SolutionDir)..\..\lib\vc2010\$(TargetName).lib</OutputFile>
+      <OutputFile>$(SolutionDir)..\..\lib\vc2010\lib\$(TargetName).lib</OutputFile>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
     </Lib>
   </ItemDefinitionGroup>
@@ -189,7 +189,7 @@
       <OmitDefaultLibName>true</OmitDefaultLibName>
     </ClCompile>
     <Lib>
-      <OutputFile>$(SolutionDir)..\..\lib\vc2010\amd64\$(TargetName)64.lib</OutputFile>
+      <OutputFile>$(SolutionDir)..\..\lib\vc2010\lib\amd64\$(TargetName)64.lib</OutputFile>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
     </Lib>
   </ItemDefinitionGroup>
@@ -214,7 +214,7 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <Lib>
-      <OutputFile>$(SolutionDir)..\..\lib\vc2010\$(TargetName)d.lib</OutputFile>
+      <OutputFile>$(SolutionDir)..\..\lib\vc2010\lib\$(TargetName)d.lib</OutputFile>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
     </Lib>
   </ItemDefinitionGroup>
@@ -239,7 +239,7 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <Lib>
-      <OutputFile>$(SolutionDir)..\..\lib\vc2010\amd64\$(TargetName)64d.lib</OutputFile>
+      <OutputFile>$(SolutionDir)..\..\lib\vc2010\lib\amd64\$(TargetName)64d.lib</OutputFile>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
     </Lib>
   </ItemDefinitionGroup>

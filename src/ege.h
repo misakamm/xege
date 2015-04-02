@@ -3,7 +3,6 @@
 * FileName      ege.h
 * HomePage1     http://misakamm.github.com/xege
 * HomePage2     http://misakamm.bitbucket.org/index.htm
-* HomePage3     http://tcgraphics.sourceforge.net
 * teiba1        http://tieba.baidu.com/f?kw=ege
 * teiba2        http://tieba.baidu.com/f?kw=ege%C4%EF
 * Blog:         http://misakamm.com
@@ -18,7 +17,7 @@
 * 如需共存，请使用多文件分开包含的模式使用，
 * 即不能一个cpp同时包含，但可以分开包含
 * 使用本库，必须用C++编译，可支持的编译器：
-* VC6/VC2008/VC2010/MinGW3.4.5/MinGW4.4.1
+* VC6/VC2008/VC2010/VC2012/VC2013/MinGW3.4.5/MinGW4.7.1/MinGW4.8.1
 *********************************************************/
 
 /****************************************************************************
@@ -73,7 +72,13 @@
 #if !defined(_GRAPH_LIB_BUILD_) && !defined(_GRAPH_NO_LIB_)
 	#ifdef _MSC_VER
 		#ifdef _WIN64
-			#if (_MSC_VER >= 1700)
+			#if (_MSC_VER >= 1800)
+				#if 0 && defined(_DLL)
+					#pragma comment(lib,"graphics1364d.lib")
+				#else
+					#pragma comment(lib,"graphics1364.lib")
+				#endif
+			#elif (_MSC_VER >= 1700)
 				#if 0 && defined(_DLL)
 					#pragma comment(lib,"graphics1264d.lib")
 				#else
@@ -97,7 +102,13 @@
 				#pragma comment(lib,"graphics.lib")
 			#endif
 		#else
-			#if (_MSC_VER >= 1700)
+			#if (_MSC_VER >= 1800)
+				#if 0 && defined(_DLL)
+					#pragma comment(lib,"graphics13d.lib")
+				#else
+					#pragma comment(lib,"graphics13.lib")
+				#endif
+			#elif (_MSC_VER >= 1700)
 				#if 0 && defined(_DLL)
 					#pragma comment(lib,"graphics12d.lib")
 				#else
@@ -221,6 +232,7 @@
 
 #ifdef _GRAPH_LIB_BUILD_
 	#define EGE_DEPRECATE(text)
+	#define EGE_GNU_DEPRECATE(text)
 #else
 	#ifdef _MSC_VER
 		#ifdef _CRT_DEPRECATE_TEXT
@@ -623,8 +635,12 @@ typedef struct ege_colpoint {
 }ege_colpoint;
 
 // 鼠标消息
+#if defined(__GNUC__)
+struct EGE_DEPRECATE(MOUSEMSG) MOUSEMSG {
+#else
 EGE_DEPRECATE(MOUSEMSG)
 struct MOUSEMSG {
+#endif
 	UINT uMsg;              // 当前鼠标消息
 	bool mkCtrl;            // Ctrl 键是否按下
 	bool mkShift;           // Shift 键是否按下

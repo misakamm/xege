@@ -3,7 +3,6 @@
 * FileName      graphics.cpp
 * HomePage1     http://misakamm.github.com/xege
 * HomePage2     http://misakamm.bitbucket.org/index.htm
-* HomePage3     http://tcgraphics.sourceforge.net
 * teiba1        http://tieba.baidu.com/f?kw=ege
 * teiba2        http://tieba.baidu.com/f?kw=ege%C4%EF
 * Blog:         http://misakamm.com
@@ -24,7 +23,9 @@
 #endif
 
 #ifdef _MSC_VER
-	#if (_MSC_VER >= 1700)
+	#if (_MSC_VER >= 1800)
+		#define COMPILER_VER TEXT("VC2013") SYSBITS
+	#elif (_MSC_VER >= 1700)
 		#define COMPILER_VER TEXT("VC2012") SYSBITS
 	#elif (_MSC_VER >= 1600)
 		#define COMPILER_VER TEXT("VC2010") SYSBITS
@@ -42,7 +43,7 @@
 	#define COMPILER_VER TEXT("GCC") GCC_VER SYSBITS
 #endif
 
-#define EGE_TITLE TEXT("EGE13.04 ") COMPILER_VER
+#define EGE_TITLE TEXT("EGE15.04 ") COMPILER_VER
 
 #ifndef _ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH
 #define _ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH

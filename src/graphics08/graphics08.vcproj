@@ -197,7 +197,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				LinkLibraryDependencies="false"
-				OutputFile="$(SolutionDir)..\..\lib\vc2008\graphics08.lib"
+				OutputFile="$(SolutionDir)..\..\lib\vc2008\lib\graphics08.lib"
 				IgnoreAllDefaultLibraries="true"
 				IgnoreDefaultLibraryNames=""
 			/>
@@ -268,7 +268,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="$(SolutionDir)..\..\lib\vc2008\amd64\graphics0864.lib"
+				OutputFile="$(SolutionDir)..\..\lib\vc2008\lib\amd64\graphics0864.lib"
 				IgnoreAllDefaultLibraries="true"
 			/>
 			<Tool
@@ -338,7 +338,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				LinkLibraryDependencies="false"
-				OutputFile="$(SolutionDir)..\..\lib\vc2008\graphics08d.lib"
+				OutputFile="$(SolutionDir)..\..\lib\vc2008\lib\graphics08d.lib"
 				IgnoreAllDefaultLibraries="true"
 			/>
 			<Tool
@@ -409,7 +409,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				LinkLibraryDependencies="false"
-				OutputFile="$(SolutionDir)..\..\lib\vc2008\amd64\graphics0864d.lib"
+				OutputFile="$(SolutionDir)..\..\lib\vc2008\lib\amd64\graphics0864d.lib"
 				IgnoreAllDefaultLibraries="true"
 			/>
 			<Tool

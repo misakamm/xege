@@ -1,12 +1,14 @@
 @echo off
-call vc6make
-call vc9make
-call vc10make
-call vc12make
-call mingw3.4make
-call mingw4.7make
-call mingw64make
-call setup
+rd /s /q "..\lib"
+call make-vc6
+call make-vc9
+call make-vc10
+call make-vc12
+call make-vc13
+call make-mingw3.4
+call make-mingw4.7
+call make-mingw4.8
+call make-mingw64
 @del /Q *~
 @del /Q *.o
 @del /Q *.swp

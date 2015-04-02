@@ -3,7 +3,6 @@
 * FileName      graphics.h
 * HomePage1     http://misakamm.github.com/xege
 * HomePage2     http://misakamm.bitbucket.org/index.htm
-* HomePage3     http://tcgraphics.sourceforge.net
 * teiba1        http://tieba.baidu.com/f?kw=ege
 * teiba2        http://tieba.baidu.com/f?kw=ege%C4%EF
 * Blog:         http://misakamm.com
@@ -18,7 +17,7 @@
 * 如需共存，请使用多文件分开包含的模式使用，
 * 即不能一个cpp同时包含，但可以分开包含
 * 使用本库，必须用C++编译，可支持的编译器：
-* VC6/VC2008/VC2010/MinGW3.4.5/MinGW4.4.1
+* VC6/VC2008/VC2010/VC2012/VC2013/MinGW3.4.5/MinGW4.7.1/MinGW4.8.1
 *********************************************************/
 
 /****************************************************************************
