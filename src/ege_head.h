@@ -40,13 +40,13 @@
 
 #ifdef EGE_GDIPLUS
 #ifdef _MSC_VER
-	#include <gdiplus.h>
+#	include <gdiplus.h>
 #else
-	#if __GNUC__ == 3
-		#include "gdiplus3/gdiplus.h"
-	#elif __GNUC__ == 4
-		#include "gdiplus4/gdiplus.h"
-	#endif
+#	if __GNUC__ == 3
+#		include "gdiplus3/gdiplus.h"
+#	elif __GNUC__ == 4
+#		include "gdiplus4/gdiplus.h"
+#	endif
 #endif
 #endif
 
@@ -184,6 +184,7 @@ public:
 private:
 	int  newimage(HDC hdc, int width, int height);
 	int  deleteimage();
+	void reset();
 public:
 	viewporttype        m_vpt;
 	textsettingstype    m_texttype;

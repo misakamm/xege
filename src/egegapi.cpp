@@ -5,6 +5,14 @@
 本文件汇集较独立的函数接口
 */
 
+#ifndef _CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
+#endif
+
+#ifndef _CRT_SECURE_NO_DEPRECATE
+#define _CRT_SECURE_NO_DEPRECATE
+#endif
+
 #ifndef _CRT_NON_CONFORMING_SWPRINTFS
 #define _CRT_NON_CONFORMING_SWPRINTFS
 #endif

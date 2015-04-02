@@ -60,106 +60,130 @@
 #endif
 
 #if defined(_MSC_VER)
-#pragma warning(disable: 4355)
-#ifndef _ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH
-#define _ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH
-#endif
-#ifndef _ALLOW_RUNTIME_LIBRARY_MISMATCH
-#define _ALLOW_RUNTIME_LIBRARY_MISMATCH
-#endif
+#	pragma warning(disable: 4355)
+#	ifndef _ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH
+#		define _ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH
+#	endif
+#	ifndef _ALLOW_RUNTIME_LIBRARY_MISMATCH
+#		define _ALLOW_RUNTIME_LIBRARY_MISMATCH
+#	endif
 #endif
 
 #if !defined(_GRAPH_LIB_BUILD_) && !defined(_GRAPH_NO_LIB_)
-	#ifdef _MSC_VER
-		#ifdef _WIN64
-			#if (_MSC_VER >= 1800)
-				#if 0 && defined(_DLL)
-					#pragma comment(lib,"graphics1364d.lib")
-				#else
-					#pragma comment(lib,"graphics1364.lib")
-				#endif
-			#elif (_MSC_VER >= 1700)
-				#if 0 && defined(_DLL)
-					#pragma comment(lib,"graphics1264d.lib")
-				#else
-					#pragma comment(lib,"graphics1264.lib")
-				#endif
-			#elif (_MSC_VER >= 1600)
-				#if 0 && defined(_DLL)
-					#pragma comment(lib,"graphics1064d.lib")
-				#else
-					#pragma comment(lib,"graphics1064.lib")
-				#endif
-			#elif (_MSC_VER >= 1500)
-				#if 0 && defined(_DLL)
-					#pragma comment(lib,"graphics0864d.lib")
-				#else
-					#pragma comment(lib,"graphics0864.lib")
-				#endif
-			#elif (_MSC_VER > 1200)
-				#pragma comment(lib,"graphics05.lib")
-			#else
-				#pragma comment(lib,"graphics.lib")
-			#endif
-		#else
-			#if (_MSC_VER >= 1800)
-				#if 0 && defined(_DLL)
-					#pragma comment(lib,"graphics13d.lib")
-				#else
-					#pragma comment(lib,"graphics13.lib")
-				#endif
-			#elif (_MSC_VER >= 1700)
-				#if 0 && defined(_DLL)
-					#pragma comment(lib,"graphics12d.lib")
-				#else
-					#pragma comment(lib,"graphics12.lib")
-				#endif
-			#elif (_MSC_VER >= 1600)
-				#if 0 && defined(_DLL)
-					#pragma comment(lib,"graphics10d.lib")
-				#else
-					#pragma comment(lib,"graphics10.lib")
-				#endif
-			#elif (_MSC_VER >= 1500)
-				#if 0 && defined(_DLL)
-					#pragma comment(lib,"graphics08d.lib")
-				#else
-					#pragma comment(lib,"graphics08.lib")
-				#endif
-			#elif (_MSC_VER > 1200)
-				#pragma comment(lib,"graphics05.lib")
-			#else
-				#pragma comment(lib,"graphics.lib")
-			#endif
-		#endif
-		#if _MSC_VER >= 1700
-			#ifdef _DEBUG
-			#else
-			#endif
-		#elif _MSC_VER >= 1600
-			#ifdef _DEBUG
-			#else
-			#endif
-		#elif _MSC_VER > 1200
-			#ifdef _DEBUG
-				//#pragma comment(linker, "/NODEFAULTLIB:MSVCRTD.lib")
-				//#pragma comment(linker, "/NODEFAULTLIB:libcmtd.lib")
-				//#pragma comment(linker, "/NODEFAULTLIB:libcpmtd.lib")
-			#else
-			#endif
-		#else
-			#ifdef _DEBUG
-				//#pragma comment(linker, "/NODEFAULTLIB:MSVCRTD.lib")
-				//#pragma comment(linker, "/NODEFAULTLIB:libcd.lib")
-				//#pragma comment(linker, "/NODEFAULTLIB:libcmtd.lib")
-				//#pragma comment(linker, "/NODEFAULTLIB:libcpmtd.lib")
-			#else
-				//#pragma comment(linker, "/NODEFAULTLIB:MSVCRT.lib")
-				//#pragma comment(linker, "/NODEFAULTLIB:libcmt.lib")
-				//#pragma comment(linker, "/NODEFAULTLIB:libcp.lib")
-			#endif
-		#endif
-	#endif
+#	ifdef _MSC_VER
+#		ifdef _WIN64
+#			if (_MSC_VER >= 2000)
+#				if 0 && defined(_DLL)
+#					pragma comment(lib,"graphics1664d.lib")
+#				else
+#					pragma comment(lib,"graphics1664.lib")
+#				endif
+#			elif (_MSC_VER >= 1900)
+#				if 0 && defined(_DLL)
+#					pragma comment(lib,"graphics1564d.lib")
+#				else
+#					pragma comment(lib,"graphics1564.lib")
+#				endif
+#			elif (_MSC_VER >= 1800)
+#				if 0 && defined(_DLL)
+#					pragma comment(lib,"graphics1364d.lib")
+#				else
+#					pragma comment(lib,"graphics1364.lib")
+#				endif
+#			elif (_MSC_VER >= 1700)
+#				if 0 && defined(_DLL)
+#					pragma comment(lib,"graphics1264d.lib")
+#				else
+#					pragma comment(lib,"graphics1264.lib")
+#				endif
+#			elif (_MSC_VER >= 1600)
+#				if 0 && defined(_DLL)
+#					pragma comment(lib,"graphics1064d.lib")
+#				else
+#					pragma comment(lib,"graphics1064.lib")
+#				endif
+#			elif (_MSC_VER >= 1500)
+#				if 0 && defined(_DLL)
+#					pragma comment(lib,"graphics0864d.lib")
+#				else
+#					pragma comment(lib,"graphics0864.lib")
+#				endif
+#			elif (_MSC_VER > 1200)
+#				pragma comment(lib,"graphics05.lib")
+#			else
+#				pragma comment(lib,"graphics.lib")
+#			endif
+#		else
+#			if (_MSC_VER >= 2000)
+#				if 0 && defined(_DLL)
+#					pragma comment(lib,"graphics1664d.lib")
+#				else
+#					pragma comment(lib,"graphics1664.lib")
+#				endif
+#			elif (_MSC_VER >= 1900)
+#				if 0 && defined(_DLL)
+#					pragma comment(lib,"graphics1564d.lib")
+#				else
+#					pragma comment(lib,"graphics1564.lib")
+#				endif
+#			elif (_MSC_VER >= 1800)
+#				if 0 && defined(_DLL)
+#					pragma comment(lib,"graphics13d.lib")
+#				else
+#					pragma comment(lib,"graphics13.lib")
+#				endif
+#			elif (_MSC_VER >= 1700)
+#				if 0 && defined(_DLL)
+#					pragma comment(lib,"graphics12d.lib")
+#				else
+#					pragma comment(lib,"graphics12.lib")
+#				endif
+#			elif (_MSC_VER >= 1600)
+#				if 0 && defined(_DLL)
+#					pragma comment(lib,"graphics10d.lib")
+#				else
+#					pragma comment(lib,"graphics10.lib")
+#				endif
+#			elif (_MSC_VER >= 1500)
+#				if 0 && defined(_DLL)
+#					pragma comment(lib,"graphics08d.lib")
+#				else
+#					pragma comment(lib,"graphics08.lib")
+#				endif
+#			elif (_MSC_VER > 1200)
+#				pragma comment(lib,"graphics05.lib")
+#			else
+#				pragma comment(lib,"graphics.lib")
+#			endif
+#		endif
+#		if _MSC_VER >= 1700
+#			ifdef _DEBUG
+#			else
+#			endif
+#		elif _MSC_VER >= 1600
+#			ifdef _DEBUG
+#			else
+#			endif
+#		elif _MSC_VER > 1200
+#			ifdef _DEBUG
+//#				pragma comment(linker, "/NODEFAULTLIB:MSVCRTD.lib")
+//#				pragma comment(linker, "/NODEFAULTLIB:libcmtd.lib")
+//#				pragma comment(linker, "/NODEFAULTLIB:libcpmtd.lib")
+#			else
+#			endif
+#		else
+#			ifdef _DEBUG
+//#				pragma comment(linker, "/NODEFAULTLIB:MSVCRTD.lib")
+//#				pragma comment(linker, "/NODEFAULTLIB:libcd.lib")
+//#				pragma comment(linker, "/NODEFAULTLIB:libcmtd.lib")
+//#				pragma comment(linker, "/NODEFAULTLIB:libcpmtd.lib")
+#			else
+//#				pragma comment(linker, "/NODEFAULTLIB:MSVCRT.lib")
+//#				pragma comment(linker, "/NODEFAULTLIB:libcmt.lib")
+//#				pragma comment(linker, "/NODEFAULTLIB:libcp.lib")
+#			endif
+#		endif
+#	endif
 #endif
 
 #if !defined(_GRAPH_LIB_BUILD_) && !defined(_GRAPH_NO_LIB_)
@@ -175,23 +199,20 @@
 #define _CRT_NON_CONFORMING_SWPRINTFS
 #endif
 
-#ifndef _CRT_NON_CONFORMING_SWPRINTFS
-#define _CRT_NON_CONFORMING_SWPRINTFS
-#endif
 #endif
 
 #include "windows.h"
 
 #if defined(_MSC_VER) && _MSC_VER <= 1200 && !defined(SetWindowLongPtr)
-	#define SetWindowLongPtrW   SetWindowLongW
-	#define GetWindowLongPtrW   GetWindowLongW
-	#define GWLP_USERDATA       GWL_USERDATA
-	#define GWLP_WNDPROC        GWL_WNDPROC
+#	define SetWindowLongPtrW   SetWindowLongW
+#	define GetWindowLongPtrW   GetWindowLongW
+#	define GWLP_USERDATA       GWL_USERDATA
+#	define GWLP_WNDPROC        GWL_WNDPROC
 #endif
 
 #if !defined(_GRAPH_LIB_BUILD_) && !defined(_GRAPH_NO_LIB_)
 #if defined(_MSC_VER) && _MSC_VER > 1200
-//#pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' ""version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
+//#	pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' ""version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 #endif
 #endif
 
@@ -205,43 +226,43 @@
 #endif
 
 #ifndef _Cdecl
-#if __STDC__
-#define _Cdecl  __cdecl
-#else
-#define _Cdecl  __cdecl
-#endif
+#	if __STDC__
+#		define _Cdecl  __cdecl
+#	else
+#		define _Cdecl  __cdecl
+#	endif
 #endif
 
 #ifdef _MSC_VER
-	#if defined(_WIN64)
-		#define EGEAPI
-	#else
-		#define EGEAPI _Cdecl
-	#endif
+#	if defined(_WIN64)
+#		define EGEAPI
+#	else
+#		define EGEAPI _Cdecl
+#	endif
 #else
-	#if defined(__WORDSIZE)
-		#if __WORDSIZE > 32
-			#define EGEAPI
-		#else
-			#define EGEAPI _Cdecl
-		#endif
-	#else
-		#define EGEAPI
-	#endif
+#	if defined(__WORDSIZE)
+#		if __WORDSIZE > 32
+#			define EGEAPI
+#		else
+#			define EGEAPI _Cdecl
+#		endif
+#	else
+#		define EGEAPI
+#	endif
 #endif
 
 #ifdef _GRAPH_LIB_BUILD_
-	#define EGE_DEPRECATE(text)
+#	define EGE_DEPRECATE(text)
 #else
-	#ifdef _MSC_VER
-		#ifdef _CRT_DEPRECATE_TEXT
-			#define EGE_DEPRECATE(text) _CRT_DEPRECATE_TEXT("This function is deprecated, more info visit http://tcgraphics.sourceforge.net/")
-		#else
-			#define EGE_DEPRECATE(text)
-		#endif
-	#else
-		#define EGE_DEPRECATE(text) __attribute__((deprecated))
-	#endif
+#	ifdef _MSC_VER
+#		ifdef _CRT_DEPRECATE_TEXT
+#			define EGE_DEPRECATE(text) _CRT_DEPRECATE_TEXT("This function is deprecated, more info visit http://tcgraphics.sourceforge.net/")
+#		else
+#			define EGE_DEPRECATE(text)
+#		endif
+#	else
+#		define EGE_DEPRECATE(text) __attribute__((deprecated))
+#	endif
 #endif
 
 #define SHOWCONSOLE             1       // 进入图形模式时，保留控制台的显示
@@ -258,8 +279,10 @@
 #define EGEGRAY(gray)           ( ((gray)<<16) | ((gray)<<8) | (gray))
 #define EGEGRAYA(gray, a)       ( ((gray)<<16) | ((gray)<<8) | (gray) | ((a)<<24) )
 #define EGEAGRAY(a, gray)       ( ((gray)<<16) | ((gray)<<8) | (gray) | ((a)<<24) )
+#define NAMESPACE_EGE_L         namespace ege {
+#define NAMESPACE_EGE_R         }
 
-namespace ege {
+NAMESPACE_EGE_L
 
 const double PI = 3.1415926535897932384626;
 
@@ -606,13 +629,13 @@ typedef struct mouse_msg {
 	mouse_msg_e     msg;
 	unsigned int    flags;
 	int             wheel;
-	bool is_left() {return (flags & mouse_flag_left) != 0;}
-	bool is_right() {return (flags & mouse_flag_right) != 0;}
-	bool is_mid() {return (flags & mouse_flag_mid) != 0;}
-	bool is_down() {return msg == mouse_msg_down;}
-	bool is_up() {return msg == mouse_msg_up;}
-	bool is_move() {return msg == mouse_msg_move;}
-	bool is_wheel() {return msg == mouse_msg_wheel;}
+	bool is_left() { return (flags & mouse_flag_left) != 0; }
+	bool is_right() { return (flags & mouse_flag_right) != 0; }
+	bool is_mid() { return (flags & mouse_flag_mid) != 0; }
+	bool is_down() { return msg == mouse_msg_down; }
+	bool is_up() { return msg == mouse_msg_up; }
+	bool is_move() { return msg == mouse_msg_move; }
+	bool is_wheel() { return msg == mouse_msg_wheel; }
 }mouse_msg;
 
 typedef struct ege_point {
@@ -1089,7 +1112,8 @@ private:
 	PIMAGE m_target;
 };
 
-#define CTL_PREINIT(classname, parent) struct preinit_obj { \
+#define CTL_PREINIT(classname, parent) \
+	struct preinit_obj { \
 		preinit_obj(classname* This, int inheritlevel) { \
 			This->pre_init(inheritlevel); \
 		} \
@@ -1099,6 +1123,7 @@ private:
 		((classname*)This)->m_inheritlevel = 1; \
 	} \
 	void pre_init(int inheritlevel) {\
+		(void)inheritlevel;
 
 #define CTL_PREINITEND  }
 #define CTL_DEFPARAM    int inherit = inherit_level_e, ege::egeControlBase* pParent = NULL
@@ -1130,12 +1155,12 @@ public:
 	~egeControlBase();
 
 	// 以下虚函数都不要直接相互调用
-	virtual LRESULT onMessage(UINT message, WPARAM wParam, LPARAM lParam) { return 0; }
+	virtual LRESULT onMessage(UINT message, WPARAM wParam, LPARAM lParam) { (void)message; (void)wParam; (void)lParam; return 0; }
 	// 以下函数如果返回非0则不向子控件传递键盘鼠标消息
-	virtual int  onMouse(int x, int y, int flag) { return 0; }
-	virtual int  onKeyDown(int key, int flag) { return 0; }
-	virtual int  onKeyUp(int key, int flag) { return 0; }
-	virtual int  onKeyChar(int key, int flag) { return 0; }
+	virtual int  onMouse(int x, int y, int flag) { (void)x; (void)y; (void)flag; return 0; }
+	virtual int  onKeyDown(int key, int flag) { (void)key; (void)flag; return 0; }
+	virtual int  onKeyUp(int key, int flag) { (void)key; (void)flag; return 0; }
+	virtual int  onKeyChar(int key, int flag) { (void)key; (void)flag; return 0; }
 	// 屏幕更新后会被调用，用于更新逻辑
 	virtual int  onUpdate() { return 0; }
 	// 以下GetFocus在要获得焦点时调用，返回值一般返回0表示获取键盘输入焦点，返回非0放弃获得输入焦点
@@ -1143,18 +1168,18 @@ public:
 	// 失去输入焦点时调用
 	virtual void onLostFocus() { }
 	// 设置尺寸前调用，自定义修正函数
-	virtual void onSizing(int *w, int *h) {}
+	virtual void onSizing(int *w, int *h) { (void)w; (void)h; }
 	// 响应尺寸变化函数
-	virtual void onSize(int w, int h) {}
+	virtual void onSize(int w, int h) { (void)w; (void)h; }
 	// 重绘函数，尽量请画到pimg上，以便能控制绘画目标
-	virtual void onDraw(PIMAGE pimg) const {}
+	virtual void onDraw(PIMAGE pimg) const { (void)pimg; }
 	// 尺寸变化时调用，用于重画过滤缓冲区内容
 	virtual void onResetFilter() {
 		setbkcolor(BLACK, m_mainFilter);
 		cleardevice(m_mainFilter);
 	}
-	virtual void onAddChild(egeControlBase* pChild) {}
-	virtual void onDelChild(egeControlBase* pChild) {}
+	virtual void onAddChild(egeControlBase* pChild) { (void)pChild; }
+	virtual void onDelChild(egeControlBase* pChild) { (void)pChild; }
 	virtual void onIdle() {} // 保留接口，未用
 	// 这里以上的函数可以自行定义（注意声明要一致，不要漏掉OnDraw里的const）
 	// 这里以下的public函数可以调用，不可自定义，任何预定义变量都不要直接访问，请使用预定义函数来控制
@@ -1171,12 +1196,12 @@ public:
 
 	void directdraw(bool bdraw) { m_bDirectDraw = (bdraw ? 1 : 0); }
 	bool isdirectdraw() const { return (m_bDirectDraw != 0); }
-	void autoredraw(bool bvisable)  { m_bAutoDraw = (m_bAutoDraw ? 1 : 0); }
-	bool isautoredraw() const       { return (m_bAutoDraw != 0);}
+	void autoredraw(bool bautoredraw)  { m_bAutoDraw = (bautoredraw ? 1 : 0); }
+	bool isautoredraw() const       { return (m_bAutoDraw != 0); }
 	void visable(bool bvisable)     { m_bVisable = (bvisable ? 1 : 0); }
-	bool isvisable() const          { return (m_bVisable != 0);}
+	bool isvisable() const          { return (m_bVisable != 0); }
 	void enable(bool benable)       { m_bEnable = (benable ? 1 : 0); }
-	bool isenable() const           { return (m_bEnable != 0);}
+	bool isenable() const           { return (m_bEnable != 0); }
 	void capture(bool bcapture)     { m_bCapture = (bcapture ? 1 : 0); }
 	bool iscapture() const          { return (m_bCapture != 0); }
 	void capmouse(bool bcapmouse)   { m_bCapMouse = (bcapmouse ? 1 : 0); }
@@ -1355,12 +1380,12 @@ class MUSIC
 public:
 	MUSIC();
 	virtual ~MUSIC();
-	operator HWND()const{return (HWND)m_dwCallBack;}
+	operator HWND()const{ return (HWND)m_dwCallBack; }
 public:
-	int   IsOpen() {return (m_DID != MUSIC_ERROR) ? 1 : 0;}
+	int   IsOpen() { return (m_DID != MUSIC_ERROR) ? 1 : 0; }
 	DWORD OpenFile(LPCSTR  filepath);
 	DWORD OpenFile(LPCWSTR filepath);
-	DWORD Play(DWORD dwFrom=MUSIC_ERROR, DWORD dwTo=MUSIC_ERROR);
+	DWORD Play(DWORD dwFrom = MUSIC_ERROR, DWORD dwTo = MUSIC_ERROR);
 	DWORD Pause();
 	DWORD Seek(DWORD dwTo); //播放位置定位，单位为ms
 	DWORD SetVolume(float value);
@@ -1383,15 +1408,15 @@ private:
 };
 
 /* 压缩函数 */
-	/* 压缩时dest缓冲区要保证最小大小为sourceLen * 1.001 + 16 */
-	/* 调用compress/compress2前，*destLen必须有值，表示dest缓冲区的最大大小，返回时这个值表示实际大小 */
-	/* compress2 的level 从0-9，0不压缩，9最大压缩，compress函数使用默认值6 */
+/* 压缩时dest缓冲区要保证最小大小为sourceLen * 1.001 + 16 */
+/* 调用compress/compress2前，*destLen必须有值，表示dest缓冲区的最大大小，返回时这个值表示实际大小 */
+/* compress2 的level 从0-9，0不压缩，9最大压缩，compress函数使用默认值6 */
 int             EGEAPI ege_compress(void *dest, unsigned long *destLen, const void *source, unsigned long sourceLen);
 int             EGEAPI ege_compress2(void *dest, unsigned long *destLen, const void *source, unsigned long sourceLen, int level);
 int             EGEAPI ege_uncompress(void *dest, unsigned long *destLen, const void *source, unsigned long sourceLen);
 unsigned long   EGEAPI ege_uncompress_size(const void *source, unsigned long sourceLen); /* 返回0表示错误，其它表示大小 */
 
-} // namespace ege
+NAMESPACE_EGE_R
 
 #ifndef _GRAPH_LIB_BUILD_
 

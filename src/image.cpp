@@ -33,11 +33,28 @@ static HBRUSH   g_hbr_def;
 static HPEN     g_pen_def;
 static HFONT    g_font_def;
 
-IMAGE::IMAGE() {
+void IMAGE::reset() {
 	m_initflag = IMAGE_INIT_FLAG;
 	m_hDC = NULL;
+	m_hBmp = NULL;
+	m_width = 0;
+	m_height = 0;
+	m_pBuffer = NULL;
+	m_color = 0;
+	m_fillcolor = 0;
+	m_aa = false;
+	memset(&m_vpt, 0, sizeof(m_vpt));
+	memset(&m_texttype, 0, sizeof(m_texttype));
+	memset(&m_linestyle, 0, sizeof(m_linestyle));
+	m_linewidth = 0.0f;
+	m_bk_color = 0;
 	m_pattern_obj = NULL;
+	m_pattern_type = 0;
 	m_texture = NULL;
+}
+
+IMAGE::IMAGE() {
+	reset();
 	PIMAGE img = CONVERT_IMAGE_CONST(0);
 	if (img) {
 		newimage(img->m_hDC, 1, 1);
@@ -48,10 +65,7 @@ IMAGE::IMAGE() {
 }
 
 IMAGE::IMAGE(int width, int height) {
-	m_initflag = IMAGE_INIT_FLAG;
-	m_hDC = NULL;
-	m_pattern_obj = NULL;
-	m_texture = NULL;
+	reset();
 	PIMAGE img = CONVERT_IMAGE_CONST(0);
 	if (img) {
 		newimage(img->m_hDC, width, height);
@@ -62,10 +76,7 @@ IMAGE::IMAGE(int width, int height) {
 }
 
 IMAGE::IMAGE(IMAGE &img) {
-	m_initflag = IMAGE_INIT_FLAG;
-	m_hDC = NULL;
-	m_pattern_obj = NULL;
-	m_texture = NULL;
+	reset();
 	newimage(img.m_hDC, img.m_width, img.m_height);
 	BitBlt(m_hDC, 0, 0, img.m_width, img.m_height, img.m_hDC, 0, 0, SRCCOPY);
 }
@@ -330,6 +341,7 @@ IMAGE::getimage(LPCSTR filename, int zoomWidth, int zoomHeight) {
 
 int
 IMAGE::getimage(LPCWSTR filename, int zoomWidth, int zoomHeight) {
+	(void)zoomWidth, (void)zoomHeight; // ignore
 	inittest(L"IMAGE::getimage");
 	{
 		int ret = getimage_pngfile(this, filename);
@@ -591,6 +603,7 @@ IMAGE::savepngimg(FILE* fp, int bAlpha) {
 
 int
 IMAGE::getimage(LPCSTR pResType, LPCSTR pResName, int zoomWidth, int zoomHeight) {
+	(void)zoomWidth, (void)zoomHeight; // ignore
 	inittest(L"IMAGE::getimage");
 	struct _graph_setting * pg = &graph_setting;
 	HRSRC hrsrc = FindResourceA(pg->instance, pResName, pResType);
@@ -663,6 +676,7 @@ IMAGE::getimage(LPCSTR pResType, LPCSTR pResName, int zoomWidth, int zoomHeight)
 
 int
 IMAGE::getimage(LPCWSTR pResType, LPCWSTR pResName, int zoomWidth, int zoomHeight) {
+	(void)zoomWidth, (void)zoomHeight; // ignore
 	inittest(L"IMAGE::getimage");
 	struct _graph_setting * pg = &graph_setting;
 	HRSRC hrsrc = FindResourceW(pg->instance, pResName, pResType);
