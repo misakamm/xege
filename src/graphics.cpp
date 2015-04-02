@@ -801,6 +801,7 @@ on_paint(struct _graph_setting * pg, HWND hwnd) {
 		HDC hdc;
 		hdc = BeginPaint(hwnd, &ps);
 		on_repaint(pg, hwnd, hdc);
+		EndPaint(hwnd, &ps);
 	} else {
 		ValidateRect( hwnd, NULL );
 		pg->update_mark_count --;

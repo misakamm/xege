@@ -232,7 +232,6 @@
 
 #ifdef _GRAPH_LIB_BUILD_
 	#define EGE_DEPRECATE(text)
-	#define EGE_GNU_DEPRECATE(text)
 #else
 	#ifdef _MSC_VER
 		#ifdef _CRT_DEPRECATE_TEXT
