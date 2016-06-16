@@ -46,6 +46,8 @@
 #		include "gdiplus3/gdiplus.h"
 #	elif __GNUC__ == 4
 #		include "gdiplus4/gdiplus.h"
+#	elif __GNUC__ == 5
+#		include "gdiplus4/gdiplus.h"
 #	endif
 #endif
 #endif
