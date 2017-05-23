@@ -25,6 +25,8 @@
 #ifdef _MSC_VER
 #	if (_MSC_VER >= 2000)
 #		define COMPILER_VER TEXT("VC201x") SYSBITS
+#	elif (_MSC_VER >= 1910)
+#		define COMPILER_VER TEXT("VC2017") SYSBITS
 #	elif (_MSC_VER >= 1900)
 #		define COMPILER_VER TEXT("VC2015") SYSBITS
 #	elif (_MSC_VER >= 1800)

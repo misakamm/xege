@@ -15,7 +15,9 @@
 #define _ALLOW_RUNTIME_LIBRARY_MISMATCH
 #endif
 
-#if !defined(_MSC_VER) || _MSC_VER > 1300
+#if _MSC_VER >= 1910
+#include <stdint.h>
+#elif !defined(_MSC_VER) || _MSC_VER > 1300
 #include "stdint.h"
 #endif
 
