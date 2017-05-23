@@ -78,6 +78,12 @@
 #				else
 #					pragma comment(lib,"graphics1664.lib")
 #				endif
+#			elif (_MSC_VER >= 1910)
+#				if 0 && defined(_DLL)
+#					pragma comment(lib,"graphics17d.lib")
+#				else
+#					pragma comment(lib,"graphics17.lib")
+#				endif
 #			elif (_MSC_VER >= 1900)
 #				if 0 && defined(_DLL)
 #					pragma comment(lib,"graphics1564d.lib")
@@ -119,6 +125,12 @@
 #					pragma comment(lib,"graphics1664d.lib")
 #				else
 #					pragma comment(lib,"graphics1664.lib")
+#				endif
+#			elif (_MSC_VER >= 1910)
+#				if 0 && defined(_DLL)
+#					pragma comment(lib,"graphics17d.lib")
+#				else
+#					pragma comment(lib,"graphics17.lib")
 #				endif
 #			elif (_MSC_VER >= 1900)
 #				if 0 && defined(_DLL)
