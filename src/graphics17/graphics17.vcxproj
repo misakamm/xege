@@ -90,29 +90,29 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>..\..\lib\vs2017\x86\</OutDir>
-    <IntDir>..\..\lib\vs2017\x86\</IntDir>
+    <IntDir>..\..\lib\vs2017\x86\temp\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>..\..\lib\vs2017\x86\</OutDir>
-    <IntDir>..\..\lib\vs2017\x86\</IntDir>
+    <IntDir>..\..\lib\vs2017\x86\temp\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DllRel|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>..\..\lib\vs2017\x86dll\</OutDir>
-    <IntDir>..\..\lib\vs2017\x86dll\</IntDir>
+    <IntDir>..\..\lib\vs2017\x86dll\temp\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>..\..\lib\vs2017\x64\</OutDir>
-    <IntDir>..\..\lib\vs2017\x64\</IntDir>
+    <IntDir>..\..\lib\vs2017\x64\temp\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DllRel|x64'">
     <OutDir>..\..\lib\vs2017\x64dll\</OutDir>
-    <IntDir>..\..\lib\vs2017\x64dll\</IntDir>
+    <IntDir>..\..\lib\vs2017\x64dll\temp\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>..\..\lib\vs2017\x64\</OutDir>
-    <IntDir>..\..\lib\vs2017\x64\</IntDir>
+    <IntDir>..\..\lib\vs2017\x64\temp\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
