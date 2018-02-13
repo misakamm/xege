@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EGE文档说明</title>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="marked.js"></script>
+    <link rel="stylesheet" href="tool.css">
+    <!--<base target="_blank">-->
+</head>
+
+<body>
+<script type="text/javascript">
+
+    var target = window.location.search;
+    target = target.substr(1);
+
+    var req = new XMLHttpRequest();
+    req.open("GET", target, true);
+    req.onload = function (ev) {
+        if (this.status === 200 || this.status === 304) {
+            var content = this.responseText;
+            var s = marked(content);
+            document.body.innerHTML = s;
+        } else {
+            console.log(ev);
+        }
+    };
+    req.send();
+</script>
+</body>
+</html>
