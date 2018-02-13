@@ -1,0 +1,90 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>EGE安装</title>
+</head>
+<body>
+
+<pre><font size="4"><a href="../index.htm">主页</a>-＞EGE安装</font>
+
+<a href="http://tieba.baidu.com/p/1804011014" target=_blank>点这里查看视频教程帖子</a>，以下是文件说明：
+
+●简要安装说明
+首先把压缩包里include目录下所有文件，复制到你的编译器安装目录下的include目录内，不管是哪个编译器
+比如，vc2008的include路径类似“Microsoft Visual Studio 9.0\VC\include”，
+而lib路径类似“Microsoft Visual Studio 9.0\VC\lib”，vc2010和2008一样。
+vc6的话，是“Microsoft Visual Studio\VC98\Include”和“Microsoft Visual Studio\VC98\Lib”
+然后再把lib目录下对应<font color=#F00>编译器名目录下</font>的文件，复制到你的编译器安装目录下的lib目录内。比如你的是vc6，那就把\lib\vc6\下的复制过去。
+
+如果你还是不明白复制到哪里，那请看这个表达（以vs2008为例）：
+copy "include\*" to "Microsoft Visual Studio 9.0\VC\include\"
+copy "lib\vc2008\*" to "Microsoft Visual Studio 9.0\VC\lib\"
+
+复制了这些文件后，就已经安装完成了。
+然后，如果是VC或者VS，那么要建立一个工程
+以下是VC6的操作步骤（但VS2008/VS2010/VS2012也类似），请按以下步骤做：
+打开VC6后，新建一个Win32 Console工程（菜单-&gt;文件-&gt;新建），如下图：
+<img src="doc/vc6.gif">
+右上角的工程名字写你喜欢的名字，其下方选择你要建立的工程的目录
+点确定后，在弹出的对话框里选择“一个空工程”，然后直接点完成。
+然后再次新建，不过这次新建一个C++ Source File，见下图：
+<img src="doc/vc62.gif">
+右边文件名写你喜欢建立的名字，然后点确定，就可以开始编写代码了。
+
+最后，请编写如下测试代码检测你的设置是否正确：
+<pre><font color=#FF0000>#include </font><font color=#FF00FF>&lt;graphics.h&gt;
+</font><font color=#0000FF>int </font><font color=#FF0000>main</font>()
+{
+    <font color=#008080>initgraph</font>(640, 480);
+    <font color=#008080>setcolor</font>(<font color=#800080>GREEN</font>);
+    <font color=#008080>line</font>(100, 100, 500, 200);
+    <font color=#008080>getch</font>();
+    <font color=#008080>closegraph</font>();
+    <font color=#0000FF>return </font>0;
+}</pre>
+然后，按F7键，或者点菜单上的Build（组建）来编译并链接，如果没有错误，就可以按F5运行了。
+
+
+好了，为什么说VS2008和VS2010也类似呢？看看如下VS2008的截图你就明白了：
+<img src="doc/vc9.gif">
+后面建立文件的时候，在左侧的General就能找到C++源文件了。如果你的是中文版，那就细心找找吧，不难找的。
+至于VS2010的就不截图了，因为几乎和VS2008一样。
+
+
+
+至于在MinGW下的编译问题，会麻烦一些，同样首先是复制include和lib下的东西，要注意版本问题。
+本版本能直接支持的基于MinGW的IDE有：
+C-Free5(MinGW3.4.5), CodeLite5.1(MinGW4.7.1), Code::Blocks12.11(MinGW4.7.1), Dev-C++5.4.0(MinGW4.7.2)
+如果你懂使用命令行编译，那么需要用如下指令编译：
+g++ yourfile.cpp -lgraphics -lgdi32 -limm32 -lmsimg32 -lole32 -loleaut32 -lwinmm -luuid -mwindows
+其中yourfile.cpp是你要编译的cpp文件
+
+如果你使用的是IDE，那就要看那个IDE是如何设置的，这里无法一一列举，
+主要需要设置两样东西：
+一是建立Win32 Application工程（目的是让它以-mwindows来编译，这个选项很重要）
+二是要添加链接库
+<font color=#FF0000 size=5>需要依次加入graphics, gdi32, imm32, msimg32, ole32, oleaut32, winmm, uuid共8个</font>
+注意次序不正确可能会引起编译错误
+
+例如在Code::Blocks下（需要建立project），在菜单 - Project - build options，设置Linker选项，如图：
+<img src="doc/cb.png">
+
+例如在C-Free5.0下，则可以在 菜单-&gt;构建-&gt;构建选项 里，设置连接选项，如图：
+<img src="doc/cfree.jpg">
+但是，<font color=#FF0000>如果你是以建立工程的方式建立，而不是建立单文件的话</font>，
+或者你发现上面的设置无效，那你需要在<font color=#FF00FF>菜单 - 工程 - 设置</font>，在这设置连接选项
+
+此外，C-Free比较特殊的一点是，如果需要编译为Win32应用程序，那么要用WinMain来声明你的主函数，如：
+<pre><font color=#FF0000>#include </font><font color=#FF00FF>&lt;graphics.h&gt;
+</font><font color=#0000FF>int </font><font color=#FF0000>WinMain</font>() <font color=#008000>// 这里在graphics.h里已经定义了宏自动把它展开成合法的声明，以减免声明的麻烦，同时用来欺骗C-Free
+</font>{
+    <font color=#008080>initgraph</font>(640, 480);
+    <font color=#008080>getch</font>();
+    <font color=#008080>closegraph</font>();
+    <font color=#0000FF>return </font>0;
+}</pre>
+又或者，如果你不喜欢这样，那就在链接选项里（即刚刚截图里的参数框里）手工加上-mwindows也可
+
+</pre>
+
+</body>
+</html>
