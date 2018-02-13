@@ -8,12 +8,13 @@ void mainloop()
 	// 为什么使用60？因为60是显示器的默认刷新率，99.9%的显示器都是这个设置
 	for ( ; is_run(); delay_fps(60) )
 	{
+		// 清屏
+		cleardevice();
+		
 		// todo: 逻辑更新
 		//
 
 		// todo: 图形更新
-		// 清屏
-		cleardevice();
 	}
 }
 
