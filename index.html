@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>EGE在线文档</title>
+	<meta charset="utf-8">
+
+</head>
+<body onload="pageOnResize()" onresize="pageOnResize()">
+<div style="top:0px;left:0px;width:250px;border:groove;margin:20px auto auto 10px;" id="toolView">
+	<h2>EGE在线文档.</h2>
+	<script type="text/javascript">
+        var toolObj = document.getElementById("toolView");
+        var tools = {
+            "README.html": "说明"
+        };
+
+        for (var key in tools) {
+            var item = document.createElement("div");
+            var text = "<h2><a href = '" + key + "' target='tools'>" + tools[key] + "</a></h2>";
+            item.setAttribute("style", "text-align:left;background-color: #abcdef; margin 10px;");
+            item.innerHTML = text;
+            toolObj.appendChild(item);
+        }
+	</script>
+</div>
+<div style="top:20px;left:300px;position:absolute; width:900px;height:95%; border:groove; "
+	 id="itemView">
+	<iframe style="border:none;width:100%;height:100%;" name="tools" src="README.md">
+	</iframe>
+</div>
+
+<script type="text/javascript">
+
+	function pageOnResize() {
+        var itemView = document.getElementById("itemView");
+        var itemWidth = document.body.clientWidth - 320;
+        if (itemWidth < 300) itemWidth = 300;
+        itemView.style.width = itemWidth + "px";
+    }
+
+
+</script>
+</body>
+</html>
