@@ -44,7 +44,7 @@
 #else
 #	if __GNUC__ == 3
 #		include "gdiplus3/gdiplus.h"
-#	elif __GNUC__ == 4
+#	elif __GNUC__ >= 4
 #		include "gdiplus4/gdiplus.h"
 #	endif
 #endif

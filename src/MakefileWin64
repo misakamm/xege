@@ -53,13 +53,13 @@ SRC_C=\
 OBJ=$(SRC_CXX:.cpp=.o) $(SRC_C:.c=.o)
 
 all:	$(OBJ)
-	copy /Y /B .\lib\libgdiplus64.a .\libgraphics64.a
+	cp .\lib\libgdiplus64.a .\libgraphics64.a
 	$(LIB) libgraphics64.a $(OBJ)
 
 clean:
-	del /F /Q *.o
-	del /F /Q "lpng\*.o"
-	del /F /Q libgraphics64.a
+	rm -rf *.o
+	rm -rf lpng/*.o
+	rm -rf libgraphics64.a
 
 %.o: %.cpp
 	$(CXX) -c $(CXXFLAGS) $*.cpp -o $@
