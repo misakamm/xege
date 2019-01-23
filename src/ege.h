@@ -71,7 +71,7 @@
 
 #if !defined(_GRAPH_LIB_BUILD_) && !defined(_GRAPH_NO_LIB_)
 #	ifdef _MSC_VER
-#		ifdef _WIN64
+#		ifdef _WIN64 // 64 bit libs
 #			if (_MSC_VER >= 2000)
 #				if 0 && defined(_DLL)
 #					pragma comment(lib,"graphics1664d.lib")
@@ -119,12 +119,12 @@
 #			else
 #				pragma comment(lib,"graphics.lib")
 #			endif
-#		else
+#		else   // 32 bit libs
 #			if (_MSC_VER >= 2000)
 #				if 0 && defined(_DLL)
-#					pragma comment(lib,"graphics1664d.lib")
+#					pragma comment(lib,"graphics16d.lib")
 #				else
-#					pragma comment(lib,"graphics1664.lib")
+#					pragma comment(lib,"graphics16.lib")
 #				endif
 #			elif (_MSC_VER >= 1910)
 #				if 0 && defined(_DLL)
@@ -134,9 +134,9 @@
 #				endif
 #			elif (_MSC_VER >= 1900)
 #				if 0 && defined(_DLL)
-#					pragma comment(lib,"graphics1564d.lib")
+#					pragma comment(lib,"graphics15d.lib")
 #				else
-#					pragma comment(lib,"graphics1564.lib")
+#					pragma comment(lib,"graphics15.lib")
 #				endif
 #			elif (_MSC_VER >= 1800)
 #				if 0 && defined(_DLL)
