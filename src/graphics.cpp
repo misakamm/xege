@@ -944,7 +944,7 @@ wndproc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
 	//int wmId, wmEvent;
 
 	pg_w = (struct _graph_setting *)GetWindowLongPtrW(hWnd, GWLP_USERDATA);
-	if (pg_w == NULL) {
+	if (pg_w == NULL || pg->img_page[0] == NULL) {
 		return DefWindowProc(hWnd, message, wParam, lParam);
 	}
 
