@@ -1,10 +1,12 @@
 /demo
-
 /include
-
 /lib
-
 /doc
-
 /vc6
-
+.vs/
+*.tlog
+*.obj
+[Dd]ebug/
+[Rr]elease/
+*.VC.db
+*.user
