@@ -25,6 +25,10 @@
 #ifndef PNGPRIV_H
 #define PNGPRIV_H
 
+#ifndef _CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS 1
+#endif
+
 /* This is required for the definition of abort(), used as a last ditch
  * error handler when all else fails.
  */
