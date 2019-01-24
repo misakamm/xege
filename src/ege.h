@@ -80,9 +80,9 @@
 #				endif
 #			elif (_MSC_VER >= 1910)
 #				if 0 && defined(_DLL)
-#					pragma comment(lib,"graphics17d.lib")
+#					pragma comment(lib,"graphics1764d.lib")
 #				else
-#					pragma comment(lib,"graphics17.lib")
+#					pragma comment(lib,"graphics1764.lib")
 #				endif
 #			elif (_MSC_VER >= 1900)
 #				if 0 && defined(_DLL)
