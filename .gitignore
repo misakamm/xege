@@ -10,3 +10,4 @@
 [Rr]elease/
 *.VC.db
 *.user
+*.o

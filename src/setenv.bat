@@ -9,5 +9,5 @@ set MINGW45PATH=D:\mingw4.5.2
 set MINGW46PATH=D:\mingw4.6
 set MINGW47PATH=D:\MinGW-4.7.1
 set MINGW472PATH=D:\MinGW-4.7.2
-set MINGW48PATH=D:\mingw4.8.1
-set MINGW64PATH=D:\mingw64
+set MINGW48PATH=C:\Dev-Cpp\MinGW64\x86_64-w64-mingw32
+set MINGW64PATH=C:\Dev-Cpp

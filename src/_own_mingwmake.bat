@@ -1,7 +1,7 @@
 @rem 在以下一行设置你的mingw路径，建议使用code::blocks自带的mingw版本来编译，路径可以带空格或者中文，需要使用gbk编码
-set MINGWPATH=D:\mingw4.7.1
+set MINGWPATH=C:\Dev-Cpp\MinGW64
 
-set path=%MINGWPATH%\bin;%MINGWPATH%\mingw32\bin
+set path=%MINGWPATH%\bin;%MINGWPATH%\x86_64-w64-mingw32\bin
 
 mingw32-make.exe -f MakefileWin clean
 mingw32-make.exe -f MakefileWin all
