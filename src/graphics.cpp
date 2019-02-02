@@ -354,7 +354,7 @@ kbmsg() {
 	struct _graph_setting * pg = &graph_setting;
 	if (pg->exit_window)
 		return grNoInitGraph;
-	return peekallkey(pg, 1);
+	return peekallkey(pg, 3);
 }
 
 int
