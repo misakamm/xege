@@ -838,7 +838,10 @@ fix_rect_1size(
 	int* nHeightSrc      // height of source rectangle
 	)
 {
-	struct viewporttype _vpt = {0, 0, pdest->m_width, pdest->m_height};
+	/* prepare viewport region and carry out coordinate transformation */
+	struct viewporttype _vpt = pdest->m_vpt;
+	*nXOriginDest += _vpt.left;
+	*nYOriginDest += _vpt.top;
 	/* default value proc */
 	if (*nWidthSrc == 0) {
 		*nWidthSrc  = psrc->m_width;
