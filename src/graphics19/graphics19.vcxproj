@@ -1,0 +1,285 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DllRel|Win32">
+      <Configuration>DllRel</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DllRel|x64">
+      <Configuration>DllRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{1DF4EE11-D83C-4DB2-A4B0-0266161B0E92}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>graphics19</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141_xp</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DllRel|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DllRel|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DllRel|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DllRel|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>..\..\lib\vs2019\x86\</OutDir>
+    <IntDir>..\..\lib\vs2019\x86\temp\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>..\..\lib\vs2019\x86\</OutDir>
+    <IntDir>..\..\lib\vs2019\x86\temp\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DllRel|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>..\..\lib\vs2019\x86dll\</OutDir>
+    <IntDir>..\..\lib\vs2019\x86dll\temp\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>..\..\lib\vs2019\x64\</OutDir>
+    <IntDir>..\..\lib\vs2019\x64\temp\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DllRel|x64'">
+    <OutDir>..\..\lib\vs2019\x64dll\</OutDir>
+    <IntDir>..\..\lib\vs2019\x64dll\temp\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>..\..\lib\vs2019\x64\</OutDir>
+    <IntDir>..\..\lib\vs2019\x64\temp\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DllRel|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>PNG_BULIDDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ImportLibrary>$(OutDir)$(TargetName)d.lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DllRel|x64'">
+    <ClCompile>
+      <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <PreprocessorDefinitions>PNG_BULIDDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <ImportLibrary>$(OutDir)$(TargetName)d.lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\color.cpp" />
+    <ClCompile Include="..\egecontrolbase.cpp" />
+    <ClCompile Include="..\egegapi.cpp" />
+    <ClCompile Include="..\graphics.cpp" />
+    <ClCompile Include="..\image.cpp" />
+    <ClCompile Include="..\logo.cpp" />
+    <ClCompile Include="..\lpng\adler32.c" />
+    <ClCompile Include="..\lpng\compress.c" />
+    <ClCompile Include="..\lpng\crc32.c" />
+    <ClCompile Include="..\lpng\deflate.c" />
+    <ClCompile Include="..\lpng\gzclose.c" />
+    <ClCompile Include="..\lpng\gzlib.c" />
+    <ClCompile Include="..\lpng\gzread.c" />
+    <ClCompile Include="..\lpng\gzwrite.c" />
+    <ClCompile Include="..\lpng\infback.c" />
+    <ClCompile Include="..\lpng\inffast.c" />
+    <ClCompile Include="..\lpng\inflate.c" />
+    <ClCompile Include="..\lpng\inftrees.c" />
+    <ClCompile Include="..\lpng\png.c" />
+    <ClCompile Include="..\lpng\pngerror.c" />
+    <ClCompile Include="..\lpng\pngget.c" />
+    <ClCompile Include="..\lpng\pngmem.c" />
+    <ClCompile Include="..\lpng\pngpread.c" />
+    <ClCompile Include="..\lpng\pngread.c" />
+    <ClCompile Include="..\lpng\pngrio.c" />
+    <ClCompile Include="..\lpng\pngrtran.c" />
+    <ClCompile Include="..\lpng\pngrutil.c" />
+    <ClCompile Include="..\lpng\pngset.c" />
+    <ClCompile Include="..\lpng\pngtrans.c" />
+    <ClCompile Include="..\lpng\pngwio.c" />
+    <ClCompile Include="..\lpng\pngwrite.c" />
+    <ClCompile Include="..\lpng\pngwtran.c" />
+    <ClCompile Include="..\lpng\pngwutil.c" />
+    <ClCompile Include="..\lpng\trees.c" />
+    <ClCompile Include="..\lpng\uncompr.c" />
+    <ClCompile Include="..\lpng\zutil.c" />
+    <ClCompile Include="..\math.cpp" />
+    <ClCompile Include="..\music.cpp" />
+    <ClCompile Include="..\random.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\ege.h" />
+    <ClInclude Include="..\ege_common.h" />
+    <ClInclude Include="..\ege_head.h" />
+    <ClInclude Include="..\ege_sbt.h" />
+    <ClInclude Include="..\graphics.h" />
+    <ClInclude Include="..\includes\GdiPlus.h" />
+    <ClInclude Include="..\includes\GdiPlusBase.h" />
+    <ClInclude Include="..\includes\GdiPlusBitmap.h" />
+    <ClInclude Include="..\includes\GdiPlusBrush.h" />
+    <ClInclude Include="..\includes\GdiPlusCachedBitmap.h" />
+    <ClInclude Include="..\includes\GdiPlusColor.h" />
+    <ClInclude Include="..\includes\GdiPlusColorMatrix.h" />
+    <ClInclude Include="..\includes\GdiPlusEnums.h" />
+    <ClInclude Include="..\includes\GdiPlusFlat.h" />
+    <ClInclude Include="..\includes\GdiPlusFont.h" />
+    <ClInclude Include="..\includes\GdiPlusFontCollection.h" />
+    <ClInclude Include="..\includes\GdiPlusFontFamily.h" />
+    <ClInclude Include="..\includes\GdiPlusGpStubs.h" />
+    <ClInclude Include="..\includes\GdiPlusGraphics.h" />
+    <ClInclude Include="..\includes\GdiPlusHeaders.h" />
+    <ClInclude Include="..\includes\GdiPlusimageAttributes.h" />
+    <ClInclude Include="..\includes\GdiPlusImageCodec.h" />
+    <ClInclude Include="..\includes\GdiPlusImaging.h" />
+    <ClInclude Include="..\includes\GdiPlusInit.h" />
+    <ClInclude Include="..\includes\GdiPlusLineCaps.h" />
+    <ClInclude Include="..\includes\GdiPlusMatrix.h" />
+    <ClInclude Include="..\includes\GdiPlusMem.h" />
+    <ClInclude Include="..\includes\GdiPlusMetaFile.h" />
+    <ClInclude Include="..\includes\GdiPlusMetaHeader.h" />
+    <ClInclude Include="..\includes\GdiPlusPath.h" />
+    <ClInclude Include="..\includes\GdiPlusPen.h" />
+    <ClInclude Include="..\includes\GdiPlusPixelFormats.h" />
+    <ClInclude Include="..\includes\GdiPlusRegion.h" />
+    <ClInclude Include="..\includes\GdiPlusStringFormat.h" />
+    <ClInclude Include="..\includes\GdiPlusTypes.h" />
+    <ClInclude Include="..\lpng\crc32.h" />
+    <ClInclude Include="..\lpng\deflate.h" />
+    <ClInclude Include="..\lpng\gzguts.h" />
+    <ClInclude Include="..\lpng\inffast.h" />
+    <ClInclude Include="..\lpng\inffixed.h" />
+    <ClInclude Include="..\lpng\inflate.h" />
+    <ClInclude Include="..\lpng\inftrees.h" />
+    <ClInclude Include="..\lpng\png.h" />
+    <ClInclude Include="..\lpng\pngconf.h" />
+    <ClInclude Include="..\lpng\pngdebug.h" />
+    <ClInclude Include="..\lpng\pnginfo.h" />
+    <ClInclude Include="..\lpng\pnglibconf.h" />
+    <ClInclude Include="..\lpng\pngpriv.h" />
+    <ClInclude Include="..\lpng\pngstruct.h" />
+    <ClInclude Include="..\lpng\trees.h" />
+    <ClInclude Include="..\lpng\zconf.h" />
+    <ClInclude Include="..\lpng\zlib.h" />
+    <ClInclude Include="..\lpng\zutil.h" />
+    <ClInclude Include="..\thread_queue.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

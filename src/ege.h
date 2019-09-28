@@ -72,127 +72,44 @@
 #if !defined(_GRAPH_LIB_BUILD_) && !defined(_GRAPH_NO_LIB_)
 #	ifdef _MSC_VER
 #		ifdef _WIN64 // 64 bit libs
-#			if (_MSC_VER >= 2000)
-#				if 0 && defined(_DLL)
-#					pragma comment(lib,"graphics1664d.lib")
-#				else
-#					pragma comment(lib,"graphics1664.lib")
-#				endif
+#			if (_MSC_VER >= 1923)
+#				pragma comment(lib,"graphics1964.lib")
 #			elif (_MSC_VER >= 1910)
-#				if 0 && defined(_DLL)
-#					pragma comment(lib,"graphics1764d.lib")
-#				else
-#					pragma comment(lib,"graphics1764.lib")
-#				endif
+#				pragma comment(lib,"graphics1764.lib")
 #			elif (_MSC_VER >= 1900)
-#				if 0 && defined(_DLL)
-#					pragma comment(lib,"graphics1564d.lib")
-#				else
-#					pragma comment(lib,"graphics1564.lib")
-#				endif
+#				pragma comment(lib,"graphics1564.lib")
 #			elif (_MSC_VER >= 1800)
-#				if 0 && defined(_DLL)
-#					pragma comment(lib,"graphics1364d.lib")
-#				else
-#					pragma comment(lib,"graphics1364.lib")
-#				endif
+#				pragma comment(lib,"graphics1364.lib")
 #			elif (_MSC_VER >= 1700)
-#				if 0 && defined(_DLL)
-#					pragma comment(lib,"graphics1264d.lib")
-#				else
-#					pragma comment(lib,"graphics1264.lib")
-#				endif
+#				pragma comment(lib,"graphics1264.lib")
 #			elif (_MSC_VER >= 1600)
-#				if 0 && defined(_DLL)
-#					pragma comment(lib,"graphics1064d.lib")
-#				else
-#					pragma comment(lib,"graphics1064.lib")
-#				endif
+#				pragma comment(lib,"graphics1064.lib")
 #			elif (_MSC_VER >= 1500)
-#				if 0 && defined(_DLL)
-#					pragma comment(lib,"graphics0864d.lib")
-#				else
-#					pragma comment(lib,"graphics0864.lib")
-#				endif
+#				pragma comment(lib,"graphics0864.lib")
 #			elif (_MSC_VER > 1200)
 #				pragma comment(lib,"graphics05.lib")
 #			else
 #				pragma comment(lib,"graphics.lib")
 #			endif
 #		else   // 32 bit libs
-#			if (_MSC_VER >= 2000)
-#				if 0 && defined(_DLL)
-#					pragma comment(lib,"graphics16d.lib")
-#				else
-#					pragma comment(lib,"graphics16.lib")
-#				endif
+#			if (_MSC_VER >= 1923)
+				pragma comment(lib,"graphics19.lib")
 #			elif (_MSC_VER >= 1910)
-#				if 0 && defined(_DLL)
-#					pragma comment(lib,"graphics17d.lib")
-#				else
-#					pragma comment(lib,"graphics17.lib")
-#				endif
+#				pragma comment(lib,"graphics17.lib")
 #			elif (_MSC_VER >= 1900)
-#				if 0 && defined(_DLL)
-#					pragma comment(lib,"graphics15d.lib")
-#				else
-#					pragma comment(lib,"graphics15.lib")
-#				endif
+#				pragma comment(lib,"graphics15.lib")
 #			elif (_MSC_VER >= 1800)
-#				if 0 && defined(_DLL)
-#					pragma comment(lib,"graphics13d.lib")
-#				else
-#					pragma comment(lib,"graphics13.lib")
-#				endif
+#				pragma comment(lib,"graphics13.lib")
 #			elif (_MSC_VER >= 1700)
-#				if 0 && defined(_DLL)
-#					pragma comment(lib,"graphics12d.lib")
-#				else
-#					pragma comment(lib,"graphics12.lib")
-#				endif
+#				pragma comment(lib,"graphics12.lib")
 #			elif (_MSC_VER >= 1600)
-#				if 0 && defined(_DLL)
-#					pragma comment(lib,"graphics10d.lib")
-#				else
-#					pragma comment(lib,"graphics10.lib")
-#				endif
+#				pragma comment(lib,"graphics10.lib")
 #			elif (_MSC_VER >= 1500)
-#				if 0 && defined(_DLL)
-#					pragma comment(lib,"graphics08d.lib")
-#				else
-#					pragma comment(lib,"graphics08.lib")
-#				endif
+#				pragma comment(lib,"graphics08.lib")
 #			elif (_MSC_VER > 1200)
 #				pragma comment(lib,"graphics05.lib")
 #			else
 #				pragma comment(lib,"graphics.lib")
-#			endif
-#		endif
-#		if _MSC_VER >= 1700
-#			ifdef _DEBUG
-#			else
-#			endif
-#		elif _MSC_VER >= 1600
-#			ifdef _DEBUG
-#			else
-#			endif
-#		elif _MSC_VER > 1200
-#			ifdef _DEBUG
-//#				pragma comment(linker, "/NODEFAULTLIB:MSVCRTD.lib")
-//#				pragma comment(linker, "/NODEFAULTLIB:libcmtd.lib")
-//#				pragma comment(linker, "/NODEFAULTLIB:libcpmtd.lib")
-#			else
-#			endif
-#		else
-#			ifdef _DEBUG
-//#				pragma comment(linker, "/NODEFAULTLIB:MSVCRTD.lib")
-//#				pragma comment(linker, "/NODEFAULTLIB:libcd.lib")
-//#				pragma comment(linker, "/NODEFAULTLIB:libcmtd.lib")
-//#				pragma comment(linker, "/NODEFAULTLIB:libcpmtd.lib")
-#			else
-//#				pragma comment(linker, "/NODEFAULTLIB:MSVCRT.lib")
-//#				pragma comment(linker, "/NODEFAULTLIB:libcmt.lib")
-//#				pragma comment(linker, "/NODEFAULTLIB:libcp.lib")
 #			endif
 #		endif
 #	endif
