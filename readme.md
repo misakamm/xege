@@ -2,8 +2,8 @@
 
 - Website <https://xege.org>  (官网, 附带[教程](https://xege.org/beginner-lesson-1.html)以及[范例](https://xege.org/category/demo)等)
 - HomePage <https://github.com/wysaid/xege>  (代为维护)
-- 百度贴吧1 <http://tieba.baidu.com/f?kw=ege%C4%EF>
 - 百度贴吧2 <http://tieba.baidu.com/f?kw=ege>
+- 百度贴吧1 <http://tieba.baidu.com/f?kw=ege%C4%EF>
 - E-Mail new: this@xege.org
 - QQ Group: 293650629 (正常维护)
 - ~~HomePage1 <http://misakamm.github.com/xege>(原作者仓库, 已停止更新)~~
