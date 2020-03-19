@@ -880,11 +880,11 @@ fix_rect_1size(
 		*nHeightSrc      -= dy;
 	}
 	if (*nXOriginDest + *nWidthSrc > _vpt.right) {
-		int dx = *nXOriginDest + *nWidthSrc - _vpt.right + 1;
+		int dx = *nXOriginDest + *nWidthSrc - _vpt.right;
 		*nWidthSrc -= dx;
 	}
 	if (*nYOriginDest + *nHeightSrc > _vpt.bottom) {
-		int dy = *nYOriginDest + *nHeightSrc - _vpt.bottom + 1;
+		int dy = *nYOriginDest + *nHeightSrc - _vpt.bottom;
 		*nHeightSrc -= dy;
 	}
 }
