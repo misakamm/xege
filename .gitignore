@@ -11,3 +11,4 @@
 *.VC.db
 *.user
 *.o
+build/

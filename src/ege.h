@@ -71,46 +71,11 @@
 
 #if !defined(_GRAPH_LIB_BUILD_) && !defined(_GRAPH_NO_LIB_)
 #	ifdef _MSC_VER
+#		pragma comment(lib,"gdiplus.lib")
 #		ifdef _WIN64 // 64 bit libs
-#			if (_MSC_VER >= 1923)
-#				pragma comment(lib,"graphics1964.lib")
-#			elif (_MSC_VER >= 1910)
-#				pragma comment(lib,"graphics1764.lib")
-#			elif (_MSC_VER >= 1900)
-#				pragma comment(lib,"graphics1564.lib")
-#			elif (_MSC_VER >= 1800)
-#				pragma comment(lib,"graphics1364.lib")
-#			elif (_MSC_VER >= 1700)
-#				pragma comment(lib,"graphics1264.lib")
-#			elif (_MSC_VER >= 1600)
-#				pragma comment(lib,"graphics1064.lib")
-#			elif (_MSC_VER >= 1500)
-#				pragma comment(lib,"graphics0864.lib")
-#			elif (_MSC_VER > 1200)
-#				pragma comment(lib,"graphics05.lib")
-#			else
-#				pragma comment(lib,"graphics.lib")
-#			endif
+#			pragma comment(lib,"graphics64.lib")
 #		else   // 32 bit libs
-#			if (_MSC_VER >= 1923)
-#				pragma comment(lib,"graphics19.lib")
-#			elif (_MSC_VER >= 1910)
-#				pragma comment(lib,"graphics17.lib")
-#			elif (_MSC_VER >= 1900)
-#				pragma comment(lib,"graphics15.lib")
-#			elif (_MSC_VER >= 1800)
-#				pragma comment(lib,"graphics13.lib")
-#			elif (_MSC_VER >= 1700)
-#				pragma comment(lib,"graphics12.lib")
-#			elif (_MSC_VER >= 1600)
-#				pragma comment(lib,"graphics10.lib")
-#			elif (_MSC_VER >= 1500)
-#				pragma comment(lib,"graphics08.lib")
-#			elif (_MSC_VER > 1200)
-#				pragma comment(lib,"graphics05.lib")
-#			else
-#				pragma comment(lib,"graphics.lib")
-#			endif
+#			pragma comment(lib,"graphics.lib")
 #		endif
 #	endif
 #endif
