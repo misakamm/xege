@@ -1,4 +1,4 @@
-//ç¢§æ³¢è¡æ¼¾ï¼ˆé¼ æ ‡æ‹–åŠ¨å¼¹åŠ›ç‰©ç†æ¨¡æ‹Ÿæ¼”ç¤ºï¼‰
+//±Ì²¨µ´Ñú£¨Êó±êÍÏ¶¯µ¯Á¦ÎïÀíÄ£ÄâÑİÊ¾£©
 #include <graphics.h>
 #include <ege/fps.h>
 
@@ -15,7 +15,7 @@ int g_mod_show = 3;
 
 double g_d_friction = 0.001;
 double g_d_min_a = 0.001;
-double g_k = 0.03; /* åŠ²åº¦ç³»æ•°ï¼Œä¸èƒ½å¤§äºç­‰äº0.5 */
+double g_k = 0.03; /* ¾¢¶ÈÏµÊı£¬²»ÄÜ´óÓÚµÈÓÚ0.5 */
 
 struct vector_t {
     double dx;
@@ -252,7 +252,7 @@ void cap_pt(struct net* pnet, int px, int py, int op) {
 
 void init() {
     int g = TRUECOLORSIZE, m = (g_height<<16) | g_width;
-    //initgraph(&g, &m, "ç¢§æ³¢è¡æ¼¾");
+    //initgraph(&g, &m, "±Ì²¨µ´Ñú");
     //setinitmode(3);
     initgraph(640, 480);
     g_width  = getwidth();

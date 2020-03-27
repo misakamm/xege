@@ -1,4 +1,4 @@
-// æŒ‡é’ˆå¼æ—¶é’Ÿæ˜¾ç¤º+æŠ—é”¯é½¿æ¼”ç¤º
+// Ö¸ÕëÊ½Ê±ÖÓÏÔÊ¾+¿¹¾â³İÑİÊ¾
 #include <ege.h>
 #include <time.h>
 #include <math.h>
@@ -93,9 +93,9 @@ int main()
     ege::setinitmode(ege::INIT_ANIMATION);
     ege::initgraph(400, 480);
     ege::randomize();
-    // ç¨‹åºä¸»å¾ªç¯
+    // ³ÌĞòÖ÷Ñ­»·
     mainloop();
-    // å…³é—­ç»˜å›¾è®¾å¤‡
+    // ¹Ø±Õ»æÍ¼Éè±¸
     ege::closegraph();
     return 0;
 }

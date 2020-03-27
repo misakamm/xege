@@ -115,25 +115,80 @@ int main()
 
     // 捕获鼠标操作，实现放大鼠标选中区域
     {
-        MOUSEMSG m;
+        mouse_msg m;
         bool isLDown = false;
         int selfx, selfy, seltx, selty; // 定义选区
 
         while (kbhit() != -1)
         {
-            m = GetMouseMsg(); // 获取一条鼠标消息
+            m = getmouse(); // 获取一条鼠标消息
 
-            switch (m.uMsg)
+            switch (m.msg)
             {
-                // 按鼠标右键恢复原图形坐标系
-            case WM_RBUTTONUP:
-                fromx = -2.2; tox = 1.2;
-                fromy = -1.65; toy = 1.65;
-                Draw(fromx, fromy, tox, toy);
+            case mouse_msg_up:
+                if (m.is_right()) {
+                    // 按鼠标右键恢复原图形坐标系
+                    fromx = -2.2; tox = 1.2;
+                    fromy = -1.65; toy = 1.65;
+                    Draw(fromx, fromy, tox, toy);
+                } else {
+                    // 按鼠标左键并拖动，选择区域
+                    rectangle(selfx, selfy, seltx, selty);
+                    setwritemode(R2_COPYPEN);
+                    isLDown = false;
+                    seltx = m.x;
+                    selty = m.y;
+
+                    if (selfx == seltx || selfy == selty) break;
+
+                    // 修正选区为 4:3
+                    {
+                        int tmp;
+                        if (selfx > seltx)
+                        {
+                            tmp = selfx; selfx = seltx; seltx = tmp;
+                        }
+                        if (selfy > selty)
+                        {
+                            tmp = selfy; selfy = selty; selty = tmp;
+                        }
+                    }
+
+                    if ( (seltx - selfx) * 0.75 < (selty - selfy) )
+                    {
+                        selty += (3 - (selty - selfy) % 3);
+                        selfx -= (selty - selfy) / 3 * 4 / 2
+                                 - (seltx - selfx) / 2;
+                        seltx = selfx + (selty - selfy) / 3 * 4;
+                    }
+                    else
+                    {
+                        seltx += (4 - (seltx - selfx) % 4);
+                        selfy -= (seltx - selfx) * 3 / 4 / 2
+                                 - (selty - selfy ) / 2;
+                        selty = selfy + (seltx - selfx ) * 3 / 4;
+                    }
+
+                    // 更新坐标系
+                    {
+                        double f, t;
+                        f = fromx + (tox - fromx) * selfx / 640;
+                        t = fromx + (tox - fromx) * seltx / 640;
+                        fromx = f;
+                        tox = t;
+                        f = fromy + (toy - fromy) * selfy / 480;
+                        t = fromy + (toy - fromy) * selty / 480;
+                        fromy = f;
+                        toy = t;
+                    }
+
+                    // 画图形
+                    Draw(fromx, fromy, tox, toy);
+                }
                 break;
 
+            case mouse_msg_move:
                 // 按鼠标左键并拖动，选择区域
-            case WM_MOUSEMOVE:
                 if (isLDown)
                 {
                     rectangle(selfx, selfy, seltx, selty);
@@ -143,70 +198,18 @@ int main()
                 }
                 break;
 
+            case mouse_msg_down:
                 // 按鼠标左键并拖动，选择区域
-            case WM_LBUTTONDOWN:
-                setcolor(WHITE);
-                setwritemode(R2_XORPEN);
-                isLDown = true;
-                selfx = seltx = m.x;
-                selfy = selty = m.y;
-                rectangle(selfx, selfy, seltx, selty);
-
-                break;
-
-                // 按鼠标左键并拖动，选择区域
-            case WM_LBUTTONUP:
-                rectangle(selfx, selfy, seltx, selty);
-                setwritemode(R2_COPYPEN);
-                isLDown = false;
-                seltx = m.x;
-                selty = m.y;
-
-                if (selfx == seltx || selfy == selty) break;
-
-                // 修正选区为 4:3
+                if (m.is_left())
                 {
-                    int tmp;
-                    if (selfx > seltx)
-                    {
-                        tmp = selfx; selfx = seltx; seltx = tmp;
-                    }
-                    if (selfy > selty)
-                    {
-                        tmp = selfy; selfy = selty; selty = tmp;
-                    }
+                    setcolor(WHITE);
+                    setwritemode(R2_XORPEN);
+                    isLDown = true;
+                    selfx = seltx = m.x;
+                    selfy = selty = m.y;
+                    rectangle(selfx, selfy, seltx, selty);
                 }
 
-                if ( (seltx - selfx) * 0.75 < (selty - selfy) )
-                {
-                    selty += (3 - (selty - selfy) % 3);
-                    selfx -= (selty - selfy) / 3 * 4 / 2
-                             - (seltx - selfx) / 2;
-                    seltx = selfx + (selty - selfy) / 3 * 4;
-                }
-                else
-                {
-                    seltx += (4 - (seltx - selfx) % 4);
-                    selfy -= (seltx - selfx) * 3 / 4 / 2
-                             - (selty - selfy ) / 2;
-                    selty = selfy + (seltx - selfx ) * 3 / 4;
-                }
-
-                // 更新坐标系
-                {
-                    double f, t;
-                    f = fromx + (tox - fromx) * selfx / 640;
-                    t = fromx + (tox - fromx) * seltx / 640;
-                    fromx = f;
-                    tox = t;
-                    f = fromy + (toy - fromy) * selfy / 480;
-                    t = fromy + (toy - fromy) * selty / 480;
-                    fromy = f;
-                    toy = t;
-                }
-
-                // 画图形
-                Draw(fromx, fromy, tox, toy);
                 break;
             }
         }

@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+#include <math.h>
 
 class SceneBase
 {
@@ -59,12 +60,12 @@ public:
     void smain()
     {
         setcolor(YELLOW);
-        setfillstyle(MAGENTA);
+        setfillstyle(SOLID_FILL, MAGENTA);
         fillellipse(150, 200, 50, 100);
     }
     SceneBase* Update()
     {
-        char str[] = "#include \"graphics.h\"\n\nint main()\n{\n    //图形窗口初始化为640*480大小\n    initgraph(640, 480);\n\n    //设置颜色为黄色\n    setcolor(YELLOW);\n    //设置填充颜色为紫红色\n    setfillstyle(MAGENTA);\n    //以(150,200)为圆心，x半径为50，y半径为100，画一个实心椭圆\n    fillellipse(150, 200, 50, 100);\n\n    getch(); //等待用户按键，相当于暂停\n    return 0;\n}";
+        char str[] = "#include \"graphics.h\"\n\nint main()\n{\n    //图形窗口初始化为640*480大小\n    initgraph(640, 480);\n\n    //设置颜色为黄色\n    setcolor(YELLOW);\n    //设置填充颜色为紫红色\n    setfillstyle(SOLID_FILL, MAGENTA);\n    //以(150,200)为圆心，x半径为50，y半径为100，画一个实心椭圆\n    fillellipse(150, 200, 50, 100);\n\n    getch(); //等待用户按键，相当于暂停\n    return 0;\n}";
         setbkcolor_f(BLACK);
         cleardevice();
 
@@ -93,12 +94,12 @@ public:
     }
     void smain()
     {
-        setfillstyle(GREEN);
+        setfillstyle(SOLID_FILL, GREEN);
         bar(100, 100, 200, 400);
     }
     SceneBase* Update()
     {
-        char str[] = "#include \"graphics.h\"\n\nint main()\n{\n    //图形窗口初始化为640*480大小\n    initgraph(640, 480);\n\n    //设置填充颜色为绿色，注意是用来填充颜色\n    setfillstyle(GREEN);\n    //从(100,100)到(200,400)画一个实心矩形，使用填充颜色\n    bar(100, 100, 200, 400);\n\n    getch(); //等待用户按键，相当于暂停\n    return 0;\n}";
+        char str[] = "#include \"graphics.h\"\n\nint main()\n{\n    //图形窗口初始化为640*480大小\n    initgraph(640, 480);\n\n    //设置填充颜色为绿色，注意是用来填充颜色\n    setfillstyle(SOLID_FILL, GREEN);\n    //从(100,100)到(200,400)画一个实心矩形，使用填充颜色\n    bar(100, 100, 200, 400);\n\n    getch(); //等待用户按键，相当于暂停\n    return 0;\n}";
         setbkcolor_f(BLACK);
         cleardevice();
 
@@ -244,7 +245,7 @@ public:
     }
     void info()
     {
-        if (img.getwidth() <= 1)
+        if (getwidth(img) <= 1)
         {
             char str[] = "#include \"graphics.h\"\nint main()\n{\
 \n    initgraph(640, 480);\
@@ -260,7 +261,7 @@ public:
 \n        }\
 \n    }\
 \n    getch();\n    return 0;\n}";
-            img->createimage(320, 480);
+            resize(img, 320, 480);
             setfont(12, 0, "宋体", img);
             setbkmode(TRANSPARENT, img);
             setcolor(0x808080, img);
@@ -295,6 +296,11 @@ public:
     SceneForLoop8(SceneBase* parent)
     {
         m_parent = parent;
+        img = newimage();
+    }
+    ~SceneForLoop8()
+    {
+        delimage(img);
     }
     void smain()
     {
@@ -304,7 +310,7 @@ public:
         {
             for (x = 0; x < 8; ++x)
             {
-                setfillstyle(((x^y)&1) ? BLACK : WHITE );
+                setfillstyle(SOLID_FILL, ((x^y)&1) ? BLACK : WHITE );
                 bar(x * 30, y * 30, (x + 1) * 30, (y + 1) * 30);
             }
         }
@@ -312,7 +318,7 @@ public:
     }
     void info()
     {
-        if (img.getwidth() <= 1)
+        if (getwidth(img) <= 1)
         {
             char str[] = "#include \"graphics.h\"\nint main()\n{\
 \n    initgraph(640, 480);\
@@ -322,22 +328,22 @@ public:
 \n    {\
 \n        for (x = 0; x < 8; ++x)\
 \n        {\
-\n            setfillstyle(((x^y)&1) ? BLACK : WHITE );\
+\n            setfillstyle(SOLID_FILL, ((x^y)&1) ? BLACK : WHITE );\
 \n            bar(x * 30, y * 30,\
 \n                (x+1) * 30, (y+1) * 30));\
 \n        }\
 \n    }\
 \n    getch();\n    return 0;\n}";
-            img.createimage(320, 480);
-            setfont(12, 0, "宋体", &img);
-            setbkmode(TRANSPARENT, &img);
-            setcolor(0x808080, &img);
-            line(0, 0, 0, 480, &img);
-            setcolor(0xFFFFFF, &img);
-            outtextrect(0, 50, 320, 480, str, &img);
-            outtextrect(0, 0, 320, 400, "左半边是程序运行结果，下面是相应的源代码\n按任意键查看下一个例子", &img);
+            resize(img, 320, 480);
+            setfont(12, 0, "宋体", img);
+            setbkmode(TRANSPARENT, img);
+            setcolor(0x808080, img);
+            line(0, 0, 0, 480, img);
+            setcolor(0xFFFFFF, img);
+            outtextrect(0, 50, 320, 480, str, img);
+            outtextrect(0, 0, 320, 400, "左半边是程序运行结果，下面是相应的源代码\n按任意键查看下一个例子", img);
         }
-        putimage(320, 0, &img);
+        putimage(320, 0, img);
     }
     SceneBase* Update()
     {
@@ -354,7 +360,7 @@ public:
     }
 private:
     SceneBase* m_parent;
-    IMAGE img;
+    PIMAGE img;
 };
 
 class SceneForLoop7 : public SceneBase
@@ -363,6 +369,11 @@ public:
     SceneForLoop7(SceneBase* parent)
     {
         m_parent = parent;
+        img = newimage();
+    }
+    ~SceneForLoop7()
+    {
+        delimage(img);
     }
     void smain()
     {
@@ -376,7 +387,7 @@ public:
     }
     void info()
     {
-        if (img.getwidth() <= 1)
+        if (getwidth(img) <= 1)
         {
             char str[] = "#include \"graphics.h\"\nint main()\n{\
 \n    initgraph(640, 480);\
@@ -388,16 +399,16 @@ public:
 \n            line(0, y, 200, y);\
 \n        }\
 \n    }\n    getch();\n    return 0;\n}";
-            img.createimage(320, 480);
-            setfont(12, 0, "宋体", &img);
-            setbkmode(TRANSPARENT, &img);
-            setcolor(0x808080, &img);
-            line(0, 0, 0, 480, &img);
-            setcolor(0xFFFFFF, &img);
-            outtextrect(0, 50, 320, 480, str, &img);
-            outtextrect(0, 0, 320, 400, "左半边是程序运行结果，下面是相应的源代码\n按任意键查看下一个例子", &img);
+            resize(img, 320, 480);
+            setfont(12, 0, "宋体", img);
+            setbkmode(TRANSPARENT, img);
+            setcolor(0x808080, img);
+            line(0, 0, 0, 480, img);
+            setcolor(0xFFFFFF, img);
+            outtextrect(0, 50, 320, 480, str, img);
+            outtextrect(0, 0, 320, 400, "左半边是程序运行结果，下面是相应的源代码\n按任意键查看下一个例子", img);
         }
-        putimage(320, 0, &img);
+        putimage(320, 0, img);
     }
     SceneBase* Update()
     {
@@ -414,7 +425,7 @@ public:
     }
 private:
     SceneBase* m_parent;
-    IMAGE img;
+    PIMAGE img;
 };
 
 class SceneForLoop6 : public SceneBase
@@ -423,6 +434,11 @@ public:
     SceneForLoop6(SceneBase* parent)
     {
         m_parent = parent;
+        img = newimage();
+    }
+    ~SceneForLoop6()
+    {
+        delimage(img);
     }
     void smain()
     {
@@ -451,7 +467,7 @@ public:
     }
     void info()
     {
-        if (img.getwidth() <= 1)
+        if (getwidth(img) <= 1)
         {
             char str[] = "#include \"graphics.h\"\nint main()\n{\
 \n    initgraph(640, 480);\
@@ -481,16 +497,16 @@ public:
 \n        //关于HSV的介绍见图形库文档或者Google\
 \n        setcolor(HSVtoRGB((float)color, 1.0f, 1.0f));\
 \n        circle(x, 100, 100);\n    }\n    getch();\n    return 0;\n}";
-            img.createimage(320, 480);
-            setfont(12, 0, "宋体", &img);
-            setbkmode(TRANSPARENT, &img);
-            setcolor(0x808080, &img);
-            line(0, 0, 0, 480, &img);
-            setcolor(0xFFFFFF, &img);
-            outtextrect(0, 50, 320, 480, str, &img);
-            outtextrect(0, 0, 320, 400, "左半边是程序运行结果，下面是相应的源代码\n按任意键查看下一个例子", &img);
+            resize(img, 320, 480);
+            setfont(12, 0, "宋体", img);
+            setbkmode(TRANSPARENT, img);
+            setcolor(0x808080, img);
+            line(0, 0, 0, 480, img);
+            setcolor(0xFFFFFF, img);
+            outtextrect(0, 50, 320, 480, str, img);
+            outtextrect(0, 0, 320, 400, "左半边是程序运行结果，下面是相应的源代码\n按任意键查看下一个例子", img);
         }
-        putimage(320, 0, &img);
+        putimage(320, 0, img);
     }
     SceneBase* Update()
     {
@@ -507,7 +523,7 @@ public:
     }
 private:
     SceneBase* m_parent;
-    IMAGE img;
+    PIMAGE img;
 };
 
 class SceneForLoop5 : public SceneBase
@@ -516,6 +532,11 @@ public:
     SceneForLoop5(SceneBase* parent)
     {
         m_parent = parent;
+        img = newimage();
+    }
+    ~SceneForLoop5()
+    {
+        delimage(img);
     }
     void smain()
     {
@@ -539,7 +560,7 @@ public:
     }
     void info()
     {
-        if (img.getwidth() <= 1)
+        if (getwidth(img) <= 1)
         {
             char str[] = "#include \"graphics.h\"\n\nint main()\n{\
 \n    initgraph(640, 480);\
@@ -565,16 +586,16 @@ public:
 \n        //红色为80，绿为0，蓝为FF\
 \n        setcolor(0xFF0080);\
 \n        circle(x, 100, 100);\n    }\n    getch();\n    return 0;\n}";
-            img.createimage(320, 480);
-            setfont(12, 0, "宋体", &img);
-            setbkmode(TRANSPARENT, &img);
-            setcolor(0x808080, &img);
-            line(0, 0, 0, 480, &img);
-            setcolor(0xFFFFFF, &img);
-            outtextrect(0, 50, 320, 480, str, &img);
-            outtextrect(0, 0, 320, 400, "左半边是程序运行结果，下面是相应的源代码\n按任意键查看下一个例子", &img);
+            resize(img, 320, 480);
+            setfont(12, 0, "宋体", img);
+            setbkmode(TRANSPARENT, img);
+            setcolor(0x808080, img);
+            line(0, 0, 0, 480, img);
+            setcolor(0xFFFFFF, img);
+            outtextrect(0, 50, 320, 480, str, img);
+            outtextrect(0, 0, 320, 400, "左半边是程序运行结果，下面是相应的源代码\n按任意键查看下一个例子", img);
         }
-        putimage(320, 0, &img);
+        putimage(320, 0, img);
     }
     SceneBase* Update()
     {
@@ -591,7 +612,7 @@ public:
     }
 private:
     SceneBase* m_parent;
-    IMAGE img;
+    PIMAGE img;
 };
 
 class SceneForLoop4 : public SceneBase
@@ -786,15 +807,20 @@ public:
         m_parent = parent;
         m_dline = 0;
         m_resettext = 1;
+        img = newimage();
+    }
+    ~SceneArray2()
+    {
+        delimage(img);
     }
     void mydelay(int ms)
     {
         int nms = 0;
         for ( ; nms < ms; delay_ms(50), nms += 50)
         {
-            while (kbhit(1))
+            while (kbhit())
             {
-                int key = getch(1);
+                int key = getch();
                 if ( (key & KEYMSG_DOWN) == 0) continue;
                 key &= 0xFFFF;
                 if (key == 'W' || key == VK_UP)
@@ -818,12 +844,12 @@ public:
         for (a = 0; a < n; ++a)
         {
             setcolor(WHITE);
-            setfillstyle(HSLtoRGB(120.0f, 1.0f, (float)(arr[a] / 32.0)));
+            setfillstyle(SOLID_FILL, HSLtoRGB(120.0f, 1.0f, (float)(arr[a] / 32.0)));
             fillellipse(100, 20 * a + 30, 9, 9);
         }
         if (i >= 0)
         {
-            setfillstyle(HSLtoRGB(120.0f, 1.0f, 1.0f));
+            setfillstyle(SOLID_FILL, HSLtoRGB(120.0f, 1.0f, 1.0f));
             fillellipse(80, 20 * i + 30, 9, 9);
             fillellipse(80, 20 * (i + 1) + 30, 9, 9);
         }
@@ -871,12 +897,12 @@ public:
 \n    for (a = 0; a < n; ++a)\
 \n    {\
 \n        setcolor(WHITE);\
-\n        setfillstyle(HSLtoRGB(120.0f, 1.0f, (float)(arr[a] / 32.0)));\
+\n        setfillstyle(SOLID_FILL, HSLtoRGB(120.0f, 1.0f, (float)(arr[a] / 32.0)));\
 \n        fillellipse(100, 20 * a, 9, 9);\
 \n    }\
 \n    if (i >= 0)\
 \n    {\
-\n        setfillstyle(HSLtoRGB(120.0f, 1.0f, 1.0f)));\
+\n        setfillstyle(SOLID_FILL, HSLtoRGB(120.0f, 1.0f, 1.0f)));\
 \n        fillellipse(80, 20 * i + 30, 9, 9);\
 \n        fillellipse(80, 20 * (i + 1) + 30, 9, 9);\
 \n    }\
@@ -915,16 +941,16 @@ public:
 \n}\
 ";
             m_resettext = 0;
-            img.createimage(320, 480);
-            setfont(12, 0, "宋体", &img);
-            setbkmode(TRANSPARENT, &img);
-            setcolor(0x808080, &img);
-            line(0, 0, 0, 480, &img);
-            setcolor(0xFFFFFF, &img);
-            outtextrect(0, 50 - m_dline * 12, 320, 2048, str, &img);
-            outtextrect(0, 0, 320, 400, "左半边是程序运行结果，下面是相应的源代码\n按任意键查看下一个例子", &img);
+            resize(img, 320, 480);
+            setfont(12, 0, "宋体", img);
+            setbkmode(TRANSPARENT, img);
+            setcolor(0x808080, img);
+            line(0, 0, 0, 480, img);
+            setcolor(0xFFFFFF, img);
+            outtextrect(0, 50 - m_dline * 12, 320, 2048, str, img);
+            outtextrect(0, 0, 320, 400, "左半边是程序运行结果，下面是相应的源代码\n按任意键查看下一个例子", img);
         }
-        putimage(320, 0, &img);
+        putimage(320, 0, img);
     }
     SceneBase* Update()
     {
@@ -941,7 +967,7 @@ public:
     }
 private:
     SceneBase* m_parent;
-    IMAGE img;
+    PIMAGE img;
     int m_dline;
     int m_resettext;
 };
@@ -952,6 +978,11 @@ public:
     SceneArray(SceneBase* parent)
     {
         m_parent = parent;
+        img = newimage();
+    }
+    ~SceneArray()
+    {
+        delimage(img);
     }
     void smain()
     {
@@ -968,7 +999,7 @@ public:
     }
     void info()
     {
-        if (img.getwidth() <= 1)
+        if (getwidth(img) <= 1)
         {
             char str[] = "#include \"graphics.h\"\n#include <stdio.h>\n#include <time.h>\n#include <string.h>\nint main()\n{\
 \n    initgraph(640, 480);\
@@ -986,16 +1017,16 @@ public:
 \n        }\
 \n    }\
 \n    getch();\n    return 0;\n}";
-            img.createimage(320, 480);
-            setfont(12, 0, "宋体", &img);
-            setbkmode(TRANSPARENT, &img);
-            setcolor(0x808080, &img);
-            line(0, 0, 0, 480, &img);
-            setcolor(0xFFFFFF, &img);
-            outtextrect(0, 50, 320, 480, str, &img);
-            outtextrect(0, 0, 320, 400, "左半边是程序运行结果，下面是相应的源代码\n按任意键查看下一个例子", &img);
+            resize(img, 320, 480);
+            setfont(12, 0, "宋体", img);
+            setbkmode(TRANSPARENT, img);
+            setcolor(0x808080, img);
+            line(0, 0, 0, 480, img);
+            setcolor(0xFFFFFF, img);
+            outtextrect(0, 50, 320, 480, str, img);
+            outtextrect(0, 0, 320, 400, "左半边是程序运行结果，下面是相应的源代码\n按任意键查看下一个例子", img);
         }
-        putimage(320, 0, &img);
+        putimage(320, 0, img);
     }
     SceneBase* Update()
     {
@@ -1012,7 +1043,7 @@ public:
     }
 private:
     SceneBase* m_parent;
-    IMAGE img;
+    PIMAGE img;
 };
 
 class SceneMenu : public SceneBase
@@ -1086,12 +1117,12 @@ public:
             outtextrect(100, 100, 440, 480, str);
         }
         getch();
-        IMAGE img;
-        getimage(&img, 0, 0, 640, 480);
+        PIMAGE img = newimage();
+        getimage(img, 0, 0, 640, 480);
         for (len = 255 ; len>=0; delay_fps(60))
         {
             cleardevice();
-            putimage_alphablend(NULL, &img, 0, 0, len);
+            putimage_alphablend(NULL, img, 0, 0, len);
             len -= 3;
         }
         return new SceneMenu;
@@ -1100,12 +1131,11 @@ private:
     char m_str[1024];
 };
 
-int WinMain()
+int main()
 {
     initgraph(640, 480);
     SceneBase* scene = new SceneIntroduce; //SceneIntroduce; SceneMenu
     setbkmode(TRANSPARENT);
-    BeginBatchDraw();
     for (SceneBase* newscene = scene; newscene != NULL; delay_fps(60))
     {
         newscene = scene->Update();
@@ -1115,7 +1145,6 @@ int WinMain()
             scene = newscene;
         }
     }
-    EndBatchDraw();
     closegraph();
     return 0;
 }
