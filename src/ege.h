@@ -551,12 +551,7 @@ typedef struct ege_colpoint {
 }ege_colpoint;
 
 // 鼠标消息
-#if defined(__GNUC__)
-struct EGE_DEPRECATE(MOUSEMSG) MOUSEMSG {
-#else
-EGE_DEPRECATE(MOUSEMSG)
 struct MOUSEMSG {
-#endif
 	UINT uMsg;              // 当前鼠标消息
 	bool mkCtrl;            // Ctrl 键是否按下
 	bool mkShift;           // Shift 键是否按下
@@ -685,13 +680,13 @@ void EGEAPI window_getviewport(int* left, int* top, int* right, int* bottom);
 void EGEAPI window_setviewport(int  left, int  top, int  right, int  bottom);
 
 // 绘图属性
-EGE_DEPRECATE(setactivepage)
+EGE_DEPRECATE(getlinestyle)
 void EGEAPI getlinestyle(int *plinestyle, unsigned short *pupattern = NULL, int *pthickness = NULL, PIMAGE pimg = NULL); // 获取当前线形
 void EGEAPI setlinestyle(int linestyle, unsigned short upattern = 0, int thickness = 1, PIMAGE pimg = NULL);          // 设置当前线形
 void EGEAPI setlinewidth(float width, PIMAGE pimg = NULL);          // 设置当前线宽
-//EGE_DEPRECATE(setactivepage)
+//EGE_DEPRECATE(getfillstyle)
 //void getfillstyle(color_t *pcolor, int *ppattern = NULL, PIMAGE pimg = NULL);           // 获取填充类型 ###
-EGE_DEPRECATE(setactivepage)
+EGE_DEPRECATE(setfillstyle)
 void EGEAPI setfillstyle(int pattern, color_t color, PIMAGE pimg = NULL);  // 设置填充类型
 
 void EGEAPI setwritemode(int mode, PIMAGE pimg = NULL);         // 设置绘图位操作模式
