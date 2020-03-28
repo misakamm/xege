@@ -569,7 +569,7 @@ struct msg_createwindow {
 	LPCWSTR classname;
 	DWORD style;
 	DWORD exstyle;
-	unsigned id;
+	size_t id;
 	LPVOID param;
 };
 
