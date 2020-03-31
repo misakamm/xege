@@ -5,10 +5,16 @@
 <body>
 
 <pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">颜色表示及相关函数</a>-＞颜色表示</font>
+<font size="4">
 设置绘图色有以下几种办法：
 1. 用 16 进制的颜色表示，形式为：
+RGB颜色
 0xrrggbb (rr=红，gg=绿，bb=蓝)
 
+ARGB颜色
+0xaarrggbb (aa = 透明度，rr=红，gg=绿，bb=蓝)
+
+如果一些绘图函数使用的是ARGB颜色，则透明度不能为0，否则看不到绘制图形。
 2. 用预定义颜色，如下：
 
 <table width="100%" border="1" align="center">
@@ -33,7 +39,7 @@
 <font color=#008080>setcolor</font>(<font color=#800080>BLUE</font>);
 <font color=#008080>setcolor</font>(<font color=#800080>EGERGB</font>(0, 0, 255));
 <font color=#008080>setcolor</font>(<font color=#008080>hsl2rgb</font>(240, 1, 0.5));</pre>
-
+</font>
 </pre>
 
 </body>

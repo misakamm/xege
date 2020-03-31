@@ -1,0 +1,85 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ege_setapttern_texture</title>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">绘制图形相关函数</a>-＞ege_setapttern_texture</font>
+<font size="4">
+<font size="5" color="#0000FF"><strong>功能：</strong></font>
+设置高级函数颜色填充模式为纹理填充模式。
+使用前需要先将图像用ege_gentexture()生成纹理图。
+若填充区域超出纹理区域大小，将使用纹理重复填充
+纹理图像使用ARGB颜色，如果图像透明度为0，则无填充效果
+
+<font size="5" color="#0000FF"><strong>声明：</strong></font>
+<pre><font color=#0000FF>void </font><font color=#008080>ege_setapttern_texture</font>(
+    <font color=#800080>PIMAGE</font> texture,
+    <font color=#0000FF>float </font>x,
+    <font color=#0000FF>float </font>y,
+    <font color=#0000FF>float </font>w,
+    <font color=#0000FF>float </font>h,
+    <font color=#800080>PIMAGE</font> pimg= <font color=#800080>NULL</font>
+);
+</pre>
+
+<font size="5" color="#0000FF"><strong>参数：</strong></font>
+texture
+用作填充的纹理图像，需要先使用ege_gentexture()生成纹理，不可为NULL。
+
+x, y, w, h
+纹理图像上作为纹理填充的区域，区域必须在纹理图像范围内，否则填充失效。
+(设置好区域后，区域的左上角将与目标图像视口原点对齐，如果想任意调整对齐位置，
+可以通过setviewport()设置视口改变原点位置)
+
+pimg
+设置的目标图像，默认为NULL，即设置窗口。
+
+<font size="5" color="#0000FF"><strong>返回值：</strong></font>
+（无）
+
+<font size="5" color="#0000FF"><strong>示例：</strong></font>
+<pre><font color=#FF0000>#include </font><font color=#FF00FF>"graphics.h"
+</font><font color=#0000FF>int </font><font color=#FF0000>main</font>()
+{
+    <font color=#008080>initgraph</font>(640, 480, 0);
+    
+    <font color=#008080>setbkcolor</font>(WHITE);
+    <font color=#008080>setcolor</font>(EGEACOLOR(0xFF, RED));
+    <font color=#008080>setfillcolor</font>(EGEACOLOR(0xFF, BLUE));
+
+    <font color=#00a000>//创建图像图像</font>
+    <font color=#800080>PIMAGE</font> pimg = <font color=#008080>newimage</font>();
+    <font color=#008080>ege_fillellipse</font>(300, 0, 100, 100);	
+    <font color=#008080>getimage</font>(pimg, 300, 0, 100, 100);
+
+    <font color=#00a000>//可设置图像透明度</font>
+    <font color=#008080>ege_setalpha</font>(0xFF, pimg);
+
+    <font color=#00a000>//生成纹理图像</font>
+    <font color=#008080>ege_gentexture</font>(true, pimg);
+
+    <font color=#00a000>//设置纹理填充模式</font>
+    <font color=#008080>ege_setpattern_texture</font>(pimg, 0, 0,100, 100);
+
+    <font color=#00a000>//设置纹理填充模式后纹理图像可销毁</font>
+    <font color=#008080>delimage</font>(pimg);
+
+    <font color=#00a000>//通过设置视口方法设置纹理对齐</font>
+    <font color=#008080>setviewport</font>(50, 50, 700, 700, false);
+
+    <font color=#00a000>//下面有填充的高级函数会使用纹理填充图形</font>
+    <font color=#008080>ege_fillrect</font>(-100, -100, 320, 320);
+    <font color=#008080>ege_fillellipse</font>(200, 200, 300, 300);
+
+    <font color=#008080>getch</font>();
+    <font color=#008080>closegraph</font>();
+    
+    <font color=#0000FF>return </font>0;
+}
+
+</font>
+</pre>
+
+</body>
+

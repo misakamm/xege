@@ -1,0 +1,59 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ege_arc</title>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">绘制图形相关函数</a>-＞ege_arc</font>
+<font size="4">
+<font size="5" color="#0000FF"><strong>功能：</strong></font>
+这个函数用于画椭圆弧。颜色由setcolor函数决定
+
+<font size="5" color="#0000FF"><strong>声明：</strong></font>
+<pre><font color=#0000FF>void </font><font color=#008080>ege_arc</font>(
+    <font color=#0000FF>float </font>x,
+    <font color=#0000FF>float </font>y,
+    <font color=#0000FF>float </font>w,
+    <font color=#0000FF>float </font>h,
+    <font color=#0000FF>float </font>startAngle,
+    <font color=#0000FF>float </font>sweepAngle,
+    <font color=#800080>PIMAGE</font> pimg = <font color=#800080>NULL</font>
+);
+</pre>
+
+<font size="5" color="#0000FF"><strong>注意事项：</strong></font>
+使用的是ARGB颜色，透明度不能为0，否则无绘制效果。
+
+<font size="5" color="#0000FF"><strong>参数：</strong></font>
+x
+包围椭圆的矩形的左上角x坐标。
+
+y
+包围椭圆的矩形的左上角y坐标。
+
+w
+包围椭圆的矩形的宽。
+
+h
+包围椭圆的矩形的高。
+
+startAngle
+椭圆弧开始的角度（单位为角度，x正方向为0度，y正方向为90度）。
+
+sweepAngle
+椭圆弧扫过的角度。
+
+pimg
+绘制的目标图像，默认为NULL，即绘制到窗口。
+
+<font size="5" color="#0000FF"><strong>返回值：</strong></font>
+（无）
+
+<font size="5" color="#0000FF"><strong>示例：</strong></font>
+（无）
+
+</font>
+</pre>
+
+</body>
+
