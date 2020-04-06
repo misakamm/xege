@@ -100,6 +100,8 @@ $ cmake .. -G "MSYS Makefiles"
 [相关网站](https://sourceforge.net/projects/ezwinports/files/)
 上下载 MSYS make 程序并将其复制到可执行路径如 `/usr/bin` 中。
 
+扩展阅读：[Windows 上的编译系统](https://www.chirsz.cc/blog/2020-03/compile-sys-on-win.html)
+
 
 ### Visual C++ 6.0
 
