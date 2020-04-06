@@ -30,3 +30,14 @@ add_library(${LIB_NAME} STATIC
 
 # Just a hint
 target_link_libraries(${LIB_NAME} gdiplus imm32 msimg32)
+
+# compile test
+add_executable(graphicstest graphicstest/maintest.cpp)
+
+target_include_directories(graphicstest BEFORE
+      PRIVATE .)
+
+target_link_libraries(graphicstest ${LIB_NAME})
+if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
+  target_link_libraries(graphicstest -mwindows)
+endif ()
