@@ -55,3 +55,5 @@ int main()
 　　
 > 呵呵，很简单吧。更详细的请参阅ege文档。
 
+EGE 使用 [CMake](https://cmake.org) 构建编译系统，可参阅 [编译指南](BUILD.md) 自行编译。
+

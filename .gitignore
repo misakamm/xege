@@ -1,4 +1,3 @@
-/demo
 /include
 /lib
 /doc
@@ -11,3 +10,4 @@
 *.VC.db
 *.user
 *.o
+build/

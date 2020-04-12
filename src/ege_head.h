@@ -15,10 +15,12 @@
 #define _ALLOW_RUNTIME_LIBRARY_MISMATCH
 #endif
 
-#if _MSC_VER >= 1910
-#include <stdint.h>
+// MSVC 从 10.0（VS2010）开始有 stdint.h
+// GCC 从 4.5 开始有 stdint.h
+#if _MSC_VER >= 1600 || __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 5)
+#  include <stdint.h>
 #elif !defined(_MSC_VER) || _MSC_VER > 1300
-#include "stdint.h"
+#  include "stdint.h"
 #endif
 
 #define _GRAPH_LIB_BUILD_
@@ -41,15 +43,7 @@
 #define EGE_GDIPLUS // 使用gdi+函数扩展
 
 #ifdef EGE_GDIPLUS
-#ifdef _MSC_VER
 #	include <gdiplus.h>
-#else
-#	if __GNUC__ == 3
-#		include "gdiplus3/gdiplus.h"
-#	elif __GNUC__ >= 4
-#		include "gdiplus4/gdiplus.h"
-#	endif
-#endif
 #endif
 
 #define QUEUE_LEN           1024
