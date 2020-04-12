@@ -616,6 +616,34 @@ getcolor(PIMAGE pimg) {
 	return 0xFFFFFFFF;
 }
 
+// 将描述线形的位模式转换为 style 数组
+// 用于 ExtCreatePen 中
+// 返回用到的数组元素数
+static int upattern2array(unsigned short upattern, DWORD style[]) {
+	int n, bn = 0, len = 1;
+	int st = upattern & 1;
+	for (n = 1; n < 16; n++) {
+		if (upattern & (1<<n)) {
+			if (st == 0) {
+				st = 1;
+				style[bn++] = len;
+				len = 1;
+			} else {
+				len++;
+			}
+		} else {
+			if (st == 0) {
+				len++;
+			} else {
+				st = 0;
+				style[bn++] = len;
+				len = 1;
+			}
+		}
+	}
+	return bn;
+}
+
 void
 setcolor(color_t color, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
@@ -635,30 +663,11 @@ setcolor(color_t color, PIMAGE pimg) {
 			DWORD style[20] = {0};
 			LOGBRUSH lbr;
 			unsigned short upattern = img->m_linestyle.upattern;
-			int n, bn = 0, len = 1, st = 0;
+			int bn;
 			lbr.lbColor = lPen.lopnColor;
 			lbr.lbStyle = BS_SOLID;
 			lbr.lbHatch = 0;
-			st = upattern & 1;
-			for (n = 1; n < 16; n++) {
-				if (upattern & (1<<n)) {
-					if (st == 0) {
-						st = 1;
-						style[bn++] = len;
-						len = 1;
-					} else {
-						len++;
-					}
-				} else {
-					if (st == 0) {
-						len++;
-					} else {
-						st = 0;
-						style[bn++] = len;
-						len = 1;
-					}
-				}
-			}
+			bn = upattern2array(upattern, style);
 			hpen = ExtCreatePen(PS_GEOMETRIC, img->m_linestyle.thickness, &lbr, bn, style);
 		} else {
 			hpen = CreatePenIndirect(&lPen);
@@ -1389,30 +1398,11 @@ setlinestyle(int linestyle, unsigned short upattern, int thickness, PIMAGE pimg)
 	if (linestyle == PS_USERSTYLE) {
 		DWORD style[20] = {0};
 		LOGBRUSH lbr;
-		int n, bn = 0, len = 1, st = 0;
+		int bn;
 		lbr.lbColor = lpen.lopnColor;
 		lbr.lbStyle = BS_SOLID;
 		lbr.lbHatch = 0;
-		st = upattern & 1;
-		for (n = 1; n < 16; n++) {
-			if (upattern & (1<<n)) {
-				if (st == 0) {
-					st = 1;
-					style[bn++] = len;
-					len = 1;
-				} else {
-					len++;
-				}
-			} else {
-				if (st == 0) {
-					len++;
-				} else {
-					st = 0;
-					style[bn++] = len;
-					len = 1;
-				}
-			}
-		}
+		bn = upattern2array(upattern, style);
 		hpen = ExtCreatePen(PS_GEOMETRIC, thickness, &lbr, bn, style);
 	} else {
 		hpen = CreatePenIndirect(&lpen);
@@ -1426,8 +1416,33 @@ setlinestyle(int linestyle, unsigned short upattern, int thickness, PIMAGE pimg)
 void
 setlinewidth(float width, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
-	img->m_linestyle.thickness = (int)width;
-	img->m_linewidth = width;
+
+	if (img && img->m_hDC) {
+		HPEN hpen;
+		int linestyle = img->m_linestyle.linestyle;
+		img->m_linestyle.thickness = (int)width;
+		img->m_linewidth = width;
+
+		if (linestyle == PS_USERSTYLE) {
+			DWORD style[20] = {0};
+			LOGBRUSH lbr;
+			int bn;
+			lbr.lbColor = img->m_color;
+			lbr.lbStyle = BS_SOLID;
+			lbr.lbHatch = 0;
+			bn = upattern2array(img->m_linestyle.upattern, style);
+			hpen = ExtCreatePen(PS_GEOMETRIC, (int)width, &lbr, bn, style);
+		} else {
+			LOGPEN lpen = {0};
+			lpen.lopnColor = img->m_color;
+			lpen.lopnWidth.x = (LONG)width;
+			lpen.lopnStyle   = linestyle;
+			hpen = CreatePenIndirect(&lpen);
+		}
+		if (hpen) {
+			DeleteObject(SelectObject(img->m_hDC, hpen));
+		}
+	}
 	CONVERT_IMAGE_END;
 }
 
