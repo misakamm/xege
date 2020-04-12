@@ -335,7 +335,7 @@ getpixel(int x, int y, PIMAGE pimg) {
 		return 0;
 	}
 	color_t col = img->m_pBuffer[y * img->m_width + x];
-	return BGRTORGB(col);
+	return col;
 }
 
 void
@@ -346,7 +346,7 @@ putpixel(int x, int y, color_t color, PIMAGE pimg) {
 	if ((x < 0) || (y < 0) || (x >= img->m_vpt.right) || (y >= img->m_vpt.bottom)) {
 		;
 	} else {
-		img->m_pBuffer[y * img->m_width + x] = RGBTOBGR(color);
+		img->m_pBuffer[y * img->m_width + x] = color;
 	}
 	CONVERT_IMAGE_END;
 }
@@ -363,7 +363,7 @@ putpixels(int nPoint, int* pPoints, PIMAGE pimg) {
 		if ((x < 0) || (y < 0) || (x >= w) || (y >= h)) {
 			;
 		} else {
-			pb[y * tw + x] = RGBTOBGR(c);
+			pb[y * tw + x] = c;
 		}
 	}
 	CONVERT_IMAGE_END;
@@ -376,7 +376,7 @@ putpixels_f(int nPoint, int* pPoints, PIMAGE pimg) {
 	int tw = img->m_width;
 	for (int n=0; n<nPoint; ++n, pPoints += 3) {
 		c = pPoints[2];
-		img->m_pBuffer[pPoints[1] * tw + pPoints[0]] = RGBTOBGR(c);
+		img->m_pBuffer[pPoints[1] * tw + pPoints[0]] = c;
 	}
 	CONVERT_IMAGE_END;
 }
@@ -385,13 +385,13 @@ color_t
 getpixel_f(int x, int y, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE_F_CONST(pimg);
 	color_t col = img->m_pBuffer[y * img->m_width + x];
-	return BGRTORGB(col);
+	return col;
 }
 
 void
 putpixel_f(int x, int y, color_t color, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE_F(pimg);
-	img->m_pBuffer[y * img->m_width + x] = RGBTOBGR(color);
+	img->m_pBuffer[y * img->m_width + x] = color;
 }
 
 void
