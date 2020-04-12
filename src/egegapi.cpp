@@ -363,7 +363,7 @@ putpixels(int nPoint, int* pPoints, PIMAGE pimg) {
 		if ((x < 0) || (y < 0) || (x >= w) || (y >= h)) {
 			;
 		} else {
-			pb[y * tw + x] = RGBTOBGR(c);
+			pb[y * tw + x] = c;
 		}
 	}
 	CONVERT_IMAGE_END;
@@ -376,7 +376,7 @@ putpixels_f(int nPoint, int* pPoints, PIMAGE pimg) {
 	int tw = img->m_width;
 	for (int n=0; n<nPoint; ++n, pPoints += 3) {
 		c = pPoints[2];
-		img->m_pBuffer[pPoints[1] * tw + pPoints[0]] = RGBTOBGR(c);
+		img->m_pBuffer[pPoints[1] * tw + pPoints[0]] = c;
 	}
 	CONVERT_IMAGE_END;
 }
@@ -1902,10 +1902,7 @@ clearviewport(PIMAGE pimg) {
 			img->m_vpt.right - img->m_vpt.left,
 			img->m_vpt.bottom - img->m_vpt.top
 		};
-		HBRUSH hbr_c = (HBRUSH)GetCurrentObject(img->m_hDC, OBJ_BRUSH);
-		LOGBRUSH logBrush;
-		GetObject(hbr_c, sizeof(logBrush), &logBrush);
-		HBRUSH hbr = CreateSolidBrush(logBrush.lbColor);
+		HBRUSH hbr = CreateSolidBrush(GetBkColor(img->m_hDC));
 		FillRect(img->m_hDC, &rect, hbr);
 		DeleteObject(hbr);
 	}
