@@ -1902,10 +1902,7 @@ clearviewport(PIMAGE pimg) {
 			img->m_vpt.right - img->m_vpt.left,
 			img->m_vpt.bottom - img->m_vpt.top
 		};
-		HBRUSH hbr_c = (HBRUSH)GetCurrentObject(img->m_hDC, OBJ_BRUSH);
-		LOGBRUSH logBrush;
-		GetObject(hbr_c, sizeof(logBrush), &logBrush);
-		HBRUSH hbr = CreateSolidBrush(logBrush.lbColor);
+		HBRUSH hbr = CreateSolidBrush(GetBkColor(img->m_hDC));
 		FillRect(img->m_hDC, &rect, hbr);
 		DeleteObject(hbr);
 	}
