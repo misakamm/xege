@@ -2212,19 +2212,13 @@ ege_fillpie(float x, float y, float w, float h, float stangle, float sweepAngle,
 void
 ege_setalpha(int alpha, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
-	if (img) {
+	if (img && img->m_hDC) {
 		int a = alpha << 24;
-		int w = pimg->getwidth();
-		int h = pimg->getheight();
-		for (int y = 0; y < h; ++y)
+		int len = img->m_width * img->m_height;
+		for (int i = 0; i < len; ++i)
 		{
-			for (int x = 0; x < w; ++x)
-			{
-				int c;
-				c = getpixel_f(x, y, img);
-				c = a | (c & 0xFFFFFF);
-				putpixel_f(x, y, c, img);
-			}
+			DWORD c = img->m_pBuffer[i];
+			img->m_pBuffer[i] = a | (c & 0xFFFFFF);
 		}
 	}
 	CONVERT_IMAGE_END;
