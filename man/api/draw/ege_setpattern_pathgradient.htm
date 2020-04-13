@@ -1,0 +1,50 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ege_setpattern_lineargradient</title>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">绘制图形相关函数</a>-＞ege_setpattern_lineargradient</font>
+<font size="4">
+<font size="5" color="#0000FF"><strong>功能：</strong></font>
+设置高级函数颜色填充模式为路径渐变颜色填充模式。
+有效区域为由点包围成的多边形区域，区域内容颜色渐变填充。
+填充区域在有效区域内才能正确填充，在有效区域外填充区域不能保证填充正确。
+
+
+<font size="5" color="#0000FF"><strong>声明：</strong></font>
+<pre><font color=#0000FF>void </font><font color=#008080>ege_setpattern_lineargradient</font>(
+    <font color=#0000FF>ege_point </font>center,            //中心点坐标
+    <font color=#0000FF>color_t </font>centercolor,         //中心点颜色
+    <font color=#800080>int </font>count,                   //多边形点的个数
+    <font color=#0000FF>ege_point* </font>points,           //点的坐标
+    <font color=#0000FF>int </font>colcount,                //颜色数
+    <font color=#800080>color_t* </font>pointscolor,        //每个点对应的颜色
+    <font color=#800080>PIMAGE</font> pimg = <font color=#800080>NULL</font>
+);
+</pre>
+
+<font size="5" color="#0000FF"><strong>参数：</strong></font>
+center，centercolor
+中心点的坐标及颜色
+
+count，points
+围成区域的多边形的点的个数和坐标
+
+colcount,pointscolor
+多边形每个点对应的颜色。
+
+pimg
+设置的目标图像，默认为NULL，即设置窗口。
+
+<font size="5" color="#0000FF"><strong>返回值：</strong></font>
+（无）
+
+<font size="5" color="#0000FF"><strong>示例：</strong></font>
+（无）
+
+</font>
+</pre>
+
+</body>
+
