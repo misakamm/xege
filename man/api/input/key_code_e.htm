@@ -1,0 +1,147 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>key_code_e</title>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">键盘鼠标输入函数</a>-＞key_code_e</font>
+<font size="4">
+<font size="5" color="#0000FF"><strong>key_code_e 枚举</strong></font>
+
+用于定义按键码
+
+<font size="5" color="#0000FF"><strong>定义：</strong></font>
+<pre><font color=#0000FF>enum </font><font color=#008080>key_code_e</font>{</pre>
+    //鼠标左右中三键
+    key_mouse_l     = 0x01,
+    key_mouse_r     = 0x02,
+    key_mouse_m     = 0x04,
+    
+    //退格，Tab，回车键
+    key_back        = 0x08,
+    key_tab         = 0x09,
+    key_enter       = 0x0d,
+    
+    //辅助键
+    key_shift       = 0x10,
+    key_control     = 0x11,
+    
+    key_menu        = 0x12,
+    key_pause       = 0x13,
+    
+    //大写锁定，esc键，空格键
+    key_capslock    = 0x14,
+    key_esc         = 0x1b,
+    key_space       = 0x20,
+
+    //上一页，下一页，行首，行尾
+    key_pageup      = 0x21,
+    key_pagedown    = 0x22,
+    key_home        = 0x23,
+    key_end         = 0x24,
+
+    //方向键
+    key_left        = 0x25,
+    key_up          = 0x26,
+    key_right       = 0x27,
+    key_down        = 0x28,
+
+    key_print       = 0x2a,
+    key_snapshot    = 0x2c,
+    
+    //插入，删除键
+    key_insert      = 0x2d,
+    key_delete      = 0x2e,
+
+    //大键盘数字键
+    key_0           = 0x30,
+    key_1           = 0x31,
+    key_2           = 0x32,
+    key_3           = 0x33,
+    key_4           = 0x34,
+    key_5           = 0x35,
+    key_6           = 0x36,
+    key_7           = 0x37,
+    key_8           = 0x38,
+    key_9           = 0x39,
+
+    //字母键中的A键和Z键
+    key_A           = 0x41,
+    key_Z           = 0x5a,
+
+    //windows键
+    key_win_l       = 0x5b,
+    key_win_r       = 0x5c,
+
+    key_sleep       = 0x5f,
+
+    //小键盘的数字键，就是九个数字围成九宫格那个
+    key_num0        = 0x60,
+    key_num1        = 0x61,
+    key_num2        = 0x62,
+    key_num3        = 0x63,
+    key_num4        = 0x64,
+    key_num5        = 0x65,
+    key_num6        = 0x66,
+    key_num7        = 0x67,
+    key_num8        = 0x68,
+    key_num9        = 0x69,
+    
+    //小键盘的符号键
+    //EGE缺少定义，故拿虚拟键码来补充
+    //VK_MULTIPLY       0x6A		*
+    //VK_ADD            0x6B		+
+    //VK_SEPARATOR      0x6C		
+    //VK_SUBTRACT       0x6D		-
+    //VK_DECIMAL        0x6E		.
+    //VK_DIVIDE         0x6F		/
+
+    //这个是键盘上方的12个功能键
+    key_f1          = 0x70,
+    key_f2          = 0x71,
+    key_f3          = 0x72,
+    key_f4          = 0x73,
+    key_f5          = 0x74,
+    key_f6          = 0x75,
+    key_f7          = 0x76,
+    key_f8          = 0x77,
+    key_f9          = 0x78,
+    key_f10         = 0x79,
+    key_f11         = 0x7a,
+    key_f12         = 0x7b,
+
+    //小键盘数字锁
+    key_numlock     = 0x90,
+    
+    key_scrolllock  = 0x91,
+
+    //可能左右两边都有一个
+    key_shift_l     = 0xa0,
+    key_shift_r     = 0xa1,
+    key_control_l   = 0xa2,
+    key_control_r   = 0xa3,
+    key_menu_l      = 0xa4,
+    key_menu_r      = 0xa5,
+
+    //大键盘上的符号键
+    key_semicolon   = 0xba,		;	分号
+    key_plus        = 0xbb,		+	加号
+    key_comma       = 0xbc,		,	逗号
+    key_minus       = 0xbd,		-	减号
+    key_period      = 0xbe,		.	句号
+    key_slash       = 0xbf,		/	右斜杠
+    key_tilde       = 0xc0,		`	波浪符（下面的点）
+    key_lbrace      = 0xdb,		[	左方
+    key_backslash   = 0xdc,		\	反斜杠
+    key_rbrace      = 0xdd,		]	右方
+    key_quote       = 0xde,		'	引号
+
+    key_ime_process = 0xe5,
+
+}<font color=#008080>key_code_e</font>;
+
+</font>
+</pre>
+
+</body>
+

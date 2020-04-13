@@ -23,19 +23,21 @@
     var src = target.match(reg)[0];
     src = src.replace("src=", "");
     src = src.replace("&", "");
+    var isMarkdown = src.match(/.md$/);
 
     var req = new XMLHttpRequest();
     req.open("GET", src, true);
     req.onload = function (ev) {
         if (this.status === 200 || this.status === 304) {
             var content = this.responseText;
-            var s = marked(content);
+            var s = isMarkdown ? marked(content) : content;
             document.body.innerHTML = s;
         } else {
             console.log(ev);
         }
     };
     req.send();
+
 </script>
 </body>
 </html>

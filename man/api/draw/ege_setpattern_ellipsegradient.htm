@@ -1,0 +1,47 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ellipsegradient</title>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">绘制图形相关函数</a>-＞ellipsegradient</font>
+<font size="4">
+<font size="5" color="#0000FF"><strong>功能：</strong></font>
+设置高级函数颜色填充模式为椭圆渐变颜色填充模式。
+有效区域为椭圆区域，区域内容颜色渐变填充。
+填充区域在有效区域内才能正确填充。
+
+<font size="5" color="#0000FF"><strong>声明：</strong></font>
+<pre><font color=#0000FF>void </font><font color=#008080>ellipsegradient</font>(
+    <font color=#0000FF>ege_point </font>center,            //中心点坐标
+    <font color=#0000FF>color_t </font>centercolor,         //中心点颜色
+    <font color=#0000FF>float </font>x,
+    <font color=#0000FF>float </font>y,
+    <font color=#0000FF>float </font>w,
+    <font color=#0000FF>float </font>h,
+    <font color=#0000FF>color_t </font>color,               //边界颜色
+    <font color=#800080>PIMAGE</font> pimg = <font color=#800080>NULL</font>
+);
+</pre>
+
+<font size="5" color="#0000FF"><strong>参数：</strong></font>
+center，centercolor
+中心点的坐标及颜色
+
+x, y, w, h
+包围椭圆的矩形的左上角坐标及宽高。
+
+pimg
+设置的目标图像，默认为NULL，即设置窗口。
+
+<font size="5" color="#0000FF"><strong>返回值：</strong></font>
+（无）
+
+<font size="5" color="#0000FF"><strong>示例：</strong></font>
+（无）
+
+</font>
+</pre>
+
+</body>
+

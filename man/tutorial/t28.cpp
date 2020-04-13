@@ -1,30 +1,30 @@
-//»ù´¡¶¯»­°Ë£¬Ê¹ÓÃC++·â×°ÄãµÄ¶ÔÏó
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë£ï¿½Ê¹ï¿½ï¿½C++ï¿½ï¿½×°ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½
 
-//¿´±¾ÎÄÕÂÇ°£¬Äã¶¼¿´ÁËÇ°¼¸ÆªÁË°É£¿¾õ²»¾õµÃËÆºõÓÐÒ»¸ö¹Ì¶¨Ä£Ê½£¿
-//Èç¹ûÄãÓÐÕâ¸ö¸Ð¾õ£¬ËµÃ÷ÄãÕæµÄ¿´¶®ÁË
-//·â×°Ò»¸öÍ¼ÐÎ¶ÔÏó£¬ËÄ´ó±ØÒª½Ó¿Úº¯Êý£º³õÊ¼»¯£¬Âß¼­¸üÐÂ£¬»æ»­£¨äÖÈ¾£©£¬ÊÍ·Å£¨Îö¹¹£©
-//º¯ÊýÉÙÁË¾Í¾ø¶Ô²»ÕýÈ·£¬½Ó¿Úº¯Êý¶àÁË¾ÍËµÃ÷ÄãµÄ·â×°¿ÉÄÜ»¹ÐèÒªµ÷Õû
-//Ò»°ãµÄÓ¦ÓÃÏÂ£¬¾ÍÕâËÄ¸ö½Ó¿Ú¾Í×ã¹»ÁË£¬×îÉÙÒ²±ØÐëÓÐÕâËÄ¸ö£¬ÇëÄãÒ»¶¨Òª¼ÇµÃ
-//Áí£º²»ÊÇËµÕâ¸öÀàÖ»ÓÐÕâËÄ¸öº¯Êý£¬¿ÉÒÔÓÐ¸ü¶àµÄº¯Êý·½±ãÄã×Ô¼ºÊ¹ÓÃ£¬µ«¶ÔÍâ£¨¶ÔÖ÷Ñ­»·º¯Êý£©±©Â¶Ê¹ÓÃµÄÓ¦¸Ã¾ÍÕâËÄ¸ö
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ã¶¼ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½Æªï¿½Ë°É£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æºï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ì¶ï¿½Ä£Ê½ï¿½ï¿½
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¾ï¿½ï¿½ï¿½Ëµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½
+//ï¿½ï¿½×°Ò»ï¿½ï¿½Í¼ï¿½Î¶ï¿½ï¿½ï¿½ï¿½Ä´ï¿½ï¿½Òªï¿½Ó¿Úºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ß¼ï¿½ï¿½ï¿½ï¿½Â£ï¿½ï¿½æ»­ï¿½ï¿½ï¿½ï¿½È¾ï¿½ï¿½ï¿½ï¿½ï¿½Í·Å£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¾Í¾ï¿½ï¿½Ô²ï¿½ï¿½ï¿½È·ï¿½ï¿½ï¿½Ó¿Úºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¾ï¿½Ëµï¿½ï¿½ï¿½ï¿½Ä·ï¿½×°ï¿½ï¿½ï¿½Ü»ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½
+//Ò»ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½Â£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¸ï¿½ï¿½Ó¿Ú¾ï¿½ï¿½ã¹»ï¿½Ë£ï¿½ï¿½ï¿½ï¿½ï¿½Ò²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Òªï¿½Çµï¿½
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½ï¿½ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¸ï¿½ï¿½ï¿½Äºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½Ê¹ï¿½Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½â£¨ï¿½ï¿½ï¿½ï¿½Ñ­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¶Ê¹ï¿½Ãµï¿½Ó¦ï¿½Ã¾ï¿½ï¿½ï¿½ï¿½Ä¸ï¿½
 
-// ´Ó±¾ÎÄ¿ªÊ¼£¬¸ÄÓÃ´ËÍ·ÎÄ¼þ£¬µ÷ÓÃº¯ÊýÊ±µÄÇø±ðÊÇÐèÒªegeÕâ¸önamespace
-// ÕâÑùµÄºÃ´¦ÊÇvcµÄ×Ô¶¯ÌáÊ¾¿ÉÒÔ¸ü¾«È·£¬ÔÄ¶Á´úÂëµÄÊ±ºò¿É¶ÁÐÔ¸üºÃ£¬È±µãÊÇ±àÐ´µÄÊ±ºòÂÔÂé·³Ò»Ð©
+// ï¿½Ó±ï¿½ï¿½Ä¿ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½Ã´ï¿½Í·ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ãºï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªegeï¿½ï¿½ï¿½namespace
+// ï¿½ï¿½ï¿½ï¿½ï¿½ÄºÃ´ï¿½ï¿½ï¿½vcï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½Ô¸ï¿½ï¿½ï¿½È·ï¿½ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½É¶ï¿½ï¿½Ô¸ï¿½ï¿½Ã£ï¿½È±ï¿½ï¿½ï¿½Ç±ï¿½Ð´ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½é·³Ò»Ð©
 #include <ege.h>
 
 const float base_speed = 0.5f;
 const float randspeed = 1.5f;
 
-//×Ô¶¨Òåº¯Êý£¬ÓÃÀ´·µ»ØÒ»¸ö0 - mÖ®¼äµÄ¸¡µãÊý
+//ï¿½Ô¶ï¿½ï¿½åº¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½0 - mÖ®ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½ï¿½ï¿½
 float myrand(float m)
 {
 	return (float)(ege::randomf() * m);
 }
 
-//¶¨ÒåÒ»¸öAniObjÀà
+//ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½AniObjï¿½ï¿½
 class AniObj
 {
 public:
-	//³õÊ¼»¯£¬ÉèÖÃ×ø±ê£¬ËÙ¶È·½Ïò£¬Í¸Ã÷¶È£¬´´½¨IMAGEµÈ
+	//ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê£¬ï¿½Ù¶È·ï¿½ï¿½ï¿½Í¸ï¿½ï¿½ï¿½È£ï¿½ï¿½ï¿½ï¿½ï¿½IMAGEï¿½ï¿½
 	AniObj()
 	{
 		_x = myrand((float)ege::getwidth());
@@ -46,30 +46,30 @@ public:
 		ege::fillellipse(_r, _r, _r, _r, _img);
 	}
 
-	//¸üÐÂÎ»ÖÃµÈÏà¹ØÊôÐÔ
+	//ï¿½ï¿½ï¿½ï¿½Î»ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	void update()
 	{
-		// µ±Ç°Î»ÖÃ + ËÙ¶È
+		// ï¿½ï¿½Ç°Î»ï¿½ï¿½ + ï¿½Ù¶ï¿½
 		_x += _dx;
 		_y += _dy;
-		if (_x < 0) _dx = myrand(randspeed) + base_speed; //Åö×ó
-		if (_y < 0) _dy = myrand(randspeed) + base_speed; //ÅöÉÏ
-		if (_x >= ege::getwidth()  - _r * 2) _dx = -(myrand(randspeed) + base_speed); //ÅöÓÒ
-		if (_y >= ege::getheight() - _r * 2) _dy = -(myrand(randspeed) + base_speed); //ÅöÏÂ
+		if (_x < 0) _dx = myrand(randspeed) + base_speed; //ï¿½ï¿½ï¿½ï¿½
+		if (_y < 0) _dy = myrand(randspeed) + base_speed; //ï¿½ï¿½ï¿½ï¿½
+		if (_x >= ege::getwidth()  - _r * 2) _dx = -(myrand(randspeed) + base_speed); //ï¿½ï¿½ï¿½ï¿½
+		if (_y >= ege::getheight() - _r * 2) _dy = -(myrand(randspeed) + base_speed); //ï¿½ï¿½ï¿½ï¿½
 
-		// ¸Ä±äalphaÖµ
+		// ï¿½Ä±ï¿½alphaÖµ
 		_alpha += _da;
 		if (_alpha <= 0)	_da = 1;
 		if (_alpha >= 0xFF) _da = -1;
 	}
 
-	//¸ù¾ÝÊôÐÔÖµ»æ»­
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½æ»­
 	void render()
 	{
 		ege::putimage_alphatransparent(NULL, _img, (int)_x, (int)_y, ege::BLACK, (unsigned char)_alpha);
 	}
 
-	//ÊÍ·ÅÕâ¸ö¶ÔÏóÊ±µ÷ÓÃ
+	//ï¿½Í·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½
 	~AniObj()
 	{
 		ege::delimage(_img);
@@ -87,38 +87,38 @@ private:
 void mainloop()
 {
 	const int MAXOBJ = 30;
-	AniObj obj[MAXOBJ]; //¶¨Òå¶ÔÏóÊý×é
+	AniObj obj[MAXOBJ]; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	int n;
 
-	//ÎªÊ²Ã´ÕâÀïÃ»ÓÐobj³õÊ¼»¯£¿ÒòÎªÔÚÀà¶ÔÏóÉùÃ÷µÄÊ±ºò¾Íµ÷ÓÃÁË¹¹Ôìº¯Êý³õÊ¼»¯ºÃÁË
+	//ÎªÊ²Ã´ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½objï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½Íµï¿½ï¿½ï¿½ï¿½Ë¹ï¿½ï¿½ìº¯ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 	for ( ; ege::is_run(); ege::delay_fps(60) )
 	{
 		for (n = 0; n < MAXOBJ; ++n)
 		{
-			obj[n].update(); //¸üÐÂÎ»ÖÃ
+			obj[n].update(); //ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½
 		}
 
 		ege::cleardevice();
 		for (n = 0; n < MAXOBJ; ++n)
 		{
-			obj[n].render(); //»æ»­
+			obj[n].render(); //ï¿½æ»­
 		}
 	}
 
-	//ÎªÊ²Ã´ÕâÀïÃ»ÓÐÊÍ·Å£¿ÒòÎªobjÊÇÊý×é¶ÔÏó£¬»áÔÚ±¾¹ý³Ì½áÊøºó×Ô¶¯µ÷ÓÃÊÍ¹¹º¯Êý
+	//ÎªÊ²Ã´ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Í·Å£ï¿½ï¿½ï¿½Îªobjï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ó£¬»ï¿½ï¿½Ú±ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¹ï¿½ï¿½ï¿½ï¿½ï¿½
 }
 
 int main(void)
 {
 	ege::setinitmode(ege::INIT_ANIMATION);
-	// Í¼ÐÎ³õÊ¼»¯£¬´°¿Ú³ß´ç640x480
+	// Í¼ï¿½Î³ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú³ß´ï¿½640x480
 	ege::initgraph(640, 480);
-	// Ëæ»úÊý³õÊ¼»¯£¬Èç¹ûÐèÒªÊ¹ÓÃËæ»úÊýµÄ»°
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÒªÊ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä»ï¿½
 	ege::randomize();
-	// ³ÌÐòÖ÷Ñ­»·
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ­ï¿½ï¿½
 	mainloop();
-	// ¹Ø±Õ»æÍ¼Éè±¸
+	// ï¿½Ø±Õ»ï¿½Í¼ï¿½è±¸
 	ege::closegraph();
 	return 0;
 }

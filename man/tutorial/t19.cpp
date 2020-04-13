@@ -1,13 +1,13 @@
-//¸ß¼¶£º»æ»­½¥±äÉ«/²Êºç
+//ï¿½ß¼ï¿½ï¿½ï¿½ï¿½æ»­ï¿½ï¿½ï¿½ï¿½É«/ï¿½Êºï¿½
 #include <graphics.h>
 
-// alpha »ìºÏ¼ÆËãº¯Êý
+// alpha ï¿½ï¿½Ï¼ï¿½ï¿½ãº¯ï¿½ï¿½
 color_t alphasingle(color_t a, color_t b, color_t alpha)
 {
 	return (a * (0xFF - alpha) + b * alpha) >> 8;
 }
 
-// ÑÕÉ«alpha»ìºÏ¼ÆËãº¯Êý
+// ï¿½ï¿½É«alphaï¿½ï¿½Ï¼ï¿½ï¿½ãº¯ï¿½ï¿½
 color_t alphacol(color_t d, color_t s, color_t alpha)
 {
 	return (alphasingle(d&0xFF00FF, s&0xFF00FF, alpha) & 0xFF00FF)
@@ -19,7 +19,7 @@ int main()
 	initgraph(640, 480);
 	int c;
 
-	//»­½¥±äÉ«
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«
 	for (c=0; c<256; ++c)
 	{
 		color_t a = 0xFF0000, b = 0x0000FF;
@@ -27,7 +27,7 @@ int main()
 		line(0, c, 200, c);
 	}
 
-	//»­²Êºç
+	//ï¿½ï¿½ï¿½Êºï¿½
 	for (c=0; c<360; ++c)
 	{
 		setcolor(hsl2rgb((float)c, 1.0f, 0.5f));

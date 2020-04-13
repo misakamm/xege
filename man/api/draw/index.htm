@@ -5,9 +5,9 @@
 <body>
 
 <pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞绘制图形相关函数</font>
-
-目录：
-<table width="100%" border="1" align="center">
+<font size="4">
+普通绘图函数：
+<table width="100%" border="1" align="center" style="font-size: 16;">
 <tr><td bgcolor="#8080FF">函数或数据</td><td bgcolor="#8080FF">说明</td></tr>
 <tr><td><a href="arc.htm">arc</a></td><td>画圆弧</td></tr>
 <tr><td><a href="bar.htm">bar</a></td><td>画无边框填充矩形</td></tr>
@@ -46,11 +46,48 @@
 <tr><td><a href="setwritemode.htm">setwritemode</a></td><td>设置绘图位操作模式</td></tr>
 </table>
 
+
+高级绘图函数(图形可透明，可带抗锯齿)：
+<table width="100%" border="1" align="center" style="font-size: 16;">
+<tr><td bgcolor="#8080FF">函数或数据</td><td bgcolor="#8080FF">说明</td></tr>
+<tr><td><a href="ege_enable_aa.htm">ege_enable_aa</a></td><td>抗锯齿设置</td></tr>
+
+<tr><td><a href="ege_line.htm">ege_line</a></td><td>画线</td></tr>
+<tr><td><a href="ege_rectangle.htm">ege_rectangle</a></td><td>画矩形线框</td></tr>
+<tr><td><a href="ege_arc.htm">ege_arc</a></td><td>画圆弧</td></tr>
+<tr><td><a href="ege_ellipse.htm">ege_ellipse</a></td><td>画椭圆线框</td></tr>
+<tr><td><a href="ege_pie.htm">ege_pie</a></td><td>画扇形线框</td></tr>
+<tr><td><a href="ege_drawpoly.htm">ege_drawpoly</a></td><td>画多边形线框</td></tr>
+<tr><td><a href="ege_bezier.htm">eege_bezier</a></td><td>画贝塞尔曲线</td></tr>
+<tr><td><a href="ege_drawcurve.htm">ege_drawcurve</a></td><td>画拟合曲线</td></tr>
+
+
+<tr><td><a href="ege_fillrect.htm">ege_fillrect</a></td><td>画填充矩形</td></tr>
+<tr><td><a href="ege_fillpie.htm">ege_fillpie</a></td><td>画填充扇形</td></tr>
+<tr><td><a href="ege_fillpoly.htm">ege_fillpoly</a></td><td>画填充多边形</td></tr>
+<tr><td><a href="ege_fillellipse.htm">ege_fillellipse</a></td><td>画填充椭圆</td></tr>
+
+<tr><td><a href="ege_setpattern_none.htm">ege_setpattern_none</a></td><td>设置为默认填充模式</td></tr>
+<tr><td><a href="ege_setpattern_lineargradient.htm">ege_setpattern_lineargradient</a></td><td>设置为线性渐变填充模式</td></tr>
+<tr><td><a href="ege_setpattern_pathgradient.htm">ege_setpattern_pathgradient</a></td><td>设置为路径渐变填充模式</td></tr>
+<tr><td><a href="ege_setpattern_ellipsegradient.htm">ege_setpattern_ellipsegradient</a></td><td>设置为椭圆渐变填充模式</td></tr>
+<tr><td><a href="ege_setpattern_texture.htm">ege_setpattern_texture</a></td><td>设置为纹理填充模式</td></tr>
+
+<tr><td><a href="ege_gentexture.htm">ege_gentexture</a></td><td>生成纹理</td></tr>
+<tr><td><a href="ege_puttexture.htm">ege_puttexture</a></td><td>绘制纹理</td></tr>
+
+<tr><td><a href="ege_point.htm">ege_point 结构体</a></td><td>点</td></tr>
+<tr><td><a href="ege_rect.htm">ege_rect 结构体</a></td><td>矩形区域</td></tr>
+<tr><td><a href="ege_colpoint.htm">ege_colpoint 结构体</a></td><td>颜色点</td></tr>
+
+
+</table>
 特殊说明：
     以下所有函数的坐标模式为，如果以有向线段表示的量，起点能取到，终点取不到。比如line函数，起点x1,y1能画上点，终点x2,y2不会画上点，请注意。类似的有lineto, linerel, bar, bar3d, rectangle, ellipse, sector，函数说明内也会对本段进行补充。
     另外，这里每一个函数的最后一个参数均为一个PIMAGE的指针，是一个可选参数，如果不填，则绘画到当前页。如果填上，则绘画到指定的IMAGE。
     关于效率，如果使用手动更新模式（setrendermode），那以上所有函数的执行速度都会得到提升。
 
+</font>
 </pre>
 
 </body>

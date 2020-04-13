@@ -5,7 +5,7 @@
 <body>
 
 <pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">绘图环境相关函数</a>-＞initgraph</font>
-
+<font size="4">
 <font size="5" color="#0000FF"><strong>功能：</strong></font>
 这个函数用于初始化绘图环境。
 
@@ -30,7 +30,19 @@ Height
 绘图环境的高度。如果为-1，则使用屏幕的高度
 
 Style
-请留空，为保留参数
+窗口初始化模式,可以由以下值组合
+INIT_NOBORDER       =0x1,       //无边框窗口
+INIT_CHILD          =0x2,       //子窗口，需配合attachHWND()函数
+INIT_TOPMOST        = 0x4,      //顶层窗口(不会被其它窗口遮挡)
+INIT_RENDERMANUAL   = 0x8,      //手动渲染模式
+INIT_NOFORCEEXIT    = 0x10,     //退出时不强制结束程序,而是设置标志位，可由is_run()判断
+INIT_WITHLOGO       = 0x100,    //带EGE logo出场动画
+
+INIT_DEFAULT （默认值）
+配置目标为Debug时，为普通窗口, INIT_DEFAULT= 0x0 (Debug)
+配置目标为Realse时，带EGE logo出场动画, INIT_DEFAULT = INIT_WITHLOGO (Realse)
+
+INIT_ANIMATION  = INIT_DEFAULT | INIT_RENDERMANUAL | INIT_NOFORCEEXIT,
 
 
 <font size="5" color="#0000FF"><strong>返回值：</strong></font>
@@ -49,7 +61,7 @@ Style
     <font color=#0000FF>return </font>0;
 }
 </pre>
-
+</font>
 
 </pre>
 

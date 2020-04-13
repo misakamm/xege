@@ -1,0 +1,46 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>savepng</title>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">图像处理相关函数</a>-＞savepng</font>
+<font size="4">
+<font size="5" color="#0000FF"><strong>功能：</strong></font>
+这个函数用于将图像保存到文件中。
+
+<font size="5" color="#0000FF"><strong>声明：</strong></font>
+<pre><font color=#0000FF>int </font><font color=#008080>savepng</font>(
+    <font color=#800080>PIMAGE </font> pimg,
+    <font color=#800080>LPCSTR </font> filename,
+    <font color=#0000FF>int </font> bAlpha = 0
+);
+
+<font color=#0000FF>int </font><font color=#008080>savepng</font>(
+    <font color=#800080>PIMAGE </font> pimg,
+    <font color=#800080>LPCWSTR </font> filename,
+    <font color=#0000FF>int </font> bAlpha = 0
+);
+</pre>
+
+<font size="5" color="#0000FF"><strong>参数：</strong></font>
+pimg
+要保存的图像
+
+filename
+保存的图像文件名
+
+bAlpha
+设置保存图像的透明度，范围从0~255
+
+<font size="5" color="#0000FF"><strong>返回值：</strong></font>
+成功返回0，否则返回非0，若pimg传入错误，会引发运行时异常。
+
+<font size="5" color="#0000FF"><strong>示例：</strong></font>
+（无）
+
+</font>
+</pre>
+
+</body>
+
