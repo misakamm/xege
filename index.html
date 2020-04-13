@@ -6,7 +6,7 @@
 	<link rel="stylesheet" href="index.css">
 </head>
 <body onload="pageOnResize()" onresize="pageOnResize()">
-<div style="top:0px;left:0px;width:250px;border:groove;margin:20px auto auto 10px;" id="toolView">
+<div style="top:0px;left:0px;width:250px; overflow: scroll; border:groove;margin:20px auto auto 10px;" id="toolView">
 	<h2>EGE在线文档.</h2>
 	<script type="text/javascript">
         var toolObj = document.getElementById("toolView");
@@ -228,9 +228,8 @@
 
         for (var key in tools) {
             var item = document.createElement("div");
-            // var text = "<h2><a href = 'helper.html?src=" + key + "' target='tools'>" + tools[key] + "</a></h2>";
 			var text = "<h2><a href = 'helper.html?src=" + key + "' target='tools'>" + tools[key] + "</a></h2>";
-            item.setAttribute("style", "text-align:left;background-color: #abcdef; margin 10px;");
+            item.setAttribute("style", "text-align:left;background-color: #abcdef; margin 5px;");
             item.innerHTML = text;
             toolObj.appendChild(item);
         }
@@ -246,6 +245,10 @@
 <script type="text/javascript">
 
 	function pageOnResize() {
+		var toolView = document.getElementById("toolView");
+		toolView.style.height = (window.screen.height - 150) + "px";
+		console.log("document.body.clientHeight" +  document.body.clientHeight);
+
         var itemView = document.getElementById("itemView");
         var itemWidth = document.body.clientWidth - 320;
         if (itemWidth < 300) itemWidth = 300;
