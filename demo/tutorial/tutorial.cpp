@@ -412,7 +412,7 @@ int main()
 	edit.size(100, 100);
 	edit.settext("È¥ËÀ");
 	edit.setmaxlen(30);
-	edit.visable(true);
+	edit.visible(true);
 	edit.setcolor(EGERGB(0, 0x80, 0));
 	edit.setbgcolor(EGERGB(0xff, 0x80, 0xff));
 	setbkcolor(EGERGB(0x80, 0, 0x80));
@@ -430,7 +430,7 @@ int main()
 		r += 0.01f;
 		if (r > PI * 2.0f) r -= float(PI * 2.0f);
 		cleardevice();
-		edit.visable(true);
+		edit.visible(true);
 		putimage_rotatezoom(NULL, img, 200, 200, 0.5f, 0.5f, r, 1.5f, 0, -1, 1);
 		xyprintf(200, 200, "%d", 100);
 	}

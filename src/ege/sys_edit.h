@@ -19,11 +19,11 @@ public:
         m_hwnd = NULL;
     }
     ~sys_edit() {
-        destory();
+        destroy();
     }
     int create(bool multiline = false, int scrollbar = 2) {
         if (m_hwnd) {
-            destory();
+            destroy();
         }
         msg_createwindow msg = {NULL};
         msg.hEvent = ::CreateEvent(NULL, TRUE, FALSE, NULL);
@@ -55,13 +55,13 @@ public:
             char fontname[] = {'\xcb', '\xce', '\xcc', '\xe5', 0, 0};
             setfont(12, 6, fontname);
         }
-        visable(false);
+        visible(false);
 
         ::CloseHandle(msg.hEvent);
 
         return 0;
     }
-    int destory() {
+    int destroy() {
         if (m_hwnd) {
             msg_createwindow msg = {NULL};
             msg.hwnd = m_hwnd;
@@ -96,9 +96,9 @@ public:
         }
         //return 0;
     }
-    void visable(bool bvisable) {
-        egeControlBase::visable(bvisable);
-        ::ShowWindow(m_hwnd, (int)bvisable);
+    void visible(bool bvisible) {
+        egeControlBase::visible(bvisible);
+        ::ShowWindow(m_hwnd, (int)bvisible);
     }
     void setfont(int h, int w, LPCSTR fontface) {
         {
