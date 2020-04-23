@@ -153,7 +153,7 @@ int main()
     scanf("%*s");
     edit.create();
     edit.size(100, 18);
-    edit.visable(true);
+    edit.visible(true);
     for ( ; kbhit() != -1; delay_fps(60)) {
         //f.zorderup();
         {

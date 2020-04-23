@@ -34,7 +34,7 @@ linestyle
 upattern
 自定义线形数据。
 自定义规则：该数据为 WORD 类型，共 16 个二进制位，每位为 1 表示画线，为 0 表示空白。从低位到高位表示从起始到终止的方向。
-仅当线型为 PS_USERSTYLE 时该参数有效。
+仅当线型为 USERBIT_LINE 时该参数有效。
 
 thickness
 线形宽度。
@@ -43,7 +43,7 @@ thickness
 （无）
 
 <font size="5" color="#0000FF"><strong>示例：</strong></font>
-设置线形为点划线： setlinestyle(DASHED_LINE);
+设置线形为宽度为3像素的点划线： setlinestyle(DASHED_LINE, NULL, 3);
 
 </font>
 </pre>

@@ -2379,7 +2379,7 @@ inputbox_getline(LPCWSTR title, LPCWSTR text, LPWSTR buf, int len) {
 	edit.move(x+30+1, y+192+1);
 	edit.size(w-(30+1)*2, h-40-192-2);
 	edit.setmaxlen(len);
-	edit.visable(true);
+	edit.visible(true);
 	edit.setfocus();
 	for (int bInit = 0; is_run(); delay_fps(30)) {
 		if (bInit) {

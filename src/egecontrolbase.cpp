@@ -88,7 +88,7 @@ egeControlBase::init(egeControlBase* parent) {
 		root = this;
 		m_parent = NULL;
 
-		m_bVisable  = 0;
+		m_bVisible  = 0;
 		m_bEnable   = 0;
 		m_bAutoDraw = 0;
 		m_bDirectDraw = 1;
@@ -105,7 +105,7 @@ egeControlBase::init(egeControlBase* parent) {
 			m_parent = root;
 		}
 
-		m_bVisable  = 1;
+		m_bVisible  = 1;
 		m_bEnable   = 1;
 		m_bAutoDraw = 1;
 		m_bDirectDraw = 0;
@@ -245,7 +245,7 @@ void egeControlBase::mouse(int x, int y, int flag) {
 			if (it == vec.rend()) it = vec.rbegin();
 			for ( ; it != vec.rend(); ++it) {
 				egeControlBase* pc = *it;
-				if (!pc->isvisable() || !pc->isenable()) continue;
+				if (!pc->isvisible() || !pc->isenable()) continue;
 				if (x >= pc->getx() && y >= pc->gety() &&
 					x < pc->getx() + pc->getw() && y < pc->gety() + pc->geth() )
 				{
@@ -287,7 +287,7 @@ void egeControlBase::keymsgdown(unsigned key, int flag) {
 		egectlmap*& cmap = (egectlmap*&)m_childmap;
 		if (cmap) {
 			for (egectlmap::reverse_iterator it = cmap->rbegin() ; it != cmap->rend(); ++it) {
-				if (!(*it)->isvisable() || !(*it)->isenable()) continue;
+				if (!(*it)->isvisible() || !(*it)->isenable()) continue;
 				if ((*it)->iscapture()) {
 					(*it)->keymsgdown(key, flag);
 				}
@@ -307,7 +307,7 @@ void egeControlBase::keymsgup(unsigned key, int flag) {
 		egectlmap*& cmap = (egectlmap*&)m_childmap;
 		if (cmap) {
 			for (egectlmap::reverse_iterator it = cmap->rbegin() ; it != cmap->rend(); ++it) {
-				if (!(*it)->isvisable() || !(*it)->isenable()) continue;
+				if (!(*it)->isvisible() || !(*it)->isenable()) continue;
 				if ((*it)->iscapture()) {
 					(*it)->keymsgup(key, flag);
 				}
@@ -327,7 +327,7 @@ void egeControlBase::keymsgchar(unsigned key, int flag) {
 		egectlmap*& cmap = (egectlmap*&)m_childmap;
 		if (cmap) {
 			for (egectlmap::reverse_iterator it = cmap->rbegin() ; it != cmap->rend(); ++it) {
-				if (!(*it)->isvisable() || !(*it)->isenable()) continue;
+				if (!(*it)->isvisible() || !(*it)->isenable()) continue;
 				if ((*it)->iscapture()) {
 					(*it)->keymsgchar(key, flag);
 				}
@@ -368,7 +368,7 @@ void egeControlBase::draw(PIMAGE pimg) {
 			(*it)->draw(pmain);
 		}
 	}
-	if (!m_bDirectDraw && m_bVisable) {
+	if (!m_bDirectDraw && m_bVisible) {
 		if (m_AlphablendMode == SOLIDCOPY) {
 			//putimage(pimg, m_x, m_y, &m_mainbuf, m_rop);
 			m_mainbuf->putimage(pimg, m_x, m_y, m_rop);

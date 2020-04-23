@@ -418,6 +418,13 @@ typedef enum key_code_e {
 	key_num8        = 0x68,
 	key_num9        = 0x69,
 
+	key_multiply    = 0x6a,
+	key_add         = 0x6b,
+	key_separator   = 0x6c,
+	key_subtract    = 0x6d,
+	key_decimal     = 0x6e,
+	key_divide      = 0x6f,
+
 	key_f1          = 0x70,
 	key_f2          = 0x71,
 	key_f3          = 0x72,
@@ -1087,8 +1094,8 @@ public:
 	bool isdirectdraw() const { return (m_bDirectDraw != 0); }
 	void autoredraw(bool bautoredraw)  { m_bAutoDraw = (bautoredraw ? 1 : 0); }
 	bool isautoredraw() const       { return (m_bAutoDraw != 0); }
-	void visable(bool bvisable)     { m_bVisable = (bvisable ? 1 : 0); }
-	bool isvisable() const          { return (m_bVisable != 0); }
+	void visible(bool bvisible)     { m_bVisible = (bvisible ? 1 : 0); }
+	bool isvisible() const          { return (m_bVisible != 0); }
 	void enable(bool benable)       { m_bEnable = (benable ? 1 : 0); }
 	bool isenable() const           { return (m_bEnable != 0); }
 	void capture(bool bcapture)     { m_bCapture = (bcapture ? 1 : 0); }
@@ -1157,7 +1164,7 @@ private:
 	PIMAGE   m_mainFilter;   // 过滤器
 
 private:
-	int m_bVisable;     // 是否可见
+	int m_bVisible;     // 是否可见
 	int m_bEnable;      // 是否可获得输入（键盘和鼠标）
 	int m_bAutoDraw;    // 是否自动绘画到窗口上
 	int m_bCapture;     // 是否可获得键盘输入焦点
