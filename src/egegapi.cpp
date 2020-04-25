@@ -656,7 +656,7 @@ setcolor(color_t color, PIMAGE pimg) {
 		img->m_color = color;
 		int linestyle = img->m_linestyle.linestyle;
 
-		COLORREF bgrcolor = RGBTOBGR(color);
+		COLORREF bgrcolor = RGBTOBGR(color) & 0x00FFFFFF;
 
 		LOGBRUSH lbr;
 		lbr.lbColor = bgrcolor;
@@ -1401,7 +1401,7 @@ setlinestyle(int linestyle, unsigned short upattern, int thickness, PIMAGE pimg)
 	img->m_linestyle.upattern = upattern;
 
 	LOGBRUSH lbr;
-	lbr.lbColor = RGBTOBGR(img->m_color);
+	lbr.lbColor = RGBTOBGR(img->m_color) & 0x00FFFFFF;
 	lbr.lbStyle = BS_SOLID;
 	lbr.lbHatch = 0;
 
@@ -1433,7 +1433,7 @@ setlinewidth(float width, PIMAGE pimg) {
 		img->m_linewidth = width;
 
 		LOGBRUSH lbr;
-		lbr.lbColor = RGBTOBGR(img->m_color);
+		lbr.lbColor = RGBTOBGR(img->m_color) & 0x00FFFFFF;
 		lbr.lbStyle = BS_SOLID;
 		lbr.lbHatch = 0;
 
