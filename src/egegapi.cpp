@@ -2292,6 +2292,55 @@ ege_puttexture(PIMAGE srcimg, ege_rect dest, ege_rect src, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
+// TODO: ´íÎó´¦Àí
+static void ege_drawtext_p(LPCWSTR textstring, float x, float y, PIMAGE img) {
+	Gdiplus::Graphics graphics(img->m_hDC);
+	graphics.SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
+	if (img->m_aa) {
+		graphics.SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAlias);
+	}
+
+	HFONT hf = (HFONT)GetCurrentObject(img->m_hDC, OBJ_FONT);
+	LOGFONT lf;
+	GetObject(hf, sizeof(LOGFONT), &lf);
+	if (strcmp(lf.lfFaceName, "System") == 0) {
+		hf = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
+	}
+
+	Gdiplus::Font font(img->m_hDC, hf);
+	// if (!font.IsAvailable()) {
+	// 	fprintf(stderr, "!font.IsAvailable(), hf: %p\n", hf);
+	// }
+	Gdiplus::PointF origin(x, y);
+	Gdiplus::SolidBrush brush(img->m_color);
+	graphics.DrawString(textstring, -1, &font, origin, &brush);
+	// int err;
+	// if (err = graphics.DrawString(textstring, -1, &font, origin, &brush)) {
+	// 	fprintf(stderr, "DrawString Err: %d\n", err);
+	// }
+}
+
+void EGEAPI ege_drawtext(LPCSTR  textstring, float x, float y, PIMAGE pimg) {
+	PIMAGE img = CONVERT_IMAGE(pimg);
+	if (img && img->m_hDC) {
+		int bufferSize = MultiByteToWideChar(CP_ACP, 0, textstring, -1, NULL, 0);
+		WCHAR* wStr = new WCHAR[bufferSize + 1];
+		MultiByteToWideChar(CP_ACP, 0, textstring, -1, wStr, bufferSize + 1);
+		ege_drawtext_p(wStr, x, y, img);
+		delete wStr;
+	}
+	CONVERT_IMAGE_END;
+}
+
+
+void EGEAPI ege_drawtext(LPCWSTR textstring, float x, float y, PIMAGE pimg) {
+	PIMAGE img = CONVERT_IMAGE(pimg);
+	if (img && img->m_hDC) {
+		ege_drawtext_p(textstring, x, y, img);
+	}
+	CONVERT_IMAGE_END;
+}
+
 #endif //EGEGDIPLUS
 
 HWND

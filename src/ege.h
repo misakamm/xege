@@ -803,6 +803,9 @@ void EGEAPI ege_setpattern_ellipsegradient(ege_point center, color_t centercolor
 	float x, float y, float w, float h, color_t color, PIMAGE pimg = NULL);
 void EGEAPI ege_setpattern_texture(PIMAGE srcimg, float x, float y, float w, float h, PIMAGE pimg = NULL);
 
+void EGEAPI ege_drawtext(LPCSTR  textstring, float x, float y, PIMAGE pimg = NULL);
+void EGEAPI ege_drawtext(LPCWSTR textstring, float x, float y, PIMAGE pimg = NULL);
+
 void EGEAPI ege_setalpha(int alpha, PIMAGE pimg = NULL);
 void EGEAPI ege_gentexture(bool gen, PIMAGE pimg = NULL);
 void EGEAPI ege_puttexture(PIMAGE srcimg, float x, float y, float w, float h, PIMAGE pimg = NULL);
