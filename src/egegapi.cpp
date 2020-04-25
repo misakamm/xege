@@ -648,38 +648,41 @@ static int upattern2array(unsigned short upattern, DWORD style[]) {
 	return segments;
 }
 
+static void update_pen(PIMAGE img) {
+	LOGBRUSH lbr;
+	lbr.lbColor = RGBTOBGR(img->m_color) & 0x00FFFFFF;
+	lbr.lbStyle = BS_SOLID;
+	lbr.lbHatch = 0;
+
+	const int linestyle = img->m_linestyle.linestyle;
+	const unsigned short upattern = img->m_linestyle.upattern;
+	const int thickness = img->m_linestyle.thickness;
+
+	// 添加这些属性以获得正确的显示效果
+	int ls = linestyle|PS_GEOMETRIC|PS_ENDCAP_ROUND|PS_JOIN_ROUND;
+
+	HPEN hpen;
+	if (linestyle == USERBIT_LINE) {
+		DWORD style[20] = {0};
+		int bn = upattern2array(upattern, style);
+		hpen = ExtCreatePen(ls, thickness, &lbr, bn, style);
+	} else {
+		hpen = ExtCreatePen(ls, thickness, &lbr, 0, NULL);
+	}
+	if (hpen) {
+		DeleteObject(SelectObject(img->m_hDC, hpen));
+	}
+}
+
 void
 setcolor(color_t color, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
 
 	if (img && img->m_hDC) {
 		img->m_color = color;
-		int linestyle = img->m_linestyle.linestyle;
 
-		COLORREF bgrcolor = RGBTOBGR(color) & 0x00FFFFFF;
-
-		LOGBRUSH lbr;
-		lbr.lbColor = bgrcolor;
-		lbr.lbStyle = BS_SOLID;
-		lbr.lbHatch = 0;
-
-		// 添加这些属性以获得正确的显示效果
-		int ls = linestyle|PS_GEOMETRIC|PS_ENDCAP_ROUND|PS_JOIN_ROUND;
-
-		HPEN hpen;
-		if (linestyle == USERBIT_LINE) {
-			DWORD style[20] = {0};
-			unsigned short upattern = img->m_linestyle.upattern;
-			int bn = upattern2array(upattern, style);
-			hpen = ExtCreatePen(ls, img->m_linestyle.thickness, &lbr, bn, style);
-		} else {
-			hpen = ExtCreatePen(ls, img->m_linestyle.thickness, &lbr, 0, NULL);
-		}
-		if (hpen) {
-			DeleteObject(SelectObject(img->m_hDC, hpen));
-		}
-
-		SetTextColor(img->m_hDC, bgrcolor);
+		update_pen(img);
+		SetTextColor(img->m_hDC, RGBTOBGR(color) & 0x00FFFFFF);
 	}
 	CONVERT_IMAGE_END;
 }
@@ -1400,25 +1403,8 @@ setlinestyle(int linestyle, unsigned short upattern, int thickness, PIMAGE pimg)
 	img->m_linestyle.linestyle = linestyle;
 	img->m_linestyle.upattern = upattern;
 
-	LOGBRUSH lbr;
-	lbr.lbColor = RGBTOBGR(img->m_color) & 0x00FFFFFF;
-	lbr.lbStyle = BS_SOLID;
-	lbr.lbHatch = 0;
+	update_pen(img);
 
-	// 添加这些属性以获得正确的显示效果
-	int ls = linestyle|PS_GEOMETRIC|PS_ENDCAP_ROUND|PS_JOIN_ROUND;
-
-	HPEN hpen;
-	if (linestyle == USERBIT_LINE) {
-		DWORD style[20] = {0};
-		int bn = upattern2array(upattern, style);
-		hpen = ExtCreatePen(ls, thickness, &lbr, bn, style);
-	} else {
-		hpen = ExtCreatePen(ls, thickness, &lbr, 0, NULL);
-	}
-	if (hpen) {
-		DeleteObject(SelectObject(img->m_hDC, hpen));
-	}
 	CONVERT_IMAGE_END;
 }
 
@@ -1427,30 +1413,10 @@ setlinewidth(float width, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
 
 	if (img && img->m_hDC) {
-		int thickness = (int)width;
-		int linestyle = img->m_linestyle.linestyle;
-		img->m_linestyle.thickness = thickness;
+		img->m_linestyle.thickness = (int)width;
 		img->m_linewidth = width;
 
-		LOGBRUSH lbr;
-		lbr.lbColor = RGBTOBGR(img->m_color) & 0x00FFFFFF;
-		lbr.lbStyle = BS_SOLID;
-		lbr.lbHatch = 0;
-
-		// 添加这些属性以获得正确的显示效果
-		int ls = linestyle|PS_GEOMETRIC|PS_ENDCAP_ROUND|PS_JOIN_ROUND;
-
-		HPEN hpen;
-		if (linestyle == USERBIT_LINE) {
-			DWORD style[20] = {0};
-			int bn = upattern2array(img->m_linestyle.upattern, style);
-			hpen = ExtCreatePen(ls, thickness, &lbr, bn, style);
-		} else {
-			hpen = ExtCreatePen(ls, thickness, &lbr, 0, NULL);
-		}
-		if (hpen) {
-			DeleteObject(SelectObject(img->m_hDC, hpen));
-		}
+		update_pen(img);
 	}
 	CONVERT_IMAGE_END;
 }
