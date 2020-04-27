@@ -2291,9 +2291,15 @@ void EGEAPI ege_drawtext(LPCSTR  textstring, float x, float y, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img && img->m_hDC) {
 		int bufferSize = MultiByteToWideChar(CP_ACP, 0, textstring, -1, NULL, 0);
-		std::vector<WCHAR> wStr(bufferSize + 1);
-		MultiByteToWideChar(CP_ACP, 0, textstring, -1, &wStr[0], bufferSize + 1);
-		ege_drawtext_p(&wStr[0], x, y, img);
+		if (bufferSize < 128) {
+			WCHAR wStr[128];
+			MultiByteToWideChar(CP_ACP, 0, textstring, -1, wStr, 128);
+			ege_drawtext_p(wStr, x, y, img);
+		} else {
+			std::vector<WCHAR> wStr(bufferSize + 1);
+			MultiByteToWideChar(CP_ACP, 0, textstring, -1, &wStr[0], bufferSize + 1);
+			ege_drawtext_p(&wStr[0], x, y, img);
+		}
 	}
 	CONVERT_IMAGE_END;
 }
