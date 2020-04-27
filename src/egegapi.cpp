@@ -21,6 +21,7 @@
 
 #include <math.h>
 #include <stdarg.h>
+#include <vector>
 
 #include "lpng/zlib.h"
 #include "ege/sys_edit.h"
@@ -648,38 +649,41 @@ static int upattern2array(unsigned short upattern, DWORD style[]) {
 	return segments;
 }
 
+static void update_pen(PIMAGE img) {
+	LOGBRUSH lbr;
+	lbr.lbColor = RGBTOBGR(img->m_color) & 0x00FFFFFF;
+	lbr.lbStyle = BS_SOLID;
+	lbr.lbHatch = 0;
+
+	const int linestyle = img->m_linestyle.linestyle;
+	const unsigned short upattern = img->m_linestyle.upattern;
+	const int thickness = img->m_linestyle.thickness;
+
+	// 添加这些属性以获得正确的显示效果
+	int ls = linestyle|PS_GEOMETRIC|PS_ENDCAP_ROUND|PS_JOIN_ROUND;
+
+	HPEN hpen;
+	if (linestyle == USERBIT_LINE) {
+		DWORD style[20] = {0};
+		int bn = upattern2array(upattern, style);
+		hpen = ExtCreatePen(ls, thickness, &lbr, bn, style);
+	} else {
+		hpen = ExtCreatePen(ls, thickness, &lbr, 0, NULL);
+	}
+	if (hpen) {
+		DeleteObject(SelectObject(img->m_hDC, hpen));
+	}
+}
+
 void
 setcolor(color_t color, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
 
 	if (img && img->m_hDC) {
 		img->m_color = color;
-		int linestyle = img->m_linestyle.linestyle;
 
-		COLORREF bgrcolor = RGBTOBGR(color);
-
-		LOGBRUSH lbr;
-		lbr.lbColor = bgrcolor;
-		lbr.lbStyle = BS_SOLID;
-		lbr.lbHatch = 0;
-
-		// 添加这些属性以获得正确的显示效果
-		int ls = linestyle|PS_GEOMETRIC|PS_ENDCAP_ROUND|PS_JOIN_ROUND;
-
-		HPEN hpen;
-		if (linestyle == USERBIT_LINE) {
-			DWORD style[20] = {0};
-			unsigned short upattern = img->m_linestyle.upattern;
-			int bn = upattern2array(upattern, style);
-			hpen = ExtCreatePen(ls, img->m_linestyle.thickness, &lbr, bn, style);
-		} else {
-			hpen = ExtCreatePen(ls, img->m_linestyle.thickness, &lbr, 0, NULL);
-		}
-		if (hpen) {
-			DeleteObject(SelectObject(img->m_hDC, hpen));
-		}
-
-		SetTextColor(img->m_hDC, bgrcolor);
+		update_pen(img);
+		SetTextColor(img->m_hDC, RGBTOBGR(color) & 0x00FFFFFF);
 	}
 	CONVERT_IMAGE_END;
 }
@@ -1400,25 +1404,8 @@ setlinestyle(int linestyle, unsigned short upattern, int thickness, PIMAGE pimg)
 	img->m_linestyle.linestyle = linestyle;
 	img->m_linestyle.upattern = upattern;
 
-	LOGBRUSH lbr;
-	lbr.lbColor = RGBTOBGR(img->m_color);
-	lbr.lbStyle = BS_SOLID;
-	lbr.lbHatch = 0;
+	update_pen(img);
 
-	// 添加这些属性以获得正确的显示效果
-	int ls = linestyle|PS_GEOMETRIC|PS_ENDCAP_ROUND|PS_JOIN_ROUND;
-
-	HPEN hpen;
-	if (linestyle == USERBIT_LINE) {
-		DWORD style[20] = {0};
-		int bn = upattern2array(upattern, style);
-		hpen = ExtCreatePen(ls, thickness, &lbr, bn, style);
-	} else {
-		hpen = ExtCreatePen(ls, thickness, &lbr, 0, NULL);
-	}
-	if (hpen) {
-		DeleteObject(SelectObject(img->m_hDC, hpen));
-	}
 	CONVERT_IMAGE_END;
 }
 
@@ -1427,30 +1414,10 @@ setlinewidth(float width, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
 
 	if (img && img->m_hDC) {
-		int thickness = (int)width;
-		int linestyle = img->m_linestyle.linestyle;
-		img->m_linestyle.thickness = thickness;
+		img->m_linestyle.thickness = (int)width;
 		img->m_linewidth = width;
 
-		LOGBRUSH lbr;
-		lbr.lbColor = RGBTOBGR(img->m_color);
-		lbr.lbStyle = BS_SOLID;
-		lbr.lbHatch = 0;
-
-		// 添加这些属性以获得正确的显示效果
-		int ls = linestyle|PS_GEOMETRIC|PS_ENDCAP_ROUND|PS_JOIN_ROUND;
-
-		HPEN hpen;
-		if (linestyle == USERBIT_LINE) {
-			DWORD style[20] = {0};
-			int bn = upattern2array(img->m_linestyle.upattern, style);
-			hpen = ExtCreatePen(ls, thickness, &lbr, bn, style);
-		} else {
-			hpen = ExtCreatePen(ls, thickness, &lbr, 0, NULL);
-		}
-		if (hpen) {
-			DeleteObject(SelectObject(img->m_hDC, hpen));
-		}
+		update_pen(img);
 	}
 	CONVERT_IMAGE_END;
 }
@@ -2288,6 +2255,60 @@ ege_puttexture(PIMAGE srcimg, ege_rect dest, ege_rect src, PIMAGE pimg) {
 				NULL
 				);
 		}
+	}
+	CONVERT_IMAGE_END;
+}
+
+// TODO: 错误处理
+static void ege_drawtext_p(LPCWSTR textstring, float x, float y, PIMAGE img) {
+	Gdiplus::Graphics graphics(img->m_hDC);
+	graphics.SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
+	if (img->m_aa) {
+		graphics.SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAlias);
+	}
+
+	HFONT hf = (HFONT)GetCurrentObject(img->m_hDC, OBJ_FONT);
+	LOGFONT lf;
+	GetObject(hf, sizeof(LOGFONT), &lf);
+	if (strcmp(lf.lfFaceName, "System") == 0) {
+		hf = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
+	}
+
+	Gdiplus::Font font(img->m_hDC, hf);
+	// if (!font.IsAvailable()) {
+	// 	fprintf(stderr, "!font.IsAvailable(), hf: %p\n", hf);
+	// }
+	Gdiplus::PointF origin(x, y);
+	Gdiplus::SolidBrush brush(img->m_color);
+	graphics.DrawString(textstring, -1, &font, origin, &brush);
+	// int err;
+	// if (err = graphics.DrawString(textstring, -1, &font, origin, &brush)) {
+	// 	fprintf(stderr, "DrawString Err: %d\n", err);
+	// }
+}
+
+void EGEAPI ege_drawtext(LPCSTR  textstring, float x, float y, PIMAGE pimg) {
+	PIMAGE img = CONVERT_IMAGE(pimg);
+	if (img && img->m_hDC) {
+		int bufferSize = MultiByteToWideChar(CP_ACP, 0, textstring, -1, NULL, 0);
+		if (bufferSize < 128) {
+			WCHAR wStr[128];
+			MultiByteToWideChar(CP_ACP, 0, textstring, -1, wStr, 128);
+			ege_drawtext_p(wStr, x, y, img);
+		} else {
+			std::vector<WCHAR> wStr(bufferSize + 1);
+			MultiByteToWideChar(CP_ACP, 0, textstring, -1, &wStr[0], bufferSize + 1);
+			ege_drawtext_p(&wStr[0], x, y, img);
+		}
+	}
+	CONVERT_IMAGE_END;
+}
+
+
+void EGEAPI ege_drawtext(LPCWSTR textstring, float x, float y, PIMAGE pimg) {
+	PIMAGE img = CONVERT_IMAGE(pimg);
+	if (img && img->m_hDC) {
+		ege_drawtext_p(textstring, x, y, img);
 	}
 	CONVERT_IMAGE_END;
 }
