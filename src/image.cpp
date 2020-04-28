@@ -339,6 +339,33 @@ IMAGE::getimage(LPCSTR filename, int zoomWidth, int zoomHeight) {
 	return getimage(wszPath, zoomWidth, zoomHeight);
 }
 
+inline void getimage_from_IPicture(PIMAGE self, IPicture* pPicture) {
+	long  lWidth, lHeight, lWidthPixels, lHeightPixels;
+	PIMAGE img = CONVERT_IMAGE_CONST(0);
+	pPicture->get_Width (&lWidth );
+	lWidthPixels  = MulDiv(lWidth,  GetDeviceCaps(img->m_hDC, LOGPIXELSX), 2540);
+	pPicture->get_Height(&lHeight);
+	lHeightPixels = MulDiv(lHeight, GetDeviceCaps(img->m_hDC, LOGPIXELSY), 2540);
+	CONVERT_IMAGE_END;
+
+	self->createimage(lWidthPixels, lHeightPixels);
+	{
+		HDC dc = self->m_hDC;
+
+		pPicture->Render(
+			dc,
+			0, 0,
+			lWidthPixels,
+			lHeightPixels,
+			0,
+			lHeight,
+			lWidth,
+			-lHeight,
+			0
+			);
+	}
+}
+
 int
 IMAGE::getimage(LPCWSTR filename, int zoomWidth, int zoomHeight) {
 	(void)zoomWidth, (void)zoomHeight; // ignore
@@ -351,8 +378,6 @@ IMAGE::getimage(LPCWSTR filename, int zoomWidth, int zoomHeight) {
 	struct IPicture *pPicture;
 	OLECHAR         wszPath[MAX_PATH*2+1];
 	WCHAR           szPath[MAX_PATH*2+1] = L"";
-	long            lWidth,         lHeight;
-	long            lWidthPixels,   lHeightPixels;
 	HRESULT         hr;
 
 	if (wcsstr(filename, L"http://")) {
@@ -380,29 +405,7 @@ IMAGE::getimage(LPCWSTR filename, int zoomWidth, int zoomHeight) {
 		return grIOerror;
 	}
 
-	PIMAGE img = CONVERT_IMAGE_CONST(0);
-	pPicture->get_Width (&lWidth );
-	lWidthPixels  = MulDiv(lWidth,  GetDeviceCaps(img->m_hDC, LOGPIXELSX), 2540);
-	pPicture->get_Height(&lHeight);
-	lHeightPixels = MulDiv(lHeight, GetDeviceCaps(img->m_hDC, LOGPIXELSY), 2540);
-	CONVERT_IMAGE_END;
-
-	createimage(lWidthPixels, lHeightPixels);
-	{
-		HDC dc = m_hDC;
-
-		pPicture->Render(
-			dc,
-			0, 0,
-			lWidthPixels,
-			lHeightPixels,
-			0,
-			lHeight,
-			lWidth,
-			-lHeight,
-			0
-			);
-	}
+	getimage_from_IPicture(this, pPicture);
 
 	pPicture->Release();
 
@@ -601,13 +604,7 @@ IMAGE::savepngimg(FILE* fp, int bAlpha) {
 	return 0;
 }
 
-int
-IMAGE::getimage(LPCSTR pResType, LPCSTR pResName, int zoomWidth, int zoomHeight) {
-	(void)zoomWidth, (void)zoomHeight; // ignore
-	inittest(L"IMAGE::getimage");
-	struct _graph_setting * pg = &graph_setting;
-	HRSRC hrsrc = FindResourceA(pg->instance, pResName, pResType);
-
+inline int getimage_from_resource(PIMAGE self, HRSRC hrsrc) {
 	if (hrsrc) {
 		HGLOBAL         hg = LoadResource(0, hrsrc);
 		DWORD           dwSize = SizeofResource(0, hrsrc);
@@ -616,8 +613,6 @@ IMAGE::getimage(LPCSTR pResType, LPCSTR pResName, int zoomWidth, int zoomHeight)
 		LPVOID          pvData;
 		struct IPicture *pPicture;
 		IStream         *pStm;
-		long            lWidth,         lHeight;
-		long            lWidthPixels,   lHeightPixels;
 		HRESULT         hr;
 
 		if (hGlobal == NULL || (pvData = GlobalLock(hGlobal)) == NULL) {
@@ -643,27 +638,7 @@ IMAGE::getimage(LPCSTR pResType, LPCSTR pResName, int zoomWidth, int zoomHeight)
 			return grIOerror;
 		}
 
-
-		PIMAGE img = CONVERT_IMAGE_CONST(0);
-		pPicture->get_Width(&lWidth);
-		lWidthPixels = MulDiv(lWidth, GetDeviceCaps(img->m_hDC, LOGPIXELSX), 2540);
-		pPicture->get_Height(&lHeight);
-		lHeightPixels = MulDiv(lHeight, GetDeviceCaps(img->m_hDC, LOGPIXELSY), 2540);
-		CONVERT_IMAGE_END;
-
-		createimage(lWidthPixels, lHeightPixels);
-		{
-			HDC dc = m_hDC;
-
-			pPicture->Render(
-				dc,
-				0, 0,
-				lWidthPixels, lHeightPixels,
-				0, lHeight,
-				lWidth, -lHeight,
-				0
-				);
-		}
+		getimage_from_IPicture(self, pPicture);
 
 		pPicture->Release();
 
@@ -673,6 +648,15 @@ IMAGE::getimage(LPCSTR pResType, LPCSTR pResName, int zoomWidth, int zoomHeight)
 	return grIOerror;
 }
 
+int
+IMAGE::getimage(LPCSTR pResType, LPCSTR pResName, int zoomWidth, int zoomHeight) {
+	(void)zoomWidth, (void)zoomHeight; // ignore
+	inittest(L"IMAGE::getimage");
+	struct _graph_setting * pg = &graph_setting;
+	HRSRC hrsrc = FindResourceA(pg->instance, pResName, pResType);
+	return getimage_from_resource(this, hrsrc);
+}
+
 
 int
 IMAGE::getimage(LPCWSTR pResType, LPCWSTR pResName, int zoomWidth, int zoomHeight) {
@@ -680,71 +664,7 @@ IMAGE::getimage(LPCWSTR pResType, LPCWSTR pResName, int zoomWidth, int zoomHeigh
 	inittest(L"IMAGE::getimage");
 	struct _graph_setting * pg = &graph_setting;
 	HRSRC hrsrc = FindResourceW(pg->instance, pResName, pResType);
-
-
-	if (hrsrc) {
-		HGLOBAL         hg = LoadResource(0, hrsrc);
-		DWORD           dwSize = SizeofResource(0, hrsrc);
-		HGLOBAL         hGlobal = GlobalAlloc(GMEM_MOVEABLE, dwSize);
-		LPVOID          pvRes = LockResource(hg);
-		LPVOID          pvData;
-		struct IPicture *pPicture;
-		IStream         *pStm;
-		long            lWidth,         lHeight;
-		long            lWidthPixels,   lHeightPixels;
-		HRESULT         hr;
-
-		if (hGlobal == NULL || (pvData = GlobalLock(hGlobal)) == NULL) {
-			return grAllocError;
-		}
-		memcpy(pvData, pvRes, dwSize);
-		GlobalUnlock(hGlobal);
-		if (S_OK != CreateStreamOnHGlobal(hGlobal, TRUE, &pStm)) {
-			return grNullPointer;
-		}
-
-		hr = OleLoadPicture(
-			pStm,
-			(LONG)dwSize,
-			TRUE,
-			IID_IPicture,
-			(void**)&pPicture
-			);
-
-		GlobalFree(hGlobal);
-
-		if(FAILED(hr)) {
-			return grIOerror;
-		}
-
-
-		PIMAGE img = CONVERT_IMAGE_CONST(0);
-		pPicture->get_Width(&lWidth);
-		lWidthPixels = MulDiv(lWidth, GetDeviceCaps(img->m_hDC, LOGPIXELSX), 2540);
-		pPicture->get_Height(&lHeight);
-		lHeightPixels = MulDiv(lHeight, GetDeviceCaps(img->m_hDC, LOGPIXELSY), 2540);
-		CONVERT_IMAGE_END;
-
-		createimage(lWidthPixels, lHeightPixels);
-		{
-			HDC dc = m_hDC;
-
-			pPicture->Render(
-				dc,
-				0, 0,
-				lWidthPixels, lHeightPixels,
-				0, lHeight,
-				lWidth, -lHeight,
-				0
-				);
-		}
-
-		pPicture->Release();
-
-		return grOk;
-	}
-
-	return grIOerror;
+	return getimage_from_resource(this, hrsrc);
 }
 int
 IMAGE::getimage(void* pMem, long size) {
@@ -756,8 +676,6 @@ IMAGE::getimage(void* pMem, long size) {
 		LPVOID          pvData;
 		struct IPicture *pPicture;
 		IStream         *pStm;
-		long            lWidth,         lHeight;
-		long            lWidthPixels,   lHeightPixels;
 		HRESULT         hr;
 
 		if (hGlobal == NULL || (pvData = GlobalLock(hGlobal)) == NULL) {
@@ -783,27 +701,7 @@ IMAGE::getimage(void* pMem, long size) {
 			return grIOerror;
 		}
 
-
-		PIMAGE img = CONVERT_IMAGE_CONST(0);
-		pPicture->get_Width(&lWidth);
-		lWidthPixels = MulDiv(lWidth, GetDeviceCaps(img->m_hDC, LOGPIXELSX), 2540);
-		pPicture->get_Height(&lHeight);
-		lHeightPixels = MulDiv(lHeight, GetDeviceCaps(img->m_hDC, LOGPIXELSY), 2540);
-		CONVERT_IMAGE_END;
-
-		createimage(lWidthPixels, lHeightPixels);
-		{
-			HDC dc = m_hDC;
-
-			pPicture->Render(
-				dc,
-				0, 0,
-				lWidthPixels, lHeightPixels,
-				0, lHeight,
-				lWidth, -lHeight,
-				0
-				);
-		}
+		getimage_from_IPicture(this, pPicture);
 
 		pPicture->Release();
 
