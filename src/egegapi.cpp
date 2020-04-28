@@ -17,11 +17,11 @@
 #define _CRT_NON_CONFORMING_SWPRINTFS
 #endif
 
+#include <vector>
 #include "ege_head.h"
 
 #include <math.h>
 #include <stdarg.h>
-#include <vector>
 
 #include "lpng/zlib.h"
 #include "ege/sys_edit.h"
