@@ -46,14 +46,14 @@
 #	include <gdiplus.h>
 #endif
 
-#define QUEUE_LEN           1024
-#define BITMAP_PAGE_SIZE    4
-#define UPDATE_MAX_CALL     0xFF
-#define RENDER_TIMER_ID     916
-#define IMAGE_INIT_FLAG     0x20100916
-#define MAX_KEY_VCODE       256
-#define FLOAT_EPS           1e-3f
-
+#define QUEUE_LEN               1024
+#define BITMAP_PAGE_SIZE	    4
+#define BITMAP_PAGE_MIN_SIZE    1
+#define UPDATE_MAX_CALL         0xFF
+#define RENDER_TIMER_ID         916
+#define IMAGE_INIT_FLAG         0x20100916
+#define MAX_KEY_VCODE           256
+#define FLOAT_EPS               1e-3f
 
 #ifndef SWAP
 #define SWAP(_a, _b, _t) {_t = _a; _a = _b; _b = _t; }

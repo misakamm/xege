@@ -22,6 +22,9 @@
 #	define SYSBITS TEXT("x86")
 #endif
 
+#define TOSTRING_(x) #x
+#define TOSTRING(x) TOSTRING_(x)
+
 #ifdef _MSC_VER
 #	if (_MSC_VER >= 2000)
 #		define COMPILER_VER TEXT("VC201x") SYSBITS
@@ -43,13 +46,16 @@
 #		define COMPILER_VER TEXT("VC6") SYSBITS
 #	endif
 #else
-#	define TOSTRING_(x) #x
-#	define TOSTRING(x) TOSTRING_(x)
 #	define GCC_VER TEXT(TOSTRING(__GNUC__)) TEXT(".") TEXT(TOSTRING(__GNUC_MINOR__))
 #	define COMPILER_VER TEXT("GCC") GCC_VER SYSBITS
 #endif
 
-#define EGE_TITLE TEXT("EGE19.01 ") COMPILER_VER
+#define EGE_VERSION_YEAR 20
+#define EGE_VERSION_MONTH 05
+
+#define EGE_VERSION_INT EGE_VERSION_YEAR * 100 + EGE_VERSION_MONTH
+#define EGE_VERSION TEXT(TOSTRING(EGE_VERSION_YEAR)) TEXT(".") TEXT(TOSTRING(EGE_VERSION_MONTH))
+#define EGE_TITLE TEXT("EGE") EGE_VERSION TEXT(" ") COMPILER_VER
 
 #ifndef _ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH
 #define _ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH
@@ -627,10 +633,10 @@ setmode(int gdriver, int gmode) {
 		pg->dc_w = (short)(gmode & 0xFFFF);
 		pg->dc_h = (short)((unsigned int)gmode >> 16);
 		if (pg->dc_w < 0) {
-			pg->dc_w = rect.right;
+			pg->dc_w = rect.right - rect.left;
 		}
 		if (pg->dc_h < 0) {
-			pg->dc_h = rect.bottom;
+			pg->dc_h = rect.bottom - rect.top;
 		}
 	} else {
 		pg->dc_w = 640;
@@ -1227,10 +1233,8 @@ void logoscene() {
 void
 init_img_page(struct _graph_setting * pg) {
 	if (g_has_init) {
-		for (int page = 0; page < BITMAP_PAGE_SIZE; ++page) {
+		for (int page = 0; page < BITMAP_PAGE_MIN_SIZE; ++page) {
 			if (pg->img_page[page] == NULL) {
-				;
-			} else {
 				pg->img_page[page]->createimage(pg->dc_w, pg->dc_h);
 			}
 		}
@@ -1245,61 +1249,140 @@ init_img_page(struct _graph_setting * pg) {
 	g_has_init = true;
 }
 
+// void
+// initgraph(int *gdriver, int *gmode, char *path) {
+// 	struct _graph_setting * pg = &graph_setting;
+
+// 	g_initcall = 0;
+// 	if (!g_has_init) {
+// 		memset(pg, 0, sizeof(_graph_setting));
+// 		pg->exit_flag = 0;
+// 		pg->exit_window = 0;
+// 		init_img_page(pg);
+// 	} else {
+// 		pg->exit_flag = 0;
+// 		pg->exit_window = 0;
+// 		setmode(*gdriver, *gmode);
+// 		// init_img_page(pg);
+
+// 		for (int i = 0; i < BITMAP_PAGE_SIZE; ++i) {
+// 			if (pg->img_page[i] != NULL) {
+// 				resize(pg->img_page[i], pg->dc_w, pg->dc_h);
+	
+// 			//视口调整
+// 				int vleft, vtop, vright, vbottom, vclip;
+// 				getviewport(&vleft, &vtop, &vright, &vbottom, &vclip, pg->img_page[i]);
+// 				//if (vleft == 0 && vtop == 0 && vright == w && vbottom == h)
+// 				setviewport(0, 0, pg->dc_w, pg->dc_h, vclip, pg->img_page[i]);
+// 			}	
+// 		}
+
+// 		//窗口视口调整
+// 		window_setviewport(pg->base_x, pg->base_y, pg->dc_w, pg->dc_h);	
+
+// 		return ;
+// 	}
+
+// 	setmode(*gdriver, *gmode);
+// 	pg->instance = GetModuleHandle(NULL);
+// 	lstrcpy(pg->window_class_name, TEXT("Easy Graphics Engine"));
+// 	lstrcpy(pg->window_caption, EGE_TITLE);
+
+// 	{
+// 		//SECURITY_ATTRIBUTES sa = {0};
+// 		DWORD pid;
+// 		pg->init_finish = false;
+// 		pg->threadui_handle = CreateThread(NULL, 0, messageloopthread, pg, CREATE_SUSPENDED, &pid);
+// 		ResumeThread(pg->threadui_handle);
+// 		while (!pg->init_finish) {
+// 			Sleep(1);
+// 		}
+// 	}
+
+// 	UpdateWindow(pg->hwnd);
+
+// 	{   //初始化鼠标位置数据
+// 		pg->mouse_last_x = pg->dc_w / 2;
+// 		pg->mouse_last_y = pg->dc_h / 2;
+// 	}
+// 	static egeControlBase _egeControlBase;
+
+// 	if (g_initoption & INIT_WITHLOGO) {
+// 		logoscene();
+// 	}
+// 	if (g_initoption & INIT_RENDERMANUAL) {
+// 		setrendermode(RENDER_MANUAL);
+// 	}
+// 	pg->mouse_show = 1;
+// }
+
 void
 initgraph(int *gdriver, int *gmode, char *path) {
 	struct _graph_setting * pg = &graph_setting;
 
-	g_initcall = 0;
-	if (!g_has_init) {
-		memset(pg, 0, sizeof(_graph_setting));
-		pg->exit_flag = 0;
-		pg->exit_window = 0;
-		init_img_page(pg);
-	} else {
-		pg->exit_flag = 0;
-		pg->exit_window = 0;
-		setmode(*gdriver, *gmode);
-		init_img_page(pg);
-		return ;
+	pg->exit_flag = 0;
+	pg->exit_window = 0;
+
+	//已创建则转为改变窗口大小	
+	if(g_has_init) {
+		int width = (int)(*gmode & 0xFFFF);
+		int height = (int)((unsigned int)(*gmode) >> 16);
+		resizewindow(width, height);
+		HWND hwnd = getHWnd();
+		if (::IsWindowVisible(hwnd))
+			::ShowWindow(hwnd, SW_SHOW);
+		return;
 	}
 
-	setmode(*gdriver, *gmode);
+	memset(pg, 0, sizeof(_graph_setting));
+	setmode(*gdriver, *gmode);	
+	//初始化过则改为调整窗口大小
+	init_img_page(pg);
+
 	pg->instance = GetModuleHandle(NULL);
 	lstrcpy(pg->window_class_name, TEXT("Easy Graphics Engine"));
 	lstrcpy(pg->window_caption, EGE_TITLE);
 
-	{
-		//SECURITY_ATTRIBUTES sa = {0};
-		DWORD pid;
-		pg->init_finish = false;
-		pg->threadui_handle = CreateThread(NULL, 0, messageloopthread, pg, CREATE_SUSPENDED, &pid);
-		ResumeThread(pg->threadui_handle);
-		while (!pg->init_finish) {
-			Sleep(1);
-		}
+	//SECURITY_ATTRIBUTES sa = {0};
+	DWORD pid;
+	pg->init_finish = false;
+	pg->threadui_handle = CreateThread(NULL, 0, messageloopthread, pg, CREATE_SUSPENDED, &pid);
+	ResumeThread(pg->threadui_handle);
+
+	while (!pg->init_finish) {
+		Sleep(1);
 	}
 
 	UpdateWindow(pg->hwnd);
 
-	{   //初始化鼠标位置数据
-		pg->mouse_last_x = pg->dc_w / 2;
-		pg->mouse_last_y = pg->dc_h / 2;
-	}
+	//初始化鼠标位置数据
+	pg->mouse_last_x = pg->dc_w / 2;
+	pg->mouse_last_y = pg->dc_h / 2;
+	
 	static egeControlBase _egeControlBase;
 
-	if (g_initoption & INIT_WITHLOGO) {
+	if (g_initoption & INIT_WITHLOGO)
 		logoscene();
-	}
-	if (g_initoption & INIT_RENDERMANUAL) {
+
+	if (g_initoption & INIT_RENDERMANUAL)
 		setrendermode(RENDER_MANUAL);
-	}
-	pg->mouse_show = 1;
+
+	pg->mouse_show = true;
+
+	//初始化后的设置
+	LOGFONTA font;
+	getfont(&font);
+	lstrcpyA(font.lfFaceName, "黑体");
+	setfont(&font);
 }
 
 void
 initgraph(int Width, int Height, int Flag) {
 	int g = TRUECOLORSIZE, m = (Width) | (Height<<16);
-	if (g_initcall == 0) setinitmode(Flag);
+
+	if (!g_initcall)
+		setinitmode(Flag);
+
 	initgraph(&g, &m, (char*)"");
 	//using flag;
 }
@@ -1337,7 +1420,8 @@ messageloopthread(LPVOID lpParameter) {
 		}
 
 		//图形初始化
-		graph_init(pg);
+		if (pg->dc == 0)
+			graph_init(pg);
 
 		{
 			pg->mouse_show = 0;
@@ -1388,5 +1472,56 @@ setinitmode(int mode, int x, int y) {
 	g_windowpos_x = x;
 	g_windowpos_y = y;
 }
+
+// 获取当前版本 ####
+int getGraphicsVer() {
+	return EGE_VERSION_INT;
+}
+
+HWND getParentHWnd() {
+	return g_attach_hwnd;
+}
+
+void getParentSize(int* width, int* height) {
+	RECT rect;
+	if (g_attach_hwnd) {
+		GetClientRect(g_attach_hwnd, &rect);
+	} else {
+		GetWindowRect(GetDesktopWindow(), &rect);
+	}
+
+	*width = rect.right - rect.left;
+	*height =rect.bottom - rect.top;
+}
+
+void EGEAPI resizewindow(int width, int height) {
+	int parentW, parentH;
+	getParentSize(&parentW, &parentH);
+
+	if (width <= 0)  width  = parentW;
+	if (height <= 0) height = parentH;
+
+	int w = getwidth(), h = getheight();
+	if ((width == w && height == h))
+		return;
+	
+	setmode(TRUECOLORSIZE, width | (height<<16));
+	struct _graph_setting * pg = &graph_setting;
+
+	for (int i = 0; i < BITMAP_PAGE_SIZE; ++i) {
+		if (pg->img_page[i] != NULL) {
+			resize(pg->img_page[i], width, height);
+			
+			//视口调整
+			int vleft, vtop, vright, vbottom, vclip;
+			getviewport(&vleft, &vtop, &vright, &vbottom, &vclip, pg->img_page[i]);
+			if (vleft == 0 && vtop == 0 && vright == w && vbottom == h)
+				setviewport(0, 0, width, height, vclip, pg->img_page[i]);
+		}	
+	}
+	//窗口视口调整
+	window_setviewport(pg->base_x, pg->base_y, width, height);	
+}
+
 
 } // namespace ege

@@ -104,6 +104,11 @@ setcaption(LPCWSTR caption) {
 	::SetWindowTextW(getHWnd(), caption);
 }
 
+void movewindow(int x, int y, bool redraw) {
+	::MoveWindow(getHWnd(), x, y, getwidth(), getheight(), redraw);
+}
+
+
 void
 api_sleep(long dwMilliseconds) {
 	if (dwMilliseconds >= 0)
@@ -1728,10 +1733,15 @@ void setrendermode(rendermode_e mode) {
 void
 setactivepage(int page) {
 	struct _graph_setting * pg = &graph_setting;
-	pg->active_page = page;
-	if (pg->img_page[page] == NULL) {
-		pg->img_page[page] = new IMAGE;
-		pg->img_page[page]->createimage(pg->dc_w, pg->dc_h);
+	if (0 <= page && page < BITMAP_PAGE_SIZE) {
+		pg->active_page = page;
+		
+		if (pg->img_page[page] == NULL) {
+			pg->img_page[page] = new IMAGE;
+			pg->img_page[page]->createimage(pg->dc_w, pg->dc_h);
+		}
+
+		pg->imgtarget = pg->img_page[page];
 		pg->dc = pg->img_page[page]->m_hDC;
 	}
 }
@@ -1739,12 +1749,14 @@ setactivepage(int page) {
 void
 setvisualpage(int page) {
 	struct _graph_setting * pg = &graph_setting;
-	pg->visual_page = page;
-	if (pg->img_page[page] == NULL) {
-		pg->img_page[page] = new IMAGE;
-		pg->img_page[page]->createimage(pg->dc_w, pg->dc_h);
+	if (0 <= page && page < BITMAP_PAGE_SIZE) {
+		pg->visual_page = page;
+		if (pg->img_page[page] == NULL) {
+			pg->img_page[page] = new IMAGE;
+			pg->img_page[page]->createimage(pg->dc_w, pg->dc_h);
+		}
+		pg->update_mark_count = 0;
 	}
-	pg->update_mark_count = 0;
 }
 
 void

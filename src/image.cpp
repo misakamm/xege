@@ -2737,8 +2737,15 @@ color_t* getbuffer(PIMAGE pImg) {
 	return img->getbuffer();
 }
 
+HDC getHdc(PIMAGE pImg) {
+	PIMAGE img = CONVERT_IMAGE_CONST(pImg);
+	CONVERT_IMAGE_END;
+	return img->getdc();
+}
+
 int
 resize(PIMAGE pDstImg, int width, int height) {
+	
 	return pDstImg->resize(width, height);
 }
 
