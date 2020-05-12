@@ -8,14 +8,14 @@
 * Blog:         http://misakamm.com
 * E-Mail:       mailto:misakamm[at gmail com]
 
-±àÒëËµÃ÷£º±àÒëÎª¶¯Ì¬¿âÊ±£¬ÐèÒª¶¨Òå PNG_BULIDDLL£¬ÒÔµ¼³ödllº¯Êý
+ç¼–è¯‘è¯´æ˜Žï¼šç¼–è¯‘ä¸ºåŠ¨æ€åº“æ—¶ï¼Œéœ€è¦å®šä¹‰ PNG_BULIDDLLï¼Œä»¥å¯¼å‡ºdllå‡½æ•°
 
-±¾Í¼ÐÎ¿â´´½¨Ê±¼ä2010 0916
+æœ¬å›¾å½¢åº“åˆ›å»ºæ—¶é—´2010 0916
 
-±¾ÎÄ¼þ¶¨ÒåÆ½Ì¨ÃÜÇÐÏà¹ØµÄ²Ù×÷¼°½Ó¿Ú
+æœ¬æ–‡ä»¶å®šä¹‰å¹³å°å¯†åˆ‡ç›¸å…³çš„æ“ä½œåŠæŽ¥å£
 */
 
-//±àÒëÆ÷°æ±¾£¬Ä¿Ç°½öÖ§³Övc6/vc2008/vc2010/vc2012/mingw
+//ç¼–è¯‘å™¨ç‰ˆæœ¬ï¼Œç›®å‰ä»…æ”¯æŒvc6/vc2008/vc2010/vc2012/mingw
 #ifdef _WIN64
 #	define SYSBITS TEXT("x64")
 #else
@@ -139,11 +139,11 @@ ui_msg_process(EGEMSG& qmsg) {
 	qmsg.flag |= 1;
 	if (qmsg.message >= WM_KEYFIRST && qmsg.message <= WM_KEYLAST) {
 		if (qmsg.message == WM_KEYDOWN) {
-			pg->egectrl_root->keymsgdown((unsigned)qmsg.wParam, 0); // ÒÔºó²¹¼Óflag
+			pg->egectrl_root->keymsgdown((unsigned)qmsg.wParam, 0); // ä»¥åŽè¡¥åŠ flag
 		} else if (qmsg.message == WM_KEYUP) {
-			pg->egectrl_root->keymsgup((unsigned)qmsg.wParam, 0); // ÒÔºó²¹¼Óflag
+			pg->egectrl_root->keymsgup((unsigned)qmsg.wParam, 0); // ä»¥åŽè¡¥åŠ flag
 		} else if (qmsg.message == WM_CHAR) {
-			pg->egectrl_root->keymsgchar((unsigned)qmsg.wParam, 0); // ÒÔºó²¹¼Óflag
+			pg->egectrl_root->keymsgchar((unsigned)qmsg.wParam, 0); // ä»¥åŽè¡¥åŠ flag
 		}
 	} else if (qmsg.message >= WM_MOUSEFIRST && qmsg.message <= WM_MOUSELAST) {
 		int x = (short int)((UINT)qmsg.lParam & 0xFFFF), y = (short int)((UINT)qmsg.lParam >> 16);
@@ -710,7 +710,7 @@ init_instance(HINSTANCE hInstance, int nCmdShow) {
 		lf.lfClipPrecision  = CLIP_DEFAULT_PRECIS;
 		lf.lfQuality        = DEFAULT_QUALITY;
 		lf.lfPitchAndFamily = DEFAULT_PITCH;
-		lstrcpyW(lf.lfFaceName, L"ËÎÌå");
+		lstrcpyW(lf.lfFaceName, L"å®‹ä½“");
 		HFONT hfont = CreateFontIndirectW(&lf);
 		::SendMessage(pg->hwnd, WM_SETFONT, (WPARAM)hfont, NULL);
 		//DeleteObject(hfont);
@@ -1256,18 +1256,18 @@ initgraph(int *gdriver, int *gmode, char *path) {
 	pg->exit_flag = 0;
 	pg->exit_window = 0;
 
-	//ÒÑ´´½¨Ôò×ªÎª¸Ä±ä´°¿Ú´óÐ¡	
+	//å·²åˆ›å»ºåˆ™è½¬ä¸ºæ”¹å˜çª—å£å¤§å°	
 	if(g_has_init) {
 		int width = (int)(*gmode & 0xFFFF);
 		int height = (int)((unsigned int)(*gmode) >> 16);
 		resizewindow(width, height);
 		HWND hwnd = getHWnd();
-		if (::IsWindowVisible(hwnd))
+		if (!::IsWindowVisible(hwnd))
 			::ShowWindow(hwnd, SW_SHOW);
 		return;
 	}
 
-	//³õÊ¼»¯»·¾³
+	//åˆå§‹åŒ–çŽ¯å¢ƒ
 	memset(pg, 0, sizeof(_graph_setting));
 	setmode(*gdriver, *gmode);	
 	init_img_page(pg);
@@ -1288,7 +1288,7 @@ initgraph(int *gdriver, int *gmode, char *path) {
 
 	UpdateWindow(pg->hwnd);
 
-	//³õÊ¼»¯Êó±êÎ»ÖÃÊý¾Ý
+	//åˆå§‹åŒ–é¼ æ ‡ä½ç½®æ•°æ®
 	pg->mouse_last_x = pg->dc_w / 2;
 	pg->mouse_last_y = pg->dc_h / 2;
 	
@@ -1302,10 +1302,10 @@ initgraph(int *gdriver, int *gmode, char *path) {
 
 	pg->mouse_show = true;
 
-	//³õÊ¼»¯ºóµÄÉèÖÃ
+	//åˆå§‹åŒ–åŽçš„è®¾ç½®
 	LOGFONTA font;
 	getfont(&font);
-	lstrcpyA(font.lfFaceName, "ºÚÌå");
+	lstrcpyA(font.lfFaceName, "é»‘ä½“");
 	setfont(&font);
 }
 
@@ -1347,12 +1347,12 @@ messageloopthread(LPVOID lpParameter) {
 		int nCmdShow = SW_SHOW;
 		register_class(pg, pg->instance);
 
-		/* Ö´ÐÐÓ¦ÓÃ³ÌÐò³õÊ¼»¯: */
+		/* æ‰§è¡Œåº”ç”¨ç¨‹åºåˆå§‹åŒ–: */
 		if (!init_instance(pg->instance, nCmdShow)) {
 			return 0xFFFFFFFF;
 		}
 
-		//Í¼ÐÎ³õÊ¼»¯
+		//å›¾å½¢åˆå§‹åŒ–
 		if (pg->dc == 0)
 			graph_init(pg);
 
@@ -1406,7 +1406,7 @@ setinitmode(int mode, int x, int y) {
 	g_windowpos_y = y;
 }
 
-// »ñÈ¡µ±Ç°°æ±¾ ####
+// èŽ·å–å½“å‰ç‰ˆæœ¬ ####
 int getGraphicsVer() {
 	return EGE_VERSION_INT;
 }
@@ -1445,14 +1445,14 @@ void EGEAPI resizewindow(int width, int height) {
 		if (pg->img_page[i] != NULL) {
 			resize(pg->img_page[i], width, height);
 			
-			//ÊÓ¿Úµ÷Õû
+			//è§†å£è°ƒæ•´
 			int vleft, vtop, vright, vbottom, vclip;
 			getviewport(&vleft, &vtop, &vright, &vbottom, &vclip, pg->img_page[i]);
 			if (vleft == 0 && vtop == 0 && vright == w && vbottom == h)
 				setviewport(0, 0, width, height, vclip, pg->img_page[i]);
 		}	
 	}
-	//´°¿ÚÊÓ¿Úµ÷Õû
+	//çª—å£è§†å£è°ƒæ•´
 	window_setviewport(pg->base_x, pg->base_y, width, height);	
 }
 
