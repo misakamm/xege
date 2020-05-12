@@ -1267,9 +1267,9 @@ initgraph(int *gdriver, int *gmode, char *path) {
 		return;
 	}
 
+	//初始化环境
 	memset(pg, 0, sizeof(_graph_setting));
 	setmode(*gdriver, *gmode);	
-	//初始化过则改为调整窗口大小
 	init_img_page(pg);
 
 	pg->instance = GetModuleHandle(NULL);
