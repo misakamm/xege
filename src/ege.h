@@ -664,6 +664,9 @@ bool EGEAPI is_run();   // 判断UI是否退出
 void EGEAPI setcaption(LPCSTR  caption);
 void EGEAPI setcaption(LPCWSTR caption);
 
+void EGEAPI movewindow(int x, int y, bool redraw = true);	//移动窗口
+void EGEAPI resizewindow(int width, int height);			//重设窗口尺寸
+
 void EGEAPI setrendermode(rendermode_e mode);
 
 // 绘图环境设置
@@ -1207,8 +1210,10 @@ public:
 
 HWND        EGEAPI getHWnd();         // 获取绘图窗口句柄
 HINSTANCE   EGEAPI getHInstance();
+HDC         EGEAPI getHdc(PIMAGE pImg = NULL);
+
 PVOID       EGEAPI getProcfunc();
-int         EGEAPI getGraphicsVer();   // 获取当前版本 ###
+int         EGEAPI getGraphicsVer();   // 获取当前版本 ####
 float       EGEAPI getfps(); // 获取当前帧率
 
 //随机函数

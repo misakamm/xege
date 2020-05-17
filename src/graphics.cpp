@@ -8,19 +8,22 @@
 * Blog:         http://misakamm.com
 * E-Mail:       mailto:misakamm[at gmail com]
 
-±àÒëËµÃ÷£º±àÒëÎª¶¯Ì¬¿âÊ±£¬ĞèÒª¶¨Òå PNG_BULIDDLL£¬ÒÔµ¼³ödllº¯Êı
+ç¼–è¯‘è¯´æ˜ï¼šç¼–è¯‘ä¸ºåŠ¨æ€åº“æ—¶ï¼Œéœ€è¦å®šä¹‰ PNG_BULIDDLLï¼Œä»¥å¯¼å‡ºdllå‡½æ•°
 
-±¾Í¼ĞÎ¿â´´½¨Ê±¼ä2010 0916
+æœ¬å›¾å½¢åº“åˆ›å»ºæ—¶é—´2010 0916
 
-±¾ÎÄ¼ş¶¨ÒåÆ½Ì¨ÃÜÇĞÏà¹ØµÄ²Ù×÷¼°½Ó¿Ú
+æœ¬æ–‡ä»¶å®šä¹‰å¹³å°å¯†åˆ‡ç›¸å…³çš„æ“ä½œåŠæ¥å£
 */
 
-//±àÒëÆ÷°æ±¾£¬Ä¿Ç°½öÖ§³Övc6/vc2008/vc2010/vc2012/mingw
+//ç¼–è¯‘å™¨ç‰ˆæœ¬ï¼Œç›®å‰ä»…æ”¯æŒvc6/vc2008/vc2010/vc2012/mingw
 #ifdef _WIN64
 #	define SYSBITS TEXT("x64")
 #else
 #	define SYSBITS TEXT("x86")
 #endif
+
+#define TOSTRING_(x) #x
+#define TOSTRING(x) TOSTRING_(x)
 
 #ifdef _MSC_VER
 #	if (_MSC_VER >= 2000)
@@ -43,13 +46,16 @@
 #		define COMPILER_VER TEXT("VC6") SYSBITS
 #	endif
 #else
-#	define TOSTRING_(x) #x
-#	define TOSTRING(x) TOSTRING_(x)
 #	define GCC_VER TEXT(TOSTRING(__GNUC__)) TEXT(".") TEXT(TOSTRING(__GNUC_MINOR__))
 #	define COMPILER_VER TEXT("GCC") GCC_VER SYSBITS
 #endif
 
-#define EGE_TITLE TEXT("EGE19.01 ") COMPILER_VER
+#define EGE_VERSION_YEAR 20
+#define EGE_VERSION_MONTH 05
+
+#define EGE_VERSION_INT EGE_VERSION_YEAR * 100 + EGE_VERSION_MONTH
+#define EGE_VERSION TEXT(TOSTRING(EGE_VERSION_YEAR)) TEXT(".") TEXT(TOSTRING(EGE_VERSION_MONTH))
+#define EGE_TITLE TEXT("EGE") EGE_VERSION TEXT(" ") COMPILER_VER
 
 #ifndef _ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH
 #define _ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH
@@ -133,11 +139,11 @@ ui_msg_process(EGEMSG& qmsg) {
 	qmsg.flag |= 1;
 	if (qmsg.message >= WM_KEYFIRST && qmsg.message <= WM_KEYLAST) {
 		if (qmsg.message == WM_KEYDOWN) {
-			pg->egectrl_root->keymsgdown((unsigned)qmsg.wParam, 0); // ÒÔºó²¹¼Óflag
+			pg->egectrl_root->keymsgdown((unsigned)qmsg.wParam, 0); // ä»¥åè¡¥åŠ flag
 		} else if (qmsg.message == WM_KEYUP) {
-			pg->egectrl_root->keymsgup((unsigned)qmsg.wParam, 0); // ÒÔºó²¹¼Óflag
+			pg->egectrl_root->keymsgup((unsigned)qmsg.wParam, 0); // ä»¥åè¡¥åŠ flag
 		} else if (qmsg.message == WM_CHAR) {
-			pg->egectrl_root->keymsgchar((unsigned)qmsg.wParam, 0); // ÒÔºó²¹¼Óflag
+			pg->egectrl_root->keymsgchar((unsigned)qmsg.wParam, 0); // ä»¥åè¡¥åŠ flag
 		}
 	} else if (qmsg.message >= WM_MOUSEFIRST && qmsg.message <= WM_MOUSELAST) {
 		int x = (short int)((UINT)qmsg.lParam & 0xFFFF), y = (short int)((UINT)qmsg.lParam >> 16);
@@ -627,10 +633,10 @@ setmode(int gdriver, int gmode) {
 		pg->dc_w = (short)(gmode & 0xFFFF);
 		pg->dc_h = (short)((unsigned int)gmode >> 16);
 		if (pg->dc_w < 0) {
-			pg->dc_w = rect.right;
+			pg->dc_w = rect.right - rect.left;
 		}
 		if (pg->dc_h < 0) {
-			pg->dc_h = rect.bottom;
+			pg->dc_h = rect.bottom - rect.top;
 		}
 	} else {
 		pg->dc_w = 640;
@@ -704,7 +710,7 @@ init_instance(HINSTANCE hInstance, int nCmdShow) {
 		lf.lfClipPrecision  = CLIP_DEFAULT_PRECIS;
 		lf.lfQuality        = DEFAULT_QUALITY;
 		lf.lfPitchAndFamily = DEFAULT_PITCH;
-		lstrcpyW(lf.lfFaceName, L"ËÎÌå");
+		lstrcpyW(lf.lfFaceName, L"å®‹ä½“");
 		HFONT hfont = CreateFontIndirectW(&lf);
 		::SendMessage(pg->hwnd, WM_SETFONT, (WPARAM)hfont, NULL);
 		//DeleteObject(hfont);
@@ -1227,10 +1233,8 @@ void logoscene() {
 void
 init_img_page(struct _graph_setting * pg) {
 	if (g_has_init) {
-		for (int page = 0; page < BITMAP_PAGE_SIZE; ++page) {
+		for (int page = 0; page < BITMAP_PAGE_MIN_SIZE; ++page) {
 			if (pg->img_page[page] == NULL) {
-				;
-			} else {
 				pg->img_page[page]->createimage(pg->dc_w, pg->dc_h);
 			}
 		}
@@ -1249,57 +1253,69 @@ void
 initgraph(int *gdriver, int *gmode, char *path) {
 	struct _graph_setting * pg = &graph_setting;
 
-	g_initcall = 0;
-	if (!g_has_init) {
-		memset(pg, 0, sizeof(_graph_setting));
-		pg->exit_flag = 0;
-		pg->exit_window = 0;
-		init_img_page(pg);
-	} else {
-		pg->exit_flag = 0;
-		pg->exit_window = 0;
-		setmode(*gdriver, *gmode);
-		init_img_page(pg);
-		return ;
+	pg->exit_flag = 0;
+	pg->exit_window = 0;
+
+	//å·²åˆ›å»ºåˆ™è½¬ä¸ºæ”¹å˜çª—å£å¤§å°	
+	if(g_has_init) {
+		int width = (int)(*gmode & 0xFFFF);
+		int height = (int)((unsigned int)(*gmode) >> 16);
+		resizewindow(width, height);
+		HWND hwnd = getHWnd();
+		if (!::IsWindowVisible(hwnd))
+			::ShowWindow(hwnd, SW_SHOW);
+		return;
 	}
 
-	setmode(*gdriver, *gmode);
+	//åˆå§‹åŒ–ç¯å¢ƒ
+	memset(pg, 0, sizeof(_graph_setting));
+	setmode(*gdriver, *gmode);	
+	init_img_page(pg);
+
 	pg->instance = GetModuleHandle(NULL);
 	lstrcpy(pg->window_class_name, TEXT("Easy Graphics Engine"));
 	lstrcpy(pg->window_caption, EGE_TITLE);
 
-	{
-		//SECURITY_ATTRIBUTES sa = {0};
-		DWORD pid;
-		pg->init_finish = false;
-		pg->threadui_handle = CreateThread(NULL, 0, messageloopthread, pg, CREATE_SUSPENDED, &pid);
-		ResumeThread(pg->threadui_handle);
-		while (!pg->init_finish) {
-			Sleep(1);
-		}
+	//SECURITY_ATTRIBUTES sa = {0};
+	DWORD pid;
+	pg->init_finish = false;
+	pg->threadui_handle = CreateThread(NULL, 0, messageloopthread, pg, CREATE_SUSPENDED, &pid);
+	ResumeThread(pg->threadui_handle);
+
+	while (!pg->init_finish) {
+		Sleep(1);
 	}
 
 	UpdateWindow(pg->hwnd);
 
-	{   //³õÊ¼»¯Êó±êÎ»ÖÃÊı¾İ
-		pg->mouse_last_x = pg->dc_w / 2;
-		pg->mouse_last_y = pg->dc_h / 2;
-	}
+	//åˆå§‹åŒ–é¼ æ ‡ä½ç½®æ•°æ®
+	pg->mouse_last_x = pg->dc_w / 2;
+	pg->mouse_last_y = pg->dc_h / 2;
+	
 	static egeControlBase _egeControlBase;
 
-	if (g_initoption & INIT_WITHLOGO) {
+	if (g_initoption & INIT_WITHLOGO)
 		logoscene();
-	}
-	if (g_initoption & INIT_RENDERMANUAL) {
+
+	if (g_initoption & INIT_RENDERMANUAL)
 		setrendermode(RENDER_MANUAL);
-	}
-	pg->mouse_show = 1;
+
+	pg->mouse_show = true;
+
+	//åˆå§‹åŒ–åçš„è®¾ç½®
+	LOGFONTA font;
+	getfont(&font);
+	lstrcpyA(font.lfFaceName, "é»‘ä½“");
+	setfont(&font);
 }
 
 void
 initgraph(int Width, int Height, int Flag) {
 	int g = TRUECOLORSIZE, m = (Width) | (Height<<16);
-	if (g_initcall == 0) setinitmode(Flag);
+
+	if (!g_initcall)
+		setinitmode(Flag);
+
 	initgraph(&g, &m, (char*)"");
 	//using flag;
 }
@@ -1331,13 +1347,14 @@ messageloopthread(LPVOID lpParameter) {
 		int nCmdShow = SW_SHOW;
 		register_class(pg, pg->instance);
 
-		/* Ö´ĞĞÓ¦ÓÃ³ÌĞò³õÊ¼»¯: */
+		/* æ‰§è¡Œåº”ç”¨ç¨‹åºåˆå§‹åŒ–: */
 		if (!init_instance(pg->instance, nCmdShow)) {
 			return 0xFFFFFFFF;
 		}
 
-		//Í¼ĞÎ³õÊ¼»¯
-		graph_init(pg);
+		//å›¾å½¢åˆå§‹åŒ–
+		if (pg->dc == 0)
+			graph_init(pg);
 
 		{
 			pg->mouse_show = 0;
@@ -1388,5 +1405,56 @@ setinitmode(int mode, int x, int y) {
 	g_windowpos_x = x;
 	g_windowpos_y = y;
 }
+
+// è·å–å½“å‰ç‰ˆæœ¬ ####
+int getGraphicsVer() {
+	return EGE_VERSION_INT;
+}
+
+HWND getParentHWnd() {
+	return g_attach_hwnd;
+}
+
+void getParentSize(int* width, int* height) {
+	RECT rect;
+	if (g_attach_hwnd) {
+		GetClientRect(g_attach_hwnd, &rect);
+	} else {
+		GetWindowRect(GetDesktopWindow(), &rect);
+	}
+
+	*width = rect.right - rect.left;
+	*height =rect.bottom - rect.top;
+}
+
+void EGEAPI resizewindow(int width, int height) {
+	int parentW, parentH;
+	getParentSize(&parentW, &parentH);
+
+	if (width <= 0)  width  = parentW;
+	if (height <= 0) height = parentH;
+
+	int w = getwidth(), h = getheight();
+	if ((width == w && height == h))
+		return;
+	
+	setmode(TRUECOLORSIZE, width | (height<<16));
+	struct _graph_setting * pg = &graph_setting;
+
+	for (int i = 0; i < BITMAP_PAGE_SIZE; ++i) {
+		if (pg->img_page[i] != NULL) {
+			resize(pg->img_page[i], width, height);
+			
+			//è§†å£è°ƒæ•´
+			int vleft, vtop, vright, vbottom, vclip;
+			getviewport(&vleft, &vtop, &vright, &vbottom, &vclip, pg->img_page[i]);
+			if (vleft == 0 && vtop == 0 && vright == w && vbottom == h)
+				setviewport(0, 0, width, height, vclip, pg->img_page[i]);
+		}	
+	}
+	//çª—å£è§†å£è°ƒæ•´
+	window_setviewport(pg->base_x, pg->base_y, width, height);	
+}
+
 
 } // namespace ege
