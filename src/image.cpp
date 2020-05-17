@@ -339,6 +339,33 @@ IMAGE::getimage(LPCSTR filename, int zoomWidth, int zoomHeight) {
 	return getimage(wszPath, zoomWidth, zoomHeight);
 }
 
+inline void getimage_from_IPicture(PIMAGE self, IPicture* pPicture) {
+	long  lWidth, lHeight, lWidthPixels, lHeightPixels;
+	PIMAGE img = CONVERT_IMAGE_CONST(0);
+	pPicture->get_Width (&lWidth );
+	lWidthPixels  = MulDiv(lWidth,  GetDeviceCaps(img->m_hDC, LOGPIXELSX), 2540);
+	pPicture->get_Height(&lHeight);
+	lHeightPixels = MulDiv(lHeight, GetDeviceCaps(img->m_hDC, LOGPIXELSY), 2540);
+	CONVERT_IMAGE_END;
+
+	self->createimage(lWidthPixels, lHeightPixels);
+	{
+		HDC dc = self->m_hDC;
+
+		pPicture->Render(
+			dc,
+			0, 0,
+			lWidthPixels,
+			lHeightPixels,
+			0,
+			lHeight,
+			lWidth,
+			-lHeight,
+			0
+			);
+	}
+}
+
 int
 IMAGE::getimage(LPCWSTR filename, int zoomWidth, int zoomHeight) {
 	(void)zoomWidth, (void)zoomHeight; // ignore
@@ -351,8 +378,6 @@ IMAGE::getimage(LPCWSTR filename, int zoomWidth, int zoomHeight) {
 	struct IPicture *pPicture;
 	OLECHAR         wszPath[MAX_PATH*2+1];
 	WCHAR           szPath[MAX_PATH*2+1] = L"";
-	long            lWidth,         lHeight;
-	long            lWidthPixels,   lHeightPixels;
 	HRESULT         hr;
 
 	if (wcsstr(filename, L"http://")) {
@@ -380,29 +405,7 @@ IMAGE::getimage(LPCWSTR filename, int zoomWidth, int zoomHeight) {
 		return grIOerror;
 	}
 
-	PIMAGE img = CONVERT_IMAGE_CONST(0);
-	pPicture->get_Width (&lWidth );
-	lWidthPixels  = MulDiv(lWidth,  GetDeviceCaps(img->m_hDC, LOGPIXELSX), 2540);
-	pPicture->get_Height(&lHeight);
-	lHeightPixels = MulDiv(lHeight, GetDeviceCaps(img->m_hDC, LOGPIXELSY), 2540);
-	CONVERT_IMAGE_END;
-
-	createimage(lWidthPixels, lHeightPixels);
-	{
-		HDC dc = m_hDC;
-
-		pPicture->Render(
-			dc,
-			0, 0,
-			lWidthPixels,
-			lHeightPixels,
-			0,
-			lHeight,
-			lWidth,
-			-lHeight,
-			0
-			);
-	}
+	getimage_from_IPicture(this, pPicture);
 
 	pPicture->Release();
 
@@ -469,11 +472,39 @@ IMAGE::saveimage(LPCWSTR filename) {
 	return ret;
 }
 
+void getimage_from_png_struct(PIMAGE self, void* vpng_ptr, void* vinfo_ptr) {
+	png_structp png_ptr = (png_structp)vpng_ptr;
+	png_infop info_ptr = (png_infop)vinfo_ptr;
+	png_read_png(png_ptr, info_ptr, PNG_TRANSFORM_BGR|PNG_TRANSFORM_EXPAND, NULL);
+	png_set_expand(png_ptr);
+	self->newimage(NULL, (int)(info_ptr->width), (int)(info_ptr->height)); //png_get_IHDR
+
+	PDWORD m_pBuffer = self->m_pBuffer;
+	const png_uint_32 width = info_ptr->width;
+	const png_uint_32 height = info_ptr->height;
+	const png_uint_32 depth = info_ptr->pixel_depth;
+	png_bytepp row_pointers = png_get_rows(png_ptr, info_ptr);
+
+	for (uint32 i = 0; i < height; ++i) {
+		if (depth == 24) {
+			for (uint32 j = 0; j < width; ++j) {
+				m_pBuffer[i * width + j] = 0xFFFFFF & (DWORD&)row_pointers[i][j * 3];
+			}
+		} else if (depth == 32) {
+			for (uint32 j = 0; j < width; ++j) {
+				m_pBuffer[i * width + j] = ((DWORD*)(row_pointers[i]))[j];
+				if ( (m_pBuffer[i * width + j] & 0xFF000000) == 0) {
+					m_pBuffer[i * width + j] = 0;
+				}
+			}
+		}
+	}
+}
+
 int
 IMAGE::getpngimg(FILE* fp) {
 	png_structp png_ptr;
 	png_infop info_ptr;
-	uint32 width, height, depth;
 
 	{
 		char header[16];
@@ -489,39 +520,19 @@ IMAGE::getpngimg(FILE* fp) {
 
 	png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
 	if (png_ptr == NULL) {
-		return -1;
+		return grAllocError;
 	}
 	info_ptr = png_create_info_struct(png_ptr);
 	if (info_ptr == NULL) {
-		png_destroy_write_struct(&png_ptr, NULL);
-		return -1;
+		png_destroy_read_struct(&png_ptr, NULL, NULL);
+		return grAllocError;
 	}
+	
 	png_init_io(png_ptr, fp);
-	png_read_png(png_ptr, info_ptr, PNG_TRANSFORM_BGR|PNG_TRANSFORM_EXPAND, NULL);
-	png_set_expand(png_ptr);
+	getimage_from_png_struct(this, png_ptr, info_ptr);
 
-	newimage(NULL, (int)(info_ptr->width), (int)(info_ptr->height)); //png_get_IHDR
-	width = info_ptr->width;
-	height = info_ptr->height;
-	depth = info_ptr->pixel_depth;
-
-	png_bytepp row_pointers = png_get_rows(png_ptr, info_ptr);
-	for (uint32 i = 0; i < height; ++i) {
-		if (depth == 24) {
-			for (uint32 j = 0; j < width; ++j) {
-				m_pBuffer[i * width + j] = 0xFFFFFF & (DWORD&)row_pointers[i][j * 3];
-			}
-		} else if (depth == 32) {
-			for (uint32 j = 0; j < width; ++j) {
-				m_pBuffer[i * width + j] = ((DWORD*)(row_pointers[i]))[j];
-				if ( (m_pBuffer[i * width + j] & 0xFF000000) == 0) {
-					m_pBuffer[i * width + j] = 0;
-				}
-			}
-		}
-	}
 	png_destroy_read_struct(&png_ptr, &info_ptr, NULL);
-	return 0;
+	return grOk;
 }
 
 int
@@ -601,76 +612,95 @@ IMAGE::savepngimg(FILE* fp, int bAlpha) {
 	return 0;
 }
 
+struct MemCursor {
+	png_const_bytep data;
+	png_size_t      size;
+	png_size_t      cur;
+};
+
+static void read_data_from_MemCursor(png_structp png_ptr, png_bytep outBytes, png_size_t byteCountToRead) {
+	MemCursor& cursor = *(MemCursor*)png_get_io_ptr(png_ptr);
+	png_size_t count = min(cursor.size - cursor.cur, byteCountToRead);
+	memcpy(outBytes, cursor.data + cursor.cur, count);
+	cursor.cur += count;
+}
+
+inline int getimage_from_resource(PIMAGE self, HRSRC hrsrc) {
+	if (hrsrc) {
+		HGLOBAL         hg = LoadResource(0, hrsrc);
+		DWORD           dwSize = SizeofResource(0, hrsrc);
+		LPVOID          pvRes = LockResource(hg);
+
+		if (dwSize >= 8 && png_check_sig((png_const_bytep)pvRes, 8)) {
+			png_structp png_ptr;
+			png_infop info_ptr;
+			MemCursor cursor;
+			cursor.data = (png_const_bytep)pvRes;
+			cursor.size = dwSize;
+			cursor.cur  = 0;
+
+			png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+			if (png_ptr == NULL) {
+				return grAllocError;
+			}
+			info_ptr = png_create_info_struct(png_ptr);
+			if (info_ptr == NULL) {
+				png_destroy_read_struct(&png_ptr, NULL, NULL);
+				return grAllocError;
+			}
+
+			png_set_read_fn(png_ptr, &cursor, read_data_from_MemCursor);
+			getimage_from_png_struct(self, png_ptr, info_ptr);
+
+			png_destroy_read_struct(&png_ptr, &info_ptr, NULL);
+		} else {
+			HGLOBAL         hGlobal = GlobalAlloc(GMEM_MOVEABLE, dwSize);
+			LPVOID          pvData;
+			struct IPicture *pPicture;
+			IStream         *pStm;
+			HRESULT         hr;
+
+			if (hGlobal == NULL || (pvData = GlobalLock(hGlobal)) == NULL) {
+				return grAllocError;
+			}
+			memcpy(pvData, pvRes, dwSize);
+			GlobalUnlock(hGlobal);
+			if (S_OK != CreateStreamOnHGlobal(hGlobal, TRUE, &pStm)) {
+				return grNullPointer;
+			}
+
+			hr = OleLoadPicture(
+				pStm,
+				(LONG)dwSize,
+				TRUE,
+				IID_IPicture,
+				(void**)&pPicture
+				);
+
+			GlobalFree(hGlobal);
+
+			if(FAILED(hr)) {
+				return grIOerror;
+			}
+
+			getimage_from_IPicture(self, pPicture);
+
+			pPicture->Release();
+		}
+
+		return grOk;
+	}
+
+	return grIOerror;
+}
+
 int
 IMAGE::getimage(LPCSTR pResType, LPCSTR pResName, int zoomWidth, int zoomHeight) {
 	(void)zoomWidth, (void)zoomHeight; // ignore
 	inittest(L"IMAGE::getimage");
 	struct _graph_setting * pg = &graph_setting;
 	HRSRC hrsrc = FindResourceA(pg->instance, pResName, pResType);
-
-	if (hrsrc) {
-		HGLOBAL         hg = LoadResource(0, hrsrc);
-		DWORD           dwSize = SizeofResource(0, hrsrc);
-		HGLOBAL         hGlobal = GlobalAlloc(GMEM_MOVEABLE, dwSize);
-		LPVOID          pvRes = LockResource(hg);
-		LPVOID          pvData;
-		struct IPicture *pPicture;
-		IStream         *pStm;
-		long            lWidth,         lHeight;
-		long            lWidthPixels,   lHeightPixels;
-		HRESULT         hr;
-
-		if (hGlobal == NULL || (pvData = GlobalLock(hGlobal)) == NULL) {
-			return grAllocError;
-		}
-		memcpy(pvData, pvRes, dwSize);
-		GlobalUnlock(hGlobal);
-		if (S_OK != CreateStreamOnHGlobal(hGlobal, TRUE, &pStm)) {
-			return grNullPointer;
-		}
-
-		hr = OleLoadPicture(
-			pStm,
-			(LONG)dwSize,
-			TRUE,
-			IID_IPicture,
-			(void**)&pPicture
-			);
-
-		GlobalFree(hGlobal);
-
-		if(FAILED(hr)) {
-			return grIOerror;
-		}
-
-
-		PIMAGE img = CONVERT_IMAGE_CONST(0);
-		pPicture->get_Width(&lWidth);
-		lWidthPixels = MulDiv(lWidth, GetDeviceCaps(img->m_hDC, LOGPIXELSX), 2540);
-		pPicture->get_Height(&lHeight);
-		lHeightPixels = MulDiv(lHeight, GetDeviceCaps(img->m_hDC, LOGPIXELSY), 2540);
-		CONVERT_IMAGE_END;
-
-		createimage(lWidthPixels, lHeightPixels);
-		{
-			HDC dc = m_hDC;
-
-			pPicture->Render(
-				dc,
-				0, 0,
-				lWidthPixels, lHeightPixels,
-				0, lHeight,
-				lWidth, -lHeight,
-				0
-				);
-		}
-
-		pPicture->Release();
-
-		return grOk;
-	}
-
-	return grIOerror;
+	return getimage_from_resource(this, hrsrc);
 }
 
 
@@ -680,71 +710,7 @@ IMAGE::getimage(LPCWSTR pResType, LPCWSTR pResName, int zoomWidth, int zoomHeigh
 	inittest(L"IMAGE::getimage");
 	struct _graph_setting * pg = &graph_setting;
 	HRSRC hrsrc = FindResourceW(pg->instance, pResName, pResType);
-
-
-	if (hrsrc) {
-		HGLOBAL         hg = LoadResource(0, hrsrc);
-		DWORD           dwSize = SizeofResource(0, hrsrc);
-		HGLOBAL         hGlobal = GlobalAlloc(GMEM_MOVEABLE, dwSize);
-		LPVOID          pvRes = LockResource(hg);
-		LPVOID          pvData;
-		struct IPicture *pPicture;
-		IStream         *pStm;
-		long            lWidth,         lHeight;
-		long            lWidthPixels,   lHeightPixels;
-		HRESULT         hr;
-
-		if (hGlobal == NULL || (pvData = GlobalLock(hGlobal)) == NULL) {
-			return grAllocError;
-		}
-		memcpy(pvData, pvRes, dwSize);
-		GlobalUnlock(hGlobal);
-		if (S_OK != CreateStreamOnHGlobal(hGlobal, TRUE, &pStm)) {
-			return grNullPointer;
-		}
-
-		hr = OleLoadPicture(
-			pStm,
-			(LONG)dwSize,
-			TRUE,
-			IID_IPicture,
-			(void**)&pPicture
-			);
-
-		GlobalFree(hGlobal);
-
-		if(FAILED(hr)) {
-			return grIOerror;
-		}
-
-
-		PIMAGE img = CONVERT_IMAGE_CONST(0);
-		pPicture->get_Width(&lWidth);
-		lWidthPixels = MulDiv(lWidth, GetDeviceCaps(img->m_hDC, LOGPIXELSX), 2540);
-		pPicture->get_Height(&lHeight);
-		lHeightPixels = MulDiv(lHeight, GetDeviceCaps(img->m_hDC, LOGPIXELSY), 2540);
-		CONVERT_IMAGE_END;
-
-		createimage(lWidthPixels, lHeightPixels);
-		{
-			HDC dc = m_hDC;
-
-			pPicture->Render(
-				dc,
-				0, 0,
-				lWidthPixels, lHeightPixels,
-				0, lHeight,
-				lWidth, -lHeight,
-				0
-				);
-		}
-
-		pPicture->Release();
-
-		return grOk;
-	}
-
-	return grIOerror;
+	return getimage_from_resource(this, hrsrc);
 }
 int
 IMAGE::getimage(void* pMem, long size) {
@@ -756,8 +722,6 @@ IMAGE::getimage(void* pMem, long size) {
 		LPVOID          pvData;
 		struct IPicture *pPicture;
 		IStream         *pStm;
-		long            lWidth,         lHeight;
-		long            lWidthPixels,   lHeightPixels;
 		HRESULT         hr;
 
 		if (hGlobal == NULL || (pvData = GlobalLock(hGlobal)) == NULL) {
@@ -783,27 +747,7 @@ IMAGE::getimage(void* pMem, long size) {
 			return grIOerror;
 		}
 
-
-		PIMAGE img = CONVERT_IMAGE_CONST(0);
-		pPicture->get_Width(&lWidth);
-		lWidthPixels = MulDiv(lWidth, GetDeviceCaps(img->m_hDC, LOGPIXELSX), 2540);
-		pPicture->get_Height(&lHeight);
-		lHeightPixels = MulDiv(lHeight, GetDeviceCaps(img->m_hDC, LOGPIXELSY), 2540);
-		CONVERT_IMAGE_END;
-
-		createimage(lWidthPixels, lHeightPixels);
-		{
-			HDC dc = m_hDC;
-
-			pPicture->Render(
-				dc,
-				0, 0,
-				lWidthPixels, lHeightPixels,
-				0, lHeight,
-				lWidth, -lHeight,
-				0
-				);
-		}
+		getimage_from_IPicture(this, pPicture);
 
 		pPicture->Release();
 

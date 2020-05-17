@@ -333,6 +333,8 @@ public:
 		int alpha = -1,                  // in range[0, 256], alpha== -1 means no alpha
 		int smooth = 0
 	);
+
+	friend void getimage_from_png_struct(PIMAGE, void*, void*);
 };
 
 // 定义ege全局状态对象
