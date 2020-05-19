@@ -1702,7 +1702,7 @@ getfont(LOGFONTW *font, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
 	if (img) {
 		HFONT hf = (HFONT)GetCurrentObject(img->m_hDC, OBJ_FONT);
-		GetObjectW(hf, sizeof(LOGFONTA), font);
+		GetObjectW(hf, sizeof(LOGFONTW), font);
 	}
 	CONVERT_IMAGE_END;
 }
