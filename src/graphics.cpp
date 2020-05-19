@@ -1230,17 +1230,9 @@ void logoscene() {
 	setrendermode(RENDER_AUTO);
 }
 
-void
+inline void
 init_img_page(struct _graph_setting * pg) {
-	if (g_has_init) {
-		for (int page = 0; page < BITMAP_PAGE_MIN_SIZE; ++page) {
-			if (pg->img_page[page] == NULL) {
-				pg->img_page[page]->createimage(pg->dc_w, pg->dc_h);
-			}
-		}
-		graph_init(pg);
-		ShowWindow(pg->hwnd, SW_SHOW);
-	} else {
+	if (!g_has_init) {
 #ifdef EGE_GDIPLUS
 		Gdiplus::GdiplusStartupInput gdiplusStartupInput;
 		Gdiplus::GdiplusStartup(&pg->g_gdiplusToken, &gdiplusStartupInput, NULL);
