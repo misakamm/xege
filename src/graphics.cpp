@@ -1293,12 +1293,6 @@ initgraph(int *gdriver, int *gmode, char *path) {
 		setrendermode(RENDER_MANUAL);
 
 	pg->mouse_show = true;
-
-	//初始化后的设置
-	LOGFONTA font;
-	getfont(&font);
-	lstrcpyA(font.lfFaceName, "黑体");
-	setfont(&font);
 }
 
 void
