@@ -217,6 +217,7 @@ IMAGE::newimage(HDC hdc, int width, int height) {
 				setfillstyle(SOLID_FILL, 0, this);
 				setlinestyle(PS_SOLID, 0, 1, this);
 				settextjustify(LEFT_TEXT, TOP_TEXT, this);
+				setfont(16, 0, "SimSun", this);
 				ege_enable_aa(false, this);
 			} else {
 				//SetBkMode(dc, bkMode);
