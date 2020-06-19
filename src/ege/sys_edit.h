@@ -2,8 +2,10 @@
 #define _EGE_SYS_EDIT_H_
 
 #ifndef _EGE_H_
-#error include "fps.h" must after include "ege.h" or "graphics.h"
+#error include "sys_edit.h" must after include "ege.h" or "graphics.h"
 #endif
+
+#include "egecontrolbase.h"
 
 namespace ege {
 

@@ -11,6 +11,8 @@
 #error include "button.h" must after include "ege.h" or "graphics.h"
 #endif
 
+#include "egecontrolbase.h"
+
 #include <algorithm>
 
 #ifdef DEBUG

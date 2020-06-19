@@ -25,6 +25,7 @@
 
 #define _GRAPH_LIB_BUILD_
 #include "ege.h"
+#include "ege/egecontrolbase.h"
 #include "thread_queue.h"
 
 #ifndef ERROR_SUCCESS
