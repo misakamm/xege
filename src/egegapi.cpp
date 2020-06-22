@@ -104,6 +104,19 @@ setcaption(LPCWSTR caption) {
 	::SetWindowTextW(getHWnd(), caption);
 }
 
+
+void seticon(int icon_id) {
+	HICON hIcon = NULL;
+	if (icon_id == 0) {
+		hIcon = ::LoadIconW(NULL, (LPCWSTR)IDI_APPLICATION);
+	} else {
+		hIcon = ::LoadIconW(getHInstance(), MAKEINTRESOURCEW(icon_id));
+	}
+	if (hIcon) {
+		::SetClassLongPtrW(getHWnd(), GCLP_HICON, (LONG_PTR)hIcon);
+	}
+}
+
 void movewindow(int x, int y, bool redraw) {
 	::MoveWindow(getHWnd(), x, y, getwidth(), getheight(), redraw);
 }

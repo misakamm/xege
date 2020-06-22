@@ -663,6 +663,7 @@ void EGEAPI closegraph();                                      // 关闭图形环境
 bool EGEAPI is_run();   // 判断UI是否退出
 void EGEAPI setcaption(LPCSTR  caption);
 void EGEAPI setcaption(LPCWSTR caption);
+void EGEAPI seticon(int icon_id);
 
 void EGEAPI movewindow(int x, int y, bool redraw = true);	//移动窗口
 void EGEAPI resizewindow(int width, int height);			//重设窗口尺寸
