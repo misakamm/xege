@@ -5,6 +5,8 @@
 #error include "label.h" must after include "ege.h" or "graphics.h"
 #endif
 
+#include "egecontrolbase.h"
+
 class label : public egeControlBase
 {
 public:

@@ -1,9 +1,3 @@
-/include
-/*.bat
-/demo
-/lib
-/doc
-/vc6
 .vs/
 *.tlog
 *.obj
@@ -12,8 +6,6 @@
 *.VC.db
 *.user
 *.o
-build/
-
-/src
+/build
 .idea/
 *-build-*
