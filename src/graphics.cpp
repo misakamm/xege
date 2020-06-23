@@ -106,7 +106,8 @@
 
 namespace ege {
 
-struct _graph_setting& graph_setting = *(struct _graph_setting*)calloc(1, sizeof(struct _graph_setting));
+// 静态分配，零初始化
+struct _graph_setting graph_setting;
 
 static DWORD    g_windowstyle = WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU|WS_MINIMIZEBOX|WS_CLIPCHILDREN|WS_VISIBLE;
 static DWORD    g_windowexstyle = WS_EX_LEFT|WS_EX_LTRREADING;
@@ -679,13 +680,13 @@ init_instance(HINSTANCE hInstance, int nCmdShow) {
 			NULL
 			);
 	} else {
-		CHAR* wndClsName = w2mb(pg->window_class_name);
-		CHAR* wndCaption = w2mb(pg->window_caption);
+		const std::string& wndClsName = w2mb(pg->window_class_name);
+		const std::string& wndCaption = w2mb(pg->window_caption);
 		
 		pg->hwnd = CreateWindowExA(
 			g_windowexstyle,
-			wndClsName,
-			wndCaption,
+			wndClsName.c_str(),
+			wndCaption.c_str(),
 			g_windowstyle & ~WS_VISIBLE,
 			g_windowpos_x,
 			g_windowpos_y,
@@ -696,8 +697,6 @@ init_instance(HINSTANCE hInstance, int nCmdShow) {
 			hInstance,
 			NULL
 			);
-		delete[] wndClsName;
-		delete[] wndCaption;
 	}
 
 	if (!pg->hwnd) {
@@ -1135,7 +1134,7 @@ static
 ATOM
 register_classA(struct _graph_setting * pg, HINSTANCE hInstance) {
 	WNDCLASSEXA wcex ={0};
-	CHAR* wndClsName = w2mb(pg->window_class_name);
+	const std::string& wndClsName = w2mb(pg->window_class_name);
 	
 	wcex.cbSize = sizeof(wcex);
 
@@ -1147,12 +1146,9 @@ register_classA(struct _graph_setting * pg, HINSTANCE hInstance) {
 	wcex.hIcon          = pg->window_hicon;
 	wcex.hCursor        = LoadCursor(NULL, IDC_ARROW);
 	wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-	wcex.lpszClassName  = wndClsName;
+	wcex.lpszClassName  = wndClsName.c_str();
 
-	ATOM atom = RegisterClassExA(&wcex);
-
-	delete[] wndClsName;
-	return atom;
+	return RegisterClassExA(&wcex);
 }
 
 static
@@ -1316,7 +1312,6 @@ initgraph(int *gdriver, int *gmode, char *path) {
 	}
 
 	//初始化环境
-	//memset(pg, 0, sizeof(_graph_setting)); // no need
 	setmode(*gdriver, *gmode);	
 	init_img_page(pg);
 

@@ -34,10 +34,10 @@ void guiupdate(_graph_setting* pg, egeControlBase* &root);
 float _GetFPS(int add);
 int getflush();
 
-LPSTR w2mb(LPCWSTR wStr) {
+std::string w2mb(LPCWSTR wStr) {
 	int bufsize = WideCharToMultiByte(CP_ACP, 0, wStr, -1, NULL, 0, 0, 0);
-	CHAR* mbStr = new CHAR[bufsize];
-	WideCharToMultiByte(CP_ACP, 0, wStr, -1, mbStr, bufsize, 0, 0);
+	std::string mbStr(bufsize, '\0');
+	WideCharToMultiByte(CP_ACP, 0, wStr, -1, &mbStr[0], bufsize, 0, 0);
 	return mbStr;
 }
 

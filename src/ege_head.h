@@ -23,6 +23,8 @@
 #  include "stdint.h"
 #endif
 
+#include <string>
+
 #define _GRAPH_LIB_BUILD_
 #include "ege.h"
 #include "ege/egecontrolbase.h"
@@ -422,7 +424,7 @@ struct _graph_setting {
 	DWORD g_t_buff[1024 * 8];
 };
 
-extern struct _graph_setting& graph_setting;
+extern struct _graph_setting graph_setting;
 
 template<typename T>
 struct count_ptr {
@@ -488,7 +490,7 @@ private:
 };
 
 // convert wide string to multibyte string
-LPSTR w2mb(LPCWSTR wStr);
+std::string w2mb(LPCWSTR wStr);
 
 } // namespace ege
 
