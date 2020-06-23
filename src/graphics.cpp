@@ -114,6 +114,7 @@ static int      g_windowpos_x = CW_USEDEFAULT;
 static int      g_windowpos_y = CW_USEDEFAULT;
 static int      g_initoption  = INIT_DEFAULT, g_initcall = 0;
 static HWND     g_attach_hwnd = 0;
+static WNDPROC  DefWindowProcFunc = NULL;
 
 #ifdef __cplusplus
 extern "C" {
@@ -662,20 +663,42 @@ init_instance(HINSTANCE hInstance, int nCmdShow) {
 		SetWindowLongPtrW(g_attach_hwnd, GWL_STYLE, style);
 	}
 
-	pg->hwnd = CreateWindowExW(
-		g_windowexstyle,
-		pg->window_class_name,
-		pg->window_caption,
-		g_windowstyle & ~WS_VISIBLE,
-		g_windowpos_x,
-		g_windowpos_y,
-		pg->dc_w + dw,
-		pg->dc_h + dh,
-		g_attach_hwnd,
-		NULL,
-		hInstance,
-		NULL
-		);
+	if (pg->is_unicode) {
+		pg->hwnd = CreateWindowExW(
+			g_windowexstyle,
+			pg->window_class_name,
+			pg->window_caption,
+			g_windowstyle & ~WS_VISIBLE,
+			g_windowpos_x,
+			g_windowpos_y,
+			pg->dc_w + dw,
+			pg->dc_h + dh,
+			g_attach_hwnd,
+			NULL,
+			hInstance,
+			NULL
+			);
+	} else {
+		CHAR* wndClsName = w2mb(pg->window_class_name);
+		CHAR* wndCaption = w2mb(pg->window_caption);
+		
+		pg->hwnd = CreateWindowExA(
+			g_windowexstyle,
+			wndClsName,
+			wndCaption,
+			g_windowstyle & ~WS_VISIBLE,
+			g_windowpos_x,
+			g_windowpos_y,
+			pg->dc_w + dw,
+			pg->dc_h + dh,
+			g_attach_hwnd,
+			NULL,
+			hInstance,
+			NULL
+			);
+		delete[] wndClsName;
+		delete[] wndCaption;
+	}
 
 	if (!pg->hwnd) {
 		return FALSE;
@@ -952,7 +975,7 @@ wndproc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
 
 	pg_w = (struct _graph_setting *)GetWindowLongPtrW(hWnd, GWLP_USERDATA);
 	if (pg_w == NULL || pg->img_page[0] == NULL) {
-		return DefWindowProcW(hWnd, message, wParam, lParam);
+		return DefWindowProcFunc(hWnd, message, wParam, lParam);
 	}
 
 	switch (message) {
@@ -971,7 +994,7 @@ wndproc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
 			if (pg->callback_close) {
 				pg->callback_close();
 			} else {
-				return DefWindowProcW(hWnd, message, wParam, lParam);
+				return DefWindowProcFunc(hWnd, message, wParam, lParam);
 			}
 		}
 		break;
@@ -1094,7 +1117,7 @@ wndproc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
 		if (pg != pg_w) {
 			return ((egeControlBase*)pg_w)->onMessage(message, wParam, lParam);
 		}
-		return DefWindowProcW(hWnd, message, wParam, lParam);
+		return DefWindowProcFunc(hWnd, message, wParam, lParam);
 	}
 	if (pg != pg_w) {
 		return ((egeControlBase*)pg_w)->onMessage(message, wParam, lParam);
@@ -1110,7 +1133,31 @@ getProcfunc() {
 /*private function*/
 static
 ATOM
-register_class(struct _graph_setting * pg, HINSTANCE hInstance) {
+register_classA(struct _graph_setting * pg, HINSTANCE hInstance) {
+	WNDCLASSEXA wcex ={0};
+	CHAR* wndClsName = w2mb(pg->window_class_name);
+	
+	wcex.cbSize = sizeof(wcex);
+
+	wcex.style          = CS_HREDRAW | CS_VREDRAW;
+	wcex.lpfnWndProc    = (WNDPROC)getProcfunc();
+	wcex.cbClsExtra     = 0;
+	wcex.cbWndExtra     = 0;
+	wcex.hInstance      = hInstance;
+	wcex.hIcon          = pg->window_hicon;
+	wcex.hCursor        = LoadCursor(NULL, IDC_ARROW);
+	wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
+	wcex.lpszClassName  = wndClsName;
+
+	ATOM atom = RegisterClassExA(&wcex);
+
+	delete[] wndClsName;
+	return atom;
+}
+
+static
+ATOM
+register_classW(struct _graph_setting * pg, HINSTANCE hInstance) {
 	WNDCLASSEXW wcex ={0};
 
 	wcex.cbSize = sizeof(wcex);
@@ -1283,6 +1330,15 @@ initgraph(int *gdriver, int *gmode, char *path) {
 
 	initicon();
 
+	// 注册窗口类，设置默认消息处理函数
+	if (pg->is_unicode) {	
+		register_classW(pg, pg->instance);
+		DefWindowProcFunc = DefWindowProcW;
+	} else {	
+		register_classA(pg, pg->instance);
+		DefWindowProcFunc = DefWindowProcA;
+	}
+
 	//SECURITY_ATTRIBUTES sa = {0};
 	DWORD pid;
 	pg->init_finish = false;
@@ -1347,7 +1403,6 @@ messageloopthread(LPVOID lpParameter) {
 	MSG msg;
 	{
 		int nCmdShow = SW_SHOW;
-		register_class(pg, pg->instance);
 
 		/* 执行应用程序初始化: */
 		if (!init_instance(pg->instance, nCmdShow)) {
@@ -1374,14 +1429,26 @@ messageloopthread(LPVOID lpParameter) {
 	}
 	pg->init_finish = true;
 
-	while (!pg->exit_window) {
-		if (GetMessage(&msg, NULL, 0, 0)) {
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-		} else {
-			Sleep(1);
+	if (pg->is_unicode) {
+		while (!pg->exit_window) {
+			if (GetMessageW(&msg, NULL, 0, 0)) {
+				TranslateMessage(&msg);
+				DispatchMessageW(&msg);
+			} else {
+				Sleep(1);
+			}
+		}
+	} else {
+		while (!pg->exit_window) {
+			if (GetMessageA(&msg, NULL, 0, 0)) {
+				TranslateMessage(&msg);
+				DispatchMessageA(&msg);
+			} else {
+				Sleep(1);
+			}
 		}
 	}
+
 	return 0;
 }
 
@@ -1390,6 +1457,7 @@ void
 setinitmode(int mode, int x, int y) {
 	g_initcall = 1;
 	g_initoption = mode;
+	struct _graph_setting * pg = &graph_setting;
 	if (mode & INIT_NOBORDER) {
 		if (mode & INIT_CHILD) {
 			g_windowstyle = WS_CHILDWINDOW|WS_CLIPCHILDREN|WS_VISIBLE;
@@ -1403,6 +1471,9 @@ setinitmode(int mode, int x, int y) {
 	}
 	if (mode & INIT_TOPMOST) {
 		g_windowexstyle |= WS_EX_TOPMOST;
+	}
+	if (mode & INIT_UNICODE) {
+		pg->is_unicode = true;
 	}
 	g_windowpos_x = x;
 	g_windowpos_y = y;

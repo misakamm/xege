@@ -34,6 +34,13 @@ void guiupdate(_graph_setting* pg, egeControlBase* &root);
 float _GetFPS(int add);
 int getflush();
 
+LPSTR w2mb(LPCWSTR wStr) {
+	int bufsize = WideCharToMultiByte(CP_ACP, 0, wStr, -1, NULL, 0, 0, 0);
+	CHAR* mbStr = new CHAR[bufsize];
+	WideCharToMultiByte(CP_ACP, 0, wStr, -1, mbStr, bufsize, 0, 0);
+	return mbStr;
+}
+
 double
 get_highfeq_time_ls(struct _graph_setting * pg) {
 	static LARGE_INTEGER llFeq = {{0}}; /* 此实为常数 */

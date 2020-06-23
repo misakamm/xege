@@ -345,6 +345,7 @@ enum initmode_flag {
 	INIT_TOPMOST        = 0x4,
 	INIT_RENDERMANUAL   = 0x8,
 	INIT_NOFORCEEXIT    = 0x10,
+	INIT_UNICODE        = 0x20,
 	INIT_WITHLOGO       = 0x100,
 #if defined(_DEBUG) || defined(DEBUG)
 	INIT_DEFAULT    = 0x0,

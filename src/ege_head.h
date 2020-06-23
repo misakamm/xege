@@ -341,6 +341,7 @@ public:
 // 定义ege全局状态对象
 struct _graph_setting {
 	bool has_init;
+	bool is_unicode;
 
 	struct _graph {
 		int width;
@@ -485,6 +486,9 @@ private:
 	long* m_cnt;
 	//Mutex* m_mutex;
 };
+
+// convert wide string to multibyte string
+LPSTR w2mb(LPCWSTR wStr);
 
 } // namespace ege
 
