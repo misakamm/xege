@@ -95,25 +95,54 @@ is_run() {
 	return true;
 }
 
-void
-setcaption(LPCSTR  caption) {
-	::SetWindowTextA(getHWnd(), caption);
+static void setcaption_move(LPCWSTR caption) {
+	struct _graph_setting * pg = &graph_setting;
+	if (pg->has_init) {
+		::SetWindowTextW(getHWnd(), caption);
+		::UpdateWindow(getHWnd()); // for vc6
+	}
+
+	if (pg->window_caption != NULL) {
+		delete [] const_cast<LPWSTR>(pg->window_caption);
+	}
+	pg->window_caption = caption;
 }
-void
-setcaption(LPCWSTR caption) {
-	::SetWindowTextW(getHWnd(), caption);
+
+void setcaption(LPCSTR  caption) {
+	int bufsize = MultiByteToWideChar(CP_ACP, 0, caption, -1, NULL, 0);
+	if (bufsize) {
+		WCHAR* new_caption = new WCHAR[bufsize];
+		MultiByteToWideChar(CP_ACP, 0, caption, -1, new_caption, bufsize);
+		setcaption_move(new_caption);
+	}
+}
+
+void setcaption(LPCWSTR caption) {
+	WCHAR* new_caption = new WCHAR[lstrlenW(caption) + 1];
+	lstrcpyW(new_caption, caption);
+	setcaption_move(new_caption);
 }
 
 
 void seticon(int icon_id) {
+	struct _graph_setting * pg = &graph_setting;
 	HICON hIcon = NULL;
+	HINSTANCE instance = GetModuleHandle(NULL);
+
 	if (icon_id == 0) {
 		hIcon = ::LoadIconW(NULL, (LPCWSTR)IDI_APPLICATION);
 	} else {
-		hIcon = ::LoadIconW(getHInstance(), MAKEINTRESOURCEW(icon_id));
+		hIcon = ::LoadIconW(instance, MAKEINTRESOURCEW(icon_id));
 	}
 	if (hIcon) {
-		::SetClassLongPtrW(getHWnd(), GCLP_HICON, (LONG_PTR)hIcon);
+		pg->window_hicon = hIcon;
+		if (pg->has_init){
+#ifdef _WIN64
+			::SetClassLongPtrW(getHWnd(), GCLP_HICON, (LONG_PTR)hIcon);
+#else
+			::SetClassLongW(getHWnd(), GCL_HICON, (LONG)hIcon);
+#endif
+		}
 	}
 }
 

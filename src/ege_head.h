@@ -340,6 +340,8 @@ public:
 
 // 定义ege全局状态对象
 struct _graph_setting {
+	bool has_init;
+
 	struct _graph {
 		int width;
 		int height;
@@ -364,8 +366,9 @@ struct _graph_setting {
 
 	HINSTANCE instance;
 	HWND    hwnd;
-	TCHAR   window_class_name[32];
-	TCHAR   window_caption[128];
+	LPCWSTR window_class_name;
+	LPCWSTR window_caption;
+	HICON   window_hicon;
 	int     exit_flag;
 	int     exit_window;
 	int     update_mark_count; //更新标记

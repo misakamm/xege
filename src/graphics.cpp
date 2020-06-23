@@ -106,9 +106,8 @@
 
 namespace ege {
 
-struct _graph_setting& graph_setting = *(struct _graph_setting*)malloc(sizeof(struct _graph_setting));
+struct _graph_setting& graph_setting = *(struct _graph_setting*)calloc(1, sizeof(struct _graph_setting));
 
-static bool     g_has_init = false;
 static DWORD    g_windowstyle = WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU|WS_MINIMIZEBOX|WS_CLIPCHILDREN|WS_VISIBLE;
 static DWORD    g_windowexstyle = WS_EX_LEFT|WS_EX_LTRREADING;
 static int      g_windowpos_x = CW_USEDEFAULT;
@@ -663,7 +662,7 @@ init_instance(HINSTANCE hInstance, int nCmdShow) {
 		SetWindowLongPtrW(g_attach_hwnd, GWL_STYLE, style);
 	}
 
-	pg->hwnd = CreateWindowEx(
+	pg->hwnd = CreateWindowExW(
 		g_windowexstyle,
 		pg->window_class_name,
 		pg->window_caption,
@@ -953,7 +952,7 @@ wndproc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
 
 	pg_w = (struct _graph_setting *)GetWindowLongPtrW(hWnd, GWLP_USERDATA);
 	if (pg_w == NULL || pg->img_page[0] == NULL) {
-		return DefWindowProc(hWnd, message, wParam, lParam);
+		return DefWindowProcW(hWnd, message, wParam, lParam);
 	}
 
 	switch (message) {
@@ -972,7 +971,7 @@ wndproc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
 			if (pg->callback_close) {
 				pg->callback_close();
 			} else {
-				return DefWindowProc(hWnd, message, wParam, lParam);
+				return DefWindowProcW(hWnd, message, wParam, lParam);
 			}
 		}
 		break;
@@ -1095,7 +1094,7 @@ wndproc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
 		if (pg != pg_w) {
 			return ((egeControlBase*)pg_w)->onMessage(message, wParam, lParam);
 		}
-		return DefWindowProc(hWnd, message, wParam, lParam);
+		return DefWindowProcW(hWnd, message, wParam, lParam);
 	}
 	if (pg != pg_w) {
 		return ((egeControlBase*)pg_w)->onMessage(message, wParam, lParam);
@@ -1112,8 +1111,7 @@ getProcfunc() {
 static
 ATOM
 register_class(struct _graph_setting * pg, HINSTANCE hInstance) {
-	WNDCLASSEX wcex ={0};
-	HICON hico = NULL;
+	WNDCLASSEXW wcex ={0};
 
 	wcex.cbSize = sizeof(wcex);
 
@@ -1122,30 +1120,12 @@ register_class(struct _graph_setting * pg, HINSTANCE hInstance) {
 	wcex.cbClsExtra     = 0;
 	wcex.cbWndExtra     = 0;
 	wcex.hInstance      = hInstance;
-	wcex.hIcon          = LoadIcon(NULL, IDI_WINLOGO);
+	wcex.hIcon          = pg->window_hicon;
 	wcex.hCursor        = LoadCursor(NULL, IDC_ARROW);
 	wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
 	wcex.lpszClassName  = pg->window_class_name;
 
-	EnumResourceNames(hInstance, RT_ANIICON, EnumResNameProc, (LONG_PTR)&hico);
-	if (hico) {
-		wcex.hIcon = hico;
-		goto END_LOAD_ICON;
-	}
-	EnumResourceNames(hInstance, RT_GROUP_ICON, EnumResNameProc, (LONG_PTR)&hico);
-	if (hico) {
-		wcex.hIcon = hico;
-		goto END_LOAD_ICON;
-	}
-	EnumResourceNames(hInstance, RT_ICON, EnumResNameProc, (LONG_PTR)&hico);
-	if (hico) {
-		wcex.hIcon = hico;
-		goto END_LOAD_ICON;
-	}
-
-END_LOAD_ICON:
-
-	return RegisterClassEx(&wcex);
+	return RegisterClassExW(&wcex);
 }
 
 /* private function */
@@ -1232,13 +1212,42 @@ void logoscene() {
 
 inline void
 init_img_page(struct _graph_setting * pg) {
-	if (!g_has_init) {
+	if (!pg->has_init) {
 #ifdef EGE_GDIPLUS
 		Gdiplus::GdiplusStartupInput gdiplusStartupInput;
 		Gdiplus::GdiplusStartup(&pg->g_gdiplusToken, &gdiplusStartupInput, NULL);
 #endif
 	}
-	g_has_init = true;
+}
+
+void initicon(void) {
+	HINSTANCE hInstance = GetModuleHandle(NULL);
+	HICON hIcon = NULL;
+	struct _graph_setting * pg = &graph_setting;
+
+	// 提前设置了图标
+	if (pg->window_hicon != 0) {
+		return;
+	}
+
+	EnumResourceNames(hInstance, RT_ANIICON, EnumResNameProc, (LONG_PTR)&hIcon);
+	if (hIcon) {
+		pg->window_hicon = hIcon;
+		return;
+	}
+	EnumResourceNames(hInstance, RT_GROUP_ICON, EnumResNameProc, (LONG_PTR)&hIcon);
+	if (hIcon) {
+		pg->window_hicon = hIcon;
+		return;
+	}
+	EnumResourceNames(hInstance, RT_ICON, EnumResNameProc, (LONG_PTR)&hIcon);
+	if (hIcon) {
+		pg->window_hicon = hIcon;
+		return;
+	}
+
+	// default icon
+	pg->window_hicon = LoadIcon(NULL, IDI_APPLICATION);
 }
 
 void
@@ -1249,7 +1258,7 @@ initgraph(int *gdriver, int *gmode, char *path) {
 	pg->exit_window = 0;
 
 	//已创建则转为改变窗口大小	
-	if(g_has_init) {
+	if(pg->has_init) {
 		int width = (int)(*gmode & 0xFFFF);
 		int height = (int)((unsigned int)(*gmode) >> 16);
 		resizewindow(width, height);
@@ -1260,13 +1269,19 @@ initgraph(int *gdriver, int *gmode, char *path) {
 	}
 
 	//初始化环境
-	memset(pg, 0, sizeof(_graph_setting));
+	//memset(pg, 0, sizeof(_graph_setting)); // no need
 	setmode(*gdriver, *gmode);	
 	init_img_page(pg);
 
 	pg->instance = GetModuleHandle(NULL);
-	lstrcpy(pg->window_class_name, TEXT("Easy Graphics Engine"));
-	lstrcpy(pg->window_caption, EGE_TITLE);
+	pg->window_class_name = L"Easy Graphics Engine";
+
+	// 若未调用 setcaption，设置默认标题
+	if (pg->window_caption == NULL) {
+		setcaption(EGE_TITLE);
+	}
+
+	initicon();
 
 	//SECURITY_ATTRIBUTES sa = {0};
 	DWORD pid;
@@ -1277,6 +1292,7 @@ initgraph(int *gdriver, int *gmode, char *path) {
 	while (!pg->init_finish) {
 		Sleep(1);
 	}
+	pg->has_init = true;
 
 	UpdateWindow(pg->hwnd);
 
