@@ -102,32 +102,23 @@ is_run() {
 	return true;
 }
 
-static void setcaption_move(LPCWSTR caption) {
+void setcaption(LPCSTR  caption) {
+	int bufsize = MultiByteToWideChar(CP_ACP, 0, caption, -1, NULL, 0);
+	if (bufsize) {
+		std::wstring new_caption(bufsize, L'\0');
+		MultiByteToWideChar(CP_ACP, 0, caption, -1, &new_caption[0], bufsize);
+		setcaption(new_caption.c_str());
+	}
+}
+
+void setcaption(LPCWSTR caption) {
 	struct _graph_setting * pg = &graph_setting;
 	if (pg->has_init) {
 		::SetWindowTextW(getHWnd(), caption);
 		::UpdateWindow(getHWnd()); // for vc6
 	}
 
-	if (pg->window_caption != NULL) {
-		delete [] const_cast<LPWSTR>(pg->window_caption);
-	}
 	pg->window_caption = caption;
-}
-
-void setcaption(LPCSTR  caption) {
-	int bufsize = MultiByteToWideChar(CP_ACP, 0, caption, -1, NULL, 0);
-	if (bufsize) {
-		WCHAR* new_caption = new WCHAR[bufsize];
-		MultiByteToWideChar(CP_ACP, 0, caption, -1, new_caption, bufsize);
-		setcaption_move(new_caption);
-	}
-}
-
-void setcaption(LPCWSTR caption) {
-	WCHAR* new_caption = new WCHAR[lstrlenW(caption) + 1];
-	lstrcpyW(new_caption, caption);
-	setcaption_move(new_caption);
 }
 
 

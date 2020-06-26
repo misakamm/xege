@@ -369,8 +369,8 @@ struct _graph_setting {
 
 	HINSTANCE instance;
 	HWND    hwnd;
-	LPCWSTR window_class_name;
-	LPCWSTR window_caption;
+	std::wstring window_class_name;
+	std::wstring window_caption;
 	HICON   window_hicon;
 	int     exit_flag;
 	int     exit_window;

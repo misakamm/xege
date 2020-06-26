@@ -667,8 +667,8 @@ init_instance(HINSTANCE hInstance, int nCmdShow) {
 	if (pg->is_unicode) {
 		pg->hwnd = CreateWindowExW(
 			g_windowexstyle,
-			pg->window_class_name,
-			pg->window_caption,
+			pg->window_class_name.c_str(),
+			pg->window_caption.c_str(),
 			g_windowstyle & ~WS_VISIBLE,
 			g_windowpos_x,
 			g_windowpos_y,
@@ -680,8 +680,8 @@ init_instance(HINSTANCE hInstance, int nCmdShow) {
 			NULL
 			);
 	} else {
-		const std::string& wndClsName = w2mb(pg->window_class_name);
-		const std::string& wndCaption = w2mb(pg->window_caption);
+		const std::string& wndClsName = w2mb(pg->window_class_name.c_str());
+		const std::string& wndCaption = w2mb(pg->window_caption.c_str());
 		
 		pg->hwnd = CreateWindowExA(
 			g_windowexstyle,
@@ -1134,7 +1134,7 @@ static
 ATOM
 register_classA(struct _graph_setting * pg, HINSTANCE hInstance) {
 	WNDCLASSEXA wcex ={0};
-	const std::string& wndClsName = w2mb(pg->window_class_name);
+	const std::string& wndClsName = w2mb(pg->window_class_name.c_str());
 	
 	wcex.cbSize = sizeof(wcex);
 
@@ -1166,7 +1166,7 @@ register_classW(struct _graph_setting * pg, HINSTANCE hInstance) {
 	wcex.hIcon          = pg->window_hicon;
 	wcex.hCursor        = LoadCursor(NULL, IDC_ARROW);
 	wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-	wcex.lpszClassName  = pg->window_class_name;
+	wcex.lpszClassName  = pg->window_class_name.c_str();
 
 	return RegisterClassExW(&wcex);
 }
@@ -1319,7 +1319,7 @@ initgraph(int *gdriver, int *gmode, char *path) {
 	pg->window_class_name = L"Easy Graphics Engine";
 
 	// 若未调用 setcaption，设置默认标题
-	if (pg->window_caption == NULL) {
+	if (pg->window_caption.empty()) {
 		setcaption(EGE_TITLE);
 	}
 
