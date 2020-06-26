@@ -16,11 +16,11 @@
 #endif
 
 
-#define TOSTRING_(x)  #x
-#define TOSTRING(x)   TOSTRING_(x)
+#define EGE_TOSTR_(x)  #x
+#define EGE_TOSTR(x)   EGE_TOSTR_(x)
 
-#define L__(str)       L##str
-#define L_(str)        L__(str)
+#define EGE_L_(str)    L##str
+#define EGE_L(str)     EGE_L_(str)
 
 //编译器版本，目前仅支持 MSVC/MinGW
 #ifdef _WIN64
@@ -29,7 +29,7 @@
 #	define SYSBITS "x86"
 #endif
 
-#define SYSBITS_W  L_(SYSBITS)
+#define SYSBITS_W  EGE_L(SYSBITS)
 
 #ifdef _MSC_VER
 #	if (_MSC_VER >= 1930)
@@ -54,10 +54,10 @@
 #		define MSVC_VER "VC6"
 #	endif
 #	define COMPILER_VER     MSVC_VER SYSBITS
-#	define COMPILER_VER_W   L_(MSVC_VER) SYSBITS_W
+#	define COMPILER_VER_W   EGE_L(MSVC_VER) SYSBITS_W
 #else
-#	define GCC_VER          TOSTRING(__GNUC__) "." TOSTRING(__GNUC_MINOR__)
-#	define GCC_VER_W        L_(TOSTRING(__GNUC__)) L"." L_(TOSTRING(__GNUC_MINOR__))
+#	define GCC_VER          EGE_TOSTR(__GNUC__) "." EGE_TOSTR(__GNUC_MINOR__)
+#	define GCC_VER_W        EGE_L(EGE_TOSTR(__GNUC__)) L"." EGE_L(EGE_TOSTR(__GNUC_MINOR__))
 #	define COMPILER_VER     "GCC"   GCC_VER    SYSBITS
 #	define COMPILER_VER_W   L"GCC"  GCC_VER_W  SYSBITS_W
 #endif
@@ -66,13 +66,13 @@
 #define EGE_VERSION_MONTH 05
 
 #define EGE_VERSION_INT EGE_VERSION_YEAR * 100 + EGE_VERSION_MONTH
-#define EGE_VERSION     TOSTRING(EGE_VERSION_YEAR)     "."  TOSTRING(EGE_VERSION_MONTH)
-#define EGE_VERSION_W   L_(TOSTRING(EGE_VERSION_YEAR)) L"." L_(TOSTRING(EGE_VERSION_MONTH))
+#define EGE_VERSION     EGE_TOSTR(EGE_VERSION_YEAR) "." EGE_TOSTR(EGE_VERSION_MONTH)
+#define EGE_VERSION_W   EGE_L(EGE_TOSTR(EGE_VERSION_YEAR)) L"." EGE_L(EGE_TOSTR(EGE_VERSION_MONTH))
 #define EGE_TITLE       "EGE"  EGE_VERSION   " "  COMPILER_VER
 #define EGE_TITLE_W     L"EGE" EGE_VERSION_W L" " COMPILER_VER_W
 
 #define EGE_WNDCLSNAME    "Easy Graphics Engine"
-#define EGE_WNDCLSNAME_W  L_(EGE_WNDCLSNAME)
+#define EGE_WNDCLSNAME_W  EGE_L(EGE_WNDCLSNAME)
 
 // MSVC 从 10.0（VS2010）开始有 stdint.h
 // GCC 从 4.5 开始有 stdint.h
