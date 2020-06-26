@@ -626,7 +626,7 @@ init_instance(HINSTANCE hInstance, int nCmdShow) {
 	if (pg->is_unicode) {
 		pg->hwnd = CreateWindowExW(
 			g_windowexstyle,
-			pg->window_class_name.c_str(),
+			EGE_WNDCLSNAME_W,
 			pg->window_caption.c_str(),
 			g_windowstyle & ~WS_VISIBLE,
 			g_windowpos_x,
@@ -639,12 +639,11 @@ init_instance(HINSTANCE hInstance, int nCmdShow) {
 			NULL
 			);
 	} else {
-		const std::string& wndClsName = w2mb(pg->window_class_name.c_str());
 		const std::string& wndCaption = w2mb(pg->window_caption.c_str());
 		
 		pg->hwnd = CreateWindowExA(
 			g_windowexstyle,
-			wndClsName.c_str(),
+			EGE_WNDCLSNAME,
 			wndCaption.c_str(),
 			g_windowstyle & ~WS_VISIBLE,
 			g_windowpos_x,
@@ -1093,7 +1092,6 @@ static
 ATOM
 register_classA(struct _graph_setting * pg, HINSTANCE hInstance) {
 	WNDCLASSEXA wcex ={0};
-	const std::string& wndClsName = w2mb(pg->window_class_name.c_str());
 	
 	wcex.cbSize = sizeof(wcex);
 
@@ -1105,7 +1103,7 @@ register_classA(struct _graph_setting * pg, HINSTANCE hInstance) {
 	wcex.hIcon          = pg->window_hicon;
 	wcex.hCursor        = LoadCursor(NULL, IDC_ARROW);
 	wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-	wcex.lpszClassName  = wndClsName.c_str();
+	wcex.lpszClassName  = EGE_WNDCLSNAME;
 
 	return RegisterClassExA(&wcex);
 }
@@ -1125,7 +1123,7 @@ register_classW(struct _graph_setting * pg, HINSTANCE hInstance) {
 	wcex.hIcon          = pg->window_hicon;
 	wcex.hCursor        = LoadCursor(NULL, IDC_ARROW);
 	wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-	wcex.lpszClassName  = pg->window_class_name.c_str();
+	wcex.lpszClassName  = EGE_WNDCLSNAME_W;
 
 	return RegisterClassExW(&wcex);
 }
@@ -1275,12 +1273,6 @@ initgraph(int *gdriver, int *gmode, char *path) {
 	init_img_page(pg);
 
 	pg->instance = GetModuleHandle(NULL);
-	pg->window_class_name = EGE_WNDCLSNAME_W;
-
-	// 若未调用 setcaption，设置默认标题
-	if (pg->window_caption.empty()) {
-		setcaption(EGE_TITLE);
-	}
 
 	initicon();
 
