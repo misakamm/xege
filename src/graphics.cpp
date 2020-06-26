@@ -15,47 +15,6 @@
 本文件定义平台密切相关的操作及接口
 */
 
-//编译器版本，目前仅支持vc6/vc2008/vc2010/vc2012/mingw
-#ifdef _WIN64
-#	define SYSBITS TEXT("x64")
-#else
-#	define SYSBITS TEXT("x86")
-#endif
-
-#define TOSTRING_(x) #x
-#define TOSTRING(x) TOSTRING_(x)
-
-#ifdef _MSC_VER
-#	if (_MSC_VER >= 2000)
-#		define COMPILER_VER TEXT("VC201x") SYSBITS
-#	elif (_MSC_VER >= 1910)
-#		define COMPILER_VER TEXT("VC2017") SYSBITS
-#	elif (_MSC_VER >= 1900)
-#		define COMPILER_VER TEXT("VC2015") SYSBITS
-#	elif (_MSC_VER >= 1800)
-#		define COMPILER_VER TEXT("VC2013") SYSBITS
-#	elif (_MSC_VER >= 1700)
-#		define COMPILER_VER TEXT("VC2012") SYSBITS
-#	elif (_MSC_VER >= 1600)
-#		define COMPILER_VER TEXT("VC2010") SYSBITS
-#	elif (_MSC_VER >= 1500)
-#		define COMPILER_VER TEXT("VC2008") SYSBITS
-#	elif (_MSC_VER > 1200)
-#		define COMPILER_VER TEXT("VC2005") SYSBITS
-#	else
-#		define COMPILER_VER TEXT("VC6") SYSBITS
-#	endif
-#else
-#	define GCC_VER TEXT(TOSTRING(__GNUC__)) TEXT(".") TEXT(TOSTRING(__GNUC_MINOR__))
-#	define COMPILER_VER TEXT("GCC") GCC_VER SYSBITS
-#endif
-
-#define EGE_VERSION_YEAR 20
-#define EGE_VERSION_MONTH 05
-
-#define EGE_VERSION_INT EGE_VERSION_YEAR * 100 + EGE_VERSION_MONTH
-#define EGE_VERSION TEXT(TOSTRING(EGE_VERSION_YEAR)) TEXT(".") TEXT(TOSTRING(EGE_VERSION_MONTH))
-#define EGE_TITLE TEXT("EGE") EGE_VERSION TEXT(" ") COMPILER_VER
 
 #ifndef _ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH
 #define _ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH
@@ -1316,7 +1275,7 @@ initgraph(int *gdriver, int *gmode, char *path) {
 	init_img_page(pg);
 
 	pg->instance = GetModuleHandle(NULL);
-	pg->window_class_name = L"Easy Graphics Engine";
+	pg->window_class_name = EGE_WNDCLSNAME_W;
 
 	// 若未调用 setcaption，设置默认标题
 	if (pg->window_caption.empty()) {

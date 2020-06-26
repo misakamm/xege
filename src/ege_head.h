@@ -15,6 +15,55 @@
 #define _ALLOW_RUNTIME_LIBRARY_MISMATCH
 #endif
 
+
+#define TOSTRING_(x) #x
+#define TOSTRING(x) TOSTRING_(x)
+
+#define CONCAT_(a, b) a##b
+#define CONCAT(a, b) CONCAT_(a, b)
+
+//编译器版本，目前仅支持 MSVC/MinGW
+#ifdef _WIN64
+#	define SYSBITS TEXT("x64")
+#else
+#	define SYSBITS TEXT("x86")
+#endif
+
+#ifdef _MSC_VER
+#	if (_MSC_VER >= 2000)
+#		define COMPILER_VER TEXT("VC201x") SYSBITS
+#	elif (_MSC_VER >= 1910)
+#		define COMPILER_VER TEXT("VC2017") SYSBITS
+#	elif (_MSC_VER >= 1900)
+#		define COMPILER_VER TEXT("VC2015") SYSBITS
+#	elif (_MSC_VER >= 1800)
+#		define COMPILER_VER TEXT("VC2013") SYSBITS
+#	elif (_MSC_VER >= 1700)
+#		define COMPILER_VER TEXT("VC2012") SYSBITS
+#	elif (_MSC_VER >= 1600)
+#		define COMPILER_VER TEXT("VC2010") SYSBITS
+#	elif (_MSC_VER >= 1500)
+#		define COMPILER_VER TEXT("VC2008") SYSBITS
+#	elif (_MSC_VER > 1200)
+#		define COMPILER_VER TEXT("VC2005") SYSBITS
+#	else
+#		define COMPILER_VER TEXT("VC6") SYSBITS
+#	endif
+#else
+#	define GCC_VER TEXT(TOSTRING(__GNUC__)) TEXT(".") TEXT(TOSTRING(__GNUC_MINOR__))
+#	define COMPILER_VER TEXT("GCC") GCC_VER SYSBITS
+#endif
+
+#define EGE_VERSION_YEAR  20
+#define EGE_VERSION_MONTH 05
+
+#define EGE_VERSION_INT EGE_VERSION_YEAR * 100 + EGE_VERSION_MONTH
+#define EGE_VERSION     TEXT(TOSTRING(EGE_VERSION_YEAR)) TEXT(".") TEXT(TOSTRING(EGE_VERSION_MONTH))
+#define EGE_TITLE       TEXT("EGE") EGE_VERSION TEXT(" ") COMPILER_VER
+
+#define EGE_WNDCLSNAME    "Easy Graphics Engine"
+#define EGE_WNDCLSNAME_W  CONCAT(L, EGE_WNDCLSNAME)
+
 // MSVC 从 10.0（VS2010）开始有 stdint.h
 // GCC 从 4.5 开始有 stdint.h
 #if _MSC_VER >= 1600 || __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 5)
