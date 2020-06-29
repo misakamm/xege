@@ -13,9 +13,9 @@ set(EGE_CPP_SRC
   math.cpp
   )
 
-add_library(${LIB_NAME} STATIC
-  ${LPNG_SRC}
-  ${EGE_CPP_SRC}
+target_sources(${LIB_NAME}
+  PRIVATE ${LPNG_SRC}
+  PRIVATE ${EGE_CPP_SRC}
   )
 
 if (MSVC)
@@ -42,7 +42,9 @@ endif (MSVC)
 target_link_libraries(${LIB_NAME} gdiplus imm32 msimg32)
 
 # compile test
-add_executable(graphicstest graphicstest/maintest.cpp)
+target_sources(graphicstest
+  PRIVATE graphicstest/maintest.cpp
+  )
 
 target_include_directories(graphicstest BEFORE
   PRIVATE .)

@@ -38,11 +38,15 @@ else ()
   set(LIB_NAME "graphics${TARGET_BITS}")
 endif ()
 
+add_library(${LIB_NAME} STATIC)
+
+add_executable(graphicstest)
+
 add_subdirectory(src)
 
 if (EXISTS temp)
   add_subdirectory(temp)
-endif()
+endif ()
 
 option(BUILD_DEMOS "Build demos" OFF)
 
