@@ -61,7 +61,7 @@ $ $env:PATH="C:\Dev-Cpp\MinGW64\bin;$env:PATH"
 ```
 
 注意，CodeBloks 附带的 MinGW 只能在 
-[MSYS Makefiles 配置](<#### MSYS Makefiles 配置>) 
+[MSYS Makefiles 配置](<#-msys-makefiles-配置>) 
 下编译。在此建议您下载不附带 MinGW 的 CodeBlocks 并单独安装最新版 TDM-GCC64，
 CodeBlocks 会自动识别已安装的 TDM-GCC。
 
@@ -150,3 +150,52 @@ $ cmake .. -G "Visual Studio 14 2015"
 ```sh
 $ cmake .. -G "Visual Studio 14 2015 Win64"
 ```
+
+## 编译临时测试文件
+
+有时候为了测试新添加的功能，需要写一些测试用例，但编译安装修改后 EGE 再在项目外编译测试程序
+比较麻烦，在项目里修改 CMake 配置并添加源文件和编译指令又会被 git 识别为未暂存的修改，会对 git 
+使用造成干扰。
+
+项目 CMake 配置中已经写好了，开发者可以新建 `temp` 目录并添加源文件和 `CMakeLists.txt` 配置
+文件，编译系统会自动配置，在编译 EGE 库后编译 `temp` 目录，而 temp 目录已被 `.gitignore` 
+排除在外，不会对 git 使用造成干扰。
+
+例如，我们想要测试读取字符输入，于是新建 `temp` 目录，在 `temp` 目录下
+新建 `CMakeLists.txt` 内容如下：
+
+```cmake
+add_executable(temp_test temp_test.cpp)
+
+target_link_libraries(temp_test ${LIB_NAME})
+
+```
+
+新建 `temp/temp_test.cpp` 内容如下：
+
+```cpp
+#include <ege.h>
+
+using namespace ege;
+
+int main(int argc, char const *argv[])
+{
+  initgraph(640, 480);
+
+  circle(120, 120, 100);
+
+  int i = 0;
+  while (is_run()) {
+    key_msg msg = getkey();
+    if (msg.msg == key_msg_char) {
+      xyprintf(0, i * 20, "%d", msg.key);
+      ++i;
+    }
+  }
+
+  return 0;
+}
+
+```
+
+执行前文所述编译步骤后在 `build/temp` 目录下就会生成可执行文件 `temp_test.exe`。

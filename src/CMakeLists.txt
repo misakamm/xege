@@ -13,9 +13,9 @@ set(EGE_CPP_SRC
   math.cpp
   )
 
-add_library(${LIB_NAME} STATIC
-  ${LPNG_SRC}
-  ${EGE_CPP_SRC}
+target_sources(${LIB_NAME}
+  PRIVATE ${LPNG_SRC}
+  PRIVATE ${EGE_CPP_SRC}
   )
 
 if (MSVC)
@@ -39,13 +39,19 @@ if (MSVC)
 endif (MSVC)
 
 # Just a hint
-target_link_libraries(${LIB_NAME} gdiplus imm32 msimg32)
+target_link_libraries(${LIB_NAME}
+  INTERFACE gdiplus
+  INTERFACE imm32
+  INTERFACE msimg32
+  )
+target_include_directories(${LIB_NAME}
+  INTERFACE .
+  )
 
 # compile test
-add_executable(graphicstest graphicstest/maintest.cpp)
-
-target_include_directories(graphicstest BEFORE
-  PRIVATE .)
+target_sources(graphicstest
+  PRIVATE graphicstest/maintest.cpp
+  )
 
 target_link_libraries(graphicstest ${LIB_NAME})
 if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")

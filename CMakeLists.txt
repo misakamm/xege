@@ -38,25 +38,18 @@ else ()
   set(LIB_NAME "graphics${TARGET_BITS}")
 endif ()
 
+add_library(${LIB_NAME} STATIC)
+
+add_executable(graphicstest)
+
 add_subdirectory(src)
+
+if (EXISTS temp)
+  add_subdirectory(temp)
+endif ()
 
 option(BUILD_DEMOS "Build demos" OFF)
 
 if (BUILD_DEMOS)
-  file(
-    GLOB DEMO_SRCS
-    LIST_DIRECTORIES false
-    ${PROJECT_SOURCE_DIR}/demo/*.cpp
-    )
-  foreach (DEMO_SRC ${DEMO_SRCS})
-    get_filename_component(DEMO_NAME ${DEMO_SRC} NAME_WE)
-    add_executable(${DEMO_NAME} ${DEMO_SRC})
-    target_include_directories(${DEMO_NAME} BEFORE
-      PRIVATE ${PROJECT_SOURCE_DIR}/src
-      )
-    target_link_libraries(${DEMO_NAME} ${LIB_NAME})
-    if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
-      target_link_libraries(${DEMO_NAME} -mwindows)
-    endif ()
-  endforeach ()
+  add_subdirectory(demo)
 endif ()
