@@ -15,6 +15,65 @@
 #define _ALLOW_RUNTIME_LIBRARY_MISMATCH
 #endif
 
+
+#define EGE_TOSTR_(x)  #x
+#define EGE_TOSTR(x)   EGE_TOSTR_(x)
+
+#define EGE_L_(str)    L##str
+#define EGE_L(str)     EGE_L_(str)
+
+//编译器版本，目前仅支持 MSVC/MinGW
+#ifdef _WIN64
+#	define SYSBITS "x64"
+#else
+#	define SYSBITS "x86"
+#endif
+
+#define SYSBITS_W  EGE_L(SYSBITS)
+
+#ifdef _MSC_VER
+#	if (_MSC_VER >= 1930)
+#		define MSVC_VER "MSVC"
+#	elif (_MSC_VER >= 1920)
+#		define MSVC_VER "VC2019"
+#	elif (_MSC_VER >= 1910)
+#		define MSVC_VER "VC2017"
+#	elif (_MSC_VER >= 1900)
+#		define MSVC_VER "VC2015"
+#	elif (_MSC_VER >= 1800)
+#		define MSVC_VER "VC2013"
+#	elif (_MSC_VER >= 1700)
+#		define MSVC_VER "VC2012"
+#	elif (_MSC_VER >= 1600)
+#		define MSVC_VER "VC2010"
+#	elif (_MSC_VER >= 1500)
+#		define MSVC_VER "VC2008"
+#	elif (_MSC_VER > 1200)
+#		define MSVC_VER "VC2005"
+#	else
+#		define MSVC_VER "VC6"
+#	endif
+#	define COMPILER_VER     MSVC_VER SYSBITS
+#	define COMPILER_VER_W   EGE_L(MSVC_VER) SYSBITS_W
+#else
+#	define GCC_VER          EGE_TOSTR(__GNUC__) "." EGE_TOSTR(__GNUC_MINOR__)
+#	define GCC_VER_W        EGE_L(EGE_TOSTR(__GNUC__)) L"." EGE_L(EGE_TOSTR(__GNUC_MINOR__))
+#	define COMPILER_VER     "GCC"   GCC_VER    SYSBITS
+#	define COMPILER_VER_W   L"GCC"  GCC_VER_W  SYSBITS_W
+#endif
+
+#define EGE_VERSION_YEAR  20
+#define EGE_VERSION_MONTH 05
+
+#define EGE_VERSION_INT EGE_VERSION_YEAR * 100 + EGE_VERSION_MONTH
+#define EGE_VERSION     EGE_TOSTR(EGE_VERSION_YEAR) "." EGE_TOSTR(EGE_VERSION_MONTH)
+#define EGE_VERSION_W   EGE_L(EGE_TOSTR(EGE_VERSION_YEAR)) L"." EGE_L(EGE_TOSTR(EGE_VERSION_MONTH))
+#define EGE_TITLE       "EGE"  EGE_VERSION   " "  COMPILER_VER
+#define EGE_TITLE_W     L"EGE" EGE_VERSION_W L" " COMPILER_VER_W
+
+#define EGE_WNDCLSNAME    "Easy Graphics Engine"
+#define EGE_WNDCLSNAME_W  EGE_L(EGE_WNDCLSNAME)
+
 // MSVC 从 10.0（VS2010）开始有 stdint.h
 // GCC 从 4.5 开始有 stdint.h
 #if _MSC_VER >= 1600 || __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 5)
@@ -369,7 +428,6 @@ struct _graph_setting {
 
 	HINSTANCE instance;
 	HWND    hwnd;
-	std::wstring window_class_name;
 	std::wstring window_caption;
 	HICON   window_hicon;
 	int     exit_flag;
@@ -422,6 +480,10 @@ struct _graph_setting {
 
 	/* 函数用临时缓冲区 */
 	DWORD g_t_buff[1024 * 8];
+
+	_graph_setting() {
+		window_caption = EGE_TITLE_W;
+	}
 };
 
 extern struct _graph_setting graph_setting;
