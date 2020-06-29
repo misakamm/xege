@@ -40,6 +40,10 @@ endif ()
 
 add_subdirectory(src)
 
+if (EXISTS temp)
+  add_subdirectory(temp)
+endif()
+
 option(BUILD_DEMOS "Build demos" OFF)
 
 if (BUILD_DEMOS)

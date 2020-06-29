@@ -6,6 +6,8 @@
 *.VC.db
 *.user
 *.o
-/build
 .idea/
 *-build-*
+
+/build
+/temp
