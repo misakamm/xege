@@ -8,9 +8,6 @@ file(
 foreach (DEMO_SRC ${DEMO_SRCS})
   get_filename_component(DEMO_NAME ${DEMO_SRC} NAME_WE)
   add_executable(${DEMO_NAME} ${DEMO_SRC})
-  target_include_directories(${DEMO_NAME} BEFORE
-    PRIVATE ${PROJECT_SOURCE_DIR}/src
-    )
   target_link_libraries(${DEMO_NAME} ${LIB_NAME})
   if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
     target_link_libraries(${DEMO_NAME} -mwindows)
