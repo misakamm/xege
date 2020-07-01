@@ -72,7 +72,7 @@ static DWORD    g_windowstyle = WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU|WS_MINIMIZEB
 static DWORD    g_windowexstyle = WS_EX_LEFT|WS_EX_LTRREADING;
 static int      g_windowpos_x = CW_USEDEFAULT;
 static int      g_windowpos_y = CW_USEDEFAULT;
-static int      g_initoption  = INIT_DEFAULT, g_initcall = 0;
+static int      g_initoption  = INIT_DEFAULT;
 static HWND     g_attach_hwnd = 0;
 static WNDPROC  DefWindowProcFunc = NULL;
 
@@ -1287,14 +1287,12 @@ initgraph(int *gdriver, int *gmode, char *path) {
 
 	//SECURITY_ATTRIBUTES sa = {0};
 	DWORD pid;
-	pg->init_finish = false;
 	pg->threadui_handle = CreateThread(NULL, 0, messageloopthread, pg, CREATE_SUSPENDED, &pid);
 	ResumeThread(pg->threadui_handle);
 
-	while (!pg->init_finish) {
+	while (!pg->has_init) {
 		Sleep(1);
 	}
-	pg->has_init = true;
 
 	UpdateWindow(pg->hwnd);
 
@@ -1317,7 +1315,7 @@ void
 initgraph(int Width, int Height, int Flag) {
 	int g = TRUECOLORSIZE, m = (Width) | (Height<<16);
 
-	if (!g_initcall)
+	if (!graph_setting.has_init)
 		setinitmode(Flag);
 
 	initgraph(&g, &m, (char*)"");
@@ -1373,7 +1371,7 @@ messageloopthread(LPVOID lpParameter) {
 			SetTimer(pg->hwnd, RENDER_TIMER_ID, 50, NULL);
 		}
 	}
-	pg->init_finish = true;
+	pg->has_init = true;
 
 	if (pg->is_unicode) {
 		while (!pg->exit_window) {
@@ -1401,7 +1399,6 @@ messageloopthread(LPVOID lpParameter) {
 
 void
 setinitmode(int mode, int x, int y) {
-	g_initcall = 1;
 	g_initoption = mode;
 	struct _graph_setting * pg = &graph_setting;
 	if (mode & INIT_NOBORDER) {
