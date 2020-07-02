@@ -147,14 +147,10 @@ graphupdate(_graph_setting* pg) {
 		return grNoInitGraph;
 	}
 	{
-		HDC hdc;
 		if( IsWindowVisible(pg->hwnd)) {
-			hdc = pg->window_dc;
-
-			if (hdc == NULL) {
-				return grNullPointer;
-			}
+			HDC hdc = ::GetDC(pg->hwnd);
 			redraw_window(pg, hdc);
+			::ReleaseDC(pg->hwnd, hdc);
 		} else {
 			pg->update_mark_count = UPDATE_MAX_CALL;
 		}
@@ -804,10 +800,6 @@ static
 void
 on_destroy(struct _graph_setting * pg) {
 	pg->exit_window = 1;
-	if (pg->dc) {
-		ReleaseDC(pg->hwnd, pg->window_dc);
-		// release objects, not finish
-	}
 	PostQuitMessage(0);
 	if (pg->close_manually && pg->use_force_exit) {
 		ExitProcess(0);
@@ -1133,7 +1125,6 @@ int
 graph_init(_graph_setting * pg) {
 	HDC hDC = GetDC(pg->hwnd);
 	pg->dc = hDC;
-	pg->window_dc = hDC;
 	pg->img_timer_update = newimage();
 	pg->msgkey_queue = new thread_queue<EGEMSG>;
 	pg->msgmouse_queue = new thread_queue<EGEMSG>;

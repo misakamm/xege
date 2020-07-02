@@ -415,7 +415,6 @@ struct _graph_setting {
 	int writemode;
 
 	HDC dc;
-	HDC window_dc;
 	int dc_w, dc_h;
 	PIMAGE img_page[BITMAP_PAGE_SIZE];
 	int base_x, base_y, base_w, base_h;
