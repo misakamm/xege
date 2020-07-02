@@ -28,11 +28,6 @@
 
 namespace ege {
 
-static HBITMAP  g_hbmp_def;
-static HBRUSH   g_hbr_def;
-static HPEN     g_pen_def;
-static HFONT    g_font_def;
-
 void IMAGE::reset() {
 	m_initflag = IMAGE_INIT_FLAG;
 	m_hDC = NULL;
@@ -136,12 +131,19 @@ IMAGE::gentexture(bool gen) {
 
 int
 IMAGE::deleteimage() {
-	DeleteObject(SelectObject(m_hDC, g_hbmp_def));
-	DeleteObject(SelectObject(m_hDC, g_hbr_def));
-	DeleteObject(SelectObject(m_hDC, g_pen_def));
-	DeleteObject(SelectObject(m_hDC, g_font_def));
+	HBITMAP hbmp  = (HBITMAP)GetCurrentObject(m_hDC, OBJ_BITMAP);
+	HBRUSH  hbr   = (HBRUSH)GetCurrentObject(m_hDC, OBJ_BRUSH);
+	HPEN    hpen  = (HPEN)GetCurrentObject(m_hDC, OBJ_PEN);
+	HFONT   hfont = (HFONT)GetCurrentObject(m_hDC, OBJ_FONT);
+
 	DeleteDC(m_hDC);
 	m_hDC = NULL;
+
+	DeleteObject(hbmp);
+	DeleteObject(hbr);
+	DeleteObject(hpen);
+	DeleteObject(hfont);
+	
 	return 0;
 }
 
@@ -188,12 +190,6 @@ IMAGE::newimage(HDC hdc, int width, int height) {
 		if (bitmap != NULL) {
 			HBITMAP hbmp_def = (HBITMAP)SelectObject(dc, bitmap);
 			int b_resize = 0;
-			if (g_hbmp_def == NULL) {
-				g_hbmp_def = hbmp_def;
-				g_hbr_def  = (HBRUSH)GetCurrentObject(dc, OBJ_BRUSH);
-				g_pen_def  = (HPEN)GetCurrentObject(dc, OBJ_PEN);
-				g_font_def = (HFONT)GetCurrentObject(dc, OBJ_FONT);
-			}
 			if (m_hDC) {
 				DeleteObject(hbmp_def);
 				b_resize = 1;
