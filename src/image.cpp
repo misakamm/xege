@@ -48,23 +48,7 @@ void IMAGE::reset() {
 	m_texture = NULL;
 }
 
-IMAGE::IMAGE() {
-	HDC refDC = NULL;
-
-	if (graph_setting.hwnd) {
-		refDC = ::GetDC(graph_setting.hwnd);
-	}
-
-	reset();
-	initimage(refDC, 1, 1);
-	setdefaultattribute();
-
-	if (refDC) {
-		::ReleaseDC(graph_setting.hwnd, refDC);
-	}
-}
-
-IMAGE::IMAGE(int width, int height) {
+void IMAGE::construct(int width, int height) {
 	HDC refDC = NULL;
 
 	if (graph_setting.hwnd) {
@@ -78,6 +62,14 @@ IMAGE::IMAGE(int width, int height) {
 	if (refDC) {
 		::ReleaseDC(graph_setting.hwnd, refDC);
 	}
+}
+
+IMAGE::IMAGE() {
+	construct(1, 1);
+}
+
+IMAGE::IMAGE(int width, int height) {
+	construct(width, height);
 }
 
 IMAGE::IMAGE(const IMAGE &img) {
@@ -203,12 +195,6 @@ void IMAGE::initimage(HDC refDC, int width, int height) {
 	m_width   = width;
 	m_height  = height;
 	m_pBuffer = bmp_buf;
-
-	m_vpt.left   = 0;
-	m_vpt.top    = 0;
-	m_vpt.right  = width;
-	m_vpt.bottom = height;
-	m_vpt.clipflag   = 1;
 
 	setviewport(0, 0, m_width, m_height, 1, this);
 	cleardevice(this);

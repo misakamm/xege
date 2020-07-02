@@ -241,6 +241,7 @@ public:
 	bool        m_aa;
 private:
 	void initimage(HDC refDC, int width, int height);
+	void construct(int width, int height);
 	void setdefaultattribute();
 	int  deleteimage();
 	void reset();
