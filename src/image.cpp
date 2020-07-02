@@ -69,6 +69,9 @@ IMAGE::IMAGE() {
 }
 
 IMAGE::IMAGE(int width, int height) {
+	// Ωÿ÷πµΩ 0
+	if (width < 0) width = 0;
+	if (height < 0) height = 0;
 	construct(width, height);
 }
 
@@ -155,9 +158,13 @@ HBITMAP newbitmap(int width, int height, PDWORD* p_bmp_buf) {
 	BITMAPINFO bmi = {{0}};
 	PDWORD bmp_buf;
 
+	// Ωÿ÷πµΩ 1
+	if (width < 1) width = 1;
+	if (height < 1) height = 1;
+
 	bmi.bmiHeader.biSize = sizeof(bmi.bmiHeader);
 	bmi.bmiHeader.biWidth = width;
-	bmi.bmiHeader.biHeight = -height - 1;
+	bmi.bmiHeader.biHeight = -height;
 	bmi.bmiHeader.biPlanes = 1;
 	bmi.bmiHeader.biBitCount = 32;
 	bmi.bmiHeader.biSizeImage = width * height * 4;
@@ -214,6 +221,11 @@ void IMAGE::setdefaultattribute() {
 int
 IMAGE::resize(int width, int height) {
 	inittest(L"IMAGE::resize");
+
+	// Ωÿ÷πµΩ 0
+	if (width < 0) width = 0;
+	if (height < 0) height = 0;
+
 	PDWORD bmp_buf;
 	HBITMAP bitmap     = newbitmap(width, height, &bmp_buf);
 	HBITMAP old_bitmap = (HBITMAP)SelectObject(this->m_hDC, bitmap);
