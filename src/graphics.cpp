@@ -1123,8 +1123,6 @@ register_classW(struct _graph_setting * pg, HINSTANCE hInstance) {
 /* private function */
 int
 graph_init(_graph_setting * pg) {
-	HDC hDC = GetDC(pg->hwnd);
-	pg->dc = hDC;
 	pg->img_timer_update = newimage();
 	pg->msgkey_queue = new thread_queue<EGEMSG>;
 	pg->msgmouse_queue = new thread_queue<EGEMSG>;
@@ -1132,7 +1130,6 @@ graph_init(_graph_setting * pg) {
 	settarget(NULL);
 	setvisualpage(0);
 	window_setviewport(0, 0, pg->dc_w, pg->dc_h);
-	//ReleaseDC(pg->hwnd, hDC);
 	return 0;
 }
 

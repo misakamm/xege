@@ -655,6 +655,7 @@ struct VECTOR3D {
 
 class IMAGE;
 typedef IMAGE *PIMAGE;
+typedef const IMAGE *PCIMAGE;
 
 // 绘图环境相关函数
 

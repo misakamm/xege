@@ -41,6 +41,11 @@ std::string w2mb(LPCWSTR wStr) {
 	return mbStr;
 }
 
+void internal_panic(LPCWSTR errmsg) {
+	MessageBoxW(graph_setting.hwnd, errmsg, L"EGE INTERNAL ERROR", MB_ICONSTOP);
+	ExitProcess((UINT)grError);
+}
+
 double
 get_highfeq_time_ls(struct _graph_setting * pg) {
 	static LARGE_INTEGER llFeq = {{0}}; /* 此实为常数 */
@@ -1777,8 +1782,7 @@ setactivepage(int page) {
 		pg->active_page = page;
 		
 		if (pg->img_page[page] == NULL) {
-			pg->img_page[page] = new IMAGE;
-			pg->img_page[page]->createimage(pg->dc_w, pg->dc_h);
+			pg->img_page[page] = new IMAGE(pg->dc_w, pg->dc_h);
 		}
 
 		pg->imgtarget = pg->img_page[page];
@@ -1792,8 +1796,7 @@ setvisualpage(int page) {
 	if (0 <= page && page < BITMAP_PAGE_SIZE) {
 		pg->visual_page = page;
 		if (pg->img_page[page] == NULL) {
-			pg->img_page[page] = new IMAGE;
-			pg->img_page[page]->createimage(pg->dc_w, pg->dc_h);
+			pg->img_page[page] = new IMAGE(pg->dc_w, pg->dc_h);
 		}
 		pg->update_mark_count = 0;
 	}
@@ -2439,7 +2442,7 @@ inputbox_getline(LPCWSTR title, LPCWSTR text, LPWSTR buf, int len) {
 	int ret = 0;
 
 	bg.getimage(0, 0, getwidth(), getheight());
-	window.createimage(w, h);
+	window.resize(w, h);
 	buf[0] = 0;
 
 	lock_window = pg->lock_window;

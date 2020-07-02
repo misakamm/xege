@@ -240,7 +240,8 @@ public:
 	color_t     m_fillcolor;
 	bool        m_aa;
 private:
-	int  newimage(HDC hdc, int width, int height);
+	void initimage(HDC refDC, int width, int height);
+	void setdefaultattribute();
 	int  deleteimage();
 	void reset();
 public:
@@ -257,7 +258,7 @@ private:
 public:
 	IMAGE();
 	IMAGE(int width, int height);
-	IMAGE(IMAGE &img);              // 拷贝构造函数
+	IMAGE(const IMAGE &img);              // 拷贝构造函数
 	IMAGE& operator = (const IMAGE &img); // 赋值运算符重载函数
 	~IMAGE();
 	void set_pattern(void* obj, int type);
@@ -269,11 +270,10 @@ public:
 	int getheight()    const {return m_height;}
 	color_t* getbuffer() const {return (color_t*)m_pBuffer;}
 
-	int  createimage(int width, int height);
 	int  resize(int width, int height);
-	void copyimage(const PIMAGE pSrcImg);
+	void copyimage(PCIMAGE pSrcImg);
 	void getimage(int srcX, int srcY, int srcWidth, int srcHeight);
-	void getimage(const PIMAGE pSrcImg, int srcX, int srcY, int srcWidth, int srcHeight);
+	void getimage(PCIMAGE pSrcImg, int srcX, int srcY, int srcWidth, int srcHeight);
 	int  getimage(LPCSTR pImgFile, int zoomWidth = 0, int zoomHeight = 0);
 	int  getimage(LPCWSTR pImgFile, int zoomWidth = 0, int zoomHeight = 0);
 	int  getimage(LPCSTR pResType, LPCSTR pResName, int zoomWidth = 0, int zoomHeight = 0);
@@ -551,6 +551,10 @@ private:
 
 // convert wide string to multibyte string
 std::string w2mb(LPCWSTR wStr);
+
+void internal_panic(LPCWSTR errmsg);
+
+HBITMAP newbitmap(int width, int height, PDWORD* p_bmp_buf);
 
 } // namespace ege
 

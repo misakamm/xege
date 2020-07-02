@@ -49,30 +49,41 @@ void IMAGE::reset() {
 }
 
 IMAGE::IMAGE() {
-	reset();
-	PIMAGE img = CONVERT_IMAGE_CONST(0);
-	if (img) {
-		newimage(img->m_hDC, 1, 1);
-	} else {
-		newimage(graph_setting.dc, 1, 1);
+	HDC refDC = NULL;
+
+	if (graph_setting.hwnd) {
+		refDC = ::GetDC(graph_setting.hwnd);
 	}
-	CONVERT_IMAGE_END;
+
+	reset();
+	initimage(refDC, 1, 1);
+	setdefaultattribute();
+
+	if (refDC) {
+		::ReleaseDC(graph_setting.hwnd, refDC);
+	}
 }
 
 IMAGE::IMAGE(int width, int height) {
-	reset();
-	PIMAGE img = CONVERT_IMAGE_CONST(0);
-	if (img) {
-		newimage(img->m_hDC, width, height);
-	} else {
-		newimage(graph_setting.dc, width, height);
+	HDC refDC = NULL;
+
+	if (graph_setting.hwnd) {
+		refDC = ::GetDC(graph_setting.hwnd);
 	}
-	CONVERT_IMAGE_END;
+
+	reset();
+	initimage(refDC, width, height);
+	setdefaultattribute();
+
+	if (refDC) {
+		::ReleaseDC(graph_setting.hwnd, refDC);
+	}
 }
 
-IMAGE::IMAGE(IMAGE &img) {
+IMAGE::IMAGE(const IMAGE &img) {
 	reset();
-	newimage(img.m_hDC, img.m_width, img.m_height);
+	initimage(img.m_hDC, img.m_width, img.m_height);
+	setdefaultattribute();
 	BitBlt(m_hDC, 0, 0, img.m_width, img.m_height, img.m_hDC, 0, 0, SRCCOPY);
 }
 
@@ -147,12 +158,10 @@ IMAGE::deleteimage() {
 	return 0;
 }
 
-int
-IMAGE::newimage(HDC hdc, int width, int height) {
-	HDC dc;
+HBITMAP newbitmap(int width, int height, PDWORD* p_bmp_buf) {
 	HBITMAP bitmap;
 	BITMAPINFO bmi = {{0}};
-	VOID* p_bmp_buf;
+	PDWORD bmp_buf;
 
 	bmi.bmiHeader.biSize = sizeof(bmi.bmiHeader);
 	bmi.bmiHeader.biWidth = width;
@@ -161,131 +170,101 @@ IMAGE::newimage(HDC hdc, int width, int height) {
 	bmi.bmiHeader.biBitCount = 32;
 	bmi.bmiHeader.biSizeImage = width * height * 4;
 
-	memset(&m_vpt, 0, sizeof(m_vpt));
+	bitmap = CreateDIBSection(
+		NULL,
+		&bmi,
+		DIB_RGB_COLORS,
+		(VOID**)&bmp_buf,
+		NULL,
+		0
+		);
 
-	if (hdc == NULL) {
-		hdc = m_hDC;
-		if (hdc == NULL) {
-			WCHAR str[60];
-			wsprintfW(str, L"Fatal error: read/write at 0x%08x. At function 'newimage', construct PIMAGE before 'initgraph'?", this);
-			MessageBoxW(graph_setting.hwnd, str, L"ERROR message", MB_ICONSTOP);
-			ExitProcess((UINT)grError);
-		}
+	if (p_bmp_buf) {
+		*p_bmp_buf = bmp_buf;
 	}
-	if (m_hDC) {
-		dc = m_hDC;
-	} else {
-		dc = CreateCompatibleDC(hdc);
-	}
-	if (dc != NULL) {
-		bitmap = CreateDIBSection(
-			NULL,
-			&bmi,
-			DIB_RGB_COLORS,
-			(VOID**)&p_bmp_buf,
-			NULL,
-			0
-			);
 
-		if (bitmap != NULL) {
-			HBITMAP hbmp_def = (HBITMAP)SelectObject(dc, bitmap);
-			int b_resize = 0;
-			if (m_hDC) {
-				DeleteObject(hbmp_def);
-				b_resize = 1;
-			} else {
-				m_vpt.left   = 0;
-				m_vpt.top    = 0;
-				m_vpt.right  = width;
-				m_vpt.bottom = height;
-				m_vpt.clipflag   = 1;
-			}
-			m_hDC = dc;
-			m_hBmp = bitmap;
-			m_width = width;
-			m_height = height;
-			m_pBuffer = (PDWORD)p_bmp_buf;
-
-			if (b_resize == 0) {
-				setcolor(LIGHTGRAY, this);
-				setbkcolor(BLACK, this);
-				SetBkMode(dc, OPAQUE); //TRANSPARENT);
-				setfillstyle(SOLID_FILL, 0, this);
-				setlinestyle(PS_SOLID, 0, 1, this);
-				settextjustify(LEFT_TEXT, TOP_TEXT, this);
-				setfont(16, 0, "SimSun", this);
-				ege_enable_aa(false, this);
-			} else {
-				//SetBkMode(dc, bkMode);
-			}
-			setviewport(0, 0, m_width, m_height, 1, this);
-			cleardevice(this);
-		} else {
-			int err = GetLastError();
-			DeleteDC(dc);
-			return err;
-		}
-	} else {
-		return GetLastError();
-	}
-	return 0;
+	return bitmap;
 }
 
-int
-IMAGE::createimage(int width, int height) {
-	inittest(L"IMAGE::createimage");
-	PIMAGE img = CONVERT_IMAGE_CONST(0);
-	if (img == NULL) {
-		img = graph_setting.img_page[graph_setting.active_page];
+
+void IMAGE::initimage(HDC refDC, int width, int height) {
+	HDC dc = CreateCompatibleDC(refDC);
+	PDWORD bmp_buf;
+	HBITMAP bitmap = newbitmap(width, height, &bmp_buf);
+
+	if (bitmap == NULL) {
+		internal_panic(L"Fatal Error: Create Bitmap fail in 'IMAGE::initimage'");
 	}
-	int ret = newimage(img->m_hDC, width, height);
-	CONVERT_IMAGE_END;
-	if (ret) {
-		return ret;
-	}
-	return 0;
+
+	::SelectObject(dc, bitmap);
+
+	m_hDC     = dc;
+	m_hBmp    = bitmap;
+	m_width   = width;
+	m_height  = height;
+	m_pBuffer = bmp_buf;
+
+	m_vpt.left   = 0;
+	m_vpt.top    = 0;
+	m_vpt.right  = width;
+	m_vpt.bottom = height;
+	m_vpt.clipflag   = 1;
+
+	setviewport(0, 0, m_width, m_height, 1, this);
+	cleardevice(this);
+}
+
+void IMAGE::setdefaultattribute() {
+	setcolor(LIGHTGRAY, this);
+	setbkcolor(BLACK, this);
+	SetBkMode(m_hDC, OPAQUE); //TRANSPARENT);
+	setfillstyle(SOLID_FILL, 0, this);
+	setlinestyle(PS_SOLID, 0, 1, this);
+	settextjustify(LEFT_TEXT, TOP_TEXT, this);
+	setfont(16, 0, "SimSun", this);
+	ege_enable_aa(false, this);
 }
 
 int
 IMAGE::resize(int width, int height) {
-	inittest(L"IMAGE::createimage");
-	PIMAGE img = CONVERT_IMAGE_CONST(0);
-	int ret = newimage(img->m_hDC, width, height);
-	CONVERT_IMAGE_END;
-	if (ret) {
-		return ret;
-	}
+	inittest(L"IMAGE::resize");
+	PDWORD bmp_buf;
+	HBITMAP bitmap     = newbitmap(width, height, &bmp_buf);
+	HBITMAP old_bitmap = (HBITMAP)SelectObject(this->m_hDC, bitmap);
+	DeleteObject(old_bitmap);
+
+	m_hBmp    = bitmap;
+	m_width   = width;
+	m_height  = height;
+	m_pBuffer = bmp_buf;
+
+	setviewport(0, 0, m_width, m_height, 1, this);
+	cleardevice(this);
+
 	return 0;
 }
 
 IMAGE&
 IMAGE::operator = (const IMAGE &img) {
 	inittest(L"IMAGE::operator=");
-	getimage((PIMAGE)(&img), 0, 0, img.m_width, img.m_height);
+	this->copyimage(&img);
 	return *this;
 }
 
 void
-IMAGE::copyimage(const PIMAGE pSrcImg) {
+IMAGE::copyimage(PCIMAGE pSrcImg) {
 	inittest(L"IMAGE::copyimage");
-	const PIMAGE img = CONVERT_IMAGE_CONST(pSrcImg);
-	int ret = 0;
-	if (m_width != img->m_width || m_height != img->m_height)
-		ret = newimage(0, img->m_width, img->m_height);
-	if (ret == 0) {
-		memcpy(getbuffer(), img->getbuffer(), m_width * m_height * 4); // 4 byte per pixel
-	}
+	PCIMAGE img = CONVERT_IMAGE_CONST(pSrcImg);
+	this->getimage(img, 0, 0, img->getwidth(), img->getheight());
 	CONVERT_IMAGE_END;
 }
 
 void
-IMAGE::getimage(const PIMAGE pSrcImg, int srcX, int srcY, int srcWidth, int srcHeight) {
+IMAGE::getimage(PCIMAGE pSrcImg, int srcX, int srcY, int srcWidth, int srcHeight) {
 	inittest(L"IMAGE::getimage");
-	const PIMAGE img = CONVERT_IMAGE_CONST(pSrcImg);
-	int ret = newimage(0, srcWidth, srcHeight);
-	if (ret == 0) {
-		BitBlt(m_hDC, 0, 0, srcWidth, srcHeight, img->m_hDC, srcX, srcY, SRCCOPY);
-	}
+	PCIMAGE img = CONVERT_IMAGE_CONST(pSrcImg);
+	this->resize(srcWidth, srcHeight);
+	BitBlt(this->m_hDC, 0, 0, srcWidth, srcHeight, img->m_hDC, srcX, srcY, SRCCOPY);
 	CONVERT_IMAGE_END;
 }
 
@@ -345,7 +324,7 @@ inline void getimage_from_IPicture(PIMAGE self, IPicture* pPicture) {
 	lHeightPixels = MulDiv(lHeight, GetDeviceCaps(img->m_hDC, LOGPIXELSY), 2540);
 	CONVERT_IMAGE_END;
 
-	self->createimage(lWidthPixels, lHeightPixels);
+	self->resize(lWidthPixels, lHeightPixels);
 	{
 		HDC dc = self->m_hDC;
 
@@ -474,7 +453,7 @@ void getimage_from_png_struct(PIMAGE self, void* vpng_ptr, void* vinfo_ptr) {
 	png_infop info_ptr = (png_infop)vinfo_ptr;
 	png_read_png(png_ptr, info_ptr, PNG_TRANSFORM_BGR|PNG_TRANSFORM_EXPAND, NULL);
 	png_set_expand(png_ptr);
-	self->newimage(NULL, (int)(info_ptr->width), (int)(info_ptr->height)); //png_get_IHDR
+	self->resize((int)(info_ptr->width), (int)(info_ptr->height)); //png_get_IHDR
 
 	PDWORD m_pBuffer = self->m_pBuffer;
 	const png_uint_32 width = info_ptr->width;
