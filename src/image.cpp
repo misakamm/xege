@@ -204,7 +204,6 @@ void IMAGE::initimage(HDC refDC, int width, int height) {
 	m_pBuffer = bmp_buf;
 
 	setviewport(0, 0, m_width, m_height, 1, this);
-	cleardevice(this);
 }
 
 void IMAGE::setdefaultattribute() {
@@ -237,7 +236,6 @@ IMAGE::resize(int width, int height) {
 	m_pBuffer = bmp_buf;
 
 	setviewport(0, 0, m_width, m_height, 1, this);
-	cleardevice(this);
 
 	return 0;
 }
