@@ -696,7 +696,7 @@ static int upattern2array(unsigned short upattern, DWORD style[]) {
 
 static void update_pen(PIMAGE img) {
 	LOGBRUSH lbr;
-	lbr.lbColor = RGBTOBGR(img->m_color) & 0x00FFFFFF;
+	lbr.lbColor = ARGBTOZBGR(img->m_color);
 	lbr.lbStyle = BS_SOLID;
 	lbr.lbHatch = 0;
 
@@ -728,7 +728,7 @@ setcolor(color_t color, PIMAGE pimg) {
 		img->m_color = color;
 
 		update_pen(img);
-		SetTextColor(img->m_hDC, RGBTOBGR(color) & 0x00FFFFFF);
+		SetTextColor(img->m_hDC, ARGBTOZBGR(color));
 	}
 	CONVERT_IMAGE_END;
 }
@@ -738,8 +738,7 @@ setfillcolor(color_t color, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
 	LOGBRUSH lbr = {0};
 	img->m_fillcolor = color;
-	color = RGBTOBGR(color);
-	lbr.lbColor = color;
+	lbr.lbColor = ARGBTOZBGR(color);
 	lbr.lbHatch = BS_SOLID;
 	HBRUSH hbr = CreateBrushIndirect(&lbr);
 	if (hbr) {
@@ -780,7 +779,7 @@ setbkcolor(color_t color, PIMAGE pimg) {
 		int size = img->m_width * img->m_height;
 		color_t col = img->m_bk_color;
 		img->m_bk_color = color;
-		SetBkColor(img->m_hDC, RGBTOBGR(color));
+		SetBkColor(img->m_hDC, ARGBTOZBGR(color));
 		for (int n = 0; n < size; n++, p++) {
 			if (*p == col) {
 				*p = color;
@@ -795,7 +794,7 @@ setbkcolor_f(color_t color, PIMAGE pimg) {
 
 	if (img && img->m_hDC) {
 		img->m_bk_color = color;
-		SetBkColor(img->m_hDC, RGBTOBGR(color));
+		SetBkColor(img->m_hDC, ARGBTOZBGR(color));
 	}
 	CONVERT_IMAGE_END;
 }
@@ -804,7 +803,7 @@ void setfontbkcolor(color_t color, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
 
 	if (img && img->m_hDC) {
-		SetBkColor(img->m_hDC, RGBTOBGR(color));
+		SetBkColor(img->m_hDC, ARGBTOZBGR(color));
 	}
 	CONVERT_IMAGE_END;
 }
@@ -1090,7 +1089,7 @@ void
 floodfill(int x, int y, int border, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
-		FloodFill(img->m_hDC, x, y, RGBTOBGR(border));
+		FloodFill(img->m_hDC, x, y, ARGBTOZBGR(border));
 	}
 	CONVERT_IMAGE_END;
 }
@@ -1099,7 +1098,7 @@ void
 floodfillsurface(int x, int y, color_t areacolor, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
-		ExtFloodFill(img->m_hDC, x, y, RGBTOBGR(areacolor), FLOODFILLSURFACE);
+		ExtFloodFill(img->m_hDC, x, y, ARGBTOZBGR(areacolor), FLOODFILLSURFACE);
 	}
 	CONVERT_IMAGE_END;
 }
@@ -1472,7 +1471,7 @@ setfillstyle(int pattern, color_t color, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
 	LOGBRUSH lbr = {0};
 	img->m_fillcolor = color;
-	lbr.lbColor = RGBTOBGR(color);
+	lbr.lbColor = ARGBTOZBGR(color);
 	//SetBkColor(img->m_hDC, color);
 	if (pattern < SOLID_FILL) {
 		lbr.lbHatch = BS_NULL;
@@ -2609,6 +2608,26 @@ ege_uncompress(void *dest, unsigned long *destLen, const void *source, unsigned 
 	} else {
 		return -1;
 	}
+}
+
+LRESULT sys_edit::onMessage(UINT message, WPARAM wParam, LPARAM lParam) {
+	if (message == WM_CTLCOLOREDIT) {
+		HDC dc = (HDC)wParam;
+		HBRUSH br = ::CreateSolidBrush(ARGBTOZBGR(m_bgcolor));
+
+		::SetBkColor(dc, ARGBTOZBGR(m_bgcolor));
+		::SetTextColor(dc, ARGBTOZBGR(m_color));
+		::DeleteObject(m_hBrush);
+		m_hBrush = br;
+		return (LRESULT)br;
+	//} else if (message == WM_SETFOCUS) {
+	//    int a = 0;
+	//    int b = 1;
+	//    return 0;
+	} else {
+		return ((LRESULT (CALLBACK *)(HWND, UINT, WPARAM, LPARAM))m_callback)(m_hwnd, message, wParam, lParam);
+	}
+	//return 0;
 }
 
 } // namespace ege

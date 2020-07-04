@@ -160,19 +160,18 @@
 #endif
 
 #define SHOWCONSOLE             1       // 进入图形模式时，保留控制台的显示
-#define RGBTOBGR(color)         ((((color) & 0xFF) << 16) | (((color) & 0xFF0000) >> 16) | ((color) & 0xFF00FF00))
-#define EGERGB(r, g, b)         ( ((r)<<16) | ((g)<<8) | (b))
 #define EGERGBA(r, g, b, a)     ( ((r)<<16) | ((g)<<8) | (b) | ((a)<<24) )
-#define EGEARGB(a, r, g, b)     ( ((r)<<16) | ((g)<<8) | (b) | ((a)<<24) )
+#define EGERGB(r, g, b)         EGERGBA(r, g, b, 0xFF)
+#define EGEARGB(a, r, g, b)     EGERGBA(r, g, b, a)
 #define EGEACOLOR(a, color)     ( ((color) & 0xFFFFFF) | ((a)<<24) )
-#define EGECOLORA(color, a)     ( ((color) & 0xFFFFFF) | ((a)<<24) )
+#define EGECOLORA(color, a)     EGEACOLOR(a, color)
 #define EGEGET_R(c)             ( ((c)>>16) & 0xFF )
 #define EGEGET_G(c)             ( ((c)>> 8) & 0xFF )
 #define EGEGET_B(c)             ( ((c)) & 0xFF )
 #define EGEGET_A(c)             ( ((c)>>24) & 0xFF )
-#define EGEGRAY(gray)           ( ((gray)<<16) | ((gray)<<8) | (gray))
-#define EGEGRAYA(gray, a)       ( ((gray)<<16) | ((gray)<<8) | (gray) | ((a)<<24) )
-#define EGEAGRAY(a, gray)       ( ((gray)<<16) | ((gray)<<8) | (gray) | ((a)<<24) )
+#define EGEGRAY(gray)           EGERGB(gray, gray, gray)
+#define EGEGRAYA(gray, a)       EGERGBA(gray, gray, gray, a)
+#define EGEAGRAY(a, gray)       EGEGRAYA(gray, a)
 #define NAMESPACE_EGE_L         namespace ege {
 #define NAMESPACE_EGE_R         }
 
@@ -263,7 +262,7 @@ enum message_mouse {
 
 // 颜色
 enum COLORS {
-	BLACK           = 0,
+	BLACK           = EGERGB(0, 0, 0),
 	BLUE            = EGERGB(0, 0, 0xA8),
 	GREEN           = EGERGB(0, 0xA8, 0),
 	CYAN            = EGERGB(0, 0xA8, 0xA8),
