@@ -132,6 +132,9 @@
 #define IFATODOB(A, B)  ( (A) && (B, 0) )
 #define IFNATODOB(A, B) ( (A) || (B, 0) )
 
+// 0xaarrggbb -> 0xaabbggrr
+#define RGBTOBGR(color)         ((((color) & 0xFF) << 16) | (((color) & 0xFF0000) >> 16) | ((color) & 0xFF00FF00))
+
 // 将 color_t 与 Bitmap Buffer 所用的 0xaarrggbb 格式
 // 转换为 COLORREF 所用的 0x00bbggrr，忽略 Alpha 通道
 // 仅用于向 GDI32 API 传递颜色时

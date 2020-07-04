@@ -160,7 +160,6 @@
 #endif
 
 #define SHOWCONSOLE             1       // 进入图形模式时，保留控制台的显示
-#define RGBTOBGR(color)         ((((color) & 0xFF) << 16) | (((color) & 0xFF0000) >> 16) | ((color) & 0xFF00FF00))
 #define EGERGBA(r, g, b, a)     ( ((r)<<16) | ((g)<<8) | (b) | ((a)<<24) )
 #define EGERGB(r, g, b)         EGERGBA(r, g, b, 0xFF)
 #define EGEARGB(a, r, g, b)     EGERGBA(r, g, b, a)

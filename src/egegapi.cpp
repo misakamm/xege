@@ -2610,4 +2610,24 @@ ege_uncompress(void *dest, unsigned long *destLen, const void *source, unsigned 
 	}
 }
 
+LRESULT sys_edit::onMessage(UINT message, WPARAM wParam, LPARAM lParam) {
+	if (message == WM_CTLCOLOREDIT) {
+		HDC dc = (HDC)wParam;
+		HBRUSH br = ::CreateSolidBrush(ARGBTOZBGR(m_bgcolor));
+
+		::SetBkColor(dc, ARGBTOZBGR(m_bgcolor));
+		::SetTextColor(dc, ARGBTOZBGR(m_color));
+		::DeleteObject(m_hBrush);
+		m_hBrush = br;
+		return (LRESULT)br;
+	//} else if (message == WM_SETFOCUS) {
+	//    int a = 0;
+	//    int b = 1;
+	//    return 0;
+	} else {
+		return ((LRESULT (CALLBACK *)(HWND, UINT, WPARAM, LPARAM))m_callback)(m_hwnd, message, wParam, lParam);
+	}
+	//return 0;
+}
+
 } // namespace ege

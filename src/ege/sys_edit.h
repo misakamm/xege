@@ -79,25 +79,7 @@ public:
         }
         return 0;
     }
-    LRESULT onMessage(UINT message, WPARAM wParam, LPARAM lParam) {
-        if (message == WM_CTLCOLOREDIT) {
-            HDC dc = (HDC)wParam;
-            HBRUSH br = ::CreateSolidBrush(RGBTOBGR(m_bgcolor));
-
-            ::SetBkColor(dc, RGBTOBGR(m_bgcolor));
-            ::SetTextColor(dc, RGBTOBGR(m_color));
-            ::DeleteObject(m_hBrush);
-            m_hBrush = br;
-            return (LRESULT)br;
-        //} else if (message == WM_SETFOCUS) {
-        //    int a = 0;
-        //    int b = 1;
-        //    return 0;
-        } else {
-            return ((LRESULT (CALLBACK *)(HWND, UINT, WPARAM, LPARAM))m_callback)(m_hwnd, message, wParam, lParam);
-        }
-        //return 0;
-    }
+    LRESULT onMessage(UINT message, WPARAM wParam, LPARAM lParam);
     void visible(bool bvisible) {
         egeControlBase::visible(bvisible);
         ::ShowWindow(m_hwnd, (int)bvisible);
