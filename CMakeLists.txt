@@ -44,7 +44,7 @@ add_executable(graphicstest)
 
 add_subdirectory(src)
 
-if (EXISTS temp)
+if (EXISTS ${PROJECT_SOURCE_DIR}/temp/CMakeLists.txt)
   add_subdirectory(temp)
 endif ()
 
