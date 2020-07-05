@@ -43,6 +43,9 @@ target_link_libraries(${LIB_NAME}
   INTERFACE gdiplus
   INTERFACE imm32
   INTERFACE msimg32
+  INTERFACE ole32
+  INTERFACE oleaut32
+  INTERFACE uuid
   )
 target_include_directories(${LIB_NAME}
   INTERFACE .
@@ -57,5 +60,8 @@ target_link_libraries(graphicstest ${LIB_NAME})
 if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
   target_link_options(graphicstest
     PRIVATE -mwindows
+    )
+  target_link_libraries(${LIB_NAME}
+    INTERFACE stdc++
     )
 endif ()
