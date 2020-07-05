@@ -33,11 +33,18 @@ void guiupdate(_graph_setting* pg, egeControlBase* &root);
 float _GetFPS(int add);
 int getflush();
 
-std::string w2mb(LPCWSTR wStr) {
+std::string w2mb(const wchar_t wStr[]) {
 	int bufsize = WideCharToMultiByte(CP_ACP, 0, wStr, -1, NULL, 0, 0, 0);
 	std::string mbStr(bufsize, '\0');
 	WideCharToMultiByte(CP_ACP, 0, wStr, -1, &mbStr[0], bufsize, 0, 0);
 	return mbStr;
+}
+
+std::wstring mb2w(const char mbStr[]) {
+	int bufsize = MultiByteToWideChar(CP_ACP, 0, mbStr, -1, NULL, 0);
+	std::wstring wStr(bufsize, L'\0');
+	MultiByteToWideChar(CP_ACP, 0, mbStr, -1, &wStr[0], bufsize);
+	return wStr;
 }
 
 void internal_panic(LPCWSTR errmsg) {
@@ -107,12 +114,8 @@ is_run() {
 }
 
 void setcaption(LPCSTR  caption) {
-	int bufsize = MultiByteToWideChar(CP_ACP, 0, caption, -1, NULL, 0);
-	if (bufsize) {
-		std::wstring new_caption(bufsize, L'\0');
-		MultiByteToWideChar(CP_ACP, 0, caption, -1, &new_caption[0], bufsize);
-		setcaption(new_caption.c_str());
-	}
+	const std::wstring& new_caption = mb2w(caption);
+	setcaption(new_caption.c_str());
 }
 
 void setcaption(LPCWSTR caption) {
@@ -2376,9 +2379,8 @@ void EGEAPI ege_drawtext(LPCSTR  textstring, float x, float y, PIMAGE pimg) {
 			MultiByteToWideChar(CP_ACP, 0, textstring, -1, wStr, 128);
 			ege_drawtext_p(wStr, x, y, img);
 		} else {
-			std::wstring wStr(bufferSize + 1, L'\0');
-			MultiByteToWideChar(CP_ACP, 0, textstring, -1, &wStr[0], bufferSize + 1);
-			ege_drawtext_p(&wStr[0], x, y, img);
+			const std::wstring& wStr = mb2w(textstring);
+			ege_drawtext_p(wStr.c_str(), x, y, img);
 		}
 	}
 	CONVERT_IMAGE_END;
@@ -2444,16 +2446,13 @@ draw_frame(PIMAGE img, int l, int t, int r, int b, color_t lc, color_t dc) {
 
 int
 inputbox_getline(LPCSTR title, LPCSTR text, LPSTR buf, int len) {
-	WCHAR _title[256], _text[256], *_buf = (WCHAR*)malloc(len * 2);
-	int ret;
-	MultiByteToWideChar(CP_ACP, 0, title, -1, _title, 256);
-	MultiByteToWideChar(CP_ACP, 0,  text, -1,  _text, 256);
-	buf[0] = 0;
-	ret = inputbox_getline(_title, _text, _buf, len);
+	const std::wstring& title_w = mb2w(title);
+	const std::wstring& text_w = mb2w(text);
+	std::wstring buf_w(len, L'\0');
+	int ret = inputbox_getline(title_w.c_str(), text_w.c_str(), &buf_w[0], len);
 	if (ret) {
-		WideCharToMultiByte(CP_ACP, 0, _buf, -1, buf, len, 0, 0);
+		WideCharToMultiByte(CP_ACP, 0, buf_w.c_str(), -1, buf, len, 0, 0);
 	}
-	free(_buf);
 	return ret;
 }
 

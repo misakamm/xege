@@ -311,9 +311,8 @@ IMAGE::getimage(LPCSTR filename, int zoomWidth, int zoomHeight) {
 		if (ret == 0) return 0;
 	}
 
-	WCHAR           wszPath[MAX_PATH*2+1];
-	MultiByteToWideChar(CP_ACP, 0, filename, -1, wszPath, MAX_PATH*2);
-	return getimage(wszPath, zoomWidth, zoomHeight);
+	const std::wstring& wszPath = mb2w(filename);
+	return getimage(wszPath.c_str(), zoomWidth, zoomHeight);
 }
 
 inline void getimage_from_IPicture(PIMAGE self, IPicture* pPicture) {
