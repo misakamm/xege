@@ -72,7 +72,7 @@ static DWORD    g_windowstyle = WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU|WS_MINIMIZEB
 static DWORD    g_windowexstyle = WS_EX_LEFT|WS_EX_LTRREADING;
 static int      g_windowpos_x = CW_USEDEFAULT;
 static int      g_windowpos_y = CW_USEDEFAULT;
-static int      g_initoption  = INIT_DEFAULT, g_initcall = 0;
+static int      g_initoption  = INIT_DEFAULT;
 static HWND     g_attach_hwnd = 0;
 static WNDPROC  DefWindowProcFunc = NULL;
 
@@ -147,14 +147,10 @@ graphupdate(_graph_setting* pg) {
 		return grNoInitGraph;
 	}
 	{
-		HDC hdc;
 		if( IsWindowVisible(pg->hwnd)) {
-			hdc = pg->window_dc;
-
-			if (hdc == NULL) {
-				return grNullPointer;
-			}
+			HDC hdc = ::GetDC(pg->hwnd);
 			redraw_window(pg, hdc);
+			::ReleaseDC(pg->hwnd, hdc);
 		} else {
 			pg->update_mark_count = UPDATE_MAX_CALL;
 		}
@@ -804,10 +800,6 @@ static
 void
 on_destroy(struct _graph_setting * pg) {
 	pg->exit_window = 1;
-	if (pg->dc) {
-		ReleaseDC(pg->hwnd, pg->window_dc);
-		// release objects, not finish
-	}
 	PostQuitMessage(0);
 	if (pg->close_manually && pg->use_force_exit) {
 		ExitProcess(0);
@@ -1131,9 +1123,6 @@ register_classW(struct _graph_setting * pg, HINSTANCE hInstance) {
 /* private function */
 int
 graph_init(_graph_setting * pg) {
-	HDC hDC = GetDC(pg->hwnd);
-	pg->dc = hDC;
-	pg->window_dc = hDC;
 	pg->img_timer_update = newimage();
 	pg->msgkey_queue = new thread_queue<EGEMSG>;
 	pg->msgmouse_queue = new thread_queue<EGEMSG>;
@@ -1141,7 +1130,6 @@ graph_init(_graph_setting * pg) {
 	settarget(NULL);
 	setvisualpage(0);
 	window_setviewport(0, 0, pg->dc_w, pg->dc_h);
-	//ReleaseDC(pg->hwnd, hDC);
 	return 0;
 }
 
@@ -1287,14 +1275,12 @@ initgraph(int *gdriver, int *gmode, char *path) {
 
 	//SECURITY_ATTRIBUTES sa = {0};
 	DWORD pid;
-	pg->init_finish = false;
 	pg->threadui_handle = CreateThread(NULL, 0, messageloopthread, pg, CREATE_SUSPENDED, &pid);
 	ResumeThread(pg->threadui_handle);
 
-	while (!pg->init_finish) {
+	while (!pg->has_init) {
 		Sleep(1);
 	}
-	pg->has_init = true;
 
 	UpdateWindow(pg->hwnd);
 
@@ -1317,7 +1303,7 @@ void
 initgraph(int Width, int Height, int Flag) {
 	int g = TRUECOLORSIZE, m = (Width) | (Height<<16);
 
-	if (!g_initcall)
+	if (!graph_setting.has_init)
 		setinitmode(Flag);
 
 	initgraph(&g, &m, (char*)"");
@@ -1373,7 +1359,7 @@ messageloopthread(LPVOID lpParameter) {
 			SetTimer(pg->hwnd, RENDER_TIMER_ID, 50, NULL);
 		}
 	}
-	pg->init_finish = true;
+	pg->has_init = true;
 
 	if (pg->is_unicode) {
 		while (!pg->exit_window) {
@@ -1401,7 +1387,6 @@ messageloopthread(LPVOID lpParameter) {
 
 void
 setinitmode(int mode, int x, int y) {
-	g_initcall = 1;
 	g_initoption = mode;
 	struct _graph_setting * pg = &graph_setting;
 	if (mode & INIT_NOBORDER) {

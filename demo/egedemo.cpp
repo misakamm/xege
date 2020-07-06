@@ -262,6 +262,7 @@ public:
 \n    }\
 \n    getch();\n    return 0;\n}";
             resize(img, 320, 480);
+            cleardevice(img);
             setfont(12, 0, "宋体", img);
             setbkmode(TRANSPARENT, img);
             setcolor(0x808080, img);
@@ -335,6 +336,7 @@ public:
 \n    }\
 \n    getch();\n    return 0;\n}";
             resize(img, 320, 480);
+            cleardevice(img);
             setfont(12, 0, "宋体", img);
             setbkmode(TRANSPARENT, img);
             setcolor(0x808080, img);
@@ -400,6 +402,7 @@ public:
 \n        }\
 \n    }\n    getch();\n    return 0;\n}";
             resize(img, 320, 480);
+            cleardevice(img);
             setfont(12, 0, "宋体", img);
             setbkmode(TRANSPARENT, img);
             setcolor(0x808080, img);
@@ -498,6 +501,7 @@ public:
 \n        setcolor(HSVtoRGB((float)color, 1.0f, 1.0f));\
 \n        circle(x, 100, 100);\n    }\n    getch();\n    return 0;\n}";
             resize(img, 320, 480);
+            cleardevice(img);
             setfont(12, 0, "宋体", img);
             setbkmode(TRANSPARENT, img);
             setcolor(0x808080, img);
@@ -587,6 +591,7 @@ public:
 \n        setcolor(0xFF0080);\
 \n        circle(x, 100, 100);\n    }\n    getch();\n    return 0;\n}";
             resize(img, 320, 480);
+            cleardevice(img);
             setfont(12, 0, "宋体", img);
             setbkmode(TRANSPARENT, img);
             setcolor(0x808080, img);
@@ -942,6 +947,7 @@ public:
 ";
             m_resettext = 0;
             resize(img, 320, 480);
+            cleardevice(img);
             setfont(12, 0, "宋体", img);
             setbkmode(TRANSPARENT, img);
             setcolor(0x808080, img);
@@ -1018,6 +1024,7 @@ public:
 \n    }\
 \n    getch();\n    return 0;\n}";
             resize(img, 320, 480);
+            cleardevice(img);
             setfont(12, 0, "宋体", img);
             setbkmode(TRANSPARENT, img);
             setcolor(0x808080, img);
