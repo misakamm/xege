@@ -839,11 +839,11 @@ IMAGE::putimage_transparent(
 		psp = imgsrc->m_pBuffer + nYOriginSrc  * imgsrc->m_width + nXOriginSrc;
 		ddx = img->m_width - nWidthSrc;
 		dsx = imgsrc->m_width - nWidthSrc;
-		cr = crTransparent;
+		cr = crTransparent & 0x00FFFFFF;
 		for (y=0; y<nHeightSrc; ++y) {
 			for (x=0; x<nWidthSrc; ++x, ++psp, ++pdp) {
-				if (*psp != cr) {
-					*pdp = *psp;
+				if ((*psp & 0x00FFFFFF) != cr) {
+					*pdp = EGECOLORA(*psp, EGEGET_A(*pdp));
 				}
 			}
 			pdp += ddx;
