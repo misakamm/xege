@@ -1053,11 +1053,14 @@ IMAGE::putimage_alphafilter(
 		for (y=0; y<nHeightSrc; ++y) {
 			for (x=0; x<nWidthSrc; ++x, ++psp, ++pdp, ++pap) {
 				DWORD d=*pdp, s=*psp;
+				DWORD alpha = *pap & 0xFF;
 				if (*pap) {
-					DWORD sa = (*pap & 0xFF) + 1, da = 0xFF - (*pap & 0xFF);
-					d = ((d&0xFF00FF)*da & 0xFF00FF00) | ((d&0xFF00)*da >> 16 << 16);
-					s = ((s&0xFF00FF)*sa & 0xFF00FF00) | ((s&0xFF00)*sa >> 16 << 16);
-					*pdp = (d + s) >> 8;
+					DWORD rb = d & 0x00FF00FF;
+					DWORD  g = d & 0x0000FF00;
+
+					rb += ((s & 0x00FF00FF) - rb) * alpha >> 8;
+					g  += ((s & 0x0000FF00) -  g) * alpha >> 8;
+					*pdp = (rb & 0x00FF00FF) | (g & 0x0000FF00) | EGEGET_A(d);
 				}
 			}
 			pdp += ddx;
@@ -2790,6 +2793,21 @@ putimage_withalpha(
 	)
 {
 	return imgsrc->putimage_withalpha(imgdest, nXOriginDest, nYOriginDest, nXOriginSrc, nYOriginSrc, nWidthSrc, nHeightSrc);
+}
+
+int putimage_alphafilter(
+	PIMAGE imgdest,         // handle to dest
+	PIMAGE imgsrc,          // handle to source
+	int nXOriginDest,       // x-coord of destination upper-left corner
+	int nYOriginDest,       // y-coord of destination upper-left corner
+	PIMAGE imgalpha,        // alpha
+	int nXOriginSrc,        // x-coord of source upper-left corner
+	int nYOriginSrc,        // y-coord of source upper-left corner
+	int nWidthSrc,          // width of source rectangle
+	int nHeightSrc          // height of source rectangle
+)
+{
+	return imgsrc->putimage_alphafilter(imgdest, nXOriginDest, nYOriginDest, imgalpha, nXOriginSrc, nYOriginSrc, nWidthSrc, nHeightSrc);
 }
 
 int
