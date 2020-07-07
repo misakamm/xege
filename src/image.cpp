@@ -993,15 +993,14 @@ IMAGE::putimage_withalpha(
 		dsx = imgsrc->m_width - nWidthSrc;
 		for (y=0; y<nHeightSrc; ++y) {
 			for (x=0; x<nWidthSrc; ++x, ++psp, ++pdp) {
-				DWORD alpha = *psp >> 24;
-				//if (*psp != cr) 
-				{
-					DWORD sa = alpha + 1, da = 0xFF - alpha;
-					DWORD d=*pdp, s=*psp;
-					d = ((d&0xFF00FF)*da & 0xFF00FF00) | ((d&0xFF00)*da >> 16 << 16);
-					s = ((s&0xFF00FF)*sa & 0xFF00FF00) | ((s&0xFF00)*sa >> 16 << 16);
-					*pdp = (d + s) >> 8;
-				}
+				DWORD d=*pdp, s=*psp;
+				DWORD alpha = EGEGET_A(s);
+				DWORD rb = d & 0x00FF00FF;
+				DWORD  g = d & 0x0000FF00;
+
+				rb += ((s & 0x00FF00FF) - rb) * alpha >> 8;
+				g  += ((s & 0x0000FF00) -  g) * alpha >> 8;
+				*pdp = (rb & 0x00FF00FF) | (g & 0x0000FF00);
 			}
 			pdp += ddx;
 			psp += dsx;
