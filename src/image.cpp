@@ -872,7 +872,6 @@ IMAGE::putimage_alphablend(
 		int y, x;
 		DWORD ddx, dsx;
 		DWORD *pdp, *psp;
-		DWORD sa = alpha + 1, da = 0xFF - alpha;
 		// fix rect
 		fix_rect_1size(
 			img,
@@ -892,9 +891,12 @@ IMAGE::putimage_alphablend(
 		for (y=0; y<nHeightSrc; ++y) {
 			for (x=0; x<nWidthSrc; ++x, ++psp, ++pdp) {
 				DWORD d=*pdp, s=*psp;
-				d = ((d&0xFF00FF)*da & 0xFF00FF00) | ((d&0xFF00)*da >> 16 << 16);
-				s = ((s&0xFF00FF)*sa & 0xFF00FF00) | ((s&0xFF00)*sa >> 16 << 16);
-				*pdp = (d + s) >> 8;
+				DWORD rb = d & 0x00FF00FF;
+				DWORD  g = d & 0x0000FF00;
+
+				rb += ((s & 0x00FF00FF) - rb) * alpha >> 8;
+				g  += ((s & 0x0000FF00) -  g) * alpha >> 8;
+				*pdp = (rb & 0x00FF00FF) | (g & 0x0000FF00) | EGEGET_A(d);
 			}
 			pdp += ddx;
 			psp += dsx;
@@ -923,7 +925,6 @@ IMAGE::putimage_alphatransparent(
 		int y, x;
 		DWORD ddx, dsx;
 		DWORD *pdp, *psp, cr;
-		DWORD sa = alpha + 1, da = 0xFF - alpha;
 		// fix rect
 		fix_rect_1size(
 			img,
@@ -940,14 +941,17 @@ IMAGE::putimage_alphatransparent(
 		psp = imgsrc->m_pBuffer + nYOriginSrc  * imgsrc->m_width + nXOriginSrc;
 		ddx = img->m_width - nWidthSrc;
 		dsx = imgsrc->m_width - nWidthSrc;
-		cr = crTransparent;
+		cr = crTransparent & 0x00FFFFFF;
 		for (y=0; y<nHeightSrc; ++y) {
 			for (x=0; x<nWidthSrc; ++x, ++psp, ++pdp) {
-				if (*psp != cr) {
+				if ((*psp & 0x00FFFFFF) != cr) {
 					DWORD d=*pdp, s=*psp;
-					d = ((d&0xFF00FF)*da & 0xFF00FF00) | ((d&0xFF00)*da >> 16 << 16);
-					s = ((s&0xFF00FF)*sa & 0xFF00FF00) | ((s&0xFF00)*sa >> 16 << 16);
-					*pdp = (d + s) >> 8;
+					DWORD rb = d & 0x00FF00FF;
+					DWORD  g = d & 0x0000FF00;
+
+					rb += ((s & 0x00FF00FF) - rb) * alpha >> 8;
+					g  += ((s & 0x0000FF00) -  g) * alpha >> 8;
+					*pdp = (rb & 0x00FF00FF) | (g & 0x0000FF00) | EGEGET_A(d);
 				}
 			}
 			pdp += ddx;
@@ -1000,7 +1004,7 @@ IMAGE::putimage_withalpha(
 
 				rb += ((s & 0x00FF00FF) - rb) * alpha >> 8;
 				g  += ((s & 0x0000FF00) -  g) * alpha >> 8;
-				*pdp = (rb & 0x00FF00FF) | (g & 0x0000FF00);
+				*pdp = (rb & 0x00FF00FF) | (g & 0x0000FF00) | EGEGET_A(d);
 			}
 			pdp += ddx;
 			psp += dsx;
