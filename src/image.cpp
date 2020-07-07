@@ -744,8 +744,8 @@ IMAGE::putimage(PIMAGE pDstImg, int dstX, int dstY, int dstWidth, int dstHeight,
 static
 void
 fix_rect_1size(
-	PIMAGE pdest,
-	PIMAGE psrc,
+	PCIMAGE pdest,
+	PCIMAGE psrc,
 	int* nXOriginDest,   // x-coord of destination upper-left corner
 	int* nYOriginDest,   // y-coord of destination upper-left corner
 	int* nXOriginSrc,    // x-coord of source upper-left corner
