@@ -971,6 +971,17 @@ int EGEAPI putimage_withalpha(
 	int nWidthSrc = 0,      // width of source rectangle
 	int nHeightSrc = 0      // height of source rectangle
 );
+int EGEAPI putimage_alphafilter(
+	PIMAGE imgdest,         // handle to dest
+	PIMAGE imgsrc,          // handle to source
+	int nXOriginDest,       // x-coord of destination upper-left corner
+	int nYOriginDest,       // y-coord of destination upper-left corner
+	PIMAGE imgalpha,        // alpha
+	int nXOriginSrc,        // x-coord of source upper-left corner
+	int nYOriginSrc,        // y-coord of source upper-left corner
+	int nWidthSrc,          // width of source rectangle
+	int nHeightSrc          // height of source rectangle
+);
 int EGEAPI imagefilter_blurring (
 	PIMAGE imgdest,         // handle to dest
 	int intensity,

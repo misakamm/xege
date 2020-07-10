@@ -744,8 +744,8 @@ IMAGE::putimage(PIMAGE pDstImg, int dstX, int dstY, int dstWidth, int dstHeight,
 static
 void
 fix_rect_1size(
-	PIMAGE pdest,
-	PIMAGE psrc,
+	PCIMAGE pdest,
+	PCIMAGE psrc,
 	int* nXOriginDest,   // x-coord of destination upper-left corner
 	int* nYOriginDest,   // y-coord of destination upper-left corner
 	int* nXOriginSrc,    // x-coord of source upper-left corner
@@ -839,11 +839,11 @@ IMAGE::putimage_transparent(
 		psp = imgsrc->m_pBuffer + nYOriginSrc  * imgsrc->m_width + nXOriginSrc;
 		ddx = img->m_width - nWidthSrc;
 		dsx = imgsrc->m_width - nWidthSrc;
-		cr = crTransparent;
+		cr = crTransparent & 0x00FFFFFF;
 		for (y=0; y<nHeightSrc; ++y) {
 			for (x=0; x<nWidthSrc; ++x, ++psp, ++pdp) {
-				if (*psp != cr) {
-					*pdp = *psp;
+				if ((*psp & 0x00FFFFFF) != cr) {
+					*pdp = EGECOLORA(*psp, EGEGET_A(*pdp));
 				}
 			}
 			pdp += ddx;
@@ -853,6 +853,15 @@ IMAGE::putimage_transparent(
 	CONVERT_IMAGE_END;
 	return grOk;
 }
+
+#define EGEALPHABLEND(d, s, pd, alpha) do {                            \
+		DWORD rb = d & 0x00FF00FF;                                     \
+		DWORD  g = d & 0x0000FF00;                                     \
+                                                                       \
+		rb += ((s & 0x00FF00FF) - rb) * alpha >> 8;                    \
+		g  += ((s & 0x0000FF00) -  g) * alpha >> 8;                    \
+		*pd = (rb & 0x00FF00FF) | (g & 0x0000FF00) | (d & 0xFF000000); \
+	} while(0)
 
 int
 IMAGE::putimage_alphablend(
@@ -872,7 +881,6 @@ IMAGE::putimage_alphablend(
 		int y, x;
 		DWORD ddx, dsx;
 		DWORD *pdp, *psp;
-		DWORD sa = alpha + 1, da = 0xFF - alpha;
 		// fix rect
 		fix_rect_1size(
 			img,
@@ -892,9 +900,7 @@ IMAGE::putimage_alphablend(
 		for (y=0; y<nHeightSrc; ++y) {
 			for (x=0; x<nWidthSrc; ++x, ++psp, ++pdp) {
 				DWORD d=*pdp, s=*psp;
-				d = ((d&0xFF00FF)*da & 0xFF00FF00) | ((d&0xFF00)*da >> 16 << 16);
-				s = ((s&0xFF00FF)*sa & 0xFF00FF00) | ((s&0xFF00)*sa >> 16 << 16);
-				*pdp = (d + s) >> 8;
+				EGEALPHABLEND(d, s, pdp, alpha);
 			}
 			pdp += ddx;
 			psp += dsx;
@@ -923,7 +929,6 @@ IMAGE::putimage_alphatransparent(
 		int y, x;
 		DWORD ddx, dsx;
 		DWORD *pdp, *psp, cr;
-		DWORD sa = alpha + 1, da = 0xFF - alpha;
 		// fix rect
 		fix_rect_1size(
 			img,
@@ -940,14 +945,12 @@ IMAGE::putimage_alphatransparent(
 		psp = imgsrc->m_pBuffer + nYOriginSrc  * imgsrc->m_width + nXOriginSrc;
 		ddx = img->m_width - nWidthSrc;
 		dsx = imgsrc->m_width - nWidthSrc;
-		cr = crTransparent;
+		cr = crTransparent & 0x00FFFFFF;
 		for (y=0; y<nHeightSrc; ++y) {
 			for (x=0; x<nWidthSrc; ++x, ++psp, ++pdp) {
-				if (*psp != cr) {
+				if ((*psp & 0x00FFFFFF) != cr) {
 					DWORD d=*pdp, s=*psp;
-					d = ((d&0xFF00FF)*da & 0xFF00FF00) | ((d&0xFF00)*da >> 16 << 16);
-					s = ((s&0xFF00FF)*sa & 0xFF00FF00) | ((s&0xFF00)*sa >> 16 << 16);
-					*pdp = (d + s) >> 8;
+					EGEALPHABLEND(d, s, pdp, alpha);
 				}
 			}
 			pdp += ddx;
@@ -993,15 +996,9 @@ IMAGE::putimage_withalpha(
 		dsx = imgsrc->m_width - nWidthSrc;
 		for (y=0; y<nHeightSrc; ++y) {
 			for (x=0; x<nWidthSrc; ++x, ++psp, ++pdp) {
-				DWORD alpha = *psp >> 24;
-				//if (*psp != cr) 
-				{
-					DWORD sa = alpha + 1, da = 0xFF - alpha;
-					DWORD d=*pdp, s=*psp;
-					d = ((d&0xFF00FF)*da & 0xFF00FF00) | ((d&0xFF00)*da >> 16 << 16);
-					s = ((s&0xFF00FF)*sa & 0xFF00FF00) | ((s&0xFF00)*sa >> 16 << 16);
-					*pdp = (d + s) >> 8;
-				}
+				DWORD d=*pdp, s=*psp;
+				DWORD alpha = EGEGET_A(s);
+				EGEALPHABLEND(d, s, pdp, alpha);
 			}
 			pdp += ddx;
 			psp += dsx;
@@ -1050,11 +1047,9 @@ IMAGE::putimage_alphafilter(
 		for (y=0; y<nHeightSrc; ++y) {
 			for (x=0; x<nWidthSrc; ++x, ++psp, ++pdp, ++pap) {
 				DWORD d=*pdp, s=*psp;
+				DWORD alpha = *pap & 0xFF;
 				if (*pap) {
-					DWORD sa = (*pap & 0xFF) + 1, da = 0xFF - (*pap & 0xFF);
-					d = ((d&0xFF00FF)*da & 0xFF00FF00) | ((d&0xFF00)*da >> 16 << 16);
-					s = ((s&0xFF00FF)*sa & 0xFF00FF00) | ((s&0xFF00)*sa >> 16 << 16);
-					*pdp = (d + s) >> 8;
+					EGEALPHABLEND(d, s, pdp, alpha);
 				}
 			}
 			pdp += ddx;
@@ -2787,6 +2782,21 @@ putimage_withalpha(
 	)
 {
 	return imgsrc->putimage_withalpha(imgdest, nXOriginDest, nYOriginDest, nXOriginSrc, nYOriginSrc, nWidthSrc, nHeightSrc);
+}
+
+int putimage_alphafilter(
+	PIMAGE imgdest,         // handle to dest
+	PIMAGE imgsrc,          // handle to source
+	int nXOriginDest,       // x-coord of destination upper-left corner
+	int nYOriginDest,       // y-coord of destination upper-left corner
+	PIMAGE imgalpha,        // alpha
+	int nXOriginSrc,        // x-coord of source upper-left corner
+	int nYOriginSrc,        // y-coord of source upper-left corner
+	int nWidthSrc,          // width of source rectangle
+	int nHeightSrc          // height of source rectangle
+)
+{
+	return imgsrc->putimage_alphafilter(imgdest, nXOriginDest, nYOriginDest, imgalpha, nXOriginSrc, nYOriginSrc, nWidthSrc, nHeightSrc);
 }
 
 int
