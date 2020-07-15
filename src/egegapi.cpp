@@ -377,8 +377,8 @@ setwritemode(int mode, PIMAGE pimg) {
 }
 
 color_t
-getpixel(int x, int y, PIMAGE pimg) {
-	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
+getpixel(int x, int y, PCIMAGE pimg) {
+	PCIMAGE img = CONVERT_IMAGE_CONST(pimg);
 	CONVERT_IMAGE_END;
 	x += img->m_vpt.left;
 	y += img->m_vpt.top;
@@ -421,8 +421,8 @@ putpixels(int nPoint, int* pPoints, PIMAGE pimg) {
 }
 
 void
-putpixels_f(int nPoint, int* pPoints, PIMAGE pimg) {
-	PIMAGE img = CONVERT_IMAGE(pimg);
+putpixels_f(int nPoint, int* pPoints, PCIMAGE pimg) {
+	PCIMAGE img = CONVERT_IMAGE(pimg);
 	int c;
 	int tw = img->m_width;
 	for (int n=0; n<nPoint; ++n, pPoints += 3) {
@@ -649,8 +649,8 @@ void rectangle(int left, int top, int right, int bottom, PIMAGE pimg) {
 }
 
 color_t
-getcolor(PIMAGE pimg) {
-	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
+getcolor(PCIMAGE pimg) {
+	PCIMAGE img = CONVERT_IMAGE_CONST(pimg);
 
 	if (img && img->m_hDC) {
 		CONVERT_IMAGE_END;
@@ -753,8 +753,8 @@ setfillcolor(color_t color, PIMAGE pimg) {
 }
 
 color_t
-getfillcolor(PIMAGE pimg) {
-	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
+getfillcolor(PCIMAGE pimg) {
+	PCIMAGE img = CONVERT_IMAGE_CONST(pimg);
 
 	if (img && img->m_hDC) {
 		CONVERT_IMAGE_END;
@@ -765,8 +765,8 @@ getfillcolor(PIMAGE pimg) {
 }
 
 color_t
-getbkcolor(PIMAGE pimg) {
-	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
+getbkcolor(PCIMAGE pimg) {
+	PCIMAGE img = CONVERT_IMAGE_CONST(pimg);
 
 	CONVERT_IMAGE_END;
 	if (img) {
@@ -1425,8 +1425,8 @@ settextjustify(int horiz, int vert, PIMAGE pimg) {
 }
 
 void
-getlinestyle(int *plinestyle, unsigned short *pupattern, int *pthickness, PIMAGE pimg) {
-	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
+getlinestyle(int *plinestyle, unsigned short *pupattern, int *pthickness, PCIMAGE pimg) {
+	PCIMAGE img = CONVERT_IMAGE_CONST(pimg);
 	if (plinestyle) {
 		*plinestyle = img->m_linestyle.linestyle;
 	}
@@ -1732,8 +1732,8 @@ setfont(const LOGFONTW *font, PIMAGE pimg) {
 }
 
 void
-getfont(LOGFONTA *font, PIMAGE pimg) {
-	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
+getfont(LOGFONTA *font, PCIMAGE pimg) {
+	PCIMAGE img = CONVERT_IMAGE_CONST(pimg);
 	if (img) {
 		HFONT hf = (HFONT)GetCurrentObject(img->m_hDC, OBJ_FONT);
 		GetObjectA(hf, sizeof(LOGFONTA), font);
@@ -1742,8 +1742,8 @@ getfont(LOGFONTA *font, PIMAGE pimg) {
 }
 
 void
-getfont(LOGFONTW *font, PIMAGE pimg) {
-	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
+getfont(LOGFONTW *font, PCIMAGE pimg) {
+	PCIMAGE img = CONVERT_IMAGE_CONST(pimg);
 	if (img) {
 		HFONT hf = (HFONT)GetCurrentObject(img->m_hDC, OBJ_FONT);
 		GetObjectW(hf, sizeof(LOGFONTW), font);
@@ -1874,8 +1874,8 @@ window_setviewport(int left, int top, int right, int bottom) {
 }
 
 void
-getviewport(int *pleft, int *ptop, int *pright, int *pbottom, int *pclip, PIMAGE pimg) {
-	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
+getviewport(int *pleft, int *ptop, int *pright, int *pbottom, int *pclip, PCIMAGE pimg) {
+	PCIMAGE img = CONVERT_IMAGE_CONST(pimg);
 	if(pleft)   *pleft  = img->m_vpt.left;
 	if (ptop)   *ptop   = img->m_vpt.top;
 	if (pright) *pright = img->m_vpt.right;
@@ -2255,13 +2255,13 @@ ege_gentexture(bool gen, PIMAGE pimg) {
 }
 
 void
-ege_puttexture(PIMAGE srcimg, float x, float y, float w, float h, PIMAGE pimg) {
+ege_puttexture(PCIMAGE srcimg, float x, float y, float w, float h, PIMAGE pimg) {
 	ege_rect dest = {x, y, w, h};
 	ege_puttexture(srcimg, dest, pimg);
 }
 
 void
-ege_puttexture(PIMAGE srcimg, ege_rect dest, PIMAGE pimg) {
+ege_puttexture(PCIMAGE srcimg, ege_rect dest, PIMAGE pimg) {
 	ege_rect src;
 	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
 	if (img) {
@@ -2275,7 +2275,7 @@ ege_puttexture(PIMAGE srcimg, ege_rect dest, PIMAGE pimg) {
 }
 
 void
-ege_puttexture(PIMAGE srcimg, ege_rect dest, ege_rect src, PIMAGE pimg) {
+ege_puttexture(PCIMAGE srcimg, ege_rect dest, ege_rect src, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
 		if (srcimg->m_texture) {
