@@ -379,23 +379,23 @@ int main(int argc, char* argv[])
 {
     // 初始化绘图窗口及颜色
     setinitmode(0x005, 0, 0);
-    if (argc < 2)
-    {
-        MessageBox(NULL, TEXT("本屏幕保护程序无配置"), TEXT("JuliaSet"), MB_OK);
-        return 0;
-    }
-    else if (stricmp(argv[1], "/p") == 0)
-    {
-        HWND hwnd;
-        sscanf(argv[2], "%d", &hwnd);
-        attachHWND(hwnd);
-        setinitmode(0x107, 0, 0);
-    }
-    else if (stricmp(argv[1], "/s"))
-    {
-        MessageBox(NULL, TEXT("本屏幕保护程序无配置"), TEXT("JuliaSet"), MB_OK);
-        return 0;
-    }
+    // if (argc < 2)
+    // {
+    //     MessageBox(NULL, TEXT("本屏幕保护程序无配置"), TEXT("JuliaSet"), MB_OK);
+    //     return 0;
+    // }
+    // else if (stricmp(argv[1], "/p") == 0)
+    // {
+    //     HWND hwnd;
+    //     sscanf(argv[2], "%d", &hwnd);
+    //     attachHWND(hwnd);
+    //     setinitmode(0x107, 0, 0);
+    // }
+    // else if (stricmp(argv[1], "/s"))
+    // {
+    //     MessageBox(NULL, TEXT("本屏幕保护程序无配置"), TEXT("JuliaSet"), MB_OK);
+    //     return 0;
+    // }
 
     //initgraph(320, 240);
     initgraph(-1, -1);
