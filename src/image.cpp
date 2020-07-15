@@ -267,7 +267,7 @@ IMAGE::getimage(PCIMAGE pSrcImg, int srcX, int srcY, int srcWidth, int srcHeight
 void
 IMAGE::getimage(int srcX, int srcY, int srcWidth, int srcHeight) {
 	PIMAGE img = CONVERT_IMAGE_CONST(0);
-	getimage(img, srcX, srcY, srcWidth, srcHeight);
+	this->getimage(img, srcX, srcY, srcWidth, srcHeight);
 	CONVERT_IMAGE_END;
 }
 
@@ -281,20 +281,20 @@ IMAGE::putimage(PIMAGE pDstImg, int dstX, int dstY, int dstWidth, int dstHeight,
 
 void
 IMAGE::putimage(PIMAGE pDstImg, int dstX, int dstY, DWORD dwRop) const {
-	putimage(pDstImg, dstX, dstY, m_width, m_height, 0, 0, dwRop);
+	this->putimage(pDstImg, dstX, dstY, m_width, m_height, 0, 0, dwRop);
 }
 
 void
 IMAGE::putimage(int dstX, int dstY, int dstWidth, int dstHeight, int srcX, int srcY, DWORD dwRop) const {
 	PIMAGE img = CONVERT_IMAGE(0);
-	putimage(img, dstX, dstY, dstWidth, dstHeight, srcX, srcY, dwRop);
+	this->putimage(img, dstX, dstY, dstWidth, dstHeight, srcX, srcY, dwRop);
 	CONVERT_IMAGE_END;
 }
 
 void
 IMAGE::putimage(int dstX, int dstY, DWORD dwRop) const {
 	PIMAGE img = CONVERT_IMAGE(0);
-	putimage(img, dstX, dstY, dwRop);
+	this->putimage(img, dstX, dstY, dwRop);
 	CONVERT_IMAGE_END;
 }
 
@@ -2678,21 +2678,25 @@ getimage(PIMAGE pDstImg, PCIMAGE pSrcImg, int srcX, int srcY, int srcWidth, int 
 
 void
 putimage(int dstX, int dstY, PCIMAGE pSrcImg, DWORD dwRop) {
+	pSrcImg = CONVERT_IMAGE_CONST(pSrcImg);
 	pSrcImg->putimage(dstX, dstY, dwRop);
 }
 
 void
 putimage(int dstX, int dstY, int dstWidth, int dstHeight, PCIMAGE pSrcImg, int srcX, int srcY, DWORD dwRop) {
+	pSrcImg = CONVERT_IMAGE_CONST(pSrcImg);
 	pSrcImg->putimage(dstX, dstY, dstWidth, dstHeight, srcX, srcY, dwRop);
 }
 
 void
 putimage(PIMAGE pDstImg, int dstX, int dstY, PCIMAGE pSrcImg, DWORD dwRop) {
+	pSrcImg = CONVERT_IMAGE_CONST(pSrcImg);
 	pSrcImg->putimage(pDstImg, dstX, dstY, dwRop);
 }
 
 void
 putimage(PIMAGE pDstImg, int dstX, int dstY, int dstWidth, int dstHeight, PCIMAGE pSrcImg, int srcX, int srcY, DWORD dwRop) {
+	pSrcImg = CONVERT_IMAGE_CONST(pSrcImg);
 	pSrcImg->putimage(pDstImg, dstX, dstY, dstWidth, dstHeight, srcX, srcY, dwRop);
 }
 
@@ -2718,11 +2722,13 @@ getimage(PIMAGE pDstImg, LPCWSTR pResType, LPCWSTR pResName, int zoomWidth, int 
 
 void
 putimage(PIMAGE pDstImg, int dstX, int dstY, int dstWidth, int dstHeight, PCIMAGE pSrcImg, int srcX, int srcY, int srcWidth, int srcHeight, DWORD dwRop) {
+	pSrcImg = CONVERT_IMAGE_CONST(pSrcImg);
 	pSrcImg->putimage(pDstImg, dstX, dstY, dstWidth, dstHeight, srcX, srcY, srcWidth, srcHeight, dwRop);
 }
 
 void
 putimage(int dstX, int dstY, int dstWidth, int dstHeight, PCIMAGE pSrcImg, int srcX, int srcY, int srcWidth, int srcHeight, DWORD dwRop) {
+	pSrcImg = CONVERT_IMAGE_CONST(pSrcImg);
 	pSrcImg->putimage(NULL, dstX, dstY, dstWidth, dstHeight, srcX, srcY, srcWidth, srcHeight, dwRop);
 }
 
@@ -2739,6 +2745,7 @@ putimage_transparent(
 	int nHeightSrc          // height of source rectangle
 	)
 {
+	imgsrc = CONVERT_IMAGE_CONST(imgsrc);
 	return imgsrc->putimage_transparent(imgdest, nXOriginDest, nYOriginDest, crTransparent, nXOriginSrc, nYOriginSrc, nWidthSrc, nHeightSrc);
 }
 
@@ -2755,6 +2762,7 @@ putimage_alphablend(
 	int nHeightSrc          // height of source rectangle
 	)
 {
+	imgsrc = CONVERT_IMAGE_CONST(imgsrc);
 	return imgsrc->putimage_alphablend(imgdest, nXOriginDest, nYOriginDest, alpha, nXOriginSrc, nYOriginSrc, nWidthSrc, nHeightSrc);
 }
 
@@ -2772,6 +2780,7 @@ putimage_alphatransparent(
 	int nHeightSrc          // height of source rectangle
 	)
 {
+	imgsrc = CONVERT_IMAGE_CONST(imgsrc);
 	return imgsrc->putimage_alphatransparent(imgdest, nXOriginDest, nYOriginDest, crTransparent, alpha, nXOriginSrc, nYOriginSrc, nWidthSrc, nHeightSrc);
 }
 
@@ -2787,6 +2796,7 @@ putimage_withalpha(
 	int nHeightSrc          // height of source rectangle
 	)
 {
+	imgsrc = CONVERT_IMAGE_CONST(imgsrc);
 	return imgsrc->putimage_withalpha(imgdest, nXOriginDest, nYOriginDest, nXOriginSrc, nYOriginSrc, nWidthSrc, nHeightSrc);
 }
 
@@ -2802,6 +2812,7 @@ int putimage_alphafilter(
 	int nHeightSrc          // height of source rectangle
 )
 {
+	imgsrc = CONVERT_IMAGE_CONST(imgsrc);
 	return imgsrc->putimage_alphafilter(imgdest, nXOriginDest, nYOriginDest, imgalpha, nXOriginSrc, nYOriginSrc, nWidthSrc, nHeightSrc);
 }
 
@@ -2827,7 +2838,7 @@ imagefilter_blurring (
 
 int
 saveimage(PCIMAGE pimg, LPCSTR  filename) {
-	PCIMAGE img = CONVERT_IMAGE(pimg);
+	PCIMAGE img = CONVERT_IMAGE_CONST(pimg);
 	int ret = 0;
 	if (img) {
 		ret = img->saveimage(filename);
@@ -2838,7 +2849,7 @@ saveimage(PCIMAGE pimg, LPCSTR  filename) {
 
 int
 saveimage(PCIMAGE pimg, LPCWSTR filename) {
-	PCIMAGE img = CONVERT_IMAGE(pimg);
+	PCIMAGE img = CONVERT_IMAGE_CONST(pimg);
 	int ret = 0;
 	if (img) {
 		ret = img->saveimage(filename);
@@ -2874,6 +2885,7 @@ int
 savepng(PCIMAGE pimg, LPCSTR  filename, int bAlpha) {
 	FILE *fp = NULL;
 	int ret;
+	pimg = CONVERT_IMAGE_CONST(pimg);
 	fp = fopen(filename, "wb");
 	if (fp == NULL) return grFileNotFound;
 	ret = pimg->savepngimg(fp, bAlpha);
@@ -2885,6 +2897,7 @@ int
 savepng(PCIMAGE pimg, LPCWSTR filename, int bAlpha) {
 	FILE *fp = NULL;
 	int ret;
+	pimg = CONVERT_IMAGE_CONST(pimg);
 	fp = _wfopen(filename, L"wb");
 	if (fp == NULL) return grFileNotFound;
 	ret = pimg->savepngimg(fp, bAlpha);
