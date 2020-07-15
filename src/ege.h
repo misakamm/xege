@@ -1023,7 +1023,7 @@ int EGEAPI putimage_rotatezoom(
 
 HWND        EGEAPI getHWnd();         // 获取绘图窗口句柄
 HINSTANCE   EGEAPI getHInstance();
-HDC         EGEAPI getHdc(PIMAGE pImg = NULL);
+HDC         EGEAPI getHDC(PIMAGE pImg = NULL);
 
 PVOID       EGEAPI getProcfunc();
 int         EGEAPI getGraphicsVer();   // 获取当前版本 ####
