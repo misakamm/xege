@@ -43,7 +43,7 @@ public:
                         }
             } while ( goon );
             obj[i].vx = obj[i].vy = 0.0f;
-            obj[i].color = EGEAGRAY( 0xff, HSVtoRGB( myrand( 360.0f ), 1.0f, 1.0f ) );
+            obj[i].color = HSVtoRGB( myrand( 360.0f ), 1.0f, 1.0f );
         }
     }
 
