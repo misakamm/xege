@@ -2648,7 +2648,13 @@ color_t* getbuffer(PIMAGE pImg) {
 	return img->getbuffer();
 }
 
-HDC getHDC(PIMAGE pImg) {
+const color_t* getbuffer(PCIMAGE pImg) {
+	PCIMAGE img = CONVERT_IMAGE_CONST(pImg);
+	CONVERT_IMAGE_END;
+	return img->getbuffer();
+}
+
+HDC getHDC(PCIMAGE pImg) {
 	PIMAGE img = CONVERT_IMAGE_CONST(pImg);
 	CONVERT_IMAGE_END;
 	return img->getdc();
