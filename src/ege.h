@@ -494,7 +494,7 @@ typedef enum pattern_type_e {
 	pattern_texture         = 3,
 }pattern_type_e;
 
-typedef unsigned int color_t;
+typedef DWORD color_t;
 
 struct viewporttype {
 	int left;
