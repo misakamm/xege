@@ -738,9 +738,12 @@ color_t     EGEAPI hsv2rgb(float H, float S, float V);
 color_t     EGEAPI getpixel  (int x, int y, PCIMAGE pimg = NULL);               // 获取点的颜色
 void        EGEAPI putpixel  (int x, int y, color_t color, PIMAGE pimg = NULL); // 画点
 color_t     EGEAPI getpixel_f(int x, int y, PCIMAGE pimg = NULL);               // 获取点的颜色
-void        EGEAPI putpixel_f(int x, int y, color_t color, PIMAGE pimg = NULL); // 画点
+void        EGEAPI putpixel_f(int x, int y, color_t color, PIMAGE pimg = NULL); // 绝对坐标画点
 void        EGEAPI putpixels  (int nPoint, int* pPoints, PIMAGE pimg = NULL);   // 批量画点
 void        EGEAPI putpixels_f(int nPoint, int* pPoints, PIMAGE pimg = NULL);   // 批量画点
+
+void        EGEAPI putpixel_withalpha  (int x, int y, color_t color, PIMAGE pimg = NULL); // 带透明度画点
+void        EGEAPI putpixel_withalpha_f(int x, int y, color_t color, PIMAGE pimg = NULL); // 带透明度绝对坐标画点
 
 void EGEAPI moveto(int x, int y, PIMAGE pimg = NULL);                      // 移动当前点(绝对坐标)
 void EGEAPI moverel(int dx, int dy, PIMAGE pimg = NULL);                   // 移动当前点(相对坐标)
