@@ -17,7 +17,6 @@
 #define _CRT_NON_CONFORMING_SWPRINTFS
 #endif
 
-#include <vector>
 #include "ege_head.h"
 
 #include <math.h>
@@ -2350,7 +2349,7 @@ void EGEAPI ege_drawtext(LPCSTR  textstring, float x, float y, PIMAGE pimg) {
 			MultiByteToWideChar(CP_ACP, 0, textstring, -1, wStr, 128);
 			ege_drawtext_p(wStr, x, y, img);
 		} else {
-			std::vector<WCHAR> wStr(bufferSize + 1);
+			std::wstring wStr(bufferSize + 1, L'\0');
 			MultiByteToWideChar(CP_ACP, 0, textstring, -1, &wStr[0], bufferSize + 1);
 			ege_drawtext_p(&wStr[0], x, y, img);
 		}
