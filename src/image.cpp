@@ -859,15 +859,6 @@ IMAGE::putimage_transparent(
 	return grOk;
 }
 
-#define EGEALPHABLEND(d, s, pd, alpha) do {                            \
-		DWORD rb = d & 0x00FF00FF;                                     \
-		DWORD  g = d & 0x0000FF00;                                     \
-                                                                       \
-		rb += ((s & 0x00FF00FF) - rb) * alpha >> 8;                    \
-		g  += ((s & 0x0000FF00) -  g) * alpha >> 8;                    \
-		*pd = (rb & 0x00FF00FF) | (g & 0x0000FF00) | (d & 0xFF000000); \
-	} while(0)
-
 int
 IMAGE::putimage_alphablend(
 	PIMAGE imgdest,         // handle to dest

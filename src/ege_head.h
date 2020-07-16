@@ -140,6 +140,18 @@
 // 仅用于向 GDI32 API 传递颜色时
 #define ARGBTOZBGR(c)   ((((c) & 0xFF) << 16) | (((c) & 0xFF0000) >> 16) | ((c) & 0xFF00))
 
+// 以 d 为背景色，s 为前景色，alpha 为 0~255 的整数进行混合，
+// 混合结果保留 d 的 Alpha 通道，保存在 pd 指向的位置
+#define EGEALPHABLEND(d, s, pd, alpha) do {                            \
+		DWORD rb = d & 0x00FF00FF;                                     \
+		DWORD  g = d & 0x0000FF00;                                     \
+                                                                       \
+		rb += ((s & 0x00FF00FF) - rb) * alpha >> 8;                    \
+		g  += ((s & 0x0000FF00) -  g) * alpha >> 8;                    \
+		*pd = (rb & 0x00FF00FF) | (g & 0x0000FF00) | (d & 0xFF000000); \
+	} while(0)
+
+
 #define CONVERT_IMAGE(pimg) ( ((size_t)(pimg)<0x20 ?\
 		((pimg) ?\
 			(graph_setting.img_page[(size_t)(pimg) & 0xF])\
