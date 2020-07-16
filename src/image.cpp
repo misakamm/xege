@@ -225,6 +225,11 @@ IMAGE::resize(int width, int height) {
 	if (width < 0) width = 0;
 	if (height < 0) height = 0;
 
+	if (width == m_width && height == m_height) {
+		setviewport(0, 0, m_width, m_height, 1, this);
+		return 0;
+	}
+
 	PDWORD bmp_buf;
 	HBITMAP bitmap     = newbitmap(width, height, &bmp_buf);
 	HBITMAP old_bitmap = (HBITMAP)SelectObject(this->m_hDC, bitmap);
