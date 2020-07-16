@@ -677,7 +677,7 @@ int     settarget(PIMAGE pbuf); // ÓÃ NULL ÉèÖÃ´°¿ÚÎª»æÍ¼Ä¿±ê
 
 void EGEAPI cleardevice(PIMAGE pimg = NULL);                   // ÇåÆÁ
 
-void EGEAPI getviewport(int *pleft, int *ptop, int *pright, int *pbottom, int *pclip = 0, PIMAGE pimg = NULL); // »ñÈ¡ÊÓÍ¼ÐÅÏ¢
+void EGEAPI getviewport(int *pleft, int *ptop, int *pright, int *pbottom, int *pclip = 0, PCIMAGE pimg = NULL); // »ñÈ¡ÊÓÍ¼ÐÅÏ¢
 void EGEAPI setviewport(int left, int top, int right, int bottom, int clip = 1, PIMAGE pimg = NULL);           // ÉèÖÃÊÓÍ¼
 void EGEAPI clearviewport(PIMAGE pimg = NULL);                                                                 // Çå¿ÕÊÓÍ¼
 
@@ -693,7 +693,7 @@ void EGEAPI window_setviewport(int  left, int  top, int  right, int  bottom);
 
 // »æÍ¼ÊôÐÔ
 EGE_DEPRECATE(getlinestyle)
-void EGEAPI getlinestyle(int *plinestyle, unsigned short *pupattern = NULL, int *pthickness = NULL, PIMAGE pimg = NULL); // »ñÈ¡µ±Ç°ÏßÐÎ
+void EGEAPI getlinestyle(int *plinestyle, unsigned short *pupattern = NULL, int *pthickness = NULL, PCIMAGE pimg = NULL); // »ñÈ¡µ±Ç°ÏßÐÎ
 void EGEAPI setlinestyle(int linestyle, unsigned short upattern = 0, int thickness = 1, PIMAGE pimg = NULL);          // ÉèÖÃµ±Ç°ÏßÐÎ
 void EGEAPI setlinewidth(float width, PIMAGE pimg = NULL);          // ÉèÖÃµ±Ç°Ïß¿í
 //EGE_DEPRECATE(getfillstyle)
@@ -706,9 +706,9 @@ void EGEAPI setwritemode(int mode, PIMAGE pimg = NULL);         // ÉèÖÃ»æÍ¼Î»²Ù×
 //void EGEAPI graphdefaults(PIMAGE pimg = NULL);                  // ÖØÖÃËùÓÐ»æÍ¼ÉèÖÃÎªÄ¬ÈÏÖµ ###
 
 // É«²Êº¯Êý
-color_t EGEAPI getcolor(PIMAGE pimg = NULL);                    // »ñÈ¡µ±Ç°»æÍ¼Ç°¾°É«
-color_t EGEAPI getfillcolor(PIMAGE pimg = NULL);                // »ñÈ¡µ±Ç°»æÍ¼Ìî³äÉ«
-color_t EGEAPI getbkcolor(PIMAGE pimg = NULL);                  // »ñÈ¡µ±Ç°»æÍ¼±³¾°É«
+color_t EGEAPI getcolor(PCIMAGE pimg = NULL);                   // »ñÈ¡µ±Ç°»æÍ¼Ç°¾°É«
+color_t EGEAPI getfillcolor(PCIMAGE pimg = NULL);               // »ñÈ¡µ±Ç°»æÍ¼Ìî³äÉ«
+color_t EGEAPI getbkcolor(PCIMAGE pimg = NULL);                 // »ñÈ¡µ±Ç°»æÍ¼±³¾°É«
 void EGEAPI setcolor(color_t color, PIMAGE pimg = NULL);        // ÉèÖÃµ±Ç°»æÍ¼Ç°¾°É«
 void EGEAPI setfillcolor(color_t color, PIMAGE pimg = NULL);    // ÉèÖÃµ±Ç°»æÍ¼Ìî³äÉ«
 void EGEAPI setbkcolor(color_t color, PIMAGE pimg = NULL);      // ÉèÖÃµ±Ç°»æÍ¼±³¾°É«£¨ÉèÖÃ²¢×ö±³¾°É«ÏñËØÌæ»»£©
@@ -735,9 +735,9 @@ color_t     EGEAPI hsv2rgb(float H, float S, float V);
 
 // »ù±¾»æÍ¼º¯Êý
 
-color_t     EGEAPI getpixel  (int x, int y, PIMAGE pimg = NULL);                // »ñÈ¡µãµÄÑÕÉ«
+color_t     EGEAPI getpixel  (int x, int y, PCIMAGE pimg = NULL);               // »ñÈ¡µãµÄÑÕÉ«
 void        EGEAPI putpixel  (int x, int y, color_t color, PIMAGE pimg = NULL); // »­µã
-color_t     EGEAPI getpixel_f(int x, int y, PIMAGE pimg = NULL);                // »ñÈ¡µãµÄÑÕÉ«
+color_t     EGEAPI getpixel_f(int x, int y, PCIMAGE pimg = NULL);               // »ñÈ¡µãµÄÑÕÉ«
 void        EGEAPI putpixel_f(int x, int y, color_t color, PIMAGE pimg = NULL); // »­µã
 void        EGEAPI putpixels  (int nPoint, int* pPoints, PIMAGE pimg = NULL);   // ÅúÁ¿»­µã
 void        EGEAPI putpixels_f(int nPoint, int* pPoints, PIMAGE pimg = NULL);   // ÅúÁ¿»­µã
@@ -813,9 +813,9 @@ void EGEAPI ege_drawtext(LPCWSTR textstring, float x, float y, PIMAGE pimg = NUL
 
 void EGEAPI ege_setalpha(int alpha, PIMAGE pimg = NULL);
 void EGEAPI ege_gentexture(bool gen, PIMAGE pimg = NULL);
-void EGEAPI ege_puttexture(PIMAGE srcimg, float x, float y, float w, float h, PIMAGE pimg = NULL);
-void EGEAPI ege_puttexture(PIMAGE srcimg, ege_rect dest, PIMAGE pimg = NULL);
-void EGEAPI ege_puttexture(PIMAGE srcimg, ege_rect dest, ege_rect src, PIMAGE pimg = NULL);
+void EGEAPI ege_puttexture(PCIMAGE srcimg, float x, float y, float w, float h, PIMAGE pimg = NULL);
+void EGEAPI ege_puttexture(PCIMAGE srcimg, ege_rect dest, PIMAGE pimg = NULL);
+void EGEAPI ege_puttexture(PCIMAGE srcimg, ege_rect dest, ege_rect src, PIMAGE pimg = NULL);
 //
 
 //int  EGEAPI Begin2d();
@@ -889,47 +889,48 @@ void EGEAPI setfont(int nHeight, int nWidth, LPCWSTR lpszFace, int nEscapement, 
 					BYTE fbOutPrecision, BYTE fbClipPrecision, BYTE fbQuality, BYTE fbPitchAndFamily, PIMAGE pimg = NULL);
 void EGEAPI setfont(const LOGFONTA *font, PIMAGE pimg = NULL); // ÉèÖÃµ±Ç°×ÖÌåÑùÊ½
 void EGEAPI setfont(const LOGFONTW *font, PIMAGE pimg = NULL); // ÉèÖÃµ±Ç°×ÖÌåÑùÊ½
-void EGEAPI getfont(LOGFONTA *font, PIMAGE pimg = NULL);       // »ñÈ¡µ±Ç°×ÖÌåÑùÊ½
-void EGEAPI getfont(LOGFONTW *font, PIMAGE pimg = NULL);       // »ñÈ¡µ±Ç°×ÖÌåÑùÊ½
+void EGEAPI getfont(LOGFONTA *font, PCIMAGE pimg = NULL);      // »ñÈ¡µ±Ç°×ÖÌåÑùÊ½
+void EGEAPI getfont(LOGFONTW *font, PCIMAGE pimg = NULL);      // »ñÈ¡µ±Ç°×ÖÌåÑùÊ½
 
 
 //Í¼Æ¬º¯Êý
 #define getmaxx getwidth
 #define getmaxy getheight
 
-int EGEAPI getwidth(PIMAGE pimg = NULL);           // »ñÈ¡Í¼Æ¬¿í¶È
-int EGEAPI getheight(PIMAGE pimg = NULL);          // »ñÈ¡Í¼Æ¬¸ß¶È
-int EGEAPI getx(PIMAGE pimg = NULL);               // »ñÈ¡µ±Ç° x ×ø±ê
-int EGEAPI gety(PIMAGE pimg = NULL);               // »ñÈ¡µ±Ç° y ×ø±ê
+int EGEAPI getwidth(PCIMAGE pimg = NULL);          // »ñÈ¡Í¼Æ¬¿í¶È
+int EGEAPI getheight(PCIMAGE pimg = NULL);         // »ñÈ¡Í¼Æ¬¸ß¶È
+int EGEAPI getx(PCIMAGE pimg = NULL);              // »ñÈ¡µ±Ç° x ×ø±ê
+int EGEAPI gety(PCIMAGE pimg = NULL);              // »ñÈ¡µ±Ç° y ×ø±ê
 
-PIMAGE      EGEAPI newimage(); // ´´½¨PIMAGE
-PIMAGE      EGEAPI newimage(int width, int height); // ´´½¨PIMAGE
-void        EGEAPI delimage(PIMAGE pImg); // ´´½¨PIMAGE
-color_t*    EGEAPI getbuffer(PIMAGE pImg);
+PIMAGE         EGEAPI newimage();                      // ´´½¨ PIMAGE
+PIMAGE         EGEAPI newimage(int width, int height); // ´´½¨ PIMAGE
+void           EGEAPI delimage(PCIMAGE pImg);          // É¾³ý PIMAGE
+color_t*       EGEAPI getbuffer(PIMAGE pImg);
+const color_t* EGEAPI getbuffer(PCIMAGE pImg);
 
 int  EGEAPI resize(PIMAGE pDstImg, int width, int height); //ÖØÉè³ß´ç
-void EGEAPI getimage(PIMAGE pDstImg, int srcX, int srcY, int srcWidth, int srcHeight);             // ´ÓÆÁÄ»»ñÈ¡Í¼Ïñ
-void EGEAPI getimage(PIMAGE pDstImg, const PIMAGE pSrcImg, int srcX, int srcY, int srcWidth, int srcHeight);   // ´ÓÁíÒ»¸ö PIMAGE ¶ÔÏóÖÐ»ñÈ¡Í¼Ïñ
-int  EGEAPI getimage(PIMAGE pDstImg, LPCSTR  pImgFile, int zoomWidth = 0, int zoomHeight = 0);     // ´ÓÍ¼Æ¬ÎÄ¼þ»ñÈ¡Í¼Ïñ(bmp/jpg/gif/emf/wmf)
-int  EGEAPI getimage(PIMAGE pDstImg, LPCWSTR pImgFile, int zoomWidth = 0, int zoomHeight = 0);     // ´ÓÍ¼Æ¬ÎÄ¼þ»ñÈ¡Í¼Ïñ(bmp/jpg/gif/emf/wmf)
+void EGEAPI getimage(PIMAGE pDstImg, int srcX, int srcY, int srcWidth, int srcHeight);                             // ´ÓÆÁÄ»»ñÈ¡Í¼Ïñ
+void EGEAPI getimage(PIMAGE pDstImg, PCIMAGE pSrcImg, int srcX, int srcY, int srcWidth, int srcHeight);            // ´ÓÁíÒ»¸ö PIMAGE ¶ÔÏóÖÐ»ñÈ¡Í¼Ïñ
+int  EGEAPI getimage(PIMAGE pDstImg, LPCSTR  pImgFile, int zoomWidth = 0, int zoomHeight = 0);                     // ´ÓÍ¼Æ¬ÎÄ¼þ»ñÈ¡Í¼Ïñ(bmp/jpg/gif/emf/wmf)
+int  EGEAPI getimage(PIMAGE pDstImg, LPCWSTR pImgFile, int zoomWidth = 0, int zoomHeight = 0);                     // ´ÓÍ¼Æ¬ÎÄ¼þ»ñÈ¡Í¼Ïñ(bmp/jpg/gif/emf/wmf)
 int  EGEAPI getimage(PIMAGE pDstImg, LPCSTR  pResType, LPCSTR  pResName, int zoomWidth = 0, int zoomHeight = 0);   // ´Ó×ÊÔ´ÎÄ¼þ»ñÈ¡Í¼Ïñ(bmp/jpg/gif/emf/wmf)
 int  EGEAPI getimage(PIMAGE pDstImg, LPCWSTR pResType, LPCWSTR pResName, int zoomWidth = 0, int zoomHeight = 0);   // ´Ó×ÊÔ´ÎÄ¼þ»ñÈ¡Í¼Ïñ(bmp/jpg/gif/emf/wmf)
-void EGEAPI putimage(int dstX, int dstY, const PIMAGE pSrcImg, DWORD dwRop = SRCCOPY);                         // »æÖÆÍ¼Ïñµ½ÆÁÄ»
-void EGEAPI putimage(int dstX, int dstY, int dstWidth, int dstHeight, const PIMAGE pSrcImg, int srcX, int srcY, DWORD dwRop = SRCCOPY);    // »æÖÆÍ¼Ïñµ½ÆÁÄ»(Ö¸¶¨¿í¸ß)
-void EGEAPI putimage(int dstX, int dstY, int dstWidth, int dstHeight, const PIMAGE pSrcImg, int srcX, int srcY, int srcWidth, int srcHeight, DWORD dwRop = SRCCOPY);   // »æÖÆÍ¼Ïñµ½ÆÁÄ»(Ö¸¶¨Ô´¿í¸ßºÍÄ¿±ê¿í¸ß½øÐÐÀ­Éì)
-void EGEAPI putimage(PIMAGE pDstImg, int dstX, int dstY, const PIMAGE pSrcImg, DWORD dwRop = SRCCOPY);         // »æÖÆÍ¼Ïñµ½ÁíÒ»Í¼ÏñÖÐ
-void EGEAPI putimage(PIMAGE pDstImg, int dstX, int dstY, int dstWidth, int dstHeight, const PIMAGE pSrcImg, int srcX, int srcY, DWORD dwRop = SRCCOPY);    // »æÖÆÍ¼Ïñµ½ÁíÒ»Í¼ÏñÖÐ(Ö¸¶¨¿í¸ß)
-void EGEAPI putimage(PIMAGE pDstImg, int dstX, int dstY, int dstWidth, int dstHeight, const PIMAGE pSrcImg, int srcX, int srcY, int srcWidth, int srcHeight, DWORD dwRop = SRCCOPY);   // »æÖÆÍ¼Ïñµ½ÁíÒ»Í¼ÏñÖÐ(Ö¸¶¨Ô´¿í¸ßºÍÄ¿±ê¿í¸ß½øÐÐÀ­Éì)
-int  EGEAPI saveimage(PIMAGE pimg, LPCSTR  filename);
-int  EGEAPI saveimage(PIMAGE pimg, LPCWSTR filename);
-int  EGEAPI savepng(PIMAGE pimg, LPCSTR  filename, int bAlpha = 0);
-int  EGEAPI savepng(PIMAGE pimg, LPCWSTR filename, int bAlpha = 0);
+void EGEAPI putimage(int dstX, int dstY, PCIMAGE pSrcImg, DWORD dwRop = SRCCOPY);                                  // »æÖÆÍ¼Ïñµ½ÆÁÄ»
+void EGEAPI putimage(int dstX, int dstY, int dstWidth, int dstHeight, PCIMAGE pSrcImg, int srcX, int srcY, DWORD dwRop = SRCCOPY);                                // »æÖÆÍ¼Ïñµ½ÆÁÄ»(Ö¸¶¨¿í¸ß)
+void EGEAPI putimage(int dstX, int dstY, int dstWidth, int dstHeight, PCIMAGE pSrcImg, int srcX, int srcY, int srcWidth, int srcHeight, DWORD dwRop = SRCCOPY);   // »æÖÆÍ¼Ïñµ½ÆÁÄ»(Ö¸¶¨Ô´¿í¸ßºÍÄ¿±ê¿í¸ß½øÐÐÀ­Éì)
+void EGEAPI putimage(PIMAGE pDstImg, int dstX, int dstY, PCIMAGE pSrcImg, DWORD dwRop = SRCCOPY);                                                                 // »æÖÆÍ¼Ïñµ½ÁíÒ»Í¼ÏñÖÐ
+void EGEAPI putimage(PIMAGE pDstImg, int dstX, int dstY, int dstWidth, int dstHeight, PCIMAGE pSrcImg, int srcX, int srcY, DWORD dwRop = SRCCOPY);                // »æÖÆÍ¼Ïñµ½ÁíÒ»Í¼ÏñÖÐ(Ö¸¶¨¿í¸ß)
+void EGEAPI putimage(PIMAGE pDstImg, int dstX, int dstY, int dstWidth, int dstHeight, PCIMAGE pSrcImg, int srcX, int srcY, int srcWidth, int srcHeight, DWORD dwRop = SRCCOPY);   // »æÖÆÍ¼Ïñµ½ÁíÒ»Í¼ÏñÖÐ(Ö¸¶¨Ô´¿í¸ßºÍÄ¿±ê¿í¸ß½øÐÐÀ­Éì)
+int  EGEAPI saveimage(PCIMAGE pimg, LPCSTR  filename);
+int  EGEAPI saveimage(PCIMAGE pimg, LPCWSTR filename);
+int  EGEAPI savepng(PCIMAGE pimg, LPCSTR  filename, int bAlpha = 0);
+int  EGEAPI savepng(PCIMAGE pimg, LPCWSTR filename, int bAlpha = 0);
 int  EGEAPI getimage_pngfile(PIMAGE pimg, LPCSTR  filename);
 int  EGEAPI getimage_pngfile(PIMAGE pimg, LPCWSTR filename);
 
 int EGEAPI putimage_transparent(
 	PIMAGE imgdest,         // handle to dest
-	PIMAGE imgsrc,          // handle to source
+	PCIMAGE imgsrc,         // handle to source
 	int nXOriginDest,       // x-coord of destination upper-left corner
 	int nYOriginDest,       // y-coord of destination upper-left corner
 	color_t crTransparent,  // color to make transparent
@@ -940,7 +941,7 @@ int EGEAPI putimage_transparent(
 );
 int EGEAPI putimage_alphablend(
 	PIMAGE imgdest,         // handle to dest
-	PIMAGE imgsrc,          // handle to source
+	PCIMAGE imgsrc,         // handle to source
 	int nXOriginDest,       // x-coord of destination upper-left corner
 	int nYOriginDest,       // y-coord of destination upper-left corner
 	unsigned char alpha,    // alpha
@@ -951,7 +952,7 @@ int EGEAPI putimage_alphablend(
 );
 int EGEAPI putimage_alphatransparent(
 	PIMAGE imgdest,         // handle to dest
-	PIMAGE imgsrc,          // handle to source
+	PCIMAGE imgsrc,         // handle to source
 	int nXOriginDest,       // x-coord of destination upper-left corner
 	int nYOriginDest,       // y-coord of destination upper-left corner
 	color_t crTransparent,  // color to make transparent
@@ -963,7 +964,7 @@ int EGEAPI putimage_alphatransparent(
 );
 int EGEAPI putimage_withalpha(
 	PIMAGE imgdest,         // handle to dest
-	PIMAGE imgsrc,          // handle to source
+	PCIMAGE imgsrc,         // handle to source
 	int nXOriginDest,       // x-coord of destination upper-left corner
 	int nYOriginDest,       // y-coord of destination upper-left corner
 	int nXOriginSrc = 0,    // x-coord of source upper-left corner
@@ -973,10 +974,10 @@ int EGEAPI putimage_withalpha(
 );
 int EGEAPI putimage_alphafilter(
 	PIMAGE imgdest,         // handle to dest
-	PIMAGE imgsrc,          // handle to source
+	PCIMAGE imgsrc,         // handle to source
 	int nXOriginDest,       // x-coord of destination upper-left corner
 	int nYOriginDest,       // y-coord of destination upper-left corner
-	PIMAGE imgalpha,        // alpha
+	PCIMAGE imgalpha,       // alpha
 	int nXOriginSrc,        // x-coord of source upper-left corner
 	int nYOriginSrc,        // y-coord of source upper-left corner
 	int nWidthSrc,          // width of source rectangle
@@ -993,27 +994,27 @@ int EGEAPI imagefilter_blurring (
 );
 int EGEAPI putimage_rotate(
 	PIMAGE imgdest,
-	PIMAGE imgtexture,
+	PCIMAGE imgtexture,
 	int nXOriginDest,
 	int nYOriginDest,
 	float centerx,
 	float centery,
 	float radian,
-	int btransparent = 0,           // transparent (1) or not (0)
+	int btransparent = 0,            // transparent (1) or not (0)
 	int alpha = -1,                  // in range[0, 256], alpha== -1 means no alpha
 	int smooth = 0
 );
 
 int EGEAPI putimage_rotatezoom(
 	PIMAGE imgdest,
-	PIMAGE imgtexture,
+	PCIMAGE imgtexture,
 	int nXOriginDest,
 	int nYOriginDest,
 	float centerx,
 	float centery,
 	float radian,
 	float zoom,
-	int btransparent = 0,           // transparent (1) or not (0)
+	int btransparent = 0,            // transparent (1) or not (0)
 	int alpha = -1,                  // in range[0, 256], alpha== -1 means no alpha
 	int smooth = 0
 );
@@ -1023,11 +1024,11 @@ int EGEAPI putimage_rotatezoom(
 
 HWND        EGEAPI getHWnd();         // »ñÈ¡»æÍ¼´°¿Ú¾ä±ú
 HINSTANCE   EGEAPI getHInstance();
-HDC         EGEAPI getHDC(PIMAGE pImg = NULL);
+HDC         EGEAPI getHDC(PCIMAGE pImg = NULL);
 
 PVOID       EGEAPI getProcfunc();
-int         EGEAPI getGraphicsVer();   // »ñÈ¡µ±Ç°°æ±¾ ####
-float       EGEAPI getfps(); // »ñÈ¡µ±Ç°Ö¡ÂÊ
+int         EGEAPI getGraphicsVer();   // »ñÈ¡µ±Ç°°æ±¾
+float       EGEAPI getfps();           // »ñÈ¡µ±Ç°Ö¡ÂÊ
 
 //Ëæ»úº¯Êý
 void            EGEAPI randomize();

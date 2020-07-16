@@ -293,10 +293,10 @@ public:
 	void putimage(PIMAGE pDstImg, int dstX, int dstY, DWORD dwRop = SRCCOPY) const;
 	void putimage(PIMAGE pDstImg, int dstX, int dstY, int dstWidth, int dstHeight, int srcX, int srcY, DWORD dwRop = SRCCOPY) const;
 	void putimage(PIMAGE pDstImg, int dstX, int dstY, int dstWidth, int dstHeight, int srcX, int srcY, int srcWidth, int srcHeight, DWORD dwRop = SRCCOPY) const;
-	int  saveimage(LPCSTR  filename);
-	int  saveimage(LPCWSTR filename);
+	int  saveimage(LPCSTR  filename) const;
+	int  saveimage(LPCWSTR filename) const;
 	int  getpngimg(FILE* fp);
-	int  savepngimg(FILE* fp, int bAlpha);
+	int  savepngimg(FILE* fp, int bAlpha) const;
 	int
 	putimage_transparent(
 		PIMAGE imgdest,         // handle to dest
@@ -307,7 +307,7 @@ public:
 		int nYOriginSrc = 0,    // y-coord of source upper-left corner
 		int nWidthSrc = 0,      // width of source rectangle
 		int nHeightSrc = 0      // height of source rectangle
-	);
+	) const;
 	int
 	putimage_alphablend(
 		PIMAGE imgdest,         // handle to dest
@@ -318,7 +318,7 @@ public:
 		int nYOriginSrc = 0,    // y-coord of source upper-left corner
 		int nWidthSrc = 0,      // width of source rectangle
 		int nHeightSrc = 0      // height of source rectangle
-	);
+	) const;
 	int
 	putimage_alphatransparent(
 		PIMAGE imgdest,         // handle to dest
@@ -330,7 +330,7 @@ public:
 		int nYOriginSrc = 0,    // y-coord of source upper-left corner
 		int nWidthSrc = 0,      // width of source rectangle
 		int nHeightSrc = 0      // height of source rectangle
-	);
+	) const;
 	int
 	putimage_withalpha(
 		PIMAGE imgdest,         // handle to dest
@@ -340,19 +340,19 @@ public:
 		int nYOriginSrc = 0,    // y-coord of source upper-left corner
 		int nWidthSrc = 0,      // width of source rectangle
 		int nHeightSrc = 0      // height of source rectangle
-	);
+	) const;
 
 	int
 	putimage_alphafilter(
 		PIMAGE imgdest,         // handle to dest
 		int nXOriginDest,       // x-coord of destination upper-left corner
 		int nYOriginDest,       // y-coord of destination upper-left corner
-		PIMAGE imgalpha,        // alpha
+		PCIMAGE imgalpha,       // alpha
 		int nXOriginSrc = 0,    // x-coord of source upper-left corner
 		int nYOriginSrc = 0,    // y-coord of source upper-left corner
 		int nWidthSrc = 0,      // width of source rectangle
 		int nHeightSrc = 0      // height of source rectangle
-	);
+	) const;
 	int
 	imagefilter_blurring_4 (
 		int intensity,
