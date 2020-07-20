@@ -732,6 +732,10 @@ void        EGEAPI rgb2hsv(color_t rgb, float *H, float *S, float *V);
 color_t     EGEAPI hsl2rgb(float H, float S, float L);
 color_t     EGEAPI hsv2rgb(float H, float S, float V);
 
+// 按 Alpha 通道混合颜色，将 src 作为背景色，dst 作为前景色进行混合
+color_t     EGEAPI alphablend(color_t dst, color_t src); // 使用 EGEGET_A(src) 作为 Alpha 值
+color_t     EGEAPI alphablend(color_t dst, color_t src, unsigned char alpha);
+
 
 // 基本绘图函数
 
