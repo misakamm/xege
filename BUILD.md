@@ -43,10 +43,13 @@ $ del * /S /Q
 ### MinGW
 
 ```sh
-$ cmake .. -G "MinGW Makefiles"
+$ cmake .. -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release
 ```
 
 CMake 会自动检测安装的 MinGW 编译器并生成编译配置。
+
+编译配置中的 `-DCMAKE_BUILD_TYPE=Release` 是构建类型（Build type），表示生成优化级别较高的
+发布版。
 
 如果想指定编译套件（如 Dev-C++ 自带的 TDM-GCC 4.9.2），可在执行 `cmake` 
 前设置 `PATH` 环境变量指向特定的 MinGW 所在位置，CMake 在配置时会采用最先
@@ -93,7 +96,7 @@ $ export PATH=/C/Dev-Cpp/MinGW64/bin:$PATH
 ```
 相应的 CMake 生成指令是
 ```sh
-$ cmake .. -G "MSYS Makefiles"
+$ cmake .. -G "MSYS Makefiles" -DCMAKE_BUILD_TYPE=Release
 ```
 
 注意，您需要从 `pacman` 包管理器安装或者
@@ -132,8 +135,11 @@ $ "D:\VC6\VC98\Bin\VCVARS32.BAT"
 ``` 
 执行成功后即建立 VC6 命令行环境，就可以继续执行编译步骤二了：
 ```sh
-$ cmake .. -G "NMake Makefiles"
+$ cmake .. -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release
 ```
+
+编译配置中的 `-DCMAKE_BUILD_TYPE=Release` 是构建类型（Build type），表示生成优化级别较高的
+发布版。
 
 ### Visual Studio
 
@@ -150,6 +156,15 @@ $ cmake .. -G "Visual Studio 14 2015"
 ```sh
 $ cmake .. -G "Visual Studio 14 2015 Win64"
 ```
+
+另外要注意的一点是，Visual Studio 的步骤三应该是：
+```sh
+$ cmake --build . --config Release
+```
+
+因为 Visual Studio 是多配置的编译系统，需要在执行编译时选择配置类型（Configuration type）。这
+也是必须的选项，因为使用 `Release` 配置编译出的库文件才能同时被 `Debug` 和 `Release` 配置的
+项目使用。
 
 ## 编译临时测试文件
 

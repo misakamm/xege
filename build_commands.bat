@@ -2,8 +2,8 @@
 
 
 :: MinGW
-cmake -G "MinGW Makefiles" -S . -B build\MinGW -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY="%CD%\build\libs\MinGW"
-cmake --build build\MinGW --config Release -j
+cmake -G "MinGW Makefiles" -S . -B build\MinGW -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY="%CD%\build\libs\MinGW" -DCMAKE_BUILD_TYPE=Release
+cmake --build build\MinGW -j
 
 :: Visual Studio 2008 32bit
 :: FIXME: UNTESTED
@@ -70,5 +70,5 @@ cmake --build build\vs2019_64 --config Release -j
 :: Visual C++ 6.0
 :: 请使用 CMD 执行
 :: 执行命令前请确保按 BUILD.md 中 `编译配置 -- Visual C++ 6.0` 一节做好设置
-cmake -G "NMake Makefiles" -S . -B build\vc6 -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY="%CD%\build\libs\vc6"
-cmake --build build\vc6 --config Release
+cmake -G "NMake Makefiles" -S . -B build\vc6 -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY="%CD%\build\libs\vc6" -DCMAKE_BUILD_TYPE=Release
+cmake --build build\vc6
