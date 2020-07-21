@@ -605,11 +605,11 @@ int WinMain()
     int rw = 640, rh = 280;
     freopen("log.txt", "w", stdout);
     setinitmode(0);
-    initgraph(rw, rh + th*tl);
+    initgraph(rw, rh + th*tl, INIT_DEFAULT|INIT_RENDERMANUAL);
     randomize();
     InitColor();
     setfont(12, 0, "宋体");
-    SetWindowTextA(GetHWnd(), "Mandelbrot Set by 御坂美琴 -- PowerEasyX V0.3.4 Release (20110129)");
+    SetWindowTextA(getHWnd(), "Mandelbrot Set by 御坂美琴 -- PowerEasyX V0.3.4 Release (20110129)");
     //mpf_set_prec(100);
 
 
@@ -679,7 +679,7 @@ int WinMain()
     //IMAGE img_def, img_ms;
     //img_def.getimage(0, 0, w, h);
 
-    BeginBatchDraw();
+    //BeginBatchDraw();
     for ( ; ; )
     {
         int bmsg = 0;
@@ -699,9 +699,10 @@ int WinMain()
             }
             if (k == 's' || k == 'S')
             {
-                IMAGE img;
-                getimage(&img, 0, 0, w, h);
-                img.saveimage("m.bmp");
+                PIMAGE pimg;
+                getimage(pimg, 0, 0, w, h);
+                saveimage(pimg, "m.bmp");
+                delimage(pimg);
             }
             //*
             if (k == 'r' || k == 'R')
@@ -723,7 +724,7 @@ int WinMain()
                 }
             }//*/
         }
-        if (MouseHit())
+        if (mousemsg())
         {
             bmsg = 1;
             m = GetMouseMsg();    // 获取一条鼠标消息
@@ -789,7 +790,7 @@ int WinMain()
                     //img_ms.getimage(0, 0, w, h);
                     Draw(from.re, from.im, to.re, to.im, mode, js_c);
                 }
-                FlushMouseMsgBuffer();
+                flushmouse();
                 break;
                 // 按鼠标左键并拖动，选择区域
             case WM_MOUSEMOVE:
@@ -879,7 +880,7 @@ int WinMain()
 
                     // 画图形
                     Draw(from.re, from.im, to.re, to.im, mode, js_c);
-                    FlushMouseMsgBuffer();
+                    flushmouse();
                 }
                 break;
             }
@@ -900,7 +901,7 @@ int WinMain()
             delay_fps(1000);
         }
     }
-    EndBatchDraw();
+    //EndBatchDraw();
 
     getch();
     closegraph();

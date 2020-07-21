@@ -1,21 +1,17 @@
 #include "graphics.h"
 //#include <complex>
 #include <time.h>
-//#include <gmpxx.h>
-#include <stdio.h>
-#include <algorithm>
+#include <gmpxx.h>
 
 //using namespace std;
-
-#define USINGDOUBLE
 
 #define BASEITERATIONS 1   //首次迭代次数
 #define ITERATIONS 256     //增量迭代次数
 #define MAXCOLOR 0x20      //颜色数
 #define COLORMASK (0x200 - 1)
 
-#define SC_W 640
-#define SC_H 480
+#define SC_W (640 * 2) //1280
+#define SC_H (480 * 2) //960
 
 #define for if(1) for
 
@@ -41,27 +37,12 @@ struct complex
 typedef complex<double> COMPLEX;
 //*/
 
-#ifdef USINGDOUBLE
-typedef double Float;
-#else
 typedef mpf_class Float;
-#endif
-
 struct COMPLEXI
 {
     int re;
     int im;
 };
-
-#ifdef USINGDOUBLE
-Float& str2float (Float& f, const char str[])
-{
-    sscanf(str, "%lf", &f);
-    return f;
-}
-typedef int mp_bitcnt_t;
-#endif
-
 mp_bitcnt_t g_prec = 64;
 
 struct COMPLEX
@@ -72,26 +53,20 @@ struct COMPLEX
     {
         re = 0.0;
         im = 0.0;
-#ifndef USINGDOUBLE
         re.set_prec(g_prec);
         im.set_prec(g_prec);
-#endif
     }
     void setprec()
     {
-#ifndef USINGDOUBLE
         re.set_prec(g_prec);
         im.set_prec(g_prec);
-#endif
     }
     void setzero()
     {
         re = 0.0;
         im = 0.0;
-#ifndef USINGDOUBLE
         re.set_prec(0);
         im.set_prec(0);
-#endif
     }
     Float& real() { return re; }
     Float& imag() { return im; }
@@ -164,25 +139,14 @@ COMPLEX operator + (const COMPLEX& a, const COMPLEX& b)
 }
 
 inline
-double abs(const COMPLEX& c)
-{
-#ifndef USINGDOUBLE
-    double d1 = mpf_get_d(c.re.get_mpf_t()), d2 = mpf_get_d(c.im.get_mpf_t());
-    return d1*d1 + d2*d2;
-#else
-    return c.re*c.re + c.im*c.im;
-#endif
-}
-
-inline
 bool abs4(const COMPLEX& c)
 {
-#ifndef USINGDOUBLE
+    //Float limit = 16.0, mlimit = -limit;
+    //if (c.re > limit || c.re < mlimit || c.im > limit || c.im < mlimit) return true;
     double d1 = mpf_get_d(c.re.get_mpf_t()), d2 = mpf_get_d(c.im.get_mpf_t());
-    return (d1*d1 + d2*d2 > 4.0);
-#else
-    return (c.re*c.re + c.im*c.im > 4.0);
-#endif
+    return d1*d1 + d2*d2 > 4.0;
+    //if (c.re * c.re + c.im * c.im > 16.0) return true;
+    //return false;
 }
 
 //typedef complex<double> COMPLEX;
@@ -202,7 +166,6 @@ typedef struct PIXEL
         last2 = last = c = NULL;
     }
 }PIXEL;
-
 
 #define CPPOOLSIZE (SC_W * 64)
 struct COMPLEXPOOL
@@ -396,6 +359,7 @@ unsigned int g_max_iter;
 unsigned int g_max_iter_last;
 
 int g_dx_iters;
+
 
 inline
 int MandelbrotEx(PIXEL& z)
@@ -663,8 +627,52 @@ int DrawEx(Float& fromx, Float& fromy, Float& tox, Float& toy, int mode = 0)
                 }
                 if (clock() - t > 5000)
                 {
-                    //if (keystate('J') && keystate('N'))
-                    return 1;
+                    if (keystate('J') && keystate('N')) return 1;
+                    delay_ms(0);
+                    t = clock();
+                }
+            }
+        }
+    }
+    //else
+    if (0)
+    {
+        int x, y;
+        while (g_udlist.pop(&x, &y))
+        {
+            PIXEL& p = pMap[y][x];
+            if (p.nIter == 0 && p.ed == 0) //err
+            {
+                COMPLEX z, c;
+                c.re = fromx + (tox - fromx) * (x / (double)SC_W);
+                c.im = fromy + (toy - fromy) * (y / (double)SC_H);
+                z.re = z.im = 0.0;
+                pMap[y][x].last = new_cp();
+                pMap[y][x].c = new_cp();
+                pMap[y][x].last->setprec();
+                pMap[y][x].c->setprec();
+                pMap[y][x].last[0] = z;
+                pMap[y][x].c[0] = c;
+            }
+            if (p.ed == 0)
+            {
+                int k = MandelbrotEx(p);
+                if (p.ed)
+                {
+                    addpoint(x, y-1);
+                    addpoint(x, y+1);
+                    addpoint(x-1, y);
+                    addpoint(x+1, y);
+                    g_b_update_mark += 1;
+                    putpixel_f(x, y, Color[k & COLORMASK]);
+                }
+                else
+                {
+                    addpoint(x, y);
+                }
+                if (clock() - t > 5000)
+                {
+                    if (keystate('J') && keystate('N')) return 1;
                     delay(0);
                     t = clock();
                 }
@@ -718,37 +726,31 @@ int WinMain()
 {
     // 初始化绘图窗口及颜色
     int w = SC_W, h = SC_H, dh = 48;
-    //setinitmode(0);
-    initgraph(w, h + dh);
+    setinitmode(0);
+    initgraph(w, h + dh, INIT_DEFAULT|INIT_RENDERMANUAL);
     randomize();
     InitColor();
-    setfillstyle(0x0);
+    setfillstyle(0x0, getcolor());
     setfont(12, 0, "宋体");
-    //SetWindowTextA(GetHWnd(), "Mandelbrot Set");
-    SetWindowTextA(GetHWnd(), "Mandelbrot Set by 御坂美琴 -- PowerEasyX V0.3.4 Release (20110129)");
+    SetWindowTextA(getHWnd(), "Mandelbrot Set");
+    //SetWindowTextA(getHWnd(), "Mandelbrot Set by 御坂美琴 -- PowerEasyX V0.3.4 Release (20110129)");
     //mpf_set_prec(100);
 
 
     // 初始化 Mandelbrot Set(曼德布洛特集)坐标系
-    IMAGE mimage;
-    IMAGE img_logo(228, 64);
+    IMAGE& mimage = *newimage();
     COMPLEX center, delta, mindelta;
     COMPLEX from, to;
     COMPLEX js_c;
     int mode = 0;
     int ncnt = 0;
     int nbeg = -1;
-    double delta_mul = 0.97857206208770013450916112581344; //0.707;
+    double delta_mul = 0.5; //0.707;
     g_prec = 2048;
     center.setprec();
     mindelta.setprec();
     delta.setprec();
-    center.re = -0.768331231741422458314381560804;
-    center.im = -0.107632864930921566605138748951;
-    mindelta.re = 0.00000000000002;
-    setfont(24, 0, "黑体", &img_logo);
-    outtextxy(0, 0, "http://misakamm.org", &img_logo);
-    /*{
+    {
         FILE * fp = fopen("MandelbrotSetAni.ini", "r");
         char str[1024] = {0};
         if (fp)
@@ -765,14 +767,13 @@ int WinMain()
             sscanf(str, "%d", &nbeg);
             fclose(fp);
         }
-    }//*/
+    }
     //mindelta.re = "0.000000000000001";
-    //delta.re = "2.0";
-    str2float(delta.re, "8.0");
+    delta.re = "2.0";
 
     SetPriorityClass(GetCurrentProcess(), IDLE_PRIORITY_CLASS);
     SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_LOWEST);
-    BeginBatchDraw();
+    //BeginBatchDraw();
     for (; delta.re > mindelta.re; delta.re *= delta_mul, ++ncnt)
     {
         setgprec(delta.re);
@@ -789,7 +790,6 @@ int WinMain()
                   y = (from.im + to.im) * 0.5,
                   d = to.re - from.re;
             setcolor(0xFFFFFF);
-#ifndef USINGDOUBLE
             gmp_sprintf(str, "%+.210Ff", x.get_mpf_t());
             outtextxy(0, SC_H + 12*0, str);
             gmp_sprintf(str, "%+.210Ff", y.get_mpf_t());
@@ -798,16 +798,6 @@ int WinMain()
             outtextxy(0, SC_H + 12*2, str);
             gmp_sprintf(str, "%-6d %4d", mpf_get_prec(y.get_mpf_t()), ncnt);;
             outtextxy(0, SC_H + 12*3, str);
-#else
-            sprintf(str, "%+.20Ff", x);
-            outtextxy(0, SC_H + 12*0, str);
-            sprintf(str, "%+.20Ff", y);
-            outtextxy(0, SC_H + 12*1, str);
-            sprintf(str, "%+.20Ff", d);
-            outtextxy(0, SC_H + 12*2, str);
-            sprintf(str, "%-6d %4d", 32, ncnt);;
-            outtextxy(0, SC_H + 12*3, str);
-#endif
             delay(0);
         }
         int calc = 1;
@@ -839,7 +829,7 @@ int WinMain()
         if (calc)
         {
             bar(0, 0, SC_W, SC_H);
-            delay(0);
+            //delay(0);
             g_max_iter_last = 16;
             //Draw(from.re, from.im, to.re, to.im, mode);
             int mend = 0xFFFFFFF;
@@ -847,7 +837,7 @@ int WinMain()
             //if (g_prec <= 64) minmark = 0, mend = 16;
             int addmark = 0;
 
-            initqueue((delta.re > 0.005));
+            initqueue(g_prec <= 64);
             g_max_iter = 2048;
             if (g_prec <= 64) g_max_iter = 16;
             //g_iters = ITERATIONS;
@@ -857,8 +847,9 @@ int WinMain()
             {
                 g_b_update_mark = 0;
                 g_min_iter_last = 0x7FFFFFFF;
-                if (clock() - t > 20)
+                if (clock() - t > 50)
                 {
+                    t = clock();
                     {
                         char str[100];
                         sprintf(str, "%8d %8d %8d %8d", g_base_iters, g_max_iter, g_max_iter_last, last_min);
@@ -867,38 +858,34 @@ int WinMain()
                     {
                         RECT rect, crect;
                         int _dw, _dh;
-                        GetClientRect(GetHWnd(), &crect);
-                        GetWindowRect(GetHWnd(), &rect);
+                        GetClientRect(getHWnd(), &crect);
+                        GetWindowRect(getHWnd(), &rect);
                         _dw = w - crect.right;
                         _dh = h + dh - crect.bottom;
                         MoveWindow(
-                            GetHWnd(),
+                            getHWnd(),
                             rect.left,
                             rect.top,
                             rect.right  + _dw - rect.left,
                             rect.bottom + _dh - rect.top,
                             TRUE);
                     }
-                    delay(0);
-                    t = clock();
+                    delay_ms(0);
                 }
                 if (DrawEx(from.re, from.im, to.re, to.im, mode)) break;
                 if (g_b_update_mark + addmark > minmark)
                 {
                     if (mend == 0xFFFFFFF)
                     {
+                        //g_base_iters += (m + 1) * g_iters;
+                        //mend = m * 2 + 1;
+                        //if (mend < g_prec) mend = g_prec;
                         mend = 16;
-                    }
+                    }//*/
+                    //if (mend < (m + 1) * 2)
+                    //    mend = (m + 1) * 2;
                     m = -1;
                     addmark = 0;
-                    if (delta.re > 0.005)
-                    {
-                        if (g_min_iter_last > 500) break;
-                    }
-                    else
-                    {
-                        if (g_min_iter_last > 10000) break;
-                    }
                     if (g_min_iter_last < last_min) g_min_iter_last = last_min;
                     if (g_max_iter_last >= g_max_iter) g_max_iter = (g_max_iter_last << 1);
                     if (g_max_iter > (g_min_iter_last << 1)) g_max_iter = (g_min_iter_last << 1);
@@ -906,9 +893,9 @@ int WinMain()
                 }
                 else
                 {
-                    if (g_max_iter > 0x100 && mend != 0xFFFFFFF)
+                    if (mend != 0xFFFFFFF && g_max_iter > last_min * 2)
                     {
-                        mend = 2;
+                        break;
                     }
                     if (g_max_iter <= 0x10000)
                     {
@@ -926,15 +913,15 @@ int WinMain()
                 char str[30];
                 getimage(&mimage, 0, 0, SC_W, SC_H);
                 sprintf(str, "snap%06d.bmp", ncnt);
-                putimage_alphatransparent(&mimage, &img_logo, 2, SC_H - 26, 0, 0x80);
-                mimage.saveimage(str);
+                saveimage(&mimage, str);
             }
         }
-        delay(0);
+        delay_ms(0);
     }
-    EndBatchDraw();
+    //EndBatchDraw();
 
     //getch();
+    delimage(&mimage);
     closegraph();
     return 0;
 }

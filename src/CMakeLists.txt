@@ -41,6 +41,7 @@ endif (MSVC)
 # Just a hint
 target_link_libraries(${LIB_NAME}
   INTERFACE gdiplus
+  INTERFACE gdi32
   INTERFACE imm32
   INTERFACE msimg32
   INTERFACE ole32
