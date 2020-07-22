@@ -375,17 +375,21 @@ setwritemode(int mode, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
+static inline bool in_rect(int x, int y, int w, int h) {
+	return !((x < 0) || (y < 0) || (x >= w) || (y >= h));
+}
+
 color_t
 getpixel(int x, int y, PCIMAGE pimg) {
 	PCIMAGE img = CONVERT_IMAGE_CONST(pimg);
 	CONVERT_IMAGE_END;
 	x += img->m_vpt.left;
 	y += img->m_vpt.top;
-	if ((x < 0) || (y < 0) || (x >= img->m_width) || (y >= img->m_height)) {
-		return 0;
+	if (in_rect(x, y, img->m_width, img->m_height)) {
+		return img->m_pBuffer[y * img->m_width + x];
 	}
-	color_t col = img->m_pBuffer[y * img->m_width + x];
-	return col;
+	// else
+	return 0;
 }
 
 void
@@ -393,9 +397,7 @@ putpixel(int x, int y, color_t color, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	x += img->m_vpt.left;
 	y += img->m_vpt.top;
-	if ((x < 0) || (y < 0) || (x >= img->m_vpt.right) || (y >= img->m_vpt.bottom)) {
-		;
-	} else {
+	if (in_rect(x, y, img->m_vpt.right, img->m_vpt.bottom)) {
 		img->m_pBuffer[y * img->m_width + x] = color;
 	}
 	CONVERT_IMAGE_END;
@@ -410,9 +412,7 @@ putpixels(int nPoint, int* pPoints, PIMAGE pimg) {
 	int tw = img->m_width;
 	for (int n=0; n<nPoint; ++n, pPoints += 3) {
 		x = pPoints[0], y = pPoints[1], c = pPoints[2];
-		if ((x < 0) || (y < 0) || (x >= w) || (y >= h)) {
-			;
-		} else {
+		if (in_rect(x, y, w, h)) {
 			pb[y * tw + x] = c;
 		}
 	}
@@ -422,11 +422,14 @@ putpixels(int nPoint, int* pPoints, PIMAGE pimg) {
 void
 putpixels_f(int nPoint, int* pPoints, PCIMAGE pimg) {
 	PCIMAGE img = CONVERT_IMAGE(pimg);
-	int c;
+	int x, y, c;
 	int tw = img->m_width;
+	int th = img->m_height;
 	for (int n=0; n<nPoint; ++n, pPoints += 3) {
-		c = pPoints[2];
-		img->m_pBuffer[pPoints[1] * tw + pPoints[0]] = c;
+		x = pPoints[0], y = pPoints[1], c = pPoints[2];
+		if (in_rect(x, y, tw, th)) {
+			img->m_pBuffer[y * tw + x] = c;
+		}
 	}
 	CONVERT_IMAGE_END;
 }
@@ -434,14 +437,18 @@ putpixels_f(int nPoint, int* pPoints, PCIMAGE pimg) {
 color_t
 getpixel_f(int x, int y, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE_F_CONST(pimg);
-	color_t col = img->m_pBuffer[y * img->m_width + x];
-	return col;
+	if (in_rect(x, y, img->m_width, img->m_height)) {
+		return img->m_pBuffer[y * img->m_width + x];
+	}
+	return 0;
 }
 
 void
 putpixel_f(int x, int y, color_t color, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE_F(pimg);
-	img->m_pBuffer[y * img->m_width + x] = color;
+	if (in_rect(x, y, img->m_width, img->m_height)) {
+		img->m_pBuffer[y * img->m_width + x] = color;
+	}
 }
 
 void

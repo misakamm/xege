@@ -2671,13 +2671,21 @@ resize(PIMAGE pDstImg, int width, int height) {
 	return pDstImg->resize(width, height);
 }
 
+#define EGE_GETIMAGE_CHK_NULL(p)                                            \
+	do {                                                                    \
+		if (p == NULL)                                                      \
+			internal_panic(L"Fatal Error: pass NULL to `ege::getimage`");   \
+	} while (0)
+
 void
 getimage(PIMAGE pDstImg, int srcX, int srcY, int srcWidth, int srcHeight) {
+	EGE_GETIMAGE_CHK_NULL(pDstImg);
 	pDstImg->getimage(srcX, srcY, srcWidth, srcHeight);
 }
 
 void
 getimage(PIMAGE pDstImg, PCIMAGE pSrcImg, int srcX, int srcY, int srcWidth, int srcHeight) {
+	EGE_GETIMAGE_CHK_NULL(pDstImg);
 	pDstImg->getimage(pSrcImg, srcX, srcY, srcWidth, srcHeight);
 }
 
@@ -2707,21 +2715,25 @@ putimage(PIMAGE pDstImg, int dstX, int dstY, int dstWidth, int dstHeight, PCIMAG
 
 int
 getimage(PIMAGE pDstImg, LPCSTR pImgFile, int zoomWidth, int zoomHeight) {
+	EGE_GETIMAGE_CHK_NULL(pDstImg);
 	return pDstImg->getimage(pImgFile, zoomWidth, zoomHeight);
 }
 
 int
 getimage(PIMAGE pDstImg, LPCWSTR pImgFile, int zoomWidth, int zoomHeight) {
+	EGE_GETIMAGE_CHK_NULL(pDstImg);
 	return pDstImg->getimage(pImgFile, zoomWidth, zoomHeight);
 }
 
 int
 getimage(PIMAGE pDstImg, LPCSTR pResType, LPCSTR pResName, int zoomWidth, int zoomHeight) {
+	EGE_GETIMAGE_CHK_NULL(pDstImg);
 	return pDstImg->getimage(pResType, pResName, zoomWidth, zoomHeight);
 }
 
 int
 getimage(PIMAGE pDstImg, LPCWSTR pResType, LPCWSTR pResName, int zoomWidth, int zoomHeight) {
+	EGE_GETIMAGE_CHK_NULL(pDstImg);
 	return pDstImg->getimage(pResType, pResName, zoomWidth, zoomHeight);
 }
 
