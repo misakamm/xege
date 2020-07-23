@@ -102,6 +102,12 @@
 #endif
 #endif
 
+#ifdef _MSC_VER
+#define EGE_FORCEINLINE   __forceinline
+#else
+#define EGE_FORCEINLINE   __attribute__((always_inline)) inline
+#endif
+
 #define EGE_GDIPLUS // 使用gdi+函数扩展
 
 #ifdef EGE_GDIPLUS
@@ -139,17 +145,6 @@
 // 转换为 COLORREF 所用的 0x00bbggrr，忽略 Alpha 通道
 // 仅用于向 GDI32 API 传递颜色时
 #define ARGBTOZBGR(c)   ((((c) & 0xFF) << 16) | (((c) & 0xFF0000) >> 16) | ((c) & 0xFF00))
-
-// 以 d 为背景色，s 为前景色，alpha 为 0~255 的整数进行混合，
-// 混合结果保留 d 的 Alpha 通道，保存在 pd 指向的位置
-#define EGEALPHABLEND(d, s, pd, alpha) do {                            \
-		DWORD rb = d & 0x00FF00FF;                                     \
-		DWORD  g = d & 0x0000FF00;                                     \
-                                                                       \
-		rb += ((s & 0x00FF00FF) - rb) * alpha >> 8;                    \
-		g  += ((s & 0x0000FF00) -  g) * alpha >> 8;                    \
-		*pd = (rb & 0x00FF00FF) | (g & 0x0000FF00) | (d & 0xFF000000); \
-	} while(0)
 
 
 #define CONVERT_IMAGE(pimg) ( ((size_t)(pimg)<0x20 ?\
@@ -576,6 +571,17 @@ std::string w2mb(LPCWSTR wStr);
 void internal_panic(LPCWSTR errmsg);
 
 HBITMAP newbitmap(int width, int height, PDWORD* p_bmp_buf);
+
+// 以 bkg 为背景色，src 为前景色，alpha 为 0~255 的整数进行混合，
+// 混合结果保留 bkg 的 Alpha 通道
+EGE_FORCEINLINE color_t alphablend_inline(color_t bkg, color_t src, unsigned char alpha) {
+	DWORD rb = bkg & 0x00FF00FF;
+	DWORD  g = bkg & 0x0000FF00;
+
+	rb += ((src & 0x00FF00FF) - rb) * alpha >> 8;
+	g  += ((src & 0x0000FF00) -  g) * alpha >> 8;
+	return (rb & 0x00FF00FF) | (g & 0x0000FF00) | (bkg & 0xFF000000);
+}
 
 } // namespace ege
 

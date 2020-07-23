@@ -896,7 +896,7 @@ IMAGE::putimage_alphablend(
 		for (y=0; y<nHeightSrc; ++y) {
 			for (x=0; x<nWidthSrc; ++x, ++psp, ++pdp) {
 				DWORD d=*pdp, s=*psp;
-				EGEALPHABLEND(d, s, pdp, alpha);
+				*pdp = alphablend_inline(d, s, alpha);
 			}
 			pdp += ddx;
 			psp += dsx;
@@ -946,7 +946,7 @@ IMAGE::putimage_alphatransparent(
 			for (x=0; x<nWidthSrc; ++x, ++psp, ++pdp) {
 				if ((*psp & 0x00FFFFFF) != cr) {
 					DWORD d=*pdp, s=*psp;
-					EGEALPHABLEND(d, s, pdp, alpha);
+					*pdp = alphablend_inline(d, s, alpha);
 				}
 			}
 			pdp += ddx;
@@ -994,7 +994,7 @@ IMAGE::putimage_withalpha(
 			for (x=0; x<nWidthSrc; ++x, ++psp, ++pdp) {
 				DWORD d=*pdp, s=*psp;
 				DWORD alpha = EGEGET_A(s);
-				EGEALPHABLEND(d, s, pdp, alpha);
+				*pdp = alphablend_inline(d, s, alpha);
 			}
 			pdp += ddx;
 			psp += dsx;
@@ -1045,7 +1045,7 @@ IMAGE::putimage_alphafilter(
 				DWORD d=*pdp, s=*psp;
 				DWORD alpha = *pap & 0xFF;
 				if (*pap) {
-					EGEALPHABLEND(d, s, pdp, alpha);
+					*pdp = alphablend_inline(d, s, alpha);
 				}
 			}
 			pdp += ddx;
