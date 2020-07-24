@@ -1,6 +1,8 @@
 cmake_minimum_required (VERSION 3.14)
 
-file(GLOB_RECURSE LPNG_SRC "lpng/*.c")
+file(GLOB LPNG_SRC
+  CONFIGURE_DEPENDS
+  "lpng/*.c")
 set(EGE_CPP_SRC
   graphics.cpp
   logo.cpp
@@ -13,33 +15,29 @@ set(EGE_CPP_SRC
   math.cpp
   )
 
-target_sources(${LIB_NAME}
+target_sources(xege
   PRIVATE ${LPNG_SRC}
   PRIVATE ${EGE_CPP_SRC}
   )
 
 if (MSVC)
   # 不在库中引用具体的运行时库
-  target_compile_options(${LIB_NAME}
+  target_compile_options(xege
     PRIVATE "/Zl"
-    )
-  set_target_properties(${LIB_NAME}
-    PROPERTIES
-    STATIC_LIBRARY_OPTIONS "/NODEFAULTLIB ${STATIC_LIBRARY_OPTIONS}"
     )
 
   if (MSVC_VERSION EQUAL 1200)
       # VC6 默认编译单线程版本（/ML(d)），无法找到 `_imp__xxx` 的定义
       # 而 CMake 生成的则使用 /MD，在此覆盖设置。
       # 编译时会有 D4025 警告，不用在意。
-      target_compile_options(${LIB_NAME}
+      target_compile_options(xege
         PRIVATE $<$<CONFIG:Debug>:/MLd> $<$<CONFIG:Release>:/ML>
         )
   endif ()
 endif (MSVC)
 
 # Just a hint
-target_link_libraries(${LIB_NAME}
+target_link_libraries(xege
   INTERFACE gdiplus
   INTERFACE gdi32
   INTERFACE imm32
@@ -48,7 +46,7 @@ target_link_libraries(${LIB_NAME}
   INTERFACE oleaut32
   INTERFACE uuid
   )
-target_include_directories(${LIB_NAME}
+target_include_directories(xege
   INTERFACE .
   )
 
@@ -57,12 +55,12 @@ target_sources(graphicstest
   PRIVATE graphicstest/maintest.cpp
   )
 
-target_link_libraries(graphicstest ${LIB_NAME})
+target_link_libraries(graphicstest xege)
 if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
   target_link_options(graphicstest
     PRIVATE -mwindows
     )
-  target_link_libraries(${LIB_NAME}
+  target_link_libraries(xege
     INTERFACE stdc++
     )
 endif ()

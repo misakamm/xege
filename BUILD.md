@@ -182,7 +182,7 @@ $ cmake --build . --config Release
 ```cmake
 add_executable(temp_test temp_test.cpp)
 
-target_link_libraries(temp_test ${LIB_NAME})
+target_link_libraries(temp_test xege)
 
 ```
 

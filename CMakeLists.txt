@@ -2,43 +2,33 @@ cmake_minimum_required (VERSION 3.14)
 
 project (XEGE)
 
-math(EXPR TARGET_BITS "8 * ${CMAKE_SIZEOF_VOID_P}")
+add_library(xege STATIC)
 
-if (MSVC)
-  if (TARGET_BITS EQUAL 64)
-    message(STATUS "MSVC 64bit target")
-    set(LIB_NAME graphics64)
-  elseif (TARGET_BITS EQUAL 32)
-    message(STATUS "MSVC 32bit target")
-    set(LIB_NAME graphics)
-  else ()
-    # 非 32/64 位的 MSVC 版本
-    message(WARNING "Unknown ${TARGET_BITS}bit MSVC Version: ${MSVC_VERSION}")
-    set(LIB_NAME graphics)
-  endif ()
-elseif (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
-  if (TARGET_BITS EQUAL 64)
-    message(STATUS "64bit GCC target")
-    # 编译结果：libgraphics64.a
-    set(LIB_NAME graphics64)
-  elseif (TARGET_BITS EQUAL 32)
-    message(STATUS "32bit GCC target")
-    # 编译结果：libgraphics.a
-    set(LIB_NAME graphics)
-  else ()
-    message(WARNING "Unknown ${TARGET_BITS}bit GCC target")
-    set(LIB_NAME graphics)
-  endif ()
+# 设置库文件名
+math(EXPR TARGET_BITS "8 * ${CMAKE_SIZEOF_VOID_P}")
+if (TARGET_BITS EQUAL 64)
+  set_property(TARGET xege
+    PROPERTY OUTPUT_NAME graphics64)
+elseif (TARGET_BITS EQUAL 32)
+  set_property(TARGET xege
+    PROPERTY OUTPUT_NAME graphics)
 else ()
-  if (CMAKE_CXX_COMPILER_ID)
-    message(WARNING "Unknown Compiler: ${CMAKE_CXX_COMPILER_ID}")
-  else ()
-    message(WARNING "Unknown Compiler: ${CMAKE_CXX_COMPILER}")
-  endif ()
-  set(LIB_NAME "graphics${TARGET_BITS}")
+  # 非 32/64 位编译器
+  message(FATAL_ERROR "XEGE does not support ${TARGET_BITS}bit compiler")
 endif ()
 
-add_library(${LIB_NAME} STATIC)
+# 打印编译器信息
+if (MSVC)
+  message(STATUS "${TARGET_BITS}bit MSVC target: MSVC ${MSVC_VERSION}")
+elseif (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
+  message(STATUS "${TARGET_BITS}bit GNU target: GCC ${CMAKE_C_COMPILER_VERSION}")
+else ()
+  if (CMAKE_CXX_COMPILER_ID)
+    message(FATAL_ERROR "Unsupported compiler: ${CMAKE_CXX_COMPILER_ID}")
+  else ()
+    message(FATAL_ERROR "Unsupported compiler: ${CMAKE_CXX_COMPILER}")
+  endif ()
+endif ()
 
 add_executable(graphicstest)
 
