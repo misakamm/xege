@@ -577,12 +577,6 @@ struct msg_createwindow {
 };
 
 
-// 绘图环境初始化参数
-#define INITGRAPH(x, y) struct _initgraph_{_initgraph_(){initgraph(x, y);}\
-	~_initgraph_(){closegraph();}}_g_initgraph_
-#define INITGRAPH3(x, y, f) struct _initgraph_{_initgraph_(){initgraph(x, y, f);}\
-	~_initgraph_(){closegraph();}}_g_initgraph_
-
 //音乐类宏
 #define MUSIC_ERROR  0xFFFFFFFF
 
