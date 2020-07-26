@@ -37,20 +37,6 @@
 #pragma once
 #endif
 
-#ifdef _GRAPH_LIB_BUILD_
-#ifndef WINVER
-#define WINVER 0x0400           // Specifies that the minimum required platform is Windows 95/NT4.
-#endif
-
-#ifndef _WIN32_WINNT
-#define _WIN32_WINNT 0x0400     // Specifies that the minimum required platform is Windows 95/NT4.
-#endif
-
-#ifndef _WIN32_WINDOWS
-#define _WIN32_WINDOWS 0x0410   // Specifies that the minimum required platform is Windows 98.
-#endif
-#endif
-
 #ifndef __cplusplus
 #error You must use C++ compiler, or you need filename with '.cpp' suffix
 #endif

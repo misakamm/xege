@@ -20,6 +20,15 @@ target_sources(xege
   PRIVATE ${EGE_CPP_SRC}
   )
 
+target_compile_definitions(xege
+  # Specifies that the minimum required platform is Windows 95/NT4.
+  PRIVATE WINVER=0x0400
+  # Specifies that the minimum required platform is Windows 95/NT4.
+  PRIVATE _WIN32_WINNT=0x0400
+  # Specifies that the minimum required platform is Windows 98.
+  PRIVATE _WIN32_WINDOWS=0x0410
+  )
+
 if (MSVC)
   # 不在库中引用具体的运行时库
   target_compile_options(xege
