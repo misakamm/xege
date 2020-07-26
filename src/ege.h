@@ -90,19 +90,8 @@
 #	define GWLP_WNDPROC        GWL_WNDPROC
 #endif
 
-#if !defined(_GRAPH_LIB_BUILD_) && !defined(_GRAPH_NO_LIB_)
-#if defined(_MSC_VER) && _MSC_VER > 1200
-//#	pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' ""version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
-#endif
-#endif
-
-
 #ifndef WM_MOUSEWHEEL
 #define WM_MOUSEWHEEL                   0x020A
-#endif
-
-#ifdef _GRAPH_LIB_BUILD_
-#include <cstdio>
 #endif
 
 #ifndef _Cdecl
@@ -131,9 +120,7 @@
 #	endif
 #endif
 
-#ifdef _GRAPH_LIB_BUILD_
-#	define EGE_DEPRECATE(text)
-#else
+#ifndef EGE_DEPRECATE
 #	ifdef _MSC_VER
 #		ifdef _CRT_DEPRECATE_TEXT
 #			define EGE_DEPRECATE(text) _CRT_DEPRECATE_TEXT("This function is deprecated, more info visit http://tcgraphics.sourceforge.net/")
@@ -1037,7 +1024,6 @@ int     EGEAPI kbhitEx(int flag);
 int     EGEAPI keystate(int key);       // 获得键码为key的键（见key_code_e）是否按下，如果key使用鼠标按键的键码，则获得的是鼠标键状态
 void    EGEAPI flushkey();              // 清空键盘消息缓冲区
 
-//#ifndef _GRAPH_LIB_BUILD_
 #if !defined(_INC_CONIO) && !defined(_CONIO_H_)
 #define _INC_CONIO
 #define _CONIO_H_
@@ -1047,7 +1033,6 @@ int EGEAPI kbhit();
 #define getch getchEx
 #define kbhit kbhitEx
 #endif
-//#endif
 
 //鼠标处理函数
 int         EGEAPI mousemsg();                  // 检查是否存在鼠标消息
