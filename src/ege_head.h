@@ -146,7 +146,6 @@
 // 仅用于向 GDI32 API 传递颜色时
 #define ARGBTOZBGR(c)   ((((c) & 0xFF) << 16) | (((c) & 0xFF0000) >> 16) | ((c) & 0xFF00))
 
-
 #define CONVERT_IMAGE(pimg) ( ((size_t)(pimg)<0x20 ?\
 		((pimg) ?\
 			(graph_setting.img_page[(size_t)(pimg) & 0xF])\

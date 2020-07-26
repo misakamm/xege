@@ -455,9 +455,7 @@ void putpixel_withalpha(int x, int y, color_t color, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	x += img->m_vpt.left;
 	y += img->m_vpt.top;
-	if ((x < 0) || (y < 0) || (x >= img->m_vpt.right) || (y >= img->m_vpt.bottom)) {
-		;
-	} else {
+	if (in_rect(x, y, img->m_vpt.right, img->m_vpt.bottom)) {
 		color_t& dst_color = img->m_pBuffer[y * img->m_width + x];
 		dst_color = alphablend_inline(dst_color, color, EGEGET_A(color));
 	}
@@ -466,8 +464,10 @@ void putpixel_withalpha(int x, int y, color_t color, PIMAGE pimg) {
 
 void putpixel_withalpha_f(int x, int y, color_t color, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE_F(pimg);
-	color_t& dst_color = img->m_pBuffer[y * img->m_width + x];
-	dst_color = alphablend_inline(dst_color, color, EGEGET_A(color));
+	if (in_rect(x, y, img->m_width, img->m_height)) {
+		color_t& dst_color = img->m_pBuffer[y * img->m_width + x];
+		dst_color = alphablend_inline(dst_color, color, EGEGET_A(color));
+	}
 	CONVERT_IMAGE_END;
 }
 
