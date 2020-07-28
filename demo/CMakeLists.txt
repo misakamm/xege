@@ -14,6 +14,7 @@ foreach (DEMO_SRC ${DEMO_SRCS})
     target_link_libraries(${DEMO_NAME} -mwindows)
   endif ()
 endforeach ()
+target_sources(egerotateimage PRIVATE egelogo.rc)
 
 message(CHECK_START "Finding GMP Library")
 find_library(gmp gmp)

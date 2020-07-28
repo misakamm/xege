@@ -9,7 +9,7 @@ int main()
 	initgraph( 640, 480 );
 	setrendermode(RENDER_MANUAL);
 	PIMAGE img = newimage();
-	getimage(img, "bg.jpg");
+	getimage(img, "JPG", "EGE_LOGO_JPG");
 	double r = 0;
 	fps f;
 	for ( ; is_run(); delay_fps(60) )
