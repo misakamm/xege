@@ -1,5 +1,7 @@
 # EGE (Easy Graphics Engine)
 
+![](egelogo.jpg)
+
 - Website <https://xege.org>  (官网, 附带[教程](https://xege.org/beginner-lesson-1.html)以及[范例](https://xege.org/category/demo)等)
 - HomePage <https://github.com/wysaid/xege>  (代为维护)
 - 百度贴吧2 <http://tieba.baidu.com/f?kw=ege>
