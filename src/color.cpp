@@ -321,4 +321,13 @@ hsv2rgb(float H, float S, float V) {
 	return EGERGB(crgb.r, crgb.g, crgb.b);
 }
 
+color_t alphablend(color_t dst, color_t src) {
+	return alphablend_inline(dst, src, EGEGET_A(src));
+}
+
+color_t alphablend(color_t dst, color_t src, unsigned char alpha) {
+	return alphablend_inline(dst, src, alpha);
+}
+
+
 } // namespace ege

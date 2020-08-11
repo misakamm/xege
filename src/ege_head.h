@@ -103,6 +103,12 @@
 #endif
 #endif
 
+#ifdef _MSC_VER
+#define EGE_FORCEINLINE   __forceinline
+#else
+#define EGE_FORCEINLINE   __attribute__((always_inline)) inline
+#endif
+
 #define EGE_GDIPLUS // 使用gdi+函数扩展
 
 #ifdef EGE_GDIPLUS
@@ -565,6 +571,17 @@ std::string w2mb(LPCWSTR wStr);
 void internal_panic(LPCWSTR errmsg);
 
 HBITMAP newbitmap(int width, int height, PDWORD* p_bmp_buf);
+
+// 以 bkg 为背景色，src 为前景色，alpha 为 0~255 的整数进行混合，
+// 混合结果保留 bkg 的 Alpha 通道
+EGE_FORCEINLINE color_t alphablend_inline(color_t bkg, color_t src, unsigned char alpha) {
+	DWORD rb = bkg & 0x00FF00FF;
+	DWORD  g = bkg & 0x0000FF00;
+
+	rb += ((src & 0x00FF00FF) - rb) * alpha >> 8;
+	g  += ((src & 0x0000FF00) -  g) * alpha >> 8;
+	return (rb & 0x00FF00FF) | (g & 0x0000FF00) | (bkg & 0xFF000000);
+}
 
 } // namespace ege
 

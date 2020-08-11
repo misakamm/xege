@@ -467,7 +467,7 @@ typedef enum pattern_type_e {
 	pattern_texture         = 3,
 }pattern_type_e;
 
-typedef unsigned int color_t;
+typedef DWORD color_t;
 
 struct viewporttype {
 	int left;
@@ -705,15 +705,22 @@ void        EGEAPI rgb2hsv(color_t rgb, float *H, float *S, float *V);
 color_t     EGEAPI hsl2rgb(float H, float S, float L);
 color_t     EGEAPI hsv2rgb(float H, float S, float V);
 
+// 按 Alpha 通道混合颜色，将 src 作为背景色，dst 作为前景色进行混合
+color_t     EGEAPI alphablend(color_t dst, color_t src); // 使用 EGEGET_A(src) 作为 Alpha 值
+color_t     EGEAPI alphablend(color_t dst, color_t src, unsigned char alpha);
+
 
 // 基本绘图函数
 
 color_t     EGEAPI getpixel  (int x, int y, PCIMAGE pimg = NULL);               // 获取点的颜色
 void        EGEAPI putpixel  (int x, int y, color_t color, PIMAGE pimg = NULL); // 画点
 color_t     EGEAPI getpixel_f(int x, int y, PCIMAGE pimg = NULL);               // 获取点的颜色
-void        EGEAPI putpixel_f(int x, int y, color_t color, PIMAGE pimg = NULL); // 画点
+void        EGEAPI putpixel_f(int x, int y, color_t color, PIMAGE pimg = NULL); // 绝对坐标画点
 void        EGEAPI putpixels  (int nPoint, int* pPoints, PIMAGE pimg = NULL);   // 批量画点
 void        EGEAPI putpixels_f(int nPoint, int* pPoints, PIMAGE pimg = NULL);   // 批量画点
+
+void        EGEAPI putpixel_withalpha  (int x, int y, color_t color, PIMAGE pimg = NULL); // 带透明度画点
+void        EGEAPI putpixel_withalpha_f(int x, int y, color_t color, PIMAGE pimg = NULL); // 带透明度绝对坐标画点
 
 void EGEAPI moveto(int x, int y, PIMAGE pimg = NULL);                      // 移动当前点(绝对坐标)
 void EGEAPI moverel(int dx, int dy, PIMAGE pimg = NULL);                   // 移动当前点(相对坐标)
