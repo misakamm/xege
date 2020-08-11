@@ -312,6 +312,7 @@ enum music_state_flag {
 };
 
 enum initmode_flag {
+	INIT_DEFAULT        = 0x0,
 	INIT_NOBORDER       = 0x1,
 	INIT_CHILD          = 0x2,
 	INIT_TOPMOST        = 0x4,
@@ -319,12 +320,7 @@ enum initmode_flag {
 	INIT_NOFORCEEXIT    = 0x10,
 	INIT_UNICODE        = 0x20,
 	INIT_WITHLOGO       = 0x100,
-#if defined(_DEBUG) || defined(DEBUG)
-	INIT_DEFAULT    = 0x0,
-#else
-	INIT_DEFAULT    = INIT_WITHLOGO,
-#endif
-	INIT_ANIMATION  = INIT_DEFAULT | INIT_RENDERMANUAL | INIT_NOFORCEEXIT,
+	INIT_ANIMATION      = INIT_DEFAULT | INIT_RENDERMANUAL | INIT_NOFORCEEXIT,
 };
 
 enum rendermode_e {
@@ -554,12 +550,6 @@ struct msg_createwindow {
 };
 
 
-// ªÊÕºª∑æ≥≥ı ºªØ≤Œ ˝
-#define INITGRAPH(x, y) struct _initgraph_{_initgraph_(){initgraph(x, y);}\
-	~_initgraph_(){closegraph();}}_g_initgraph_
-#define INITGRAPH3(x, y, f) struct _initgraph_{_initgraph_(){initgraph(x, y, f);}\
-	~_initgraph_(){closegraph();}}_g_initgraph_
-
 //“Ù¿÷¿‡∫Í
 #define MUSIC_ERROR  0xFFFFFFFF
 
@@ -630,14 +620,26 @@ typedef IMAGE *PIMAGE;
 typedef const IMAGE *PCIMAGE;
 
 // ªÊÕºª∑æ≥œ‡πÿ∫Ø ˝
-
-void EGEAPI initgraph(int Width, int Height, int Flag = INIT_DEFAULT);    // ≥ı ºªØÕº–Œª∑æ≥
-void EGEAPI initgraph(int* gdriver, int* gmode, char* path);   // ºÊ»› Borland C++ 3.1 µƒ÷ÿ‘ÿ£¨÷ª π”√ 640x480x24bit
-void EGEAPI closegraph();                                      // πÿ±’Õº–Œª∑æ≥
-bool EGEAPI is_run();   // ≈–∂œUI «∑ÒÕÀ≥ˆ
+void EGEAPI setinitmode(int mode, int x = CW_USEDEFAULT, int y = CW_USEDEFAULT); //…Ë÷√≥ı ºªØƒ£ Ω£¨mode=0Œ™∆’Õ®£¨1Œ™Œﬁ±ﬂøÚ¥∞ø⁄£¨xy «≥ı º¥∞ø⁄◊¯±Í
+int  EGEAPI getinitmode();
+void EGEAPI initgraph(int Width, int Height, int Flag);        // ≥ı ºªØÕº–Œª∑æ≥
+// Debug ≈‰÷√œ¬ƒ¨»œ≤ªœ‘ æ LOGO£¨Release ƒ£ Ωœ¬ƒ¨»œœ‘ æ°£
+#if !defined(NDEBUG) || defined(DEBUG) || defined(_DEBUG)
+inline void EGEAPI initgraph(int Width, int Height) {
+	initgraph(Width, Height, getinitmode());
+}
+#else
+inline void EGEAPI initgraph(int Width, int Height) {
+	initgraph(Width, Height, getinitmode()|INIT_WITHLOGO);
+}
+#endif
+void EGEAPI initgraph(int* gdriver, int* gmode, const char* path);  // ºÊ»› Borland C++ 3.1 µƒ÷ÿ‘ÿ£¨÷ª π”√ 640x480x24bit
+void EGEAPI closegraph();                                           // πÿ±’Õº–Œª∑æ≥
+bool EGEAPI is_run();                                               // ≈–∂œUI «∑ÒÕÀ≥ˆ
 void EGEAPI setcaption(LPCSTR  caption);
 void EGEAPI setcaption(LPCWSTR caption);
 void EGEAPI seticon(int icon_id);
+int  EGEAPI attachHWND(HWND hWnd);
 
 void EGEAPI movewindow(int x, int y, bool redraw = true);	//“∆∂Ø¥∞ø⁄
 void EGEAPI resizewindow(int width, int height);			//÷ÿ…Ë¥∞ø⁄≥ﬂ¥Á
@@ -688,8 +690,6 @@ void EGEAPI setbkcolor(color_t color, PIMAGE pimg = NULL);      // …Ë÷√µ±«∞ªÊÕº±
 void EGEAPI setbkcolor_f(color_t color, PIMAGE pimg = NULL);    // øÏÀŸ…Ë÷√µ±«∞ªÊÕº±≥æ∞…´£®÷ª…Ë÷√≤ªªÊª≠£©
 void EGEAPI setfontbkcolor(color_t color, PIMAGE pimg = NULL);  // …Ë÷√µ±«∞Œƒ◊÷±≥æ∞…´
 void EGEAPI setbkmode(int iBkMode, PIMAGE pimg = NULL);         // …Ë÷√±≥æ∞ªÏ∫œƒ£ Ω(0=OPAQUE, 1=TRANSPARENT)
-void EGEAPI setinitmode(int mode = INIT_DEFAULT, int x = CW_USEDEFAULT, int y = CW_USEDEFAULT); //…Ë÷√≥ı ºªØƒ£ Ω£¨mode=0Œ™∆’Õ®£¨1Œ™Œﬁ±ﬂøÚ¥∞ø⁄£¨xy «≥ı º¥∞ø⁄◊¯±Í
-int  EGEAPI attachHWND(HWND hWnd);
 
 // ºÊ»›∫Í
 #define RGBtoGRAY   rgb2gray

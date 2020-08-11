@@ -72,7 +72,7 @@ static DWORD    g_windowstyle = WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU|WS_MINIMIZEB
 static DWORD    g_windowexstyle = WS_EX_LEFT|WS_EX_LTRREADING;
 static int      g_windowpos_x = CW_USEDEFAULT;
 static int      g_windowpos_y = CW_USEDEFAULT;
-static int      g_initoption  = -1;
+static int      g_initoption  = INIT_DEFAULT;
 static HWND     g_attach_hwnd = 0;
 static WNDPROC  DefWindowProcFunc = NULL;
 
@@ -1239,7 +1239,7 @@ void initicon(void) {
 }
 
 void
-initgraph(int *gdriver, int *gmode, char *path) {
+initgraph(int *gdriver, int *gmode, const char *path) {
 	struct _graph_setting * pg = &graph_setting;
 
 	pg->exit_flag = 0;
@@ -1257,8 +1257,6 @@ initgraph(int *gdriver, int *gmode, char *path) {
 	}
 
 	//初始化环境
-	if (g_initoption == -1)
-		setinitmode();
 	setmode(*gdriver, *gmode);	
 	init_img_page(pg);
 
@@ -1304,12 +1302,8 @@ initgraph(int *gdriver, int *gmode, char *path) {
 void
 initgraph(int Width, int Height, int Flag) {
 	int g = TRUECOLORSIZE, m = (Width) | (Height<<16);
-
-	if (g_initoption == -1)
-		setinitmode(Flag);
-
-	initgraph(&g, &m, (char*)"");
-	//using flag;
+	setinitmode(Flag);
+	initgraph(&g, &m, "");
 }
 
 void
@@ -1410,6 +1404,10 @@ setinitmode(int mode, int x, int y) {
 	}
 	g_windowpos_x = x;
 	g_windowpos_y = y;
+}
+
+int getinitmode() {
+	return g_initoption;
 }
 
 // 获取当前版本 ####
