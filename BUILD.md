@@ -145,7 +145,8 @@ $ cmake .. -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release
 
 使用 `cmake -G` 命令查看支持的 Visual Studio 版本，选择自己安装的 VS 版本，
 如“Visual Studio 14 2015”作为 `-G` 的参数传递给 CMake。可用 `-A` 参数指定
-目标平台，默认为 32 位 x86 平台 `Win32`，可选的参数有 `x64`，`ARM`，`ARM64`。
+目标平台，VS2017 及更早的 Visual Studio 默认为 32 位 x86 平台 `Win32`，
+VS2019 则与所在平台一致。可选的参数有 `Win32`，`x64`，`ARM`，`ARM64`。
 
 因此编译 32 位 EGE 库需要执行：
 ```sh
