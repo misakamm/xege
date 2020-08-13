@@ -1410,7 +1410,7 @@ int getinitmode() {
 	return g_initoption;
 }
 
-// 获取当前版本 ####
+// 获取当前版本
 int getGraphicsVer() {
 	return EGE_VERSION_INT;
 }
