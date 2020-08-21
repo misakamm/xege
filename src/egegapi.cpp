@@ -19,8 +19,9 @@
 
 #include "ege_head.h"
 
-#include <math.h>
-#include <stdarg.h>
+#include <cmath>
+#include <cstdarg>
+#include <cstdio>
 
 #include "lpng/zlib.h"
 #include "ege/sys_edit.h"
