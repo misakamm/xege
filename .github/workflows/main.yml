@@ -1,0 +1,22 @@
+name: 测试构建项目
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  TESTING:
+    runs-on: windows-2019
+    steps:
+      - name: 获取源码
+        uses: actions/Checkout@v2
+
+      - name: 尝试构建 MSVC 2019 X64 Release
+        run: |
+          mkdir build
+          cd build
+          cmake .. -G "Visual Studio 16 2019" -A x64
+          cmake --build . -j 
+
