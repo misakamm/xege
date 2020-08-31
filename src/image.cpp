@@ -317,12 +317,15 @@ IMAGE::getimage(LPCSTR filename, int zoomWidth, int zoomHeight) {
 
 inline void getimage_from_IPicture(PIMAGE self, IPicture* pPicture) {
 	long  lWidth, lHeight, lWidthPixels, lHeightPixels;
-	PIMAGE img = CONVERT_IMAGE_CONST(0);
-	pPicture->get_Width (&lWidth );
-	lWidthPixels  = MulDiv(lWidth,  GetDeviceCaps(img->m_hDC, LOGPIXELSX), 2540);
-	pPicture->get_Height(&lHeight);
-	lHeightPixels = MulDiv(lHeight, GetDeviceCaps(img->m_hDC, LOGPIXELSY), 2540);
-	CONVERT_IMAGE_END;
+	{
+		::HDC ScreenDC = ::GetDC(NULL);
+		pPicture->get_Width (&lWidth);
+		pPicture->get_Height(&lHeight);
+		// convert Himetric units to pixels
+		lWidthPixels  = ::MulDiv(lWidth,  ::GetDeviceCaps(ScreenDC, LOGPIXELSX), 2540);
+		lHeightPixels = ::MulDiv(lHeight, ::GetDeviceCaps(ScreenDC, LOGPIXELSY), 2540);
+		::ReleaseDC(NULL, ScreenDC);
+	}
 
 	self->resize(lWidthPixels, lHeightPixels);
 	{
