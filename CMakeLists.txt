@@ -30,16 +30,23 @@ else ()
   endif ()
 endif ()
 
-add_executable(graphicstest)
+# 增加链接 ege 的可执行目标
+macro(ege_add_executable name source)
+  add_executable(${name} ${source})
+  target_link_libraries(${name} xege)
+  if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
+    target_link_options(${name}
+      PRIVATE -mwindows)
+  endif ()
+endmacro()
+
+# 编译测试
+ege_add_executable(graphicstest src/graphicstest/maintest.cpp)
 
 add_subdirectory(src)
 
+add_subdirectory(demo)
+
 if (EXISTS ${PROJECT_SOURCE_DIR}/temp/CMakeLists.txt)
   add_subdirectory(temp)
-endif ()
-
-option(BUILD_DEMOS "Build demos" OFF)
-
-if (BUILD_DEMOS)
-  add_subdirectory(demo)
 endif ()

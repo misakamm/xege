@@ -45,6 +45,11 @@ if (MSVC)
 endif (MSVC)
 
 # Just a hint
+if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
+  target_link_libraries(xege
+    INTERFACE stdc++
+    )
+endif ()
 target_link_libraries(xege
   INTERFACE gdiplus
   INTERFACE gdi32
@@ -57,18 +62,3 @@ target_link_libraries(xege
 target_include_directories(xege
   INTERFACE .
   )
-
-# compile test
-target_sources(graphicstest
-  PRIVATE graphicstest/maintest.cpp
-  )
-
-target_link_libraries(graphicstest xege)
-if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
-  target_link_options(graphicstest
-    PRIVATE -mwindows
-    )
-  target_link_libraries(xege
-    INTERFACE stdc++
-    )
-endif ()
