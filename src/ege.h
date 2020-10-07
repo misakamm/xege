@@ -999,6 +999,34 @@ int EGEAPI putimage_rotatezoom(
 	int smooth = 0
 );
 
+    int EGEAPI putimage_rotatetransparent(
+            PIMAGE imgdest,/* 目的图像, NULL表示窗口 */
+            PIMAGE imgsrc,/* 源图像 */
+            int xCenterDest,/* 旋转中心在目的图像的x坐标 */
+            int yCenterDest,/* 旋转中心在目的图像的y坐标 */
+            int xCenterSrc, /* 旋转中心在源图像的x坐标 */
+            int yCenterSrc,/* 旋转中心在源图像的y坐标 */
+            color_t crTransparent, /* 源图像透明背景色 */
+            float radian, /* 逆时针旋转角度(弧度) */
+            float zoom=1.0 /* 缩放因子 */
+    ); /* 绘制旋转&缩放后图像(背景透明) */
+
+int EGEAPI putimage_rotatetransparent(
+        PIMAGE imgdest,/* 目的图像, NULL表示窗口 */
+        PIMAGE imgsrc,/* 源图像 */
+        int xCenterDest,/* 旋转中心在目的图像的x坐标 */
+        int yCenterDest,/* 旋转中心在目的图像的y坐标 */
+        int xOriginSrc, /* 源图像复制区域左上角x坐标 */
+        int yOriginSrc, /* 源图像复制区域左上角y坐标 */
+        int widthSrc, /* 源图像复制区域宽度 */
+        int heightSrc, /* 源图像复制区域高度 */
+        int xCenterSrc, /* 旋转中心在源图像的x坐标 */
+        int yCenterSrc,/* 旋转中心在源图像的y坐标 */
+        color_t crTransparent, /* 源图像透明背景色 */
+        float radian, /* 逆时针旋转角度(弧度) */
+        float zoom=1.0 /* 缩放因子 */
+); /* 绘制旋转&缩放后图像(背景透明) */
+
 
 // 其它函数
 
