@@ -1000,33 +1000,32 @@ int EGEAPI putimage_rotatezoom(
 );
 
 int EGEAPI putimage_rotatetransparent(
-    PIMAGE imgdest,/* 目的图像, NULL表示窗口 */
-    PIMAGE imgsrc,/* 源图像 */
-    int xCenterDest,/* 旋转中心在目的图像的x坐标 */
-    int yCenterDest,/* 旋转中心在目的图像的y坐标 */
-    int xCenterSrc, /* 旋转中心在源图像的x坐标 */
-    int yCenterSrc,/* 旋转中心在源图像的y坐标 */
-    color_t crTransparent, /* 源图像透明背景色 */
-    float radian, /* 逆时针旋转角度(弧度) */
-    float zoom=1.0 /* 缩放因子 */
-); /* 绘制旋转&缩放后图像(背景透明) */
+    PIMAGE imgdest,/* handle to dest, NULL means the SCREEN  */
+    PIMAGE imgsrc,/* handle to source */
+    int xCenterDest,/* x-coord of rotation center in dest */
+    int yCenterDest,/* y-coord of rotation center in dest */
+    int xCenterSrc, /* x-coord of rotation center in source */
+    int yCenterSrc,/* y-coord of rotation center in source */
+    color_t crTransparent, /* color to make transparent */
+    float radian, /* rotation angle (clockwise, in radian) */
+    float zoom=1.0 /* zoom factor */
+); 
 
 int EGEAPI putimage_rotatetransparent(
-        PIMAGE imgdest,/* 目的图像, NULL表示窗口 */
-        PIMAGE imgsrc,/* 源图像 */
-        int xCenterDest,/* 旋转中心在目的图像的x坐标 */
-        int yCenterDest,/* 旋转中心在目的图像的y坐标 */
-        int xOriginSrc, /* 源图像复制区域左上角x坐标 */
-        int yOriginSrc, /* 源图像复制区域左上角y坐标 */
-        int widthSrc, /* 源图像复制区域宽度 */
-        int heightSrc, /* 源图像复制区域高度 */
-        int xCenterSrc, /* 旋转中心在源图像的x坐标 */
-        int yCenterSrc,/* 旋转中心在源图像的y坐标 */
-        color_t crTransparent, /* 源图像透明背景色 */
-        float radian, /* 逆时针旋转角度(弧度) */
-        float zoom=1.0 /* 缩放因子 */
-); /* 绘制旋转&缩放后图像(背景透明) */
-
+        PIMAGE imgdest,/* handle to dest, NULL means the SCREEN */
+        PIMAGE imgsrc,/* handle to source */
+        int xCenterDest,/* x-coord of rotation center in dest */
+        int yCenterDest,/* y-coord of rotation center in dest */
+        int xOriginSrc, /* x-coord of source upper-left corner */
+        int yOriginSrc, /* y-coord of source upper-left corner */
+        int widthSrc, /* width of source rectangle */
+        int heightSrc, /* height of source rectangle */
+        int xCenterSrc, /* x-coord of rotation center in source */
+        int yCenterSrc,/* y-coord of rotation center in source */
+        color_t crTransparent, /* color to make transparent */
+        float radian, /* rotation angle (clockwise, in radian) */
+        float zoom=1.0 /* zoom factor */
+); 
 
 // 其它函数
 
