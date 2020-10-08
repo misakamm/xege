@@ -2574,40 +2574,6 @@ putimage_rotatezoom(
 	return grOk;
 }
 
-HBITMAP create_mask_bitmap(HDC hDC, int nX, int nY, int nWidth, int nHeight,
-		  UINT crTransparent)
-{
-
-	// create monochrome mask bitmap, memory DC
-	HDC hMemDC = CreateCompatibleDC(hDC);
-	HBITMAP hMask  = CreateCompatibleBitmap(hMemDC,nWidth, nHeight);
-	HBITMAP hOld   = (HBITMAP) SelectObject(hMemDC, hMask);
-	COLORREF transColor=RGBTOBGR(crTransparent);
-
-	/*  don't work for 32-bit bitmap with alpha channel
-	COLORREF oldBk = SetBkColor(hDC, transColor);    // map to 1, white
-	BitBlt(hMemDC,0,0,m_nMaskWidth,m_nMaskHeight, hDC, nX, nY, NOTSRCCOPY);
-	SetBkColor(hDC, oldBk);
-	 */
-	COLORREF notTransparent=RGBTOBGR(WHITE);
-	COLORREF transparent=RGBTOBGR(BLACK);
-	for (int x=0;x<nWidth;x++) {
-		for (int y=0;y<nHeight;y++) {
-			COLORREF c=GetPixel(hDC,nX+x,nY+y);
-			if (c==transColor) {
-				SetPixel(hMemDC,x,y,transparent);
-			} else {
-				SetPixel(hMemDC,x,y,notTransparent);
-			}
-		}
-	}
-
-	SelectObject(hMemDC,hOld);
-	DeleteDC(hMemDC);
-
-	return hMask;
-}
-
 int putimage_rotatetransparent(
 		PIMAGE imgdest,
 		PIMAGE imgsrc,
@@ -2625,23 +2591,38 @@ int putimage_rotatetransparent(
 	)
 {
 	const PIMAGE img = CONVERT_IMAGE(imgdest);
-	POINT points[3];
-	/* upper-left corner of destination */
-	points[0].x=((xOriginSrc-xCenterSrc)*cos(radian)-(yOriginSrc-yCenterSrc)*sin(radian))*zoom+xCenterDest;
-	points[0].y=((xOriginSrc-xCenterSrc)*sin(radian)+(yOriginSrc-yCenterSrc)*cos(radian))*zoom+yCenterDest;
-	/* upper-right corner of destination */
-	points[1].x=((xOriginSrc+widthSrc-xCenterSrc)*cos(radian)-(yOriginSrc-yCenterSrc)*sin(radian))*zoom+xCenterDest;
-	points[1].y=((xOriginSrc+widthSrc-xCenterSrc)*sin(radian)+(yOriginSrc-yCenterSrc)*cos(radian))*zoom+yCenterDest;
-	/* lower-left corner of destination */
-	points[2].x=((xOriginSrc-xCenterSrc)*cos(radian)-(yOriginSrc+heightSrc-yCenterSrc)*sin(radian))*zoom+xCenterDest;
-	points[2].y=((xOriginSrc-xCenterSrc)*sin(radian)+(yOriginSrc+heightSrc-yCenterSrc)*cos(radian))*zoom+yCenterDest;
 
-//		HDC hMemDC=create_mask_bitmap(imgsrc->m_hDC,xOriginSrc,yOriginSrc,widthSrc,heightSrc,crTransparent);
-//		PlgBlt(img->m_hDC,points,hMemDC,xOriginSrc,yOriginSrc,widthSrc,heightSrc,0,0,0);
+	int zoomed_width=widthSrc*zoom;
+	int zoomed_height=heightSrc*zoom;
+	int zoomed_center_x = (xCenterSrc-xOriginSrc)*zoom;
+	int zoomed_center_y = (yCenterSrc-yOriginSrc)*zoom;
+	/* zoom */
+	PIMAGE zoomed_img = newimage(zoomed_width,zoomed_height);
+	putimage(zoomed_img,0,0,zoomed_width,zoomed_height,
+		imgsrc,xOriginSrc,yOriginSrc,widthSrc,heightSrc,SRCCOPY);
+	
+	/* rotation */
 
-	HBITMAP hMask=create_mask_bitmap(imgsrc->m_hDC,xOriginSrc,yOriginSrc,widthSrc,heightSrc,crTransparent);
-	BOOL result=PlgBlt(img->m_hDC,points,imgsrc->m_hDC,xOriginSrc,yOriginSrc,widthSrc,heightSrc,hMask,0,0);
-	DeleteObject(hMask);
+	for (int x=0;x<zoomed_width;x++) {
+		for (int y=0;y<zoomed_height;y++) {
+			color_t c = getpixel(x,y,zoomed_img);
+			double src_x = ((x-zoomed_center_x)*cos(radian)-(y-zoomed_center_y)*sin(radian))+xCenterDest;
+			double src_y=((x-zoomed_center_x)*sin(radian)+(y-zoomed_center_y)*cos(radian))+yCenterDest;
+			if (c !=crTransparent) {
+				/*  
+				the rotated pixel may span(partly) more than one pixels
+				see:
+				https://stackoverflow.com/questions/36201381/how-to-rotate-image-canvas-pixel-manipulation
+    			 */				
+				putpixel(src_x,src_y,c,img);
+				putpixel(src_x+0.5,src_y,c,img);
+				putpixel(src_x,src_y+0.5,c,img);
+				putpixel(src_x+0.5,src_y+0.5,c,img);
+			}
+		}
+	}
+	
+	delimage(zoomed_img);
 	return grOk;
 };
 
