@@ -721,6 +721,8 @@ void        EGEAPI putpixels_f(int nPoint, int* pPoints, PIMAGE pimg = NULL);   
 
 void        EGEAPI putpixel_withalpha  (int x, int y, color_t color, PIMAGE pimg = NULL); // 带透明度画点
 void        EGEAPI putpixel_withalpha_f(int x, int y, color_t color, PIMAGE pimg = NULL); // 带透明度绝对坐标画点
+void        EGEAPI putpixel_savealpha  (int x, int y, color_t color, PIMAGE pimg = NULL); // 设置像素点的颜色（同时保留原有alpha值）
+void        EGEAPI putpixel_savealpha_f(int x, int y, color_t color, PIMAGE pimg = NULL); // 设置像素点的颜色（同时保留原有alpha值，使用绝对坐标）
 
 void EGEAPI moveto(int x, int y, PIMAGE pimg = NULL);                      // 移动当前点(绝对坐标)
 void EGEAPI moverel(int dx, int dy, PIMAGE pimg = NULL);                   // 移动当前点(相对坐标)
@@ -1000,31 +1002,31 @@ int EGEAPI putimage_rotatezoom(
 );
 
 int EGEAPI putimage_rotatetransparent(
-    PIMAGE imgdest,/* handle to dest, NULL means the SCREEN  */
-    PIMAGE imgsrc,/* handle to source */
-    int xCenterDest,/* x-coord of rotation center in dest */
-    int yCenterDest,/* y-coord of rotation center in dest */
-    int xCenterSrc, /* x-coord of rotation center in source */
-    int yCenterSrc,/* y-coord of rotation center in source */
-    color_t crTransparent, /* color to make transparent */
-    float radian, /* rotation angle (clockwise, in radian) */
-    float zoom=1.0 /* zoom factor */
+	PIMAGE imgdest,/* handle to dest, NULL means the SCREEN  */
+	PCIMAGE imgsrc,/* handle to source */
+	int xCenterDest,/* x-coord of rotation center in dest */
+	int yCenterDest,/* y-coord of rotation center in dest */
+	int xCenterSrc, /* x-coord of rotation center in source */
+	int yCenterSrc,/* y-coord of rotation center in source */
+	color_t crTransparent, /* color to make transparent */
+	float radian, /* rotation angle (clockwise, in radian) */
+	float zoom=1.0 /* zoom factor */
 ); 
 
 int EGEAPI putimage_rotatetransparent(
-    PIMAGE imgdest,/* handle to dest, NULL means the SCREEN */
-    PIMAGE imgsrc,/* handle to source */
-    int xCenterDest,/* x-coord of rotation center in dest */
-    int yCenterDest,/* y-coord of rotation center in dest */
-    int xOriginSrc, /* x-coord of source upper-left corner */
-    int yOriginSrc, /* y-coord of source upper-left corner */
-    int widthSrc, /* width of source rectangle */
-    int heightSrc, /* height of source rectangle */
-    int xCenterSrc, /* x-coord of rotation center in source */
-    int yCenterSrc,/* y-coord of rotation center in source */
-    color_t crTransparent, /* color to make transparent */
-    float radian, /* rotation angle (clockwise, in radian) */
-    float zoom=1.0 /* zoom factor */
+	PIMAGE imgdest,/* handle to dest, NULL means the SCREEN */
+	PCIMAGE imgsrc,/* handle to source */
+	int xCenterDest,/* x-coord of rotation center in dest */
+	int yCenterDest,/* y-coord of rotation center in dest */
+	int xOriginSrc, /* x-coord of source upper-left corner */
+	int yOriginSrc, /* y-coord of source upper-left corner */
+	int widthSrc, /* width of source rectangle */
+	int heightSrc, /* height of source rectangle */
+	int xCenterSrc, /* x-coord of rotation center in source */
+	int yCenterSrc,/* y-coord of rotation center in source */
+	color_t crTransparent, /* color to make transparent */
+	float radian, /* rotation angle (clockwise, in radian) */
+	float zoom=1.0 /* zoom factor */
 ); 
 
 // 其它函数

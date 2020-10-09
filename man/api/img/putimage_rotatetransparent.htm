@@ -1,6 +1,6 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>putimage_transparent</title>
+    <title>putimage_rotatetransparent</title>
 </head>
 <body>
 
@@ -12,7 +12,7 @@
 <font size="5" color="#0000FF"><strong>声明：</strong></font>
 <pre><font color=#0000FF>int </font><font color=#008080>putimage_rotatetransparent</font>(
     <font color=#800080>PIMAGE </font>imgdest,         <font color=#008000>  // 目的图像指针, NULL表示窗口</font>
-    <font color=#800080>PIMAGE </font>imgsrc,          <font color=#008000>  // 源图像指针</font>
+    <font color=#800080>PCIMAGE </font>imgsrc,          <font color=#008000>  // 源图像指针</font>
     <font color=#0000FF>int </font>xCenterDest,       <font color=#008000>  // 旋转中心在目的图像的x坐标 </font>
     <font color=#0000FF>int </font>yCenterDest,       <font color=#008000>  // 旋转中心在目的图像的y坐标</font>
     <font color=#0000FF>int </font>xCenterSrc,       <font color=#008000>  // 源图像旋转中心的x坐标 </font>
@@ -26,7 +26,7 @@
 
 <pre><font color=#0000FF>int </font><font color=#008080>putimage_rotatetransparent</font>(
     <font color=#800080>PIMAGE </font>imgdest,         <font color=#008000>  // 目的图像指针, NULL表示窗口</font>
-    <font color=#800080>PIMAGE </font>imgsrc,          <font color=#008000>  // 源图像指针</font>
+    <font color=#800080>PCIMAGE </font>imgsrc,          <font color=#008000>  // 源图像指针</font>
     <font color=#0000FF>int </font>xCenterDest,       <font color=#008000>  // 旋转中心在目的图像的x坐标 </font>
     <font color=#0000FF>int </font>yCenterDest,       <font color=#008000>  // 旋转中心在目的图像的y坐标</font>
     <font color=#0000FF>int </font>xOriginSrc,       <font color=#008000>  // 源图像复制区域左上角x坐标 </font>
