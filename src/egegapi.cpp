@@ -475,6 +475,26 @@ void putpixel_withalpha_f(int x, int y, color_t color, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
+void putpixel_savealpha(int x, int y, color_t color, PIMAGE pimg) {
+	PIMAGE img = CONVERT_IMAGE(pimg);
+	x += img->m_vpt.left;
+	y += img->m_vpt.top;
+	if (in_rect(x, y, img->m_vpt.right, img->m_vpt.bottom)) {
+		color_t& dst_color = img->m_pBuffer[y * img->m_width + x];
+		dst_color = EGECOLORA(color, EGEGET_A(dst_color));
+	}
+	CONVERT_IMAGE_END;
+}
+
+void putpixel_savealpha_f(int x, int y, color_t color, PIMAGE pimg) {
+	PIMAGE img = CONVERT_IMAGE_F(pimg);
+	if (in_rect(x, y, img->m_width, img->m_height)) {
+		color_t& dst_color = img->m_pBuffer[y * img->m_width + x];
+		dst_color = EGECOLORA(color, EGEGET_A(dst_color));
+	}
+	CONVERT_IMAGE_END;
+}
+
 void
 moveto(int x, int y, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);

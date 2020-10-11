@@ -2574,6 +2574,74 @@ putimage_rotatezoom(
 	return grOk;
 }
 
+int putimage_rotatetransparent(
+	PIMAGE imgdest,
+	PCIMAGE imgsrc,
+	int xCenterDest,
+	int yCenterDest,
+	int xOriginSrc,
+	int yOriginSrc,
+	int widthSrc,
+	int heightSrc,
+	int xCenterSrc,
+	int yCenterSrc,
+	color_t crTransparent,
+	float radian,
+	float zoom
+	)
+{
+	const PIMAGE img = CONVERT_IMAGE(imgdest);
+	int zoomed_width=widthSrc*zoom;
+	int zoomed_height=heightSrc*zoom;
+	int zoomed_center_x = (xCenterSrc-xOriginSrc)*zoom;
+	int zoomed_center_y = (yCenterSrc-yOriginSrc)*zoom;
+	/* zoom */
+	PIMAGE zoomed_img = newimage(zoomed_width,zoomed_height);
+	putimage(zoomed_img,0,0,zoomed_width,zoomed_height,
+		imgsrc,xOriginSrc,yOriginSrc,widthSrc,heightSrc,SRCCOPY);
+	/* rotation */
+	for (int x=0;x<zoomed_width;x++) {
+		for (int y=0;y<zoomed_height;y++) {
+			/* zoomed_img is newly created and have no transform/viewport, so we can use buffer directly */
+			color_t color = zoomed_img->m_pBuffer[y * zoomed_img->m_width + x];
+			double src_x = ((x-zoomed_center_x)*cos(radian)-(y-zoomed_center_y)*sin(radian))+xCenterDest;
+			double src_y=((x-zoomed_center_x)*sin(radian)+(y-zoomed_center_y)*cos(radian))+yCenterDest;
+			if (color !=crTransparent) {
+				/*  
+				the rotated pixel may span(partly) more than one pixels
+				see:
+				https://stackoverflow.com/questions/36201381/how-to-rotate-image-canvas-pixel-manipulation
+				*/		
+				putpixel_savealpha(src_x,src_y,color,img);
+				putpixel_savealpha(src_x+0.5,src_y,color,img);
+				putpixel_savealpha(src_x,src_y+0.5,color,img);
+				putpixel_savealpha(src_x+0.5,src_y+0.5,color,img);
+			}
+		}
+	}
+	delimage(zoomed_img);
+	CONVERT_IMAGE_END;
+	return grOk;
+};
+
+int putimage_rotatetransparent(
+	PIMAGE imgdest,
+	PCIMAGE imgsrc,
+	int xCenterDest,
+	int yCenterDest,
+	int xCenterSrc,
+	int yCenterSrc,
+	color_t crTransparent,
+	float radian,
+	float zoom
+	) 
+{
+	return putimage_rotatetransparent(imgdest,imgsrc,
+		xCenterDest,yCenterDest,0,0,
+		imgsrc->getwidth(),imgsrc->getheight(),
+		xCenterSrc,yCenterSrc,
+		crTransparent,radian,zoom);
+}
 
 
 
