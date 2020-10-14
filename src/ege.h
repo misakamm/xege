@@ -81,7 +81,13 @@
 
 #endif
 
-#include "windows.h"
+#if defined(_EGE_FOR_AUTO_CODE_COMPLETETION_ONLY_)
+#include <windef.h>
+#include <winuser.h>
+#include <wingdi.h>
+#else
+#include <windows.h>	
+#endif
 
 #if defined(_MSC_VER) && _MSC_VER <= 1200 && !defined(SetWindowLongPtr)
 #	define SetWindowLongPtrW   SetWindowLongW
