@@ -260,7 +260,7 @@ IMAGE::copyimage(PCIMAGE pSrcImg) {
 	CONVERT_IMAGE_END;
 }
 
-void
+int
 IMAGE::getimage(PCIMAGE pSrcImg, int srcX, int srcY, int srcWidth, int srcHeight) {
 	inittest(L"IMAGE::getimage");
 	PCIMAGE img = CONVERT_IMAGE_CONST(pSrcImg);
@@ -270,7 +270,7 @@ IMAGE::getimage(PCIMAGE pSrcImg, int srcX, int srcY, int srcWidth, int srcHeight
 	return grOk;
 }
 
-void
+int
 IMAGE::getimage(int srcX, int srcY, int srcWidth, int srcHeight) {
 	PIMAGE img = CONVERT_IMAGE_CONST(0);
 	this->getimage(img, srcX, srcY, srcWidth, srcHeight);
@@ -303,7 +303,6 @@ IMAGE::putimage(int dstX, int dstY, DWORD dwRop) const {
 	PIMAGE img = CONVERT_IMAGE(0);
 	this->putimage(img, dstX, dstY, dwRop);
 	CONVERT_IMAGE_END;
-	return grOk;
 }
 
 int
@@ -2743,16 +2742,16 @@ resize(PIMAGE pDstImg, int width, int height) {
 			internal_panic(L"Fatal Error: pass NULL to `ege::getimage`");   \
 	} while (0)
 
-void
+int
 getimage(PIMAGE pDstImg, int srcX, int srcY, int srcWidth, int srcHeight) {
 	EGE_GETIMAGE_CHK_NULL(pDstImg);
-	pDstImg->getimage(srcX, srcY, srcWidth, srcHeight);
+	return pDstImg->getimage(srcX, srcY, srcWidth, srcHeight);
 }
 
-void
+int
 getimage(PIMAGE pDstImg, PCIMAGE pSrcImg, int srcX, int srcY, int srcWidth, int srcHeight) {
 	EGE_GETIMAGE_CHK_NULL(pDstImg);
-	pDstImg->getimage(pSrcImg, srcX, srcY, srcWidth, srcHeight);
+	return pDstImg->getimage(pSrcImg, srcX, srcY, srcWidth, srcHeight);
 }
 
 void
