@@ -105,7 +105,10 @@
 <font size="5" color="#0000FF"><strong>示例：</strong></font>
 以下局部代码读取 c:\test.jpg 绘制在屏幕左上角：
 <pre><font color=#800080>PIMAGE </font>img = <font color=#008080>newimage</font>();
-<font color=#008080>getimage</font>(img, <font color=#FF00FF>"c:\\test.jpg"</font>);
+if (<font color=#008080>getimage</font>(img, <font color=#FF00FF>"c:\\test.jpg"</font>)!= grOk) {
+    <font color=#008000>//读取图片文件失败</font>
+    <font color=#008080>exit</font>(-1);
+}
 <font color=#008080>putimage</font>(0, 0, img);
 <font color=#008080>delimage</font>(img);
 以下局部代码将屏幕 (0,0) 起始的长宽各 100 像素的图像拷贝至 (200,200) 位置：
