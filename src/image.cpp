@@ -267,6 +267,7 @@ IMAGE::getimage(PCIMAGE pSrcImg, int srcX, int srcY, int srcWidth, int srcHeight
 	this->resize(srcWidth, srcHeight);
 	BitBlt(this->m_hDC, 0, 0, srcWidth, srcHeight, img->m_hDC, srcX, srcY, SRCCOPY);
 	CONVERT_IMAGE_END;
+	return grOk;
 }
 
 void
@@ -274,6 +275,7 @@ IMAGE::getimage(int srcX, int srcY, int srcWidth, int srcHeight) {
 	PIMAGE img = CONVERT_IMAGE_CONST(0);
 	this->getimage(img, srcX, srcY, srcWidth, srcHeight);
 	CONVERT_IMAGE_END;
+	return grOk;
 }
 
 void
@@ -301,6 +303,7 @@ IMAGE::putimage(int dstX, int dstY, DWORD dwRop) const {
 	PIMAGE img = CONVERT_IMAGE(0);
 	this->putimage(img, dstX, dstY, dwRop);
 	CONVERT_IMAGE_END;
+	return grOk;
 }
 
 int
@@ -308,7 +311,8 @@ IMAGE::getimage(LPCSTR filename, int zoomWidth, int zoomHeight) {
 	inittest(L"IMAGE::getimage");
 	{
 		int ret = getimage_pngfile(this, filename);
-		if (ret == 0) return 0;
+		//grIOerror means it's not a png file
+		if (ret != grIOerror) return ret;
 	}
 
 	const std::wstring& wszPath = mb2w(filename);
@@ -351,7 +355,8 @@ IMAGE::getimage(LPCWSTR filename, int zoomWidth, int zoomHeight) {
 	inittest(L"IMAGE::getimage");
 	{
 		int ret = getimage_pngfile(this, filename);
-		if (ret == 0) return 0;
+		//grIOerror means it's not a png file
+		if (ret == grIOerror) return ret;
 	}
 
 	struct IPicture *pPicture;
