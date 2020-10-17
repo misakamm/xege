@@ -81,7 +81,7 @@
 
 #endif
 
-#if defined(_EGE_FOR_AUTO_CODE_COMPLETETION_ONLY_)
+#if defined(EGE_FOR_AUTO_CODE_COMPLETETION_ONLY)
 #include <windef.h>
 #include <winuser.h>
 #include <wingdi.h>
