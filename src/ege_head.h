@@ -290,8 +290,8 @@ public:
 
 	int  resize(int width, int height);
 	void copyimage(PCIMAGE pSrcImg);
-	void getimage(int srcX, int srcY, int srcWidth, int srcHeight);
-	void getimage(PCIMAGE pSrcImg, int srcX, int srcY, int srcWidth, int srcHeight);
+	int getimage(int srcX, int srcY, int srcWidth, int srcHeight);
+	int getimage(PCIMAGE pSrcImg, int srcX, int srcY, int srcWidth, int srcHeight);
 	int  getimage(LPCSTR pImgFile, int zoomWidth = 0, int zoomHeight = 0);
 	int  getimage(LPCWSTR pImgFile, int zoomWidth = 0, int zoomHeight = 0);
 	int  getimage(LPCSTR pResType, LPCSTR pResName, int zoomWidth = 0, int zoomHeight = 0);

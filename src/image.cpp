@@ -260,20 +260,22 @@ IMAGE::copyimage(PCIMAGE pSrcImg) {
 	CONVERT_IMAGE_END;
 }
 
-void
+int
 IMAGE::getimage(PCIMAGE pSrcImg, int srcX, int srcY, int srcWidth, int srcHeight) {
 	inittest(L"IMAGE::getimage");
 	PCIMAGE img = CONVERT_IMAGE_CONST(pSrcImg);
 	this->resize(srcWidth, srcHeight);
 	BitBlt(this->m_hDC, 0, 0, srcWidth, srcHeight, img->m_hDC, srcX, srcY, SRCCOPY);
 	CONVERT_IMAGE_END;
+	return grOk;
 }
 
-void
+int
 IMAGE::getimage(int srcX, int srcY, int srcWidth, int srcHeight) {
 	PIMAGE img = CONVERT_IMAGE_CONST(0);
 	this->getimage(img, srcX, srcY, srcWidth, srcHeight);
 	CONVERT_IMAGE_END;
+	return grOk;
 }
 
 void
@@ -308,7 +310,8 @@ IMAGE::getimage(LPCSTR filename, int zoomWidth, int zoomHeight) {
 	inittest(L"IMAGE::getimage");
 	{
 		int ret = getimage_pngfile(this, filename);
-		if (ret == 0) return 0;
+		//grIOerror means it's not a png file
+		if (ret != grIOerror) return ret;
 	}
 
 	const std::wstring& wszPath = mb2w(filename);
@@ -351,7 +354,8 @@ IMAGE::getimage(LPCWSTR filename, int zoomWidth, int zoomHeight) {
 	inittest(L"IMAGE::getimage");
 	{
 		int ret = getimage_pngfile(this, filename);
-		if (ret == 0) return 0;
+		//grIOerror means it's not a png file
+		if (ret == grIOerror) return ret;
 	}
 
 	struct IPicture *pPicture;
@@ -2738,16 +2742,16 @@ resize(PIMAGE pDstImg, int width, int height) {
 			internal_panic(L"Fatal Error: pass NULL to `ege::getimage`");   \
 	} while (0)
 
-void
+int
 getimage(PIMAGE pDstImg, int srcX, int srcY, int srcWidth, int srcHeight) {
 	EGE_GETIMAGE_CHK_NULL(pDstImg);
-	pDstImg->getimage(srcX, srcY, srcWidth, srcHeight);
+	return pDstImg->getimage(srcX, srcY, srcWidth, srcHeight);
 }
 
-void
+int
 getimage(PIMAGE pDstImg, PCIMAGE pSrcImg, int srcX, int srcY, int srcWidth, int srcHeight) {
 	EGE_GETIMAGE_CHK_NULL(pDstImg);
-	pDstImg->getimage(pSrcImg, srcX, srcY, srcWidth, srcHeight);
+	return pDstImg->getimage(pSrcImg, srcX, srcY, srcWidth, srcHeight);
 }
 
 void
