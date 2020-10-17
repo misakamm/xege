@@ -2006,12 +2006,29 @@ clearviewport(PIMAGE pimg) {
 
 #ifdef EGE_GDIPLUS
 
+static Gdiplus::DashStyle linestyle_to_dashstyle(int linestyle) {
+	switch(linestyle){
+		case SOLID_LINE:
+			return Gdiplus::DashStyleSolid;
+		case PS_DASH:
+			return Gdiplus::DashStyleDash;
+		case PS_DOT:
+			return Gdiplus::DashStyleDot;
+		case PS_DASHDOT:
+			return Gdiplus::DashStyleDashDot;
+	}
+	return Gdiplus::DashStyleSolid;
+}
+
 void
 ege_line(float x1, float y1, float x2, float y2, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
+		if (img->m_linestyle.linestyle == PS_NULL) 
+			return;
 		Gdiplus::Graphics graphics(img->getdc());
 		Gdiplus::Pen pen(img->m_color, img->m_linewidth);
+		pen.SetDashStyle(linestyle_to_dashstyle(img->m_linestyle.linestyle));
 		graphics.SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
 		if (img->m_aa) {
 			graphics.SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
@@ -2025,8 +2042,11 @@ void
 ege_drawpoly(int numpoints, ege_point* polypoints, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
+		if (img->m_linestyle.linestyle == PS_NULL) 
+			return;
 		Gdiplus::Graphics graphics(img->getdc());
 		Gdiplus::Pen pen(img->m_color, img->m_linewidth);
+		pen.SetDashStyle(linestyle_to_dashstyle(img->m_linestyle.linestyle));
 		graphics.SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
 		if (img->m_aa) {
 			graphics.SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
@@ -2040,8 +2060,11 @@ void
 ege_drawcurve(int numpoints, ege_point* polypoints, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
+		if (img->m_linestyle.linestyle == PS_NULL) 
+			return;
 		Gdiplus::Graphics graphics(img->getdc());
 		Gdiplus::Pen pen(img->m_color, img->m_linewidth);
+		pen.SetDashStyle(linestyle_to_dashstyle(img->m_linestyle.linestyle));		
 		graphics.SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
 		if (img->m_aa) {
 			graphics.SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
@@ -2055,8 +2078,11 @@ void
 ege_rectangle(float x, float y, float w, float h, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
+		if (img->m_linestyle.linestyle == PS_NULL) 
+			return;
 		Gdiplus::Graphics graphics(img->getdc());
 		Gdiplus::Pen pen(img->m_color, img->m_linewidth);
+		pen.SetDashStyle(linestyle_to_dashstyle(img->m_linestyle.linestyle));	
 		graphics.SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
 		if (img->m_aa) {
 			graphics.SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
@@ -2070,8 +2096,11 @@ void
 ege_ellipse(float x, float y, float w, float h, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
+		if (img->m_linestyle.linestyle == PS_NULL) 
+			return;
 		Gdiplus::Graphics graphics(img->getdc());
 		Gdiplus::Pen pen(img->m_color, img->m_linewidth);
+		pen.SetDashStyle(linestyle_to_dashstyle(img->m_linestyle.linestyle));			
 		graphics.SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
 		if (img->m_aa) {
 			graphics.SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
@@ -2085,8 +2114,11 @@ void
 ege_pie(float x, float y, float w, float h, float stangle, float sweepAngle, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
+		if (img->m_linestyle.linestyle == PS_NULL) 
+			return;
 		Gdiplus::Graphics graphics(img->getdc());
 		Gdiplus::Pen pen(img->m_color, img->m_linewidth);
+		pen.SetDashStyle(linestyle_to_dashstyle(img->m_linestyle.linestyle));				
 		graphics.SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
 		if (img->m_aa) {
 			graphics.SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
@@ -2100,8 +2132,11 @@ void
 ege_arc(float x, float y, float w, float h, float stangle, float sweepAngle, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
+		if (img->m_linestyle.linestyle == PS_NULL) 
+			return;
 		Gdiplus::Graphics graphics(img->getdc());
 		Gdiplus::Pen pen(img->m_color, img->m_linewidth);
+		pen.SetDashStyle(linestyle_to_dashstyle(img->m_linestyle.linestyle));		
 		graphics.SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
 		if (img->m_aa) {
 			graphics.SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
@@ -2115,8 +2150,11 @@ void
 ege_bezier(int numpoints, ege_point* polypoints, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
+		if (img->m_linestyle.linestyle == PS_NULL) 
+			return;
 		Gdiplus::Graphics graphics(img->getdc());
 		Gdiplus::Pen pen(img->m_color, img->m_linewidth);
+		pen.SetDashStyle(linestyle_to_dashstyle(img->m_linestyle.linestyle));		
 		graphics.SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
 		if (img->m_aa) {
 			graphics.SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
