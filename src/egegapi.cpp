@@ -776,7 +776,7 @@ static void update_pen(PIMAGE img) {
 
 	// why update pen not in IMAGE???
 #ifdef EGE_GDIPLUS
-	const std::shared_ptr<Gdiplus::Pen>& pen=img->getPen();
+	Gdiplus::Pen* pen=img->getPen();
 	pen->SetColor(img->m_color);
 	pen->SetWidth(img->m_linewidth);
 	pen->SetDashStyle(linestyle_to_dashstyle(img->m_linestyle.linestyle));
@@ -2020,6 +2020,19 @@ clearviewport(PIMAGE pimg) {
 }
 
 #ifdef EGE_GDIPLUS
+Gdiplus::DashStyle linestyle_to_dashstyle(int linestyle){
+	switch(linestyle){
+	case SOLID_LINE:
+		return Gdiplus::DashStyleSolid;
+	case PS_DASH:
+		return Gdiplus::DashStyleDash;
+	case PS_DOT:
+		return Gdiplus::DashStyleDot;
+	case PS_DASHDOT:
+		return Gdiplus::DashStyleDashDot;
+	}
+	return Gdiplus::DashStyleSolid;
+}
 
 void
 ege_line(float x1, float y1, float x2, float y2, PIMAGE pimg) {
@@ -2027,9 +2040,9 @@ ege_line(float x1, float y1, float x2, float y2, PIMAGE pimg) {
 	if (img) {
 		if (img->m_linestyle.linestyle == PS_NULL) 
 			return;
-		const std::shared_ptr<Gdiplus::Graphics>& graphics=img->getGraphics();
-		const std::shared_ptr<Gdiplus::Pen>& pen=img->getPen();
-		graphics->DrawLine(pen.get(), x1, y1, x2, y2);
+		Gdiplus::Graphics* graphics=img->getGraphics();
+		Gdiplus::Pen* pen=img->getPen();
+		graphics->DrawLine(pen, x1, y1, x2, y2);
 	}
 	CONVERT_IMAGE_END;
 }
@@ -2040,9 +2053,9 @@ ege_drawpoly(int numpoints, ege_point* polypoints, PIMAGE pimg) {
 	if (img) {
 		if (img->m_linestyle.linestyle == PS_NULL)
 			return;
-		const std::shared_ptr<Gdiplus::Graphics>& graphics=img->getGraphics();
-		const std::shared_ptr<Gdiplus::Pen>& pen=img->getPen();
-		graphics->DrawLines(pen.get(), (Gdiplus::PointF*)polypoints, numpoints);
+		Gdiplus::Graphics* graphics=img->getGraphics();
+		Gdiplus::Pen* pen=img->getPen();
+		graphics->DrawLines(pen, (Gdiplus::PointF*)polypoints, numpoints);
 	}
 	CONVERT_IMAGE_END;
 }
@@ -2053,9 +2066,9 @@ ege_drawcurve(int numpoints, ege_point* polypoints, PIMAGE pimg) {
 	if (img) {
 		if (img->m_linestyle.linestyle == PS_NULL)
 			return;
-		const std::shared_ptr<Gdiplus::Graphics>& graphics=img->getGraphics();
-		const std::shared_ptr<Gdiplus::Pen>& pen=img->getPen();
-		graphics->DrawCurve(pen.get(), (Gdiplus::PointF*)polypoints, numpoints);
+		Gdiplus::Graphics* graphics=img->getGraphics();
+		Gdiplus::Pen* pen=img->getPen();
+		graphics->DrawCurve(pen, (Gdiplus::PointF*)polypoints, numpoints);
 	}
 	CONVERT_IMAGE_END;
 }
@@ -2066,9 +2079,9 @@ ege_rectangle(float x, float y, float w, float h, PIMAGE pimg) {
 	if (img) {
 		if (img->m_linestyle.linestyle == PS_NULL)
 			return;
-		const std::shared_ptr<Gdiplus::Graphics>& graphics=img->getGraphics();
-		const std::shared_ptr<Gdiplus::Pen>& pen=img->getPen();
-		graphics->DrawRectangle(pen.get(), x, y, w, h);
+		Gdiplus::Graphics* graphics=img->getGraphics();
+		Gdiplus::Pen* pen=img->getPen();
+		graphics->DrawRectangle(pen, x, y, w, h);
 	}
 	CONVERT_IMAGE_END;
 }
@@ -2079,9 +2092,9 @@ ege_ellipse(float x, float y, float w, float h, PIMAGE pimg) {
 	if (img) {
 		if (img->m_linestyle.linestyle == PS_NULL)
 			return;
-		const std::shared_ptr<Gdiplus::Graphics>& graphics=img->getGraphics();
-		const std::shared_ptr<Gdiplus::Pen>& pen=img->getPen();
-		graphics->DrawEllipse(pen.get(), x, y, w, h);
+		Gdiplus::Graphics* graphics=img->getGraphics();
+		Gdiplus::Pen* pen=img->getPen();
+		graphics->DrawEllipse(pen, x, y, w, h);
 	}
 	CONVERT_IMAGE_END;
 }
@@ -2092,9 +2105,9 @@ ege_pie(float x, float y, float w, float h, float stangle, float sweepAngle, PIM
 	if (img) {
 		if (img->m_linestyle.linestyle == PS_NULL)
 			return;
-		const std::shared_ptr<Gdiplus::Graphics>& graphics=img->getGraphics();
-		const std::shared_ptr<Gdiplus::Pen>& pen=img->getPen();
-		graphics->DrawPie(pen.get(), x, y, w, h, stangle, sweepAngle);
+		Gdiplus::Graphics* graphics=img->getGraphics();
+		Gdiplus::Pen* pen=img->getPen();
+		graphics->DrawPie(pen, x, y, w, h, stangle, sweepAngle);
 	}
 	CONVERT_IMAGE_END;
 }
@@ -2105,9 +2118,9 @@ ege_arc(float x, float y, float w, float h, float stangle, float sweepAngle, PIM
 	if (img) {
 		if (img->m_linestyle.linestyle == PS_NULL)
 			return;
-		const std::shared_ptr<Gdiplus::Graphics>& graphics=img->getGraphics();
-		const std::shared_ptr<Gdiplus::Pen>& pen=img->getPen();
-		graphics->DrawArc(pen.get(), x, y, w, h, stangle, sweepAngle);
+		Gdiplus::Graphics* graphics=img->getGraphics();
+		Gdiplus::Pen* pen=img->getPen();
+		graphics->DrawArc(pen, x, y, w, h, stangle, sweepAngle);
 	}
 	CONVERT_IMAGE_END;
 }
@@ -2118,9 +2131,9 @@ ege_bezier(int numpoints, ege_point* polypoints, PIMAGE pimg) {
 	if (img) {
 		if (img->m_linestyle.linestyle == PS_NULL)
 			return;
-		const std::shared_ptr<Gdiplus::Graphics>& graphics=img->getGraphics();
-		const std::shared_ptr<Gdiplus::Pen>& pen=img->getPen();
-		graphics->DrawBeziers(pen.get(), (Gdiplus::PointF*)polypoints, numpoints);
+		Gdiplus::Graphics* graphics=img->getGraphics();
+		Gdiplus::Pen* pen=img->getPen();
+		graphics->DrawBeziers(pen, (Gdiplus::PointF*)polypoints, numpoints);
 	}
 	CONVERT_IMAGE_END;
 }
@@ -2205,9 +2218,9 @@ void
 ege_fillpoly(int numpoints, ege_point* polypoints, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
-		const std::shared_ptr<Gdiplus::Graphics>& graphics=img->getGraphics();
-		const std::shared_ptr<Gdiplus::Brush>& brush=img->getBrush();
-		graphics->FillPolygon(brush.get(), (Gdiplus::PointF*)polypoints, numpoints);
+		Gdiplus::Graphics* graphics=img->getGraphics();
+		Gdiplus::Brush* brush=img->getBrush();
+		graphics->FillPolygon(brush, (Gdiplus::PointF*)polypoints, numpoints);
 	}
 	CONVERT_IMAGE_END;
 }
@@ -2216,9 +2229,9 @@ void
 ege_fillrect(float x, float y, float w, float h, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
-		const std::shared_ptr<Gdiplus::Graphics>& graphics=img->getGraphics();
-		const std::shared_ptr<Gdiplus::Brush>& brush=img->getBrush();
-		graphics->FillRectangle(brush.get(), x, y, w, h);
+		Gdiplus::Graphics* graphics=img->getGraphics();
+		Gdiplus::Brush* brush=img->getBrush();
+		graphics->FillRectangle(brush, x, y, w, h);
 	}
 	CONVERT_IMAGE_END;
 }
@@ -2227,9 +2240,9 @@ void
 ege_fillellipse(float x, float y, float w, float h, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
-		const std::shared_ptr<Gdiplus::Graphics>& graphics=img->getGraphics();
-		const std::shared_ptr<Gdiplus::Brush>& brush=img->getBrush();
-		graphics->FillEllipse(brush.get(), x, y, w, h);
+		Gdiplus::Graphics* graphics=img->getGraphics();
+		Gdiplus::Brush* brush=img->getBrush();
+		graphics->FillEllipse(brush, x, y, w, h);
 	}
 	CONVERT_IMAGE_END;
 }
@@ -2238,9 +2251,9 @@ void
 ege_fillpie(float x, float y, float w, float h, float stangle, float sweepAngle, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
-		const std::shared_ptr<Gdiplus::Graphics>& graphics=img->getGraphics();
-		const std::shared_ptr<Gdiplus::Brush>& brush=img->getBrush();
-		graphics->FillPie(brush.get(), x, y, w, h, stangle, sweepAngle);
+		Gdiplus::Graphics* graphics=img->getGraphics();
+		Gdiplus::Brush* brush=img->getBrush();
+		graphics->FillPie(brush, x, y, w, h, stangle, sweepAngle);
 	}
 	CONVERT_IMAGE_END;
 }
@@ -2294,7 +2307,7 @@ ege_puttexture(PCIMAGE srcimg, ege_rect dest, ege_rect src, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
 		if (srcimg->m_texture) {
-			const std::shared_ptr<Gdiplus::Graphics>& graphics=img->getGraphics();
+			Gdiplus::Graphics* graphics=img->getGraphics();
 			/*
 			Gdiplus::ImageAttributes ia;
 			Gdiplus::ColorMatrix mx = {
@@ -2326,7 +2339,7 @@ ege_puttexture(PCIMAGE srcimg, ege_rect dest, ege_rect src, PIMAGE pimg) {
 
 // TODO: ¥ÌŒÛ¥¶¿Ì
 static void ege_drawtext_p(LPCWSTR textstring, float x, float y, PIMAGE img) {
-	const std::shared_ptr<Gdiplus::Graphics>& graphics=img->getGraphics();
+	Gdiplus::Graphics* graphics=img->getGraphics();
 
 	HFONT hf = (HFONT)GetCurrentObject(img->m_hDC, OBJ_FONT);
 	LOGFONT lf;

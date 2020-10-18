@@ -45,9 +45,9 @@ void IMAGE::reset() {
 	m_bk_color = 0;
 	m_texture = NULL;
 #ifdef EGE_GDIPLUS
-	m_graphics.reset();
-	m_pen.reset();
-	m_brush.reset();
+	m_graphics=NULL;
+	m_pen=NULL;
+	m_brush=NULL;
 #endif
 }
 
@@ -118,9 +118,15 @@ IMAGE::gentexture(bool gen) {
 int
 IMAGE::deleteimage() {
 #ifdef EGE_GDIPLUS
-	m_graphics.reset();
-	m_pen.reset();
-	m_brush.reset();
+	if (NULL!=m_graphics)
+		delete m_graphics;
+	m_graphics=NULL;
+	if (NULL!=m_pen)
+		delete m_pen;
+	m_pen=NULL;
+	if (NULL!=m_brush)
+		delete m_brush;
+	m_brush=NULL;
 #endif
 
 	HBITMAP hbmp  = (HBITMAP)GetCurrentObject(m_hDC, OBJ_BITMAP);
@@ -201,6 +207,47 @@ void IMAGE::setdefaultattribute() {
 	settextjustify(LEFT_TEXT, TOP_TEXT, this);
 	setfont(16, 0, "SimSun", this);
 	enable_anti_alias(false);
+}
+
+#ifdef EGE_GDIPLUS
+
+Gdiplus::Graphics*  IMAGE::getGraphics() {
+	if (NULL == m_graphics) {
+		m_graphics=new Gdiplus::Graphics(m_hDC);
+		m_graphics->SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
+		m_graphics->SetSmoothingMode(m_aa? Gdiplus::SmoothingModeAntiAlias : Gdiplus::SmoothingModeNone);
+	}
+	return m_graphics;
+}
+Gdiplus::Pen* IMAGE::getPen() {
+	if (NULL == m_pen) {
+		m_pen = new Gdiplus::Pen(m_color,m_linewidth);
+		m_pen->SetDashStyle(linestyle_to_dashstyle(m_linestyle.linestyle));
+	}
+	return m_pen;
+}
+Gdiplus::Brush* IMAGE::getBrush() {
+	if (NULL == m_brush) {
+		m_brush = new Gdiplus::SolidBrush(m_fillcolor);
+	}
+	return m_brush;
+}
+
+void IMAGE::set_pattern(Gdiplus::Brush* brush) {
+	if (NULL != m_brush) {
+		delete m_brush;
+	}
+	m_brush = brush;
+}
+#endif
+
+void IMAGE::enable_anti_alias(bool enable){
+	m_aa = enable;
+#ifdef EGE_GDIPLUS
+	if (NULL != m_graphics) {
+		m_graphics->SetSmoothingMode(m_aa? Gdiplus::SmoothingModeAntiAlias : Gdiplus::SmoothingModeNone);
+	}
+#endif
 }
 
 int
