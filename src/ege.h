@@ -454,6 +454,7 @@ typedef enum mouse_msg_e {
 	mouse_msg_move      = 0x40,
 	mouse_msg_wheel     = 0x80,
 }mouse_msg_e;
+
 typedef enum mouse_flag_e {
 	mouse_flag_left     = 1,
 	mouse_flag_right    = 2,
@@ -461,13 +462,6 @@ typedef enum mouse_flag_e {
 	mouse_flag_shift    = 0x100,
 	mouse_flag_ctrl     = 0x200,
 }mouse_flag_e;
-
-typedef enum pattern_type_e {
-	pattern_none            = 0,
-	pattern_lineargradient  = 1,
-	pattern_pathgradient    = 2,
-	pattern_texture         = 3,
-}pattern_type_e;
 
 typedef DWORD color_t;
 
