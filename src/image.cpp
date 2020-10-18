@@ -46,6 +46,10 @@ void IMAGE::reset() {
 	m_pattern_obj = NULL;
 	m_pattern_type = 0;
 	m_texture = NULL;
+#ifdef EGE_GDIPLUS
+	m_graphics = nullptr;
+	m_pen = nullptr;
+#endif
 }
 
 void IMAGE::construct(int width, int height) {
@@ -137,6 +141,11 @@ IMAGE::gentexture(bool gen) {
 
 int
 IMAGE::deleteimage() {
+#ifdef EGE_GDIPLUS
+	m_graphics = nullptr;
+	m_pen = nullptr;
+#endif
+
 	HBITMAP hbmp  = (HBITMAP)GetCurrentObject(m_hDC, OBJ_BITMAP);
 	HBRUSH  hbr   = (HBRUSH)GetCurrentObject(m_hDC, OBJ_BRUSH);
 	HPEN    hpen  = (HPEN)GetCurrentObject(m_hDC, OBJ_PEN);
@@ -149,7 +158,7 @@ IMAGE::deleteimage() {
 	DeleteObject(hbr);
 	DeleteObject(hpen);
 	DeleteObject(hfont);
-	
+
 	return 0;
 }
 
@@ -251,6 +260,13 @@ IMAGE::operator = (const IMAGE &img) {
 	this->copyimage(&img);
 	return *this;
 }
+
+#ifdef EGE_GDIPLUS
+
+
+
+
+#endif
 
 void
 IMAGE::copyimage(PCIMAGE pSrcImg) {
@@ -2730,6 +2746,8 @@ HDC getHDC(PCIMAGE pImg) {
 	return img->getdc();
 }
 
+
+
 int
 resize(PIMAGE pDstImg, int width, int height) {
 	
@@ -2990,7 +3008,7 @@ savepng(PCIMAGE pimg, LPCWSTR filename, int bAlpha) {
 void
 ege_enable_aa(bool enable, PIMAGE pimg) {
 	PIMAGE img  = CONVERT_IMAGE(pimg);
-	img->m_aa = enable;
+	img->enable_anti_alias(enable);
 	CONVERT_IMAGE_END;
 }
 

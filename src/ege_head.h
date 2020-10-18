@@ -115,6 +115,7 @@
 
 #ifdef EGE_GDIPLUS
 #	include <gdiplus.h>
+#   include <memory>
 #endif
 
 #define QUEUE_LEN               1024
@@ -243,6 +244,22 @@ struct EGEMSG {
 	UINT        flag;
 };
 
+#ifdef EGE_GDIPLUS
+inline Gdiplus::DashStyle linestyle_to_dashstyle(int linestyle) {
+	switch(linestyle){
+		case SOLID_LINE:
+			return Gdiplus::DashStyleSolid;
+		case PS_DASH:
+			return Gdiplus::DashStyleDash;
+		case PS_DOT:
+			return Gdiplus::DashStyleDot;
+		case PS_DASHDOT:
+			return Gdiplus::DashStyleDashDot;
+	}
+	return Gdiplus::DashStyleSolid;
+}
+#endif
+
 // 定义图像对象
 class IMAGE
 {
@@ -255,8 +272,12 @@ public:
 	PDWORD      m_pBuffer;
 	color_t     m_color;
 	color_t     m_fillcolor;
-	bool        m_aa;
 private:
+#ifdef EGE_GDIPLUS
+	std::shared_ptr<Gdiplus::Graphics> m_graphics;
+	std::shared_ptr<Gdiplus::Pen> m_pen;
+#endif
+	bool        m_aa;
 	void initimage(HDC refDC, int width, int height);
 	void construct(int width, int height);
 	void setdefaultattribute();
@@ -287,6 +308,33 @@ public:
 	int getwidth()     const {return m_width; }
 	int getheight()    const {return m_height;}
 	color_t* getbuffer() const {return (color_t*)m_pBuffer;}
+#ifdef EGE_GDIPLUS
+	//TODO: thread safe
+	std::shared_ptr<Gdiplus::Graphics> getGraphics() {
+		if (nullptr == m_graphics.get()) {
+			m_graphics=std::make_shared<Gdiplus::Graphics>(m_hDC);
+			m_graphics->SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
+			m_graphics->SetSmoothingMode(m_aa? Gdiplus::SmoothingModeAntiAlias : Gdiplus::SmoothingModeNone);
+		}
+		return m_graphics;
+	}
+	std::shared_ptr<Gdiplus::Pen> getPen() {
+		if (nullptr == m_pen.get()) {
+			m_pen = std::make_shared<Gdiplus::Pen>(m_color,m_linewidth);
+			m_pen->SetDashStyle(linestyle_to_dashstyle(m_linestyle.linestyle));
+		}
+		return m_pen;
+	}
+#endif
+	void enable_anti_alias(bool enable){
+		m_aa = enable;
+#ifdef EGE_GDIPLUS
+		if (nullptr != m_graphics.get()) {
+			m_graphics->SetSmoothingMode(m_aa? Gdiplus::SmoothingModeAntiAlias : Gdiplus::SmoothingModeNone);
+		}
+#endif
+	}
+
 
 	int  resize(int width, int height);
 	void copyimage(PCIMAGE pSrcImg);

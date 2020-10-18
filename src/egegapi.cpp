@@ -773,6 +773,15 @@ static void update_pen(PIMAGE img) {
 	if (hpen) {
 		DeleteObject(SelectObject(img->m_hDC, hpen));
 	}
+
+	// why update pen not in IMAGE???
+#ifdef EGE_GDIPLUS
+	std::shared_ptr<Gdiplus::Pen> pen=img->getPen();
+	pen->SetColor(img->m_color);
+	pen->SetWidth(img->m_linewidth);
+	pen->SetDashStyle(linestyle_to_dashstyle(img->m_linestyle.linestyle));
+#endif
+
 }
 
 void
@@ -2006,34 +2015,15 @@ clearviewport(PIMAGE pimg) {
 
 #ifdef EGE_GDIPLUS
 
-static Gdiplus::DashStyle linestyle_to_dashstyle(int linestyle) {
-	switch(linestyle){
-		case SOLID_LINE:
-			return Gdiplus::DashStyleSolid;
-		case PS_DASH:
-			return Gdiplus::DashStyleDash;
-		case PS_DOT:
-			return Gdiplus::DashStyleDot;
-		case PS_DASHDOT:
-			return Gdiplus::DashStyleDashDot;
-	}
-	return Gdiplus::DashStyleSolid;
-}
-
 void
 ege_line(float x1, float y1, float x2, float y2, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
 		if (img->m_linestyle.linestyle == PS_NULL) 
 			return;
-		Gdiplus::Graphics graphics(img->getdc());
-		Gdiplus::Pen pen(img->m_color, img->m_linewidth);
-		pen.SetDashStyle(linestyle_to_dashstyle(img->m_linestyle.linestyle));
-		graphics.SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
-		if (img->m_aa) {
-			graphics.SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
-		}
-		graphics.DrawLine(&pen, x1, y1, x2, y2);
+		std::shared_ptr<Gdiplus::Graphics> graphics=img->getGraphics();
+		std::shared_ptr<Gdiplus::Pen> pen=img->getPen();
+		graphics->DrawLine(pen.get(), x1, y1, x2, y2);
 	}
 	CONVERT_IMAGE_END;
 }
@@ -2042,16 +2032,11 @@ void
 ege_drawpoly(int numpoints, ege_point* polypoints, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
-		if (img->m_linestyle.linestyle == PS_NULL) 
+		if (img->m_linestyle.linestyle == PS_NULL)
 			return;
-		Gdiplus::Graphics graphics(img->getdc());
-		Gdiplus::Pen pen(img->m_color, img->m_linewidth);
-		pen.SetDashStyle(linestyle_to_dashstyle(img->m_linestyle.linestyle));
-		graphics.SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
-		if (img->m_aa) {
-			graphics.SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
-		}
-		graphics.DrawLines(&pen, (Gdiplus::PointF*)polypoints, numpoints);
+		std::shared_ptr<Gdiplus::Graphics> graphics=img->getGraphics();
+		std::shared_ptr<Gdiplus::Pen> pen=img->getPen();
+		graphics->DrawLines(pen.get(), (Gdiplus::PointF*)polypoints, numpoints);
 	}
 	CONVERT_IMAGE_END;
 }
@@ -2060,16 +2045,11 @@ void
 ege_drawcurve(int numpoints, ege_point* polypoints, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
-		if (img->m_linestyle.linestyle == PS_NULL) 
+		if (img->m_linestyle.linestyle == PS_NULL)
 			return;
-		Gdiplus::Graphics graphics(img->getdc());
-		Gdiplus::Pen pen(img->m_color, img->m_linewidth);
-		pen.SetDashStyle(linestyle_to_dashstyle(img->m_linestyle.linestyle));		
-		graphics.SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
-		if (img->m_aa) {
-			graphics.SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
-		}
-		graphics.DrawCurve(&pen, (Gdiplus::PointF*)polypoints, numpoints);
+		std::shared_ptr<Gdiplus::Graphics> graphics=img->getGraphics();
+		std::shared_ptr<Gdiplus::Pen> pen=img->getPen();
+		graphics->DrawCurve(pen.get(), (Gdiplus::PointF*)polypoints, numpoints);
 	}
 	CONVERT_IMAGE_END;
 }
@@ -2078,16 +2058,11 @@ void
 ege_rectangle(float x, float y, float w, float h, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
-		if (img->m_linestyle.linestyle == PS_NULL) 
+		if (img->m_linestyle.linestyle == PS_NULL)
 			return;
-		Gdiplus::Graphics graphics(img->getdc());
-		Gdiplus::Pen pen(img->m_color, img->m_linewidth);
-		pen.SetDashStyle(linestyle_to_dashstyle(img->m_linestyle.linestyle));	
-		graphics.SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
-		if (img->m_aa) {
-			graphics.SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
-		}
-		graphics.DrawRectangle(&pen, x, y, w, h);
+		std::shared_ptr<Gdiplus::Graphics> graphics=img->getGraphics();
+		std::shared_ptr<Gdiplus::Pen> pen=img->getPen();
+		graphics->DrawRectangle(pen.get(), x, y, w, h);
 	}
 	CONVERT_IMAGE_END;
 }
@@ -2096,16 +2071,11 @@ void
 ege_ellipse(float x, float y, float w, float h, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
-		if (img->m_linestyle.linestyle == PS_NULL) 
+		if (img->m_linestyle.linestyle == PS_NULL)
 			return;
-		Gdiplus::Graphics graphics(img->getdc());
-		Gdiplus::Pen pen(img->m_color, img->m_linewidth);
-		pen.SetDashStyle(linestyle_to_dashstyle(img->m_linestyle.linestyle));			
-		graphics.SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
-		if (img->m_aa) {
-			graphics.SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
-		}
-		graphics.DrawEllipse(&pen, x, y, w, h);
+		std::shared_ptr<Gdiplus::Graphics> graphics=img->getGraphics();
+		std::shared_ptr<Gdiplus::Pen> pen=img->getPen();
+		graphics->DrawEllipse(pen.get(), x, y, w, h);
 	}
 	CONVERT_IMAGE_END;
 }
@@ -2114,16 +2084,11 @@ void
 ege_pie(float x, float y, float w, float h, float stangle, float sweepAngle, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
-		if (img->m_linestyle.linestyle == PS_NULL) 
+		if (img->m_linestyle.linestyle == PS_NULL)
 			return;
-		Gdiplus::Graphics graphics(img->getdc());
-		Gdiplus::Pen pen(img->m_color, img->m_linewidth);
-		pen.SetDashStyle(linestyle_to_dashstyle(img->m_linestyle.linestyle));				
-		graphics.SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
-		if (img->m_aa) {
-			graphics.SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
-		}
-		graphics.DrawPie(&pen, x, y, w, h, stangle, sweepAngle);
+		std::shared_ptr<Gdiplus::Graphics> graphics=img->getGraphics();
+		std::shared_ptr<Gdiplus::Pen> pen=img->getPen();
+		graphics->DrawPie(pen.get(), x, y, w, h, stangle, sweepAngle);
 	}
 	CONVERT_IMAGE_END;
 }
@@ -2132,16 +2097,11 @@ void
 ege_arc(float x, float y, float w, float h, float stangle, float sweepAngle, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
-		if (img->m_linestyle.linestyle == PS_NULL) 
+		if (img->m_linestyle.linestyle == PS_NULL)
 			return;
-		Gdiplus::Graphics graphics(img->getdc());
-		Gdiplus::Pen pen(img->m_color, img->m_linewidth);
-		pen.SetDashStyle(linestyle_to_dashstyle(img->m_linestyle.linestyle));		
-		graphics.SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
-		if (img->m_aa) {
-			graphics.SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
-		}
-		graphics.DrawArc(&pen, x, y, w, h, stangle, sweepAngle);
+		std::shared_ptr<Gdiplus::Graphics> graphics=img->getGraphics();
+		std::shared_ptr<Gdiplus::Pen> pen=img->getPen();
+		graphics->DrawArc(pen.get(), x, y, w, h, stangle, sweepAngle);
 	}
 	CONVERT_IMAGE_END;
 }
@@ -2150,16 +2110,11 @@ void
 ege_bezier(int numpoints, ege_point* polypoints, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
-		if (img->m_linestyle.linestyle == PS_NULL) 
+		if (img->m_linestyle.linestyle == PS_NULL)
 			return;
-		Gdiplus::Graphics graphics(img->getdc());
-		Gdiplus::Pen pen(img->m_color, img->m_linewidth);
-		pen.SetDashStyle(linestyle_to_dashstyle(img->m_linestyle.linestyle));		
-		graphics.SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
-		if (img->m_aa) {
-			graphics.SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
-		}
-		graphics.DrawBeziers(&pen, (Gdiplus::PointF*)polypoints, numpoints);
+		std::shared_ptr<Gdiplus::Graphics> graphics=img->getGraphics();
+		std::shared_ptr<Gdiplus::Pen> pen=img->getPen();
+		graphics->DrawBeziers(pen.get(), (Gdiplus::PointF*)polypoints, numpoints);
 	}
 	CONVERT_IMAGE_END;
 }
@@ -2246,16 +2201,12 @@ void
 ege_fillpoly(int numpoints, ege_point* polypoints, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
-		Gdiplus::Graphics graphics(img->getdc());
-		graphics.SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
-		if (img->m_aa) {
-			graphics.SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
-		}
+		std::shared_ptr<Gdiplus::Graphics> graphics = img->getGraphics();
 		if (img->m_pattern_obj) {
-			graphics.FillPolygon((Gdiplus::Brush*)img->m_pattern_obj, (Gdiplus::PointF*)polypoints, numpoints);
+			graphics->FillPolygon((Gdiplus::Brush*)img->m_pattern_obj, (Gdiplus::PointF*)polypoints, numpoints);
 		} else {
 			Gdiplus::SolidBrush brush(img->m_fillcolor);
-			graphics.FillPolygon(&brush, (Gdiplus::PointF*)polypoints, numpoints);
+			graphics->FillPolygon(&brush, (Gdiplus::PointF*)polypoints, numpoints);
 		}
 	}
 	CONVERT_IMAGE_END;
@@ -2265,16 +2216,12 @@ void
 ege_fillrect(float x, float y, float w, float h, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
-		Gdiplus::Graphics graphics(img->getdc());
-		graphics.SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
-		if (img->m_aa) {
-			graphics.SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
-		}
+		std::shared_ptr<Gdiplus::Graphics> graphics = img->getGraphics();
 		if (img->m_pattern_obj) {
-			graphics.FillRectangle((Gdiplus::Brush*)img->m_pattern_obj, x, y, w, h);
+			graphics->FillRectangle((Gdiplus::Brush*)img->m_pattern_obj, x, y, w, h);
 		} else {
 			Gdiplus::SolidBrush brush(img->m_fillcolor);
-			graphics.FillRectangle(&brush, x, y, w, h);
+			graphics->FillRectangle(&brush, x, y, w, h);
 		}
 	}
 	CONVERT_IMAGE_END;
@@ -2284,16 +2231,12 @@ void
 ege_fillellipse(float x, float y, float w, float h, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
-		Gdiplus::Graphics graphics(img->getdc());
-		graphics.SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
-		if (img->m_aa) {
-			graphics.SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
-		}
+		std::shared_ptr<Gdiplus::Graphics> graphics = img->getGraphics();
 		if (img->m_pattern_obj) {
-			graphics.FillEllipse((Gdiplus::Brush*)img->m_pattern_obj, x, y, w, h);
+			graphics->FillEllipse((Gdiplus::Brush*)img->m_pattern_obj, x, y, w, h);
 		} else {
 			Gdiplus::SolidBrush brush(img->m_fillcolor);
-			graphics.FillEllipse(&brush, x, y, w, h);
+			graphics->FillEllipse(&brush, x, y, w, h);
 		}
 	}
 	CONVERT_IMAGE_END;
@@ -2303,16 +2246,12 @@ void
 ege_fillpie(float x, float y, float w, float h, float stangle, float sweepAngle, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
-		Gdiplus::Graphics graphics(img->getdc());
-		graphics.SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
-		if (img->m_aa) {
-			graphics.SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
-		}
+		std::shared_ptr<Gdiplus::Graphics> graphics = img->getGraphics();
 		if (img->m_pattern_obj) {
-			graphics.FillPie((Gdiplus::Brush*)img->m_pattern_obj, x, y, w, h, stangle, sweepAngle);
+			graphics->FillPie((Gdiplus::Brush*)img->m_pattern_obj, x, y, w, h, stangle, sweepAngle);
 		} else {
 			Gdiplus::SolidBrush brush(img->m_fillcolor);
-			graphics.FillPie(&brush, x, y, w, h, stangle, sweepAngle);
+			graphics->FillPie(&brush, x, y, w, h, stangle, sweepAngle);
 		}
 	}
 	CONVERT_IMAGE_END;
@@ -2367,11 +2306,7 @@ ege_puttexture(PCIMAGE srcimg, ege_rect dest, ege_rect src, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
 		if (srcimg->m_texture) {
-			Gdiplus::Graphics graphics(img->getdc());
-			graphics.SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
-			if (img->m_aa) {
-				graphics.SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
-			}
+			std::shared_ptr<Gdiplus::Graphics> graphics = img->getGraphics();
 			/*
 			Gdiplus::ImageAttributes ia;
 			Gdiplus::ColorMatrix mx = {
@@ -2386,7 +2321,7 @@ ege_puttexture(PCIMAGE srcimg, ege_rect dest, ege_rect src, PIMAGE pimg) {
 			ia.SetColorMatrix(&mx);
 			// */
 			//graphics.SetTransform();
-			graphics.DrawImage(
+			graphics->DrawImage(
 				(Gdiplus::Image*)srcimg->m_texture,
 				Gdiplus::RectF(dest.x, dest.y, dest.w, dest.h),
 				src.x,
@@ -2403,12 +2338,7 @@ ege_puttexture(PCIMAGE srcimg, ege_rect dest, ege_rect src, PIMAGE pimg) {
 
 // TODO: ´íÎó´¦Àí
 static void ege_drawtext_p(LPCWSTR textstring, float x, float y, PIMAGE img) {
-	Gdiplus::Graphics graphics(img->m_hDC);
-	graphics.SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
-	if (img->m_aa) {
-		graphics.SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAlias);
-	}
-
+	std::shared_ptr<Gdiplus::Graphics> graphics = img->getGraphics();
 	HFONT hf = (HFONT)GetCurrentObject(img->m_hDC, OBJ_FONT);
 	LOGFONT lf;
 	GetObject(hf, sizeof(LOGFONT), &lf);
@@ -2422,7 +2352,7 @@ static void ege_drawtext_p(LPCWSTR textstring, float x, float y, PIMAGE img) {
 	// }
 	Gdiplus::PointF origin(x, y);
 	Gdiplus::SolidBrush brush(img->m_color);
-	graphics.DrawString(textstring, -1, &font, origin, &brush);
+	graphics->DrawString(textstring, -1, &font, origin, &brush);
 	// int err;
 	// if (err = graphics.DrawString(textstring, -1, &font, origin, &brush)) {
 	// 	fprintf(stderr, "DrawString Err: %d\n", err);
