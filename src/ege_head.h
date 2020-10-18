@@ -310,7 +310,7 @@ public:
 	color_t* getbuffer() const {return (color_t*)m_pBuffer;}
 #ifdef EGE_GDIPLUS
 	//TODO: thread safe
-	std::shared_ptr<Gdiplus::Graphics> getGraphics() {
+	inline std::shared_ptr<Gdiplus::Graphics> getGraphics() {
 		if (nullptr == m_graphics.get()) {
 			m_graphics=std::make_shared<Gdiplus::Graphics>(m_hDC);
 			m_graphics->SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
@@ -318,7 +318,7 @@ public:
 		}
 		return m_graphics;
 	}
-	std::shared_ptr<Gdiplus::Pen> getPen() {
+	inline std::shared_ptr<Gdiplus::Pen> getPen() {
 		if (nullptr == m_pen.get()) {
 			m_pen = std::make_shared<Gdiplus::Pen>(m_color,m_linewidth);
 			m_pen->SetDashStyle(linestyle_to_dashstyle(m_linestyle.linestyle));
@@ -326,7 +326,7 @@ public:
 		return m_pen;
 	}
 #endif
-	void enable_anti_alias(bool enable){
+	inline void enable_anti_alias(bool enable){
 		m_aa = enable;
 #ifdef EGE_GDIPLUS
 		if (nullptr != m_graphics.get()) {
@@ -334,7 +334,6 @@ public:
 		}
 #endif
 	}
-
 
 	int  resize(int width, int height);
 	void copyimage(PCIMAGE pSrcImg);
