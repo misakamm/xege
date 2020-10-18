@@ -261,13 +261,6 @@ IMAGE::operator = (const IMAGE &img) {
 	return *this;
 }
 
-#ifdef EGE_GDIPLUS
-
-
-
-
-#endif
-
 void
 IMAGE::copyimage(PCIMAGE pSrcImg) {
 	inittest(L"IMAGE::copyimage");
