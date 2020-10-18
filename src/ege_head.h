@@ -115,7 +115,7 @@
 
 #ifdef EGE_GDIPLUS
 #	include <gdiplus.h>
-#   include <memory>
+#	include <memory>
 #endif
 
 #define QUEUE_LEN               1024
