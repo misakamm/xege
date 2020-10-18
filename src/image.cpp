@@ -2739,8 +2739,6 @@ HDC getHDC(PCIMAGE pImg) {
 	return img->getdc();
 }
 
-
-
 int
 resize(PIMAGE pDstImg, int width, int height) {
 	
