@@ -111,8 +111,6 @@
 #define EGE_FORCEINLINE   __attribute__((always_inline)) inline
 #endif
 
-#define EGE_GDIPLUS // 使用gdi+函数扩展
-
 #ifdef EGE_GDIPLUS
 #	include <gdiplus.h>
 #endif

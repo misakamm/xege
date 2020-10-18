@@ -138,6 +138,8 @@
 #	endif
 #endif
 
+#define EGE_GDIPLUS     //启用GDIPLUS
+
 #define SHOWCONSOLE             1       // 进入图形模式时，保留控制台的显示
 #define EGERGBA(r, g, b, a)     ( ((r)<<16) | ((g)<<8) | (b) | ((a)<<24) )
 #define EGERGB(r, g, b)         EGERGBA(r, g, b, 0xFF)
@@ -769,6 +771,7 @@ void EGEAPI fillpoly_gradient(int numpoints, const ege_colpoint* polypoints, PIM
 void EGEAPI floodfill(int x, int y, int border, PIMAGE pimg = NULL);                // 按边界颜色填充区域
 void EGEAPI floodfillsurface(int x, int y, color_t areacolor, PIMAGE pimg = NULL);  // 按起始点颜色填充区域
 
+#ifdef EGE_GDIPLUS
 // 高级绘图函数（带AA）
 // ege new_api
 void EGEAPI ege_enable_aa(bool enable, PIMAGE pimg = NULL);
@@ -805,6 +808,7 @@ void EGEAPI ege_puttexture(PCIMAGE srcimg, float x, float y, float w, float h, P
 void EGEAPI ege_puttexture(PCIMAGE srcimg, ege_rect dest, PIMAGE pimg = NULL);
 void EGEAPI ege_puttexture(PCIMAGE srcimg, ege_rect dest, ege_rect src, PIMAGE pimg = NULL);
 //
+#endif
 
 //int  EGEAPI Begin2d();
 //void EGEAPI EndRender();
