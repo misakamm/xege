@@ -808,6 +808,9 @@ setfillcolor(color_t color, PIMAGE pimg) {
 	if (hbr) {
 		DeleteObject(SelectObject(img->m_hDC, hbr));
 	}
+#ifdef EGE_GDIPLUS
+	img->set_pattern(NULL);
+#endif
 	CONVERT_IMAGE_END;
 }
 
@@ -1563,6 +1566,9 @@ setfillstyle(int pattern, color_t color, PIMAGE pimg) {
 	if (hbr) {
 		DeleteObject(SelectObject(img->m_hDC, hbr));
 	}
+	#ifdef EGE_GDIPLUS
+		img->set_pattern(NULL);
+	#endif
 	CONVERT_IMAGE_END;
 }
 
@@ -2122,9 +2128,7 @@ ege_bezier(int numpoints, ege_point* polypoints, PIMAGE pimg) {
 void
 ege_setpattern_none(PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
-	if (img) {
-		img->delete_pattern();
-	}
+	img->set_pattern(NULL);
 	CONVERT_IMAGE_END;
 }
 
@@ -2138,7 +2142,7 @@ ege_setpattern_lineargradient(float x1, float y1, color_t c1, float x2, float y2
 			Gdiplus::Color(c1),
 			Gdiplus::Color(c2)
 			);
-		img->set_pattern(pbrush, pattern_lineargradient);
+		img->set_pattern(pbrush);
 	}
 	CONVERT_IMAGE_END;
 }
@@ -2157,7 +2161,7 @@ ege_setpattern_pathgradient(ege_point center, color_t centercolor,
 		pbrush->SetCenterColor(Gdiplus::Color(centercolor));
 		pbrush->SetCenterPoint(Gdiplus::PointF(center.x, center.y));
 		pbrush->SetSurroundColors((Gdiplus::Color*)pointscolor, &colcount);
-		img->set_pattern(pbrush, pattern_pathgradient);
+		img->set_pattern(pbrush);
 	}
 	CONVERT_IMAGE_END;
 }
@@ -2177,7 +2181,7 @@ ege_setpattern_ellipsegradient(ege_point center, color_t centercolor,
 		pbrush->SetCenterColor(Gdiplus::Color(centercolor));
 		pbrush->SetCenterPoint(Gdiplus::PointF(center.x, center.y));
 		pbrush->SetSurroundColors((Gdiplus::Color*)&color, &count);
-		img->set_pattern(pbrush, pattern_pathgradient);
+		img->set_pattern(pbrush);
 	}
 	CONVERT_IMAGE_END;
 }
@@ -2191,7 +2195,7 @@ ege_setpattern_texture(PIMAGE srcimg, float x, float y, float w, float h, PIMAGE
 				(Gdiplus::Image*)srcimg->m_texture,
 				Gdiplus::WrapModeTile,
 				x, y, w, h);
-			img->set_pattern(pbrush, pattern_texture);
+			img->set_pattern(pbrush);
 		}
 	}
 	CONVERT_IMAGE_END;
@@ -2202,12 +2206,8 @@ ege_fillpoly(int numpoints, ege_point* polypoints, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
 		const std::shared_ptr<Gdiplus::Graphics>& graphics=img->getGraphics();
-		if (img->m_pattern_obj) {
-			graphics->FillPolygon((Gdiplus::Brush*)img->m_pattern_obj, (Gdiplus::PointF*)polypoints, numpoints);
-		} else {
-			Gdiplus::SolidBrush brush(img->m_fillcolor);
-			graphics->FillPolygon(&brush, (Gdiplus::PointF*)polypoints, numpoints);
-		}
+		const std::shared_ptr<Gdiplus::Brush>& brush=img->getBrush();
+		graphics->FillPolygon(brush.get(), (Gdiplus::PointF*)polypoints, numpoints);
 	}
 	CONVERT_IMAGE_END;
 }
@@ -2217,12 +2217,8 @@ ege_fillrect(float x, float y, float w, float h, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
 		const std::shared_ptr<Gdiplus::Graphics>& graphics=img->getGraphics();
-		if (img->m_pattern_obj) {
-			graphics->FillRectangle((Gdiplus::Brush*)img->m_pattern_obj, x, y, w, h);
-		} else {
-			Gdiplus::SolidBrush brush(img->m_fillcolor);
-			graphics->FillRectangle(&brush, x, y, w, h);
-		}
+		const std::shared_ptr<Gdiplus::Brush>& brush=img->getBrush();
+		graphics->FillRectangle(brush.get(), x, y, w, h);
 	}
 	CONVERT_IMAGE_END;
 }
@@ -2232,12 +2228,8 @@ ege_fillellipse(float x, float y, float w, float h, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
 		const std::shared_ptr<Gdiplus::Graphics>& graphics=img->getGraphics();
-		if (img->m_pattern_obj) {
-			graphics->FillEllipse((Gdiplus::Brush*)img->m_pattern_obj, x, y, w, h);
-		} else {
-			Gdiplus::SolidBrush brush(img->m_fillcolor);
-			graphics->FillEllipse(&brush, x, y, w, h);
-		}
+		const std::shared_ptr<Gdiplus::Brush>& brush=img->getBrush();
+		graphics->FillEllipse(brush.get(), x, y, w, h);
 	}
 	CONVERT_IMAGE_END;
 }
@@ -2247,12 +2239,8 @@ ege_fillpie(float x, float y, float w, float h, float stangle, float sweepAngle,
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
 		const std::shared_ptr<Gdiplus::Graphics>& graphics=img->getGraphics();
-		if (img->m_pattern_obj) {
-			graphics->FillPie((Gdiplus::Brush*)img->m_pattern_obj, x, y, w, h, stangle, sweepAngle);
-		} else {
-			Gdiplus::SolidBrush brush(img->m_fillcolor);
-			graphics->FillPie(&brush, x, y, w, h, stangle, sweepAngle);
-		}
+		const std::shared_ptr<Gdiplus::Brush>& brush=img->getBrush();
+		graphics->FillPie(brush.get(), x, y, w, h, stangle, sweepAngle);
 	}
 	CONVERT_IMAGE_END;
 }

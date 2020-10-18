@@ -276,6 +276,7 @@ private:
 #ifdef EGE_GDIPLUS
 	std::shared_ptr<Gdiplus::Graphics> m_graphics;
 	std::shared_ptr<Gdiplus::Pen> m_pen;
+	std::shared_ptr<Gdiplus::Brush> m_brush;
 #endif
 	bool        m_aa;
 	void initimage(HDC refDC, int width, int height);
@@ -289,8 +290,6 @@ public:
 	linestyletype       m_linestyle;
 	float               m_linewidth;
 	color_t             m_bk_color;
-	void*               m_pattern_obj;
-	int                 m_pattern_type;
 	void*               m_texture;
 private:
 	void inittest(const WCHAR* strCallFunction = NULL) const;
@@ -300,8 +299,6 @@ public:
 	IMAGE(const IMAGE &img);              // 拷贝构造函数
 	IMAGE& operator = (const IMAGE &img); // 赋值运算符重载函数
 	~IMAGE();
-	void set_pattern(void* obj, int type);
-	void delete_pattern();
 	void gentexture(bool gen);
 public:
 	HDC getdc()        const {return m_hDC;}
@@ -309,9 +306,9 @@ public:
 	int getheight()    const {return m_height;}
 	color_t* getbuffer() const {return (color_t*)m_pBuffer;}
 #ifdef EGE_GDIPLUS
-	//TODO: thread safe
+	//TODO: thread safe?
 	inline const std::shared_ptr<Gdiplus::Graphics>& getGraphics() {
-		if (nullptr == m_graphics.get()) {
+		if (m_graphics.get() == nullptr) {
 			m_graphics=std::make_shared<Gdiplus::Graphics>(m_hDC);
 			m_graphics->SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
 			m_graphics->SetSmoothingMode(m_aa? Gdiplus::SmoothingModeAntiAlias : Gdiplus::SmoothingModeNone);
@@ -319,21 +316,35 @@ public:
 		return m_graphics;
 	}
 	inline const std::shared_ptr<Gdiplus::Pen>& getPen() {
-		if (nullptr == m_pen.get()) {
+		if (m_pen.get() == nullptr) {
 			m_pen = std::make_shared<Gdiplus::Pen>(m_color,m_linewidth);
 			m_pen->SetDashStyle(linestyle_to_dashstyle(m_linestyle.linestyle));
 		}
 		return m_pen;
 	}
-#endif
-	inline void enable_anti_alias(bool enable){
-		m_aa = enable;
-#ifdef EGE_GDIPLUS
-		if (nullptr != m_graphics.get()) {
-			m_graphics->SetSmoothingMode(m_aa? Gdiplus::SmoothingModeAntiAlias : Gdiplus::SmoothingModeNone);
+	inline const std::shared_ptr<Gdiplus::Brush>& getBrush() {
+		if (m_brush.get() == nullptr) {
+			m_brush = std::make_shared<Gdiplus::SolidBrush>(m_fillcolor);
 		}
-#endif
+		return m_brush;
 	}
+	inline void set_pattern(Gdiplus::Brush* brush) {
+		if (NULL == brush) {
+			m_brush.reset();
+		} else {
+			m_brush.reset(brush);
+		}
+	}
+#endif
+
+inline void enable_anti_alias(bool enable){
+	m_aa = enable;
+#ifdef EGE_GDIPLUS
+	if (m_graphics.get() != nullptr) {
+		m_graphics->SetSmoothingMode(m_aa? Gdiplus::SmoothingModeAntiAlias : Gdiplus::SmoothingModeNone);
+	}
+#endif
+}
 
 	int  resize(int width, int height);
 	void copyimage(PCIMAGE pSrcImg);

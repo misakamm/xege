@@ -462,13 +462,6 @@ typedef enum mouse_flag_e {
 	mouse_flag_ctrl     = 0x200,
 }mouse_flag_e;
 
-typedef enum pattern_type_e {
-	pattern_none            = 0,
-	pattern_lineargradient  = 1,
-	pattern_pathgradient    = 2,
-	pattern_texture         = 3,
-}pattern_type_e;
-
 typedef DWORD color_t;
 
 struct viewporttype {
