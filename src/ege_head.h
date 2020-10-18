@@ -274,8 +274,8 @@ public:
 	color_t     m_fillcolor;
 private:
 #ifdef EGE_GDIPLUS
-	std::shared_ptr<Gdiplus::Graphics> m_graphics;
-	std::shared_ptr<Gdiplus::Pen> m_pen;
+	std::unique_ptr<Gdiplus::Graphics> m_graphics;
+	std::unique_ptr<Gdiplus::Pen> m_pen;
 #endif
 	bool        m_aa;
 	void initimage(HDC refDC, int width, int height);
@@ -310,17 +310,17 @@ public:
 	color_t* getbuffer() const {return (color_t*)m_pBuffer;}
 #ifdef EGE_GDIPLUS
 	//TODO: thread safe
-	inline std::shared_ptr<Gdiplus::Graphics> getGraphics() {
+	inline const std::unique_ptr<Gdiplus::Graphics>& getGraphics() {
 		if (nullptr == m_graphics.get()) {
-			m_graphics=std::make_shared<Gdiplus::Graphics>(m_hDC);
+			m_graphics=std::make_unique<Gdiplus::Graphics>(m_hDC);
 			m_graphics->SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
 			m_graphics->SetSmoothingMode(m_aa? Gdiplus::SmoothingModeAntiAlias : Gdiplus::SmoothingModeNone);
 		}
 		return m_graphics;
 	}
-	inline std::shared_ptr<Gdiplus::Pen> getPen() {
+	inline const std::unique_ptr<Gdiplus::Pen>& getPen() {
 		if (nullptr == m_pen.get()) {
-			m_pen = std::make_shared<Gdiplus::Pen>(m_color,m_linewidth);
+			m_pen = std::make_unique<Gdiplus::Pen>(m_color,m_linewidth);
 			m_pen->SetDashStyle(linestyle_to_dashstyle(m_linestyle.linestyle));
 		}
 		return m_pen;

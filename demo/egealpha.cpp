@@ -20,6 +20,9 @@ int main()
     setlinestyle(CENTER_LINE,0,1,img);
     setlinewidth(10,img);
     ege_line(100,100,400,400,img);
+    setcolor(EGEACOLOR(255,GREEN),img);    
+    setlinestyle(DOTTED_LINE,0,1,img);
+    setlinewidth(5,img);    
     ege_ellipse(200,100,200,200,img);		
     putimage_withalpha(NULL,img,0,0);
     
