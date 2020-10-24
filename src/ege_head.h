@@ -243,6 +243,10 @@ struct EGEMSG {
 	UINT        flag;
 };
 
+#ifdef EGE_GDIPLUS
+Gdiplus::DashStyle linestyle_to_dashstyle(int linestyle);
+#endif
+
 // 定义图像对象
 class IMAGE
 {
@@ -255,8 +259,13 @@ public:
 	PDWORD      m_pBuffer;
 	color_t     m_color;
 	color_t     m_fillcolor;
-	bool        m_aa;
 private:
+#ifdef EGE_GDIPLUS
+	Gdiplus::Graphics* m_graphics;
+	Gdiplus::Pen* m_pen;
+	Gdiplus::Brush* m_brush;
+#endif
+	bool        m_aa;
 	void initimage(HDC refDC, int width, int height);
 	void construct(int width, int height);
 	void setdefaultattribute();
@@ -268,8 +277,6 @@ public:
 	linestyletype       m_linestyle;
 	float               m_linewidth;
 	color_t             m_bk_color;
-	void*               m_pattern_obj;
-	int                 m_pattern_type;
 	void*               m_texture;
 private:
 	void inittest(const WCHAR* strCallFunction = NULL) const;
@@ -279,14 +286,20 @@ public:
 	IMAGE(const IMAGE &img);              // 拷贝构造函数
 	IMAGE& operator = (const IMAGE &img); // 赋值运算符重载函数
 	~IMAGE();
-	void set_pattern(void* obj, int type);
-	void delete_pattern();
 	void gentexture(bool gen);
 public:
 	HDC getdc()        const {return m_hDC;}
 	int getwidth()     const {return m_width; }
 	int getheight()    const {return m_height;}
 	color_t* getbuffer() const {return (color_t*)m_pBuffer;}
+#ifdef EGE_GDIPLUS
+	//TODO: thread safe?
+	Gdiplus::Graphics* getGraphics();
+	Gdiplus::Pen* getPen();
+	Gdiplus::Brush* getBrush();
+	void set_pattern(Gdiplus::Brush* brush);
+#endif
+	void enable_anti_alias(bool enable);
 
 	int  resize(int width, int height);
 	void copyimage(PCIMAGE pSrcImg);

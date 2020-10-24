@@ -43,9 +43,12 @@ void IMAGE::reset() {
 	memset(&m_linestyle, 0, sizeof(m_linestyle));
 	m_linewidth = 0.0f;
 	m_bk_color = 0;
-	m_pattern_obj = NULL;
-	m_pattern_type = 0;
 	m_texture = NULL;
+#ifdef EGE_GDIPLUS
+	m_graphics=NULL;
+	m_pen=NULL;
+	m_brush=NULL;
+#endif
 }
 
 void IMAGE::construct(int width, int height) {
@@ -84,7 +87,6 @@ IMAGE::IMAGE(const IMAGE &img) {
 
 IMAGE::~IMAGE() {
 	gentexture(false);
-	delete_pattern();
 	deleteimage();
 }
 
@@ -95,28 +97,6 @@ void IMAGE::inittest(const WCHAR* strCallFunction) const {
 		MessageBoxW(graph_setting.hwnd, str, L"EGE ERROR message", MB_ICONSTOP);
 		ExitProcess((UINT)grError);
 	}
-}
-
-void
-IMAGE::set_pattern(void* obj, int type) {
-	delete_pattern();
-	m_pattern_type = type;
-	m_pattern_obj = obj;
-}
-
-void
-IMAGE::delete_pattern() {
-	if (m_pattern_obj == NULL) return;
-
-	if (m_pattern_type == pattern_none) {
-	} else if (m_pattern_type == pattern_lineargradient) {
-		delete (Gdiplus::LinearGradientBrush*)m_pattern_obj;
-	} else if (m_pattern_type == pattern_pathgradient) {
-		delete (Gdiplus::PathGradientBrush*)m_pattern_obj;
-	} else if (m_pattern_type == pattern_texture) {
-		delete (Gdiplus::TextureBrush*)m_pattern_obj;
-	}
-	m_pattern_obj = NULL;
 }
 
 void
@@ -137,6 +117,18 @@ IMAGE::gentexture(bool gen) {
 
 int
 IMAGE::deleteimage() {
+#ifdef EGE_GDIPLUS
+	if (NULL!=m_graphics)
+		delete m_graphics;
+	m_graphics=NULL;
+	if (NULL!=m_pen)
+		delete m_pen;
+	m_pen=NULL;
+	if (NULL!=m_brush)
+		delete m_brush;
+	m_brush=NULL;
+#endif
+
 	HBITMAP hbmp  = (HBITMAP)GetCurrentObject(m_hDC, OBJ_BITMAP);
 	HBRUSH  hbr   = (HBRUSH)GetCurrentObject(m_hDC, OBJ_BRUSH);
 	HPEN    hpen  = (HPEN)GetCurrentObject(m_hDC, OBJ_PEN);
@@ -149,7 +141,7 @@ IMAGE::deleteimage() {
 	DeleteObject(hbr);
 	DeleteObject(hpen);
 	DeleteObject(hfont);
-	
+
 	return 0;
 }
 
@@ -214,7 +206,48 @@ void IMAGE::setdefaultattribute() {
 	setlinestyle(PS_SOLID, 0, 1, this);
 	settextjustify(LEFT_TEXT, TOP_TEXT, this);
 	setfont(16, 0, "SimSun", this);
-	ege_enable_aa(false, this);
+	enable_anti_alias(false);
+}
+
+#ifdef EGE_GDIPLUS
+
+Gdiplus::Graphics*  IMAGE::getGraphics() {
+	if (NULL == m_graphics) {
+		m_graphics=new Gdiplus::Graphics(m_hDC);
+		m_graphics->SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
+		m_graphics->SetSmoothingMode(m_aa? Gdiplus::SmoothingModeAntiAlias : Gdiplus::SmoothingModeNone);
+	}
+	return m_graphics;
+}
+Gdiplus::Pen* IMAGE::getPen() {
+	if (NULL == m_pen) {
+		m_pen = new Gdiplus::Pen(m_color,m_linewidth);
+		m_pen->SetDashStyle(linestyle_to_dashstyle(m_linestyle.linestyle));
+	}
+	return m_pen;
+}
+Gdiplus::Brush* IMAGE::getBrush() {
+	if (NULL == m_brush) {
+		m_brush = new Gdiplus::SolidBrush(m_fillcolor);
+	}
+	return m_brush;
+}
+
+void IMAGE::set_pattern(Gdiplus::Brush* brush) {
+	if (NULL != m_brush) {
+		delete m_brush;
+	}
+	m_brush = brush;
+}
+#endif
+
+void IMAGE::enable_anti_alias(bool enable){
+	m_aa = enable;
+#ifdef EGE_GDIPLUS
+	if (NULL != m_graphics) {
+		m_graphics->SetSmoothingMode(m_aa? Gdiplus::SmoothingModeAntiAlias : Gdiplus::SmoothingModeNone);
+	}
+#endif
 }
 
 int
@@ -2990,7 +3023,7 @@ savepng(PCIMAGE pimg, LPCWSTR filename, int bAlpha) {
 void
 ege_enable_aa(bool enable, PIMAGE pimg) {
 	PIMAGE img  = CONVERT_IMAGE(pimg);
-	img->m_aa = enable;
+	img->enable_anti_alias(enable);
 	CONVERT_IMAGE_END;
 }
 
