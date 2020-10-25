@@ -2386,6 +2386,123 @@ void EGEAPI ege_drawtext(LPCWSTR textstring, float x, float y, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
+void EGEAPI ege_drawimage(PCIMAGE srcimg,int dstX, int dstY,PIMAGE pimg){
+	PIMAGE img = CONVERT_IMAGE(pimg);
+	if (img && srcimg) {
+		Gdiplus::Graphics* graphics=img->getGraphics();
+		Gdiplus::Bitmap bitmap(srcimg->getwidth(),srcimg->getheight(),4*srcimg->getwidth(),
+			PixelFormat32bppARGB,(BYTE *)(srcimg->m_pBuffer));
+		Gdiplus::Point p(dstX,dstY); 
+		graphics->DrawImage(&bitmap,p);
+	}
+	CONVERT_IMAGE_END;	
+} 
+
+void EGEAPI ege_drawimage(PCIMAGE srcimg,int dstX, int dstY, int dstWidth, int dstHeight,
+		int srcX, int srcY, int srcWidth, int srcHeight,PIMAGE pimg) {
+	PIMAGE img = CONVERT_IMAGE(pimg);
+	if (img && srcimg) {
+		Gdiplus::Graphics* graphics=img->getGraphics();
+		Gdiplus::Bitmap bitmap(srcimg->getwidth(),srcimg->getheight(),4*srcimg->getwidth(),
+			PixelFormat32bppARGB,(BYTE *)(srcimg->m_pBuffer));
+		Gdiplus::Point destPoints[3] = {
+   			Gdiplus::Point(dstX, dstY),
+   			Gdiplus::Point(dstX+dstWidth, dstY),
+   			Gdiplus::Point(dstX, dstY+dstHeight)};
+		graphics->DrawImage(&bitmap,destPoints,3,srcX,srcY,srcWidth,srcHeight,Gdiplus::UnitPixel,NULL,NULL,NULL);
+	}
+	CONVERT_IMAGE_END;			
+}
+
+void EGEAPI ege_transform_rotate(float angle,PIMAGE pimg) {
+	PIMAGE img = CONVERT_IMAGE(pimg);
+	if (img) {
+		Gdiplus::Graphics* graphics=img->getGraphics();
+		graphics->RotateTransform(angle);		
+	}
+	CONVERT_IMAGE_END;	
+}
+
+void EGEAPI ege_transform_translate(float x,float y,PIMAGE pimg) {
+	PIMAGE img = CONVERT_IMAGE(pimg);
+	if (img) {
+		Gdiplus::Graphics* graphics=img->getGraphics();
+		graphics->TranslateTransform(x,y);		
+	}
+	CONVERT_IMAGE_END;	
+}
+
+void EGEAPI ege_transform_scale(float scale_x, float scale_y,PIMAGE pimg) {
+	PIMAGE img = CONVERT_IMAGE(pimg);
+	if (img) {
+		Gdiplus::Graphics* graphics=img->getGraphics();
+		graphics->ScaleTransform(scale_x,scale_y);		
+	}
+	CONVERT_IMAGE_END;	
+}
+
+void EGEAPI ege_transform_reset(PIMAGE pimg){
+	PIMAGE img = CONVERT_IMAGE(pimg);
+	if (img) {
+		Gdiplus::Graphics* graphics=img->getGraphics();
+		graphics->ResetTransform();
+	}
+	CONVERT_IMAGE_END;	
+}
+void EGEAPI ege_get_transform(ege_transform_matrix* pmatrix, PIMAGE pimg) {
+	PIMAGE img = CONVERT_IMAGE(pimg);
+	if (img) {
+		Gdiplus::Graphics* graphics=img->getGraphics();
+		Gdiplus::Matrix m;
+		Gdiplus::REAL elements[6];
+		graphics->GetTransform(&m);
+		m.GetElements(elements);
+		pmatrix->m11 = elements[0];
+		pmatrix->m12 = elements[1];
+		pmatrix->m21 = elements[2];
+		pmatrix->m22 = elements[3];
+		pmatrix->m31 = elements[4];
+		pmatrix->m32 = elements[5];		
+	}
+	CONVERT_IMAGE_END;	
+}
+
+void EGEAPI ege_set_transform(ege_transform_matrix* const pmatrix, PIMAGE pimg) {
+	PIMAGE img = CONVERT_IMAGE(pimg);
+	if (img) {
+		Gdiplus::Graphics* graphics=img->getGraphics();
+		Gdiplus::Matrix m(pmatrix->m11,pmatrix->m12,pmatrix->m21,pmatrix->m22,pmatrix->m31,pmatrix->m32);
+		graphics->SetTransform(&m);
+	}
+	CONVERT_IMAGE_END;		
+}
+
+ege_point EGEAPI ege_transform_calc(ege_point p, PIMAGE pimg) {
+	return ege_transform_calc(p.x,p.y,pimg);		
+}
+
+ege_point EGEAPI ege_transform_calc(float x, float y, PIMAGE pimg) {
+	PIMAGE img = CONVERT_IMAGE(pimg);
+	if (img) {
+		Gdiplus::Graphics* graphics=img->getGraphics();
+		Gdiplus::Matrix m;
+		Gdiplus::REAL elements[6],m11,m12,m21,m22,m31,m32;
+		graphics->GetTransform(&m);
+		m.GetElements(elements);
+		m11 = elements[0];
+		m12 = elements[1];
+		m21 = elements[2];
+		m22 = elements[3];
+		m31 = elements[4];
+		m32 = elements[5];	
+		return {x*m11+y*m21+m31, x*m12+y*m22+m32};
+	} else {
+		return {0,0};
+	}
+	CONVERT_IMAGE_END;	
+}
+
+
 #endif //EGEGDIPLUS
 
 HWND
