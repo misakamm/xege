@@ -801,6 +801,31 @@ void EGEAPI ege_gentexture(bool gen, PIMAGE pimg = NULL);
 void EGEAPI ege_puttexture(PCIMAGE srcimg, float x, float y, float w, float h, PIMAGE pimg = NULL);
 void EGEAPI ege_puttexture(PCIMAGE srcimg, ege_rect dest, PIMAGE pimg = NULL);
 void EGEAPI ege_puttexture(PCIMAGE srcimg, ege_rect dest, ege_rect src, PIMAGE pimg = NULL);
+
+//draw image
+void EGEAPI ege_drawimage(PCIMAGE srcimg,int dstX, int dstY,PIMAGE pimg = NULL);
+void EGEAPI ege_drawimage(PCIMAGE srcimg,int dstX, int dstY, int dstWidth, int dstHeight, int srcX, int srcY, int srcWidth, int srcHeight,PIMAGE pimg = NULL);
+
+// matrix for transformation
+typedef struct ege_transform_matrix{
+	float m11;
+	float m12;
+	float m21;
+	float m22;
+	float m31;
+	float m32;	
+}ege_transform_matrix;
+
+//transforms
+void EGEAPI ege_transform_rotate(float angle,PIMAGE pimg = NULL);
+void EGEAPI ege_transform_translate(float x,float y,PIMAGE pimg = NULL);
+void EGEAPI ege_transform_scale(float scale_x, float scale_y,PIMAGE pimg = NULL);
+void EGEAPI ege_transform_reset(PIMAGE pimg = NULL);
+void EGEAPI ege_get_transform(ege_transform_matrix* pmatrix, PIMAGE pimg = NULL);
+void EGEAPI ege_set_transform(ege_transform_matrix* const pmatrix, PIMAGE pimg = NULL);
+ege_point EGEAPI ege_transform_calc(ege_point p, PIMAGE pimg = NULL); // Calculate transformed coordination of p; 
+ege_point EGEAPI ege_transform_calc(float x, float y, PIMAGE pimg = NULL); // Calculate transformed coordination of point(x,y);
+
 //
 #endif
 

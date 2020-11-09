@@ -1,0 +1,43 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ege_set_transform</title>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">绘制图形相关函数</a>-＞ege_set_transform</font>
+<font size="4">
+<font size="5" color="#0000FF"><strong>功能：</strong></font>
+设置图片的坐标变换矩阵。
+
+<font size="5" color="#0000FF"><strong>声明：</strong></font>
+
+<pre><font color=#008000>// 设置坐标变换矩阵</font>
+<font color=#0000FF>void </font><font color=#008080>ege_set_transform</font>(
+    <font color=#0000FF>ege_transform_matrix</font>* pmatrix,              <font color=#008000>//坐标变换矩阵指针，该指针必须指向一个有效的矩阵对象</font>
+    <font color=#800080>PCIMAGE </font>pimg = <font color=#800080>NULL  </font><font color=#008000>//目标图像指针，NULL表示绘制到屏幕</font>
+);
+</pre>
+
+<font size="5" color="#0000FF"><strong>参数：</strong></font>
+（详见函数原型内的注释）
+备注：该函数通常与ege_get_transform函数配合使用。
+
+<font size="5" color="#0000FF"><strong>返回值：</strong></font>
+（无）
+
+<font size="5" color="#0000FF"><strong>示例：</strong></font>
+下面的代码将图片img沿中心点顺时针旋转45度后，复制到屏幕的中心：
+<pre>
+<font color=#800080>ege_transform_matrix</font> m;
+//保存旧的坐标变换矩阵
+<font color=#008080>ege_get_transform</font>(&m);
+<font color=#008080>ege_transform_translate</font>(<font color=#008080>getwidth</font>(),<font color=#008080>getheight</font>()); //平移到屏幕中心
+<font color=#008080>ege_transform_rotate</font>(45.0); // 顺时针旋转45度
+<font color=#008080>ege_transform_translate</font>(-<font color=#008080>getwidth</font>(img)/2, -<font color=#008080>getheight</font>(img)/2); // 平移图片img中心
+<font color=#008080>ege_drawimage</font>(img,0,0); 
+//恢复原有坐标变换
+<font color=#008080>ege_set_transform</font>(&m);
+</pre>
+
+</body>
+
