@@ -141,5 +141,6 @@ int main()
         }
         cleardevice();
     }
+    closegraph();
     return 0;
 }

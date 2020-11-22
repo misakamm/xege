@@ -388,7 +388,7 @@ IMAGE::getimage(LPCWSTR filename, int zoomWidth, int zoomHeight) {
 	{
 		int ret = getimage_pngfile(this, filename);
 		//grIOerror means it's not a png file
-		if (ret == grIOerror) return ret;
+		if (ret != grIOerror) return ret;
 	}
 
 	struct IPicture *pPicture;
