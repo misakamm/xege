@@ -89,6 +89,10 @@
 #include <windows.h>	
 #endif
 
+#if defined(_MSC_VER) && (_MSC_VER <= 1300)
+#define _MSC_VC6
+#endif
+
 #if defined(_MSC_VER) && _MSC_VER <= 1200 && !defined(SetWindowLongPtr)
 #	define SetWindowLongPtrW   SetWindowLongW
 #	define GetWindowLongPtrW   GetWindowLongW
@@ -830,7 +834,7 @@ ege_point EGEAPI ege_transform_calc(float x, float y, PIMAGE pimg = NULL); // Ca
 #endif
 
 //We don't support VC 6
-#if _MSC_VER < 1300 
+#ifndef _MSC_VC6
 //Console 
 BOOL init_console(); // Initialize the console 
 void clear_console(); // clear the console

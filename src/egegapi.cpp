@@ -39,7 +39,7 @@
 namespace ege {
 
 //We don't support vc6
-#if _MSC_VER < 1300 
+#ifndef _MSC_VC6 
 
 static HANDLE hInput=NULL;
 static HANDLE hOutput=NULL;
