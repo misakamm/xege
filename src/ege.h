@@ -829,6 +829,16 @@ ege_point EGEAPI ege_transform_calc(float x, float y, PIMAGE pimg = NULL); // Ca
 //
 #endif
 
+//We don't support VC 6
+#if _MSC_VER < 1300 
+//Console 
+BOOL init_console(); // Initialize the console 
+void clear_console(); // clear the console
+BOOL show_console(); //Show the Console
+BOOL hide_console(); // hide the console
+BOOL close_console(); //close the console and restore the old STD I/O
+#endif
+
 //int  EGEAPI Begin2d();
 //void EGEAPI EndRender();
 
