@@ -1010,9 +1010,7 @@ IMAGE::putimage_withalpha(
 	const PIMAGE img = CONVERT_IMAGE(imgdest);
 	if (img) {
 		PCIMAGE imgsrc = this;
-		int y, x;
-		DWORD ddx, dsx;
-		DWORD *pdp, *psp;
+		BLENDFUNCTION bf;
 		// fix rect
 		fix_rect_1size(
 			img,
@@ -1024,20 +1022,14 @@ IMAGE::putimage_withalpha(
 			&nWidthSrc,
 			&nHeightSrc
 			);
+		bf.BlendOp = AC_SRC_OVER;
+		bf.BlendFlags = 0;
+		bf.SourceConstantAlpha = 0xff;  
+		bf.AlphaFormat = AC_SRC_ALPHA;  
 		// draw 
-		pdp = img->m_pBuffer + nYOriginDest * img->m_width + nXOriginDest;
-		psp = imgsrc->m_pBuffer + nYOriginSrc  * imgsrc->m_width + nXOriginSrc;
-		ddx = img->m_width - nWidthSrc;
-		dsx = imgsrc->m_width - nWidthSrc;
-		for (y=0; y<nHeightSrc; ++y) {
-			for (x=0; x<nWidthSrc; ++x, ++psp, ++pdp) {
-				DWORD d=*pdp, s=*psp;
-				DWORD alpha = EGEGET_A(s);
-				*pdp = alphablend_inline(d, s, alpha);
-			}
-			pdp += ddx;
-			psp += dsx;
-		}
+		AlphaBlend(img->m_hDC,nXOriginDest,nYOriginDest,nWidthSrc,
+			nHeightSrc,m_hDC,nXOriginSrc,nYOriginSrc,
+			nWidthSrc,nHeightSrc,bf);
 	}
 	CONVERT_IMAGE_END;
 	return grOk;
