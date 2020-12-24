@@ -1052,6 +1052,42 @@ bar(int left, int top, int right, int bottom, PIMAGE pimg) {
 }
 
 void
+fillroundrect(int left, int top, int right, int bottom, int xradius, int yradius, PIMAGE pimg) {
+	PIMAGE img = CONVERT_IMAGE(pimg);
+	if (img) {
+		RoundRect(img->m_hDC,left,top,right,bottom,xradius*2,yradius*2); 
+	}
+	CONVERT_IMAGE_END;
+}
+
+void EGEAPI roundrect(int left, int top, int right, int bottom, int xradius, int yradius, PIMAGE pimg){
+	PIMAGE img = CONVERT_IMAGE(pimg);
+	if (img) {
+		LOGBRUSH lbr;
+		HBRUSH hbr;
+		HGDIOBJ hOld;
+		lbr.lbStyle = BS_NULL;
+		lbr.lbHatch = BS_NULL; //ignored
+		lbr.lbColor = WHITE; // ignored
+		hbr = CreateBrushIndirect(&lbr);
+		hOld=SelectObject(img->m_hDC,hbr);
+		RoundRect(img->m_hDC,left,top,right,bottom,xradius*2,yradius*2); 
+		SelectObject(img->m_hDC,hOld); 
+		DeleteObject(hbr);		
+	}
+	CONVERT_IMAGE_END;
+}
+
+
+void EGEAPI fillrect(int left, int top, int right, int bottom, PIMAGE pimg){
+	PIMAGE img = CONVERT_IMAGE(pimg);
+	if (img) {
+		Rectangle(img->m_hDC,left,top,right,bottom); 
+	}
+	CONVERT_IMAGE_END;
+}
+
+void
 bar3d(int x1, int y1, int x2, int y2, int depth, int topflag, PIMAGE pimg) {
 	--x2; --y2;
 	{
