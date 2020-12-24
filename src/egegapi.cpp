@@ -1060,7 +1060,8 @@ fillroundrect(int left, int top, int right, int bottom, int xradius, int yradius
 	CONVERT_IMAGE_END;
 }
 
-void EGEAPI roundrect(int left, int top, int right, int bottom, int xradius, int yradius, PIMAGE pimg){
+void
+roundrect(int left, int top, int right, int bottom, int xradius, int yradius, PIMAGE pimg){
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
 		LOGBRUSH lbr;
@@ -1079,7 +1080,8 @@ void EGEAPI roundrect(int left, int top, int right, int bottom, int xradius, int
 }
 
 
-void EGEAPI fillrect(int left, int top, int right, int bottom, PIMAGE pimg){
+void
+fillrect(int left, int top, int right, int bottom, PIMAGE pimg){
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
 		Rectangle(img->m_hDC,left,top,right,bottom); 
