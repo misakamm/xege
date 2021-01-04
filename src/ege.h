@@ -89,6 +89,10 @@
 #include <windows.h>	
 #endif
 
+#if defined(_MSC_VER) && (_MSC_VER <= 1300)
+#define _MSC_VC6
+#endif
+
 #if defined(_MSC_VER) && _MSC_VER <= 1200 && !defined(SetWindowLongPtr)
 #	define SetWindowLongPtrW   SetWindowLongW
 #	define GetWindowLongPtrW   GetWindowLongW
@@ -746,6 +750,7 @@ void EGEAPI pieslice(int x, int y, int stangle, int endangle, int radius, PIMAGE
 void EGEAPI ellipse(int x, int y, int stangle, int endangle, int xradius, int yradius, PIMAGE pimg = NULL);// »­ÍÖÔ²»¡Ïß
 void EGEAPI fillellipse(int x, int y, int xradius, int yradius, PIMAGE pimg = NULL);                       // »­Ìî³äÍÖÔ²
 void EGEAPI sector(int x, int y, int stangle, int endangle, int xradius, int yradius, PIMAGE pimg = NULL); // »­Ìî³äÍÖÔ²ÉÈÐÎ
+void EGEAPI roundrect(int left, int top, int right, int bottom, int xradius, int yradius, PIMAGE pimg = NULL); //»­Ô²½Ç¾ØÐÎ 
 
 void EGEAPI arcf(float x, float y, float stangle, float endangle, float radius, PIMAGE pimg = NULL);                    // »­Ô²»¡
 void EGEAPI circlef(float x, float y, float radius, PIMAGE pimg = NULL);                                                // »­Ô²
@@ -756,6 +761,9 @@ void EGEAPI sectorf(float x, float y, float stangle, float endangle, float xradi
 
 void EGEAPI bar(int left, int top, int right, int bottom, PIMAGE pimg = NULL);                             // »­ÎÞ±ß¿òÌî³ä¾ØÐÎ
 void EGEAPI bar3d(int left, int top, int right, int bottom, int depth, int topflag, PIMAGE pimg = NULL);   // »­ÓÐ±ß¿òÈýÎ¬Ìî³ä¾ØÐÎ
+
+void EGEAPI fillrect(int left, int top, int right, int bottom, PIMAGE pimg = NULL);                      //»­Ìî³ä¾ØÐÎ 
+void EGEAPI fillroundrect(int left, int top, int right, int bottom, int xradius, int yradius, PIMAGE pimg = NULL); //»­Ìî³äÔ²½Ç¾ØÐÎ 
 
 void EGEAPI drawpoly(int numpoints, const int *polypoints, PIMAGE pimg = NULL);     // »­¶à±ßÐÎ
 void EGEAPI drawlines(int numlines, const int *polypoints, PIMAGE pimg = NULL);     // »­¶àÌõ²»Á¬ÐøÏß£¨À©Õ¹º¯Êý£©
@@ -827,6 +835,16 @@ ege_point EGEAPI ege_transform_calc(ege_point p, PIMAGE pimg = NULL); // Calcula
 ege_point EGEAPI ege_transform_calc(float x, float y, PIMAGE pimg = NULL); // Calculate transformed coordination of point(x,y);
 
 //
+#endif
+
+//We don't support VC 6
+#ifndef _MSC_VC6
+//Console 
+BOOL init_console(); // Initialize the console 
+void clear_console(); // clear the console
+BOOL show_console(); //Show the Console
+BOOL hide_console(); // hide the console
+BOOL close_console(); //close the console and restore the old STD I/O
 #endif
 
 //int  EGEAPI Begin2d();
