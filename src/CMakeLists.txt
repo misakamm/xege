@@ -20,12 +20,12 @@ target_sources(xege
   )
 
 target_compile_definitions(xege
-  # Specifies that the minimum required platform is Windows 95/NT4.
-  PRIVATE WINVER=0x0500
-  # Specifies that the minimum required platform is Windows 95/NT4.
-  PRIVATE _WIN32_WINNT=0x0500
-  # Specifies that the minimum required platform is Windows 98.
-  PRIVATE _WIN32_WINDOWS=0x0500
+  # Specifies that the minimum required platform is Windows XP.
+  PRIVATE WINVER=0x0510
+  # Specifies that the minimum required platform is Windows XP.
+  PRIVATE _WIN32_WINNT=0x0510
+  # Specifies that the minimum required platform is Windows XP.
+  PRIVATE _WIN32_WINDOWS=0x0510
   )
 
 if (MSVC)

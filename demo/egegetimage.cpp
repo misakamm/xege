@@ -20,8 +20,11 @@ int main()
 		getch();
 		exit(-1);
 	}    
-	putimage(50,50,img);
+	putimage_withalpha(NULL,img,50,50);
+	putimage_withalpha(NULL,img,50,200,150,150,0,0,getwidth(img),getheight(img));
 	delimage(img);
+
+
 	
 	// test read jpg file
 	img=newimage();

@@ -957,7 +957,7 @@ IMAGE::putimage_alphatransparent(
 	int nWidthSrc,          // width of source rectangle
 	int nHeightSrc          // height of source rectangle
 ) const {
-	inittest(L"IMAGE::putimage_alphablend");
+	inittest(L"IMAGE::putimage_alphatransparent");
 	const PIMAGE img = CONVERT_IMAGE(imgdest);
 	if (img) {
 		PCIMAGE imgsrc = this;
@@ -1006,13 +1006,11 @@ IMAGE::putimage_withalpha(
 	int nWidthSrc,          // width of source rectangle
 	int nHeightSrc          // height of source rectangle
 ) const {
-	inittest(L"IMAGE::putimage_alphablend");
+	inittest(L"IMAGE::putimage_withalpha");
 	const PIMAGE img = CONVERT_IMAGE(imgdest);
 	if (img) {
 		PCIMAGE imgsrc = this;
-		int y, x;
-		DWORD ddx, dsx;
-		DWORD *pdp, *psp;
+		BLENDFUNCTION bf;
 		// fix rect
 		fix_rect_1size(
 			img,
@@ -1024,24 +1022,60 @@ IMAGE::putimage_withalpha(
 			&nWidthSrc,
 			&nHeightSrc
 			);
+		bf.BlendOp = AC_SRC_OVER;
+		bf.BlendFlags = 0;
+		bf.SourceConstantAlpha = 0xff;  
+		bf.AlphaFormat = AC_SRC_ALPHA;  
 		// draw 
-		pdp = img->m_pBuffer + nYOriginDest * img->m_width + nXOriginDest;
-		psp = imgsrc->m_pBuffer + nYOriginSrc  * imgsrc->m_width + nXOriginSrc;
-		ddx = img->m_width - nWidthSrc;
-		dsx = imgsrc->m_width - nWidthSrc;
-		for (y=0; y<nHeightSrc; ++y) {
-			for (x=0; x<nWidthSrc; ++x, ++psp, ++pdp) {
-				DWORD d=*pdp, s=*psp;
-				DWORD alpha = EGEGET_A(s);
-				*pdp = alphablend_inline(d, s, alpha);
-			}
-			pdp += ddx;
-			psp += dsx;
-		}
+		AlphaBlend(img->m_hDC,nXOriginDest,nYOriginDest,nWidthSrc,
+			nHeightSrc,m_hDC,nXOriginSrc,nYOriginSrc,
+			nWidthSrc,nHeightSrc,bf);
 	}
 	CONVERT_IMAGE_END;
 	return grOk;
 }
+
+int
+IMAGE::putimage_withalpha(
+	PIMAGE imgdest,         // handle to dest
+	int nXOriginDest,       // x-coord of destination upper-left corner
+	int nYOriginDest,       // y-coord of destination upper-left corner
+	int nWidthDest,         // width of destination rectangle
+	int nHeightDest,        // height of destination rectangle	
+	int nXOriginSrc,        // x-coord of source upper-left corner
+	int nYOriginSrc,        // y-coord of source upper-left corner
+	int nWidthSrc,          // width of source rectangle
+	int nHeightSrc          // height of source rectangle
+) const {
+	inittest(L"IMAGE::putimage_withalpha");
+	const PIMAGE img = CONVERT_IMAGE(imgdest);
+	if (img) {
+		PCIMAGE imgsrc = this;
+		BLENDFUNCTION bf;
+		// fix rect
+		fix_rect_1size(
+			img,
+			imgsrc,
+			&nXOriginDest,
+			&nYOriginDest,
+			&nXOriginSrc,
+			&nYOriginSrc,
+			&nWidthSrc,
+			&nHeightSrc
+			);
+		bf.BlendOp = AC_SRC_OVER;
+		bf.BlendFlags = 0;
+		bf.SourceConstantAlpha = 0xff;  
+		bf.AlphaFormat = AC_SRC_ALPHA;  
+		// draw 
+		AlphaBlend(img->m_hDC,nXOriginDest,nYOriginDest,nWidthDest,
+			nHeightDest,m_hDC,nXOriginSrc,nYOriginSrc,
+			nWidthSrc,nHeightSrc,bf);
+	}
+	CONVERT_IMAGE_END;
+	return grOk;
+}
+
 
 int
 IMAGE::putimage_alphafilter(
@@ -1054,7 +1088,7 @@ IMAGE::putimage_alphafilter(
 	int nWidthSrc,          // width of source rectangle
 	int nHeightSrc          // height of source rectangle
 ) const {
-	inittest(L"IMAGE::putimage_alphablend");
+	inittest(L"IMAGE::putimage_alphafilter");
 	const PIMAGE img = CONVERT_IMAGE(imgdest);
 	if (img) {
 		PCIMAGE imgsrc = this;
@@ -2913,6 +2947,22 @@ putimage_withalpha(
 {
 	imgsrc = CONVERT_IMAGE_CONST(imgsrc);
 	return imgsrc->putimage_withalpha(imgdest, nXOriginDest, nYOriginDest, nXOriginSrc, nYOriginSrc, nWidthSrc, nHeightSrc);
+}
+
+int EGEAPI putimage_withalpha(
+	PIMAGE imgdest,         // handle to dest
+	PCIMAGE imgsrc,         // handle to source
+	int nXOriginDest,       // x-coord of destination upper-left corner
+	int nYOriginDest,       // y-coord of destination upper-left corner
+	int nWidthDest,         // width of destination rectangle
+	int nHeightDest,        // height of destination rectangle
+	int nXOriginSrc,        // x-coord of source upper-left corner
+	int nYOriginSrc,        // y-coord of source upper-left corner
+	int nWidthSrc,          // width of source rectangle
+	int nHeightSrc          // height of source rectangle
+){
+	imgsrc = CONVERT_IMAGE_CONST(imgsrc);
+	return imgsrc->putimage_withalpha(imgdest, nXOriginDest, nYOriginDest, nWidthDest,nHeightDest, nXOriginSrc, nYOriginSrc, nWidthSrc, nHeightSrc);	
 }
 
 int putimage_alphafilter(

@@ -361,7 +361,18 @@ public:
 		int nWidthSrc = 0,      // width of source rectangle
 		int nHeightSrc = 0      // height of source rectangle
 	) const;
-
+	int
+	putimage_withalpha(
+		PIMAGE imgdest,         // handle to dest
+		int nXOriginDest,       // x-coord of destination upper-left corner
+		int nYOriginDest,       // y-coord of destination upper-left corner
+		int nWidthDest,         // width of destination rectangle
+		int nHeightDest,        // height of destination rectangle
+		int nXOriginSrc,        // x-coord of source upper-left corner
+		int nYOriginSrc,        // y-coord of source upper-left corner
+		int nWidthSrc,          // width of source rectangle
+		int nHeightSrc          // height of source rectangle
+	) const;
 	int
 	putimage_alphafilter(
 		PIMAGE imgdest,         // handle to dest
