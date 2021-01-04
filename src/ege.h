@@ -746,6 +746,7 @@ void EGEAPI pieslice(int x, int y, int stangle, int endangle, int radius, PIMAGE
 void EGEAPI ellipse(int x, int y, int stangle, int endangle, int xradius, int yradius, PIMAGE pimg = NULL);// ª≠Õ÷‘≤ª°œﬂ
 void EGEAPI fillellipse(int x, int y, int xradius, int yradius, PIMAGE pimg = NULL);                       // ª≠ÃÓ≥‰Õ÷‘≤
 void EGEAPI sector(int x, int y, int stangle, int endangle, int xradius, int yradius, PIMAGE pimg = NULL); // ª≠ÃÓ≥‰Õ÷‘≤…»–Œ
+void EGEAPI roundrect(int left, int top, int right, int bottom, int xradius, int yradius, PIMAGE pimg = NULL); //ª≠‘≤Ω«æÿ–Œ 
 
 void EGEAPI arcf(float x, float y, float stangle, float endangle, float radius, PIMAGE pimg = NULL);                    // ª≠‘≤ª°
 void EGEAPI circlef(float x, float y, float radius, PIMAGE pimg = NULL);                                                // ª≠‘≤
@@ -756,6 +757,9 @@ void EGEAPI sectorf(float x, float y, float stangle, float endangle, float xradi
 
 void EGEAPI bar(int left, int top, int right, int bottom, PIMAGE pimg = NULL);                             // ª≠Œﬁ±ﬂøÚÃÓ≥‰æÿ–Œ
 void EGEAPI bar3d(int left, int top, int right, int bottom, int depth, int topflag, PIMAGE pimg = NULL);   // ª≠”–±ﬂøÚ»˝Œ¨ÃÓ≥‰æÿ–Œ
+
+void EGEAPI fillrect(int left, int top, int right, int bottom, PIMAGE pimg = NULL);                      //ª≠ÃÓ≥‰æÿ–Œ 
+void EGEAPI fillroundrect(int left, int top, int right, int bottom, int xradius, int yradius, PIMAGE pimg = NULL); //ª≠ÃÓ≥‰‘≤Ω«æÿ–Œ 
 
 void EGEAPI drawpoly(int numpoints, const int *polypoints, PIMAGE pimg = NULL);     // ª≠∂‡±ﬂ–Œ
 void EGEAPI drawlines(int numlines, const int *polypoints, PIMAGE pimg = NULL);     // ª≠∂‡Ãı≤ª¡¨–¯œﬂ£®¿©’π∫Ø ˝£©
