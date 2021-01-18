@@ -82,13 +82,13 @@ BOOL init_console(){
 		DrawMenuBar(hConsoleWnd);
 	}
 
-	hCrt=_open_osfhandle((long)hOutput,_O_TEXT);
+	hCrt=_open_osfhandle((intptr_t)hOutput,_O_TEXT);
 	hf=_fdopen( hCrt, "w" );
 	fOldOut=*stdout;
 	*stdout=*hf;
 	setvbuf( stdout, NULL, _IONBF, 0 );
 
-	hCrt=_open_osfhandle((long)hInput,_O_TEXT);
+	hCrt=_open_osfhandle((intptr_t)hInput,_O_TEXT);
 	hf=_fdopen(hCrt, "r");
 	fOldIn=*stdin;
 	*stdin=*hf;
