@@ -1139,8 +1139,8 @@ sector(int x, int y, int stangle, int endangle, int xradius, int yradius, PIMAGE
 		Pie(img->m_hDC,
 			x-xradius, y-yradius,
 			x+xradius, y+yradius,
-			(int)round(x + xradius*cos(sr)), (int)round(y - yradius*sin(sr)),
-			(int)round(x + xradius*cos(er)), (int)round(y - yradius*sin(er))
+			(int)ege_round(x + xradius*cos(sr)), (int)ege_round(y - yradius*sin(sr)),
+			(int)ege_round(x + xradius*cos(er)), (int)ege_round(y - yradius*sin(er))
 			);
 	}
 	CONVERT_IMAGE_END;
@@ -1154,8 +1154,8 @@ sectorf(float x, float y, float stangle, float endangle, float xradius, float yr
 		Pie(img->m_hDC,
 			(int)(x-xradius), (int)(y-yradius),
 			(int)(x+xradius), (int)(y+yradius),
-			(int)round(x + xradius*cos(sr)), (int)round(y - yradius*sin(sr)),
-			(int)round(x + xradius*cos(er)), (int)round(y - yradius*sin(er))
+			(int)ege_round(x + xradius*cos(sr)), (int)ege_round(y - yradius*sin(sr)),
+			(int)ege_round(x + xradius*cos(er)), (int)ege_round(y - yradius*sin(er))
 			);
 	}
 	CONVERT_IMAGE_END;
