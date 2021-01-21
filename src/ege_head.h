@@ -618,6 +618,11 @@ inline int ege_round(float x) {
 int ege_round(float x);
 #endif
 
+// FIXME: This seems to be VC6 SDK problem
+#ifndef AC_SRC_ALPHA
+#define AC_SRC_ALPHA 0x01
+#endif
+
 } // namespace ege
 
 #endif /*_EGE_HEAD_H_*/
