@@ -3043,7 +3043,7 @@ static BOOL nocaseends(LPCWSTR suffix,LPCWSTR text) {
 
 
 int
-saveimage(PCIMAGE pimg, LPCSTR  filename,image_type_e type) {
+saveimage(PCIMAGE pimg, LPCSTR  filename, image_type_e type) {
 	PCIMAGE img = CONVERT_IMAGE_CONST(pimg);
 	int ret = 0;
 	if (img) {
@@ -3069,7 +3069,7 @@ saveimage(PCIMAGE pimg, LPCSTR  filename,image_type_e type) {
 
 
 int
-saveimage(PCIMAGE pimg, LPCWSTR filename,image_type_e type) {
+saveimage(PCIMAGE pimg, LPCWSTR filename, image_type_e type) {
 	PCIMAGE img = CONVERT_IMAGE_CONST(pimg);
 	int ret = 0;
 	if (img) {
