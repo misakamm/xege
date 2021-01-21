@@ -2669,6 +2669,7 @@ ege_point EGEAPI ege_transform_calc(ege_point p, PIMAGE pimg) {
 
 ege_point EGEAPI ege_transform_calc(float x, float y, PIMAGE pimg) {
 	PIMAGE img = CONVERT_IMAGE(pimg);
+	ege_point p;
 	if (img) {
 		Gdiplus::Graphics* graphics=img->getGraphics();
 		Gdiplus::Matrix m;
@@ -2681,11 +2682,14 @@ ege_point EGEAPI ege_transform_calc(float x, float y, PIMAGE pimg) {
 		m22 = elements[3];
 		m31 = elements[4];
 		m32 = elements[5];	
-		return {x*m11+y*m21+m31, x*m12+y*m22+m32};
+		p.x = x*m11+y*m21+m31;
+		p.y = x*m12+y*m22+m32;
 	} else {
-		return {0,0};
+		p.x = 0;
+		p.y = 0;
 	}
-	CONVERT_IMAGE_END;	
+	CONVERT_IMAGE_END;
+	return p;
 }
 
 
