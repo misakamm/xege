@@ -469,6 +469,12 @@ typedef enum mouse_flag_e {
 	mouse_flag_ctrl     = 0x200,
 }mouse_flag_e;
 
+typedef enum {
+	image_type_png,
+	image_type_bmp,
+	image_type_auto_detect
+} image_type_e;
+
 typedef DWORD color_t;
 
 struct viewporttype {
@@ -950,8 +956,8 @@ void EGEAPI putimage(int dstX, int dstY, int dstWidth, int dstHeight, PCIMAGE pS
 void EGEAPI putimage(PIMAGE pDstImg, int dstX, int dstY, PCIMAGE pSrcImg, DWORD dwRop = SRCCOPY);                                                                 // 绘制图像到另一图像中
 void EGEAPI putimage(PIMAGE pDstImg, int dstX, int dstY, int dstWidth, int dstHeight, PCIMAGE pSrcImg, int srcX, int srcY, DWORD dwRop = SRCCOPY);                // 绘制图像到另一图像中(指定宽高)
 void EGEAPI putimage(PIMAGE pDstImg, int dstX, int dstY, int dstWidth, int dstHeight, PCIMAGE pSrcImg, int srcX, int srcY, int srcWidth, int srcHeight, DWORD dwRop = SRCCOPY);   // 绘制图像到另一图像中(指定源宽高和目标宽高进行拉伸)
-int  EGEAPI saveimage(PCIMAGE pimg, LPCSTR  filename);
-int  EGEAPI saveimage(PCIMAGE pimg, LPCWSTR filename);
+int  EGEAPI saveimage(PCIMAGE pimg, LPCSTR  filename, image_type_e type=image_type_auto_detect);
+int  EGEAPI saveimage(PCIMAGE pimg, LPCWSTR filename, image_type_e type=image_type_auto_detect);
 int  EGEAPI savepng(PCIMAGE pimg, LPCSTR  filename, int bAlpha = 0);
 int  EGEAPI savepng(PCIMAGE pimg, LPCWSTR filename, int bAlpha = 0);
 int  EGEAPI getimage_pngfile(PIMAGE pimg, LPCSTR  filename);
