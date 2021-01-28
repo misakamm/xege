@@ -3053,7 +3053,6 @@ saveimage(PCIMAGE pimg, LPCSTR  filename) {
 			ret = savepng(pimg,filename);
 		else
 			ret = savepng(pimg,filename);
-		}
 	}
 	CONVERT_IMAGE_END;
 	return ret;
