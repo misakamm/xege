@@ -3043,24 +3043,16 @@ static BOOL nocaseends(LPCWSTR suffix,LPCWSTR text) {
 
 
 int
-saveimage(PCIMAGE pimg, LPCSTR  filename, image_type_e type) {
+saveimage(PCIMAGE pimg, LPCSTR  filename) {
 	PCIMAGE img = CONVERT_IMAGE_CONST(pimg);
 	int ret = 0;
 	if (img) {
-		switch(type) {
-			case image_type_png:
-				ret = savepng(pimg,filename);
-				break;
-			case image_type_bmp:
-				ret = img->saveimage(filename);
-				break;
-			default:
-				if (nocaseends(".bmp",filename))
-					ret = img->saveimage(filename);
-				else if (nocaseends(".png",filename)) 
-					ret = savepng(pimg,filename);
-				else
-					ret = savepng(pimg,filename);
+		if (nocaseends(".bmp",filename))
+			ret = img->saveimage(filename);
+		else if (nocaseends(".png",filename)) 
+			ret = savepng(pimg,filename);
+		else
+			ret = savepng(pimg,filename);
 		}
 	}
 	CONVERT_IMAGE_END;
@@ -3069,25 +3061,16 @@ saveimage(PCIMAGE pimg, LPCSTR  filename, image_type_e type) {
 
 
 int
-saveimage(PCIMAGE pimg, LPCWSTR filename, image_type_e type) {
+saveimage(PCIMAGE pimg, LPCWSTR filename) {
 	PCIMAGE img = CONVERT_IMAGE_CONST(pimg);
 	int ret = 0;
 	if (img) {
-		switch(type) {
-			case image_type_png:
-				ret = savepng(pimg,filename);
-				break;
-			case image_type_bmp:
-				ret = img->saveimage(filename);
-				break;
-			default:		
-				if (nocaseends(L".bmp",filename))
-					ret = img->saveimage(filename);
-				else if (nocaseends(L".png",filename)) 
-					ret = savepng(pimg,filename);
-				else
-					ret = savepng(pimg,filename);	
-		}	
+		if (nocaseends(L".bmp",filename))
+			ret = img->saveimage(filename);
+		else if (nocaseends(L".png",filename)) 
+			ret = savepng(pimg,filename);
+		else
+			ret = savepng(pimg,filename);	
 	}
 	CONVERT_IMAGE_END;
 	return ret;
