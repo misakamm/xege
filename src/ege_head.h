@@ -610,6 +610,19 @@ EGE_FORCEINLINE color_t alphablend_inline(color_t bkg, color_t src, unsigned cha
 	return (rb & 0x00FF00FF) | (g & 0x0000FF00) | (bkg & 0xFF000000);
 }
 
+#if __cplusplus >= 201103L
+inline int ege_round(float x) {
+	return round(x);
+}
+#else
+int ege_round(float x);
+#endif
+
+// FIXME: This seems to be VC6 SDK problem
+#ifndef AC_SRC_ALPHA
+#define AC_SRC_ALPHA 0x01
+#endif
+
 } // namespace ege
 
 #endif /*_EGE_HEAD_H_*/

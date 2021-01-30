@@ -143,4 +143,10 @@ VECTOR3D::GetAngel(const VECTOR3D& _e, const VECTOR3D& _s) {
 	return (float)asin(sr);
 }
 
+#if !(__cplusplus >= 201103L)
+int ege_round(float x) {
+	return (x > 0.0) ? floor(x + 0.5) : ceil(x - 0.5);
+}
+#endif
+
 } // namespace ege
