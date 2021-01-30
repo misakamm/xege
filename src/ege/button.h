@@ -4,10 +4,10 @@
  * @author StudyC.cn@gmail.com
  * @date 2011-08-09
  */
-#ifndef _EGE_BUTTON_H_
-#define _EGE_BUTTON_H_
+#ifndef EGE_BUTTON_H
+#define EGE_BUTTON_H
 
-#ifndef _EGE_H_
+#ifndef EGE_H
 #error include "button.h" must after include "ege.h" or "graphics.h"
 #endif
 
@@ -449,4 +449,4 @@ class button : public egeControlBase
 #endif
 };
 
-#endif /* _EGE_BUTTON_H_ */
+#endif /* EGE_BUTTON_H */

@@ -85,7 +85,7 @@ unsigned long getlogodatasize();
 }
 #endif
 
-float _GetFPS(int add);
+float EGE_PRIVATE_GetFPS(int add);
 DWORD WINAPI messageloopthread(LPVOID lpParameter);
 
 
@@ -154,7 +154,7 @@ graphupdate(_graph_setting* pg) {
 		} else {
 			pg->update_mark_count = UPDATE_MAX_CALL;
 		}
-		_GetFPS(0x100);
+		EGE_PRIVATE_GetFPS(0x100);
 		{
 			RECT rect, crect;
 			HWND hwnd;

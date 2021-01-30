@@ -1,7 +1,7 @@
-#ifndef _EGECONTROLBASE_H_
-#define _EGECONTROLBASE_H_
+#ifndef EGECONTROLBASE_H
+#define EGECONTROLBASE_H
 
-#ifndef _EGE_H_
+#ifndef EGE_H
 #error include "egectlbase.h" must after include "ege.h" or "graphics.h"
 #endif
 
@@ -186,7 +186,7 @@ private:
 	egeControlBase* m_parent;
 	static int s_maxchildid;   // 下一次子控件分配ID值
 
-#ifdef _GRAPH_LIB_BUILD_
+#ifdef EGE_GRAPH_LIB_BUILD
 public:
 #else
 private:
@@ -210,4 +210,4 @@ public:
 
 } /* namespace ege */
 
-#endif /* _EGECONTROLBASE_H_ */
+#endif /* EGECONTROLBASE_H */

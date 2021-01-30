@@ -1,7 +1,7 @@
-#ifndef _EGE_FPS_H_
-#define _EGE_FPS_H_
+#ifndef EGE_FPS_H
+#define EGE_FPS_H
 
-#ifndef _EGE_H_
+#ifndef EGE_H
 #error include "fps.h" must after include "ege.h" or "graphics.h"
 #endif
 
@@ -43,4 +43,4 @@ public:
 };
 
 } // namespace ege
-#endif /*_EGE_FPS_H_*/
+#endif /*EGE_FPS_H*/

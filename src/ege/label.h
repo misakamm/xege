@@ -1,7 +1,7 @@
-#ifndef _EGE_LABEL_H_
-#define _EGE_LABEL_H_
+#ifndef EGE_LABEL_H
+#define EGE_LABEL_H
 
-#ifndef _EGE_H_
+#ifndef EGE_H
 #error include "label.h" must after include "ege.h" or "graphics.h"
 #endif
 
@@ -116,4 +116,4 @@ protected:
     int m_fontheight;
 };
 
-#endif /* _EGE_LABEL_H_ */
+#endif /* EGE_LABEL_H */
