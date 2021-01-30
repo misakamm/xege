@@ -3001,23 +3001,75 @@ imagefilter_blurring (
 	return ret;
 }
 
+static BOOL nocaseends(LPCSTR suffix,LPCSTR text) {
+	int len_suffix,len_text;
+	LPCSTR p_suffix;
+	LPCSTR p_text;
+	len_suffix = strlen(suffix);
+	len_text = strlen(text);
+	if ( (len_text < len_suffix) || (len_text == 0) ) {
+		return FALSE;
+	}
+	p_suffix = suffix;
+	p_text = (text + (len_text-len_suffix));
+	while (*p_text!=0) {
+		if (toupper(*p_text)!=toupper(*p_suffix))
+			return FALSE;
+		p_text++;
+		p_suffix++; 
+	}	
+	return TRUE;
+}
+
+static BOOL nocaseends(LPCWSTR suffix,LPCWSTR text) {
+	int len_suffix,len_text;
+	LPCWSTR p_suffix;
+	LPCWSTR p_text;
+	len_suffix = wcslen(suffix);
+	len_text = wcslen(text);
+	if ( (len_text < len_suffix) || (len_text == 0) ) {
+		return FALSE;
+	}
+	p_suffix = suffix;
+	p_text = (text + (len_text-len_suffix));
+	while (*p_text!=0) {
+		if (towupper(*p_text)!=towupper(*p_suffix))
+			return FALSE;
+		p_text++;
+		p_suffix++; 
+	}	
+	return TRUE;
+}
+
+
 int
 saveimage(PCIMAGE pimg, LPCSTR  filename) {
 	PCIMAGE img = CONVERT_IMAGE_CONST(pimg);
 	int ret = 0;
 	if (img) {
-		ret = img->saveimage(filename);
+		if (nocaseends(".bmp",filename))
+			ret = img->saveimage(filename);
+		else if (nocaseends(".png",filename)) 
+			ret = savepng(pimg,filename);
+		else
+			ret = savepng(pimg,filename);
 	}
 	CONVERT_IMAGE_END;
 	return ret;
 }
+
 
 int
 saveimage(PCIMAGE pimg, LPCWSTR filename) {
 	PCIMAGE img = CONVERT_IMAGE_CONST(pimg);
 	int ret = 0;
 	if (img) {
-		ret = img->saveimage(filename);
+		if (nocaseends(L".bmp",filename))
+			ret = img->saveimage(filename);
+		else if (nocaseends(L".png",filename)) 
+			ret = savepng(pimg,filename);
+		else
+			ret = savepng(pimg,filename);	
 	}
 	CONVERT_IMAGE_END;
 	return ret;
