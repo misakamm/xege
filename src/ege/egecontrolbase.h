@@ -21,7 +21,7 @@ private:
 		preinit_obj(classname* This, int inheritlevel) { \
 			This->pre_init(inheritlevel); \
 		} \
-	}_preinit_obj; \
+	}egecontrolbase_preinit_obj; \
 	enum inherit_e { inherit_level_e = parent::inherit_level_e + 1, }; \
 	static void firstinit(ege::egeControlBase* This) { \
 		((classname*)This)->m_inheritlevel = 1; \
@@ -31,7 +31,7 @@ private:
 
 #define CTL_PREINITEND  }
 #define CTL_DEFPARAM    int inherit = inherit_level_e, ege::egeControlBase* pParent = NULL
-#define CTL_INITBASE(parent)    _preinit_obj(this, inherit_level_e), parent(inherit, (ege::egeControlBase*)pParent)
+#define CTL_INITBASE(parent)    egecontrolbase_preinit_obj(this, inherit_level_e), parent(inherit, (ege::egeControlBase*)pParent)
 #define CTL_INIT        InitObject iobj(this, inherit_level_e);\
 						ege::PushTarget _pushtarget(buf());
 
