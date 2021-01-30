@@ -22,7 +22,16 @@ y
 0
 
 <font size="5" color="#0000FF"><strong>示例：</strong></font>
-（无）
+<pre>
+<font color=#0000FF>if </font>(<font color=#008080>keystate</font>(<font color=#800080>key_mouse_l</font>)) { <font color=#008000>// 鼠标左键按下了</font>
+    <font color=#008000>//获取鼠标当前位置坐标，放在变量mouse_x和mouse_y中 </font>
+    <font color=#0000FF>int </font>mouse_x,mouse_y;
+    <font color=#008080>mousepos</font>(&mouse_x,&mouse_y);
+    <font color=#008000>//在鼠标当前位置画一个半径为100的圆</font>
+    <font color=#008080>circle</font>(&mouse_x,&mouse_y,100);
+}
+</pre>
+
 
 </font>
 </pre>
