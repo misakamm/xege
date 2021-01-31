@@ -32,8 +32,8 @@
 * ★setfillstyle函数的自定义填充模式未实现，但一般应用足够
 ****************************************************************************/
 
-#ifndef _GRAPHICS_H_
-#define _GRAPHICS_H_
+#ifndef EGE_GRAPHICS_H
+#define EGE_GRAPHICS_H
 
 #ifndef __cplusplus
 #error You must use C++ compiler, or you need filename with '.cpp' suffix

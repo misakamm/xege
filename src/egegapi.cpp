@@ -39,7 +39,7 @@
 namespace ege {
 
 //We don't support vc6
-#ifndef _MSC_VC6 
+#ifndef EGE_COMPILERINFO_VC6
 
 static HANDLE hInput=NULL;
 static HANDLE hOutput=NULL;
@@ -179,7 +179,7 @@ BOOL close_console(){
 
 int dealmessage(_graph_setting* pg, bool force_update);
 void guiupdate(_graph_setting* pg, egeControlBase* &root);
-float _GetFPS(int add);
+float EGE_PRIVATE_GetFPS(int add);
 int getflush();
 
 std::string w2mb(const wchar_t wStr[]) {
@@ -492,7 +492,7 @@ delay_jfps(double fps) {
 		if (bSleep) {
 			dealmessage(pg, FORCE_UPDATE);
 		} else {
-			_GetFPS(-0x100);
+			EGE_PRIVATE_GetFPS(-0x100);
 		}
 		dw = get_highfeq_time_ls(pg) * 1000.0;
 		guiupdate(pg, root);
@@ -2830,7 +2830,7 @@ inputbox_getline(LPCWSTR title, LPCWSTR text, LPWSTR buf, int len) {
 }
 
 float
-_GetFPS(int add) {//获取帧数
+EGE_PRIVATE_GetFPS(int add) {//获取帧数
 	static int      fps = 0;
 	static int      fps_inv = 0;
 	static double   time = 0;
@@ -2863,7 +2863,7 @@ _GetFPS(int add) {//获取帧数
 
 float
 getfps() {
-	return _GetFPS(0);
+	return EGE_PRIVATE_GetFPS(0);
 }
 
 double

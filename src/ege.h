@@ -30,8 +30,8 @@
 * ★合理地使用delay_ms/delay_fps函数，可以减少你的程序占用的CPU，否则一个都没有调用同时也没有getch/getmouse的话，程序将占满一个CPU的时间
 ****************************************************************************/
 
-#ifndef _EGE_H_
-#define _EGE_H_
+#ifndef EGE_H
+#define EGE_H
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma once
@@ -55,7 +55,7 @@
 #	endif
 #endif
 
-#if !defined(_GRAPH_LIB_BUILD_) && !defined(_GRAPH_NO_LIB_)
+#if !defined(EGE_GRAPH_LIB_BUILD) && !defined(EGE_GRAPH_NO_LIB)
 #	ifdef _MSC_VER
 #		pragma comment(lib,"gdiplus.lib")
 #		ifdef _WIN64 // 64 bit libs
@@ -66,7 +66,7 @@
 #	endif
 #endif
 
-#if !defined(_GRAPH_LIB_BUILD_) && !defined(_GRAPH_NO_LIB_)
+#if !defined(EGE_GRAPH_LIB_BUILD) && !defined(EGE_GRAPH_NO_LIB)
 #ifndef _CRT_SECURE_NO_WARNINGS
 #define _CRT_SECURE_NO_WARNINGS
 #endif
@@ -90,7 +90,7 @@
 #endif
 
 #if defined(_MSC_VER) && (_MSC_VER <= 1300)
-#define _MSC_VC6
+#define EGE_COMPILERINFO_VC6
 #endif
 
 #if defined(_MSC_VER) && _MSC_VER <= 1200 && !defined(SetWindowLongPtr)
@@ -104,11 +104,11 @@
 #define WM_MOUSEWHEEL                   0x020A
 #endif
 
-#ifndef _Cdecl
+#ifndef EGE_CDECL
 #	if __STDC__
-#		define _Cdecl  __cdecl
+#		define EGE_CDECL  __cdecl
 #	else
-#		define _Cdecl  __cdecl
+#		define EGE_CDECL  __cdecl
 #	endif
 #endif
 
@@ -116,14 +116,14 @@
 #	if defined(_WIN64)
 #		define EGEAPI
 #	else
-#		define EGEAPI _Cdecl
+#		define EGEAPI EGE_CDECL
 #	endif
 #else
 #	if defined(__WORDSIZE)
 #		if __WORDSIZE > 32
 #			define EGEAPI
 #		else
-#			define EGEAPI _Cdecl
+#			define EGEAPI EGE_CDECL
 #		endif
 #	else
 #		define EGEAPI
@@ -862,7 +862,7 @@ ege_point EGEAPI ege_transform_calc(float x, float y, PIMAGE pimg = NULL); // Ca
 #endif
 
 //We don't support VC 6
-#ifndef _MSC_VC6
+#ifndef EGE_COMPILERINFO_VC6
 //Console 
 BOOL init_console(); // Initialize the console 
 void clear_console(); // clear the console
@@ -1226,7 +1226,7 @@ unsigned long   EGEAPI ege_uncompress_size(const void *source, unsigned long sou
 
 NAMESPACE_EGE_R
 
-#ifndef _GRAPH_LIB_BUILD_
+#ifndef EGE_GRAPH_LIB_BUILD
 
 #if defined(_MSC_VER) && (defined(HIDE_CONSOLE) || !defined(SHOW_CONSOLE))
 #pragma comment( linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"" )

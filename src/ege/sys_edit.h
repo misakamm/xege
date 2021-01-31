@@ -1,7 +1,7 @@
-#ifndef _EGE_SYS_EDIT_H_
-#define _EGE_SYS_EDIT_H_
+#ifndef EGE_SYS_EDIT_H
+#define EGE_SYS_EDIT_H
 
-#ifndef _EGE_H_
+#ifndef EGE_H
 #error include "sys_edit.h" must after include "ege.h" or "graphics.h"
 #endif
 
@@ -183,4 +183,4 @@ protected:
 };
 
 } // namespace ege
-#endif /*_EGE_SYS_EDIT_H_*/
+#endif /*EGE_SYS_EDIT_H*/

@@ -5,8 +5,8 @@
 公共声明头文件（私有，不对外使用）
 */
 
-#ifndef _EGE_HEAD_H_
-#define _EGE_HEAD_H_
+#ifndef EGE_HEAD_H
+#define EGE_HEAD_H
 
 #ifndef _ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH
 #define _ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH
@@ -86,7 +86,7 @@
 
 #include <string>
 
-#define _GRAPH_LIB_BUILD_
+#define EGE_GRAPH_LIB_BUILD
 #define EGE_DEPRECATE(text)
 #include "ege.h"
 #include "ege/egecontrolbase.h"
@@ -169,11 +169,11 @@
 #define DEFAULT_CHARSET ANSI_CHARSET
 #endif
 
-#if !defined(_W64)
+#if !defined(EGE_W64)
 #if !defined(__midl) && (defined(_X86_) || defined(_M_IX86)) && _MSC_VER >= 1300
-#define _W64 __w64
+#define EGE_W64 __w64
 #else
-#define _W64
+#define EGE_W64
 #endif
 #endif
 
@@ -185,8 +185,8 @@ typedef unsigned __int64 ULONG_PTR, *PULONG_PTR;
 #define __int3264   __int64
 
 #else
-typedef _W64 long LONG_PTR, *PLONG_PTR;
-typedef _W64 unsigned long ULONG_PTR, *PULONG_PTR;
+typedef EGE_W64 long LONG_PTR, *PLONG_PTR;
+typedef EGE_W64 unsigned long ULONG_PTR, *PULONG_PTR;
 
 #define __int3264   __int32
 
@@ -625,4 +625,4 @@ int ege_round(float x);
 
 } // namespace ege
 
-#endif /*_EGE_HEAD_H_*/
+#endif /* EGE_HEAD_H */

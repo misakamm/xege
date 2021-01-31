@@ -31,7 +31,7 @@ typedef struct COLORRGB {
 /* private function */
 static
 COLORHSL
-_RGBtoHSL(int _col) {
+EGE_PRIVATE_RGBtoHSL(int _col) {
 	COLORHSL _crCol;
 	float r, g, b;
 	float *t,*dp[3] = {&r, &g, &b};
@@ -117,7 +117,7 @@ _RGBtoHSL(int _col) {
 /* private function */
 static
 int
-_HSLtoRGB(float _h, float _s, float _l) {
+EGE_PRIVATE_HSLtoRGB(float _h, float _s, float _l) {
 	float r, g, b;
 
 	if ( _h < 0.0f) {
@@ -283,7 +283,7 @@ rgb2gray(color_t color) {
 
 void
 rgb2hsl(color_t rgb, float *H, float *S, float *L) {
-	COLORHSL hsl = _RGBtoHSL((int)rgb);
+	COLORHSL hsl = EGE_PRIVATE_RGBtoHSL((int)rgb);
 	*H = hsl.h * 360.0f;
 	*S = hsl.s;
 	*L = hsl.l;
@@ -291,7 +291,7 @@ rgb2hsl(color_t rgb, float *H, float *S, float *L) {
 
 color_t
 hsl2rgb(float H, float S, float L) {
-	return (color_t)_HSLtoRGB(H / 360.0f, S, L);
+	return (color_t)EGE_PRIVATE_HSLtoRGB(H / 360.0f, S, L);
 }
 
 void
