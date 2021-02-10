@@ -1302,7 +1302,7 @@ initgraph(int *gdriver, int *gmode, const char *path) {
 void
 initgraph(int Width, int Height, int Flag) {
 	int g = TRUECOLORSIZE, m = (Width) | (Height<<16);
-	setinitmode(Flag);
+	setinitmode(Flag, g_windowpos_x, g_windowpos_y);
 	initgraph(&g, &m, "");
 }
 
