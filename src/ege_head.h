@@ -299,6 +299,7 @@ public:
 #endif
 	void enable_anti_alias(bool enable);
 
+	int  resize_f(int width, int height);
 	int  resize(int width, int height);
 	void copyimage(PCIMAGE pSrcImg);
 	int getimage(int srcX, int srcY, int srcWidth, int srcHeight);

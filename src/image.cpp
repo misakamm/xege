@@ -250,9 +250,8 @@ void IMAGE::enable_anti_alias(bool enable){
 #endif
 }
 
-int
-IMAGE::resize(int width, int height) {
-	inittest(L"IMAGE::resize");
+int IMAGE::resize_f(int width, int height) {
+	inittest(L"IMAGE::resize_f");
 
 	// Ωÿ÷πµΩ 0
 	if (width < 0) width = 0;
@@ -276,6 +275,13 @@ IMAGE::resize(int width, int height) {
 	setviewport(0, 0, m_width, m_height, 1, this);
 
 	return 0;
+}
+
+int IMAGE::resize(int width, int height) {
+	inittest(L"IMAGE::resize");
+	int ret = this->resize_f(width, height);
+	cleardevice(this);
+	return ret;
 }
 
 IMAGE&
@@ -2797,9 +2803,11 @@ HDC getHDC(PCIMAGE pImg) {
 	return img->getdc();
 }
 
-int
-resize(PIMAGE pDstImg, int width, int height) {
-	
+int resize_f(PIMAGE pDstImg, int width, int height) {
+	return pDstImg->resize_f(width, height);
+}
+
+int resize(PIMAGE pDstImg, int width, int height) {
 	return pDstImg->resize(width, height);
 }
 
