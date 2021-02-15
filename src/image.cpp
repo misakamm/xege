@@ -303,7 +303,7 @@ int
 IMAGE::getimage(PCIMAGE pSrcImg, int srcX, int srcY, int srcWidth, int srcHeight) {
 	inittest(L"IMAGE::getimage");
 	PCIMAGE img = CONVERT_IMAGE_CONST(pSrcImg);
-	this->resize(srcWidth, srcHeight);
+	this->resize_f(srcWidth, srcHeight);
 	BitBlt(this->m_hDC, 0, 0, srcWidth, srcHeight, img->m_hDC, srcX, srcY, SRCCOPY);
 	CONVERT_IMAGE_END;
 	return grOk;
@@ -369,7 +369,7 @@ inline void getimage_from_IPicture(PIMAGE self, IPicture* pPicture) {
 		::ReleaseDC(NULL, ScreenDC);
 	}
 
-	self->resize(lWidthPixels, lHeightPixels);
+	self->resize_f(lWidthPixels, lHeightPixels);
 	{
 		HDC dc = self->m_hDC;
 
@@ -499,7 +499,7 @@ void getimage_from_png_struct(PIMAGE self, void* vpng_ptr, void* vinfo_ptr) {
 	png_infop info_ptr = (png_infop)vinfo_ptr;
 	png_read_png(png_ptr, info_ptr, PNG_TRANSFORM_BGR|PNG_TRANSFORM_EXPAND, NULL);
 	png_set_expand(png_ptr);
-	self->resize((int)(info_ptr->width), (int)(info_ptr->height)); //png_get_IHDR
+	self->resize_f((int)(info_ptr->width), (int)(info_ptr->height)); //png_get_IHDR
 
 	PDWORD m_pBuffer = self->m_pBuffer;
 	const png_uint_32 width = info_ptr->width;
