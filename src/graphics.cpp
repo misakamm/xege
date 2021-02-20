@@ -1247,8 +1247,8 @@ initgraph(int *gdriver, int *gmode, const char *path) {
 
 	//已创建则转为改变窗口大小	
 	if(pg->has_init) {
-		int width = (int)(*gmode & 0xFFFF);
-		int height = (int)((unsigned int)(*gmode) >> 16);
+		int width = (short)(*gmode & 0xFFFF);
+		int height = (short)((unsigned int)(*gmode) >> 16);
 		resizewindow(width, height);
 		HWND hwnd = getHWnd();
 		if (!::IsWindowVisible(hwnd))
