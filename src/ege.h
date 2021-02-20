@@ -961,7 +961,8 @@ void           EGEAPI delimage(PCIMAGE pImg);          // 删除 PIMAGE
 color_t*       EGEAPI getbuffer(PIMAGE pImg);
 const color_t* EGEAPI getbuffer(PCIMAGE pImg);
 
-int  EGEAPI resize(PIMAGE pDstImg, int width, int height); //重设尺寸
+int  EGEAPI resize_f(PIMAGE pDstImg, int width, int height);  //重设尺寸，但不填充背景色
+int  EGEAPI resize(PIMAGE pDstImg, int width, int height); //重设尺寸，并填充背景色
 int EGEAPI getimage(PIMAGE pDstImg, int srcX, int srcY, int srcWidth, int srcHeight);                             // 从屏幕获取图像
 int EGEAPI getimage(PIMAGE pDstImg, PCIMAGE pSrcImg, int srcX, int srcY, int srcWidth, int srcHeight);            // 从另一个 PIMAGE 对象中获取图像
 int  EGEAPI getimage(PIMAGE pDstImg, LPCSTR  pImgFile, int zoomWidth = 0, int zoomHeight = 0);                     // 从图片文件获取图像(bmp/jpg/gif/emf/wmf)

@@ -2765,7 +2765,6 @@ inputbox_getline(LPCWSTR title, LPCWSTR text, LPWSTR buf, int len) {
 
 	bg.getimage(0, 0, getwidth(), getheight());
 	window.resize(w, h);
-	cleardevice(&window);
 	buf[0] = 0;
 
 	lock_window = pg->lock_window;
