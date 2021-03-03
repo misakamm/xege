@@ -171,7 +171,19 @@ public:
         ::InvalidateRect(m_hwnd, NULL, TRUE);
     }
     void setfocus() {
-        ::PostMessageW(getHWnd(), WM_USER + 2, 0, (LPARAM)m_hwnd);
+        msg_createwindow msg = {NULL};
+        msg.hwnd = m_hwnd;
+        msg.hEvent = ::CreateEvent(NULL, TRUE, FALSE, NULL);
+        ::PostMessageW(getHWnd(), WM_USER + 2, 0, (LPARAM)&msg);
+        ::WaitForSingleObject(msg.hEvent, INFINITE);    	
+        
+    }
+    virtual int  onGetFocus() {
+    	m_bInputFocus = 1;
+        return 0;
+    }
+    virtual void onLostFocus() {
+        m_bInputFocus = 0;
     }
 protected:
     HWND        m_hwnd;

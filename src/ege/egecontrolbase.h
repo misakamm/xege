@@ -171,7 +171,7 @@ private:
 	PIMAGE   m_mainbuf;      // 主缓冲
 	PIMAGE   m_mainFilter;   // 过滤器
 
-private:
+protected:
 	int m_bVisible;     // 是否可见
 	int m_bEnable;      // 是否可获得输入（键盘和鼠标）
 	int m_bAutoDraw;    // 是否自动绘画到窗口上
@@ -183,6 +183,8 @@ private:
 	int m_allocId;      // 分配id
 	int m_allocZorder;  // 分配Z次序
 
+
+private:
 	egeControlBase* m_parent;
 	static int s_maxchildid;   // 下一次子控件分配ID值
 

@@ -1053,8 +1053,12 @@ wndproc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
 	case WM_USER + 1:
 		windowmanager(pg, (wParam != 0), (struct msg_createwindow*)lParam);
 		break;
-	case WM_USER + 2:
-		::SetFocus((HWND)lParam);
+	case WM_USER + 2: 
+		{
+			struct msg_createwindow* msg = (struct msg_createwindow*)lParam;
+			::SetFocus(msg->hwnd);
+			::SetEvent(msg->hEvent);
+		}
 		break;
 	case WM_CTLCOLOREDIT:
 		{
@@ -1062,6 +1066,18 @@ wndproc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
 			return ctl->onMessage(message, wParam, lParam);
 		}
 		break;
+	case WM_SETFOCUS:
+		if (pg != pg_w) {
+			return ((egeControlBase*)pg_w)->onGetFocus();
+		}
+		break;		
+	case WM_KILLFOCUS:
+		if (pg != pg_w) {
+			((egeControlBase*)pg_w)->onLostFocus();
+			return 0;
+		}
+		break;		
+		
 	default:
 		if (pg != pg_w) {
 			return ((egeControlBase*)pg_w)->onMessage(message, wParam, lParam);
