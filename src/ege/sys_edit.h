@@ -175,8 +175,7 @@ public:
         msg.hwnd = m_hwnd;
         msg.hEvent = ::CreateEvent(NULL, TRUE, FALSE, NULL);
         ::PostMessageW(getHWnd(), WM_USER + 2, 0, (LPARAM)&msg);
-        ::WaitForSingleObject(msg.hEvent, INFINITE);    	
-        
+        ::WaitForSingleObject(msg.hEvent, INFINITE);
     }
     virtual int  onGetFocus() {
         m_bInputFocus = 1;
