@@ -1076,8 +1076,7 @@ wndproc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
 			((egeControlBase*)pg_w)->onLostFocus();
 			return 0;
 		}
-		break;		
-		
+		break;			
 	default:
 		if (pg != pg_w) {
 			return ((egeControlBase*)pg_w)->onMessage(message, wParam, lParam);

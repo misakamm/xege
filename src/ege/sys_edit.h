@@ -179,7 +179,7 @@ public:
         
     }
     virtual int  onGetFocus() {
-    	m_bInputFocus = 1;
+        m_bInputFocus = 1;
         return 0;
     }
     virtual void onLostFocus() {
