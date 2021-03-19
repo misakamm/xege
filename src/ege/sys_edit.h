@@ -177,13 +177,6 @@ public:
         ::PostMessageW(getHWnd(), WM_USER + 2, 0, (LPARAM)&msg);
         ::WaitForSingleObject(msg.hEvent, INFINITE);
     }
-    virtual int  onGetFocus() {
-        m_bInputFocus = 1;
-        return 0;
-    }
-    virtual void onLostFocus() {
-        m_bInputFocus = 0;
-    }
 protected:
     HWND        m_hwnd;
     HFONT       m_hFont;

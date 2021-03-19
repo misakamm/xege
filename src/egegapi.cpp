@@ -2937,23 +2937,30 @@ ege_uncompress(void *dest, unsigned long *destLen, const void *source, unsigned 
 }
 
 LRESULT sys_edit::onMessage(UINT message, WPARAM wParam, LPARAM lParam) {
-	if (message == WM_CTLCOLOREDIT) {
-		HDC dc = (HDC)wParam;
-		HBRUSH br = ::CreateSolidBrush(ARGBTOZBGR(m_bgcolor));
-
-		::SetBkColor(dc, ARGBTOZBGR(m_bgcolor));
-		::SetTextColor(dc, ARGBTOZBGR(m_color));
-		::DeleteObject(m_hBrush);
-		m_hBrush = br;
-		return (LRESULT)br;
-	//} else if (message == WM_SETFOCUS) {
-	//    int a = 0;
-	//    int b = 1;
-	//    return 0;
-	} else {
-		return ((LRESULT (CALLBACK *)(HWND, UINT, WPARAM, LPARAM))m_callback)(m_hwnd, message, wParam, lParam);
+	switch(message) {
+		case WM_CTLCOLOREDIT: 
+			{
+				HDC dc = (HDC)wParam;
+				HBRUSH br = ::CreateSolidBrush(ARGBTOZBGR(m_bgcolor));
+	
+				::SetBkColor(dc, ARGBTOZBGR(m_bgcolor));
+				::SetTextColor(dc, ARGBTOZBGR(m_color));
+				::DeleteObject(m_hBrush);
+				m_hBrush = br;
+				return (LRESULT)br;			
+			}
+			break;
+		case WM_SETFOCUS:
+			m_bInputFocus = 1;
+			// call textbox's own message process to show caret
+			return ((LRESULT (CALLBACK *)(HWND, UINT, WPARAM, LPARAM))m_callback)(m_hwnd, message, wParam, lParam);		
+		case WM_KILLFOCUS:
+			m_bInputFocus = 0;
+			// call textbox's own message process to hide caret
+			return ((LRESULT (CALLBACK *)(HWND, UINT, WPARAM, LPARAM))m_callback)(m_hwnd, message, wParam, lParam);
+		default:
+			return ((LRESULT (CALLBACK *)(HWND, UINT, WPARAM, LPARAM))m_callback)(m_hwnd, message, wParam, lParam);
 	}
-	//return 0;
 }
 
 } // namespace ege
