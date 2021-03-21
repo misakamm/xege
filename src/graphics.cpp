@@ -1053,8 +1053,12 @@ wndproc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
 	case WM_USER + 1:
 		windowmanager(pg, (wParam != 0), (struct msg_createwindow*)lParam);
 		break;
-	case WM_USER + 2:
-		::SetFocus((HWND)lParam);
+	case WM_USER + 2: 
+		{
+			struct msg_createwindow* msg = (struct msg_createwindow*)lParam;
+			::SetFocus(msg->hwnd);
+			::SetEvent(msg->hEvent);
+		}
 		break;
 	case WM_CTLCOLOREDIT:
 		{

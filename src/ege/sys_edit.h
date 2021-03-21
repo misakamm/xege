@@ -171,7 +171,11 @@ public:
         ::InvalidateRect(m_hwnd, NULL, TRUE);
     }
     void setfocus() {
-        ::PostMessageW(getHWnd(), WM_USER + 2, 0, (LPARAM)m_hwnd);
+        msg_createwindow msg = {NULL};
+        msg.hwnd = m_hwnd;
+        msg.hEvent = ::CreateEvent(NULL, TRUE, FALSE, NULL);
+        ::PostMessageW(getHWnd(), WM_USER + 2, 0, (LPARAM)&msg);
+        ::WaitForSingleObject(msg.hEvent, INFINITE);
     }
 protected:
     HWND        m_hwnd;
