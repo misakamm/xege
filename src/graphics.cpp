@@ -603,7 +603,7 @@ setmode(int gdriver, int gmode) {
 /*private function*/
 static
 BOOL
-init_instance(HINSTANCE hInstance, int nCmdShow) {
+init_instance(HINSTANCE hInstance) {
 	struct _graph_setting * pg = &graph_setting;
 	int dw = 0, dh = 0;
 	//WCHAR Title[256] = {0};
@@ -692,11 +692,7 @@ init_instance(HINSTANCE hInstance, int nCmdShow) {
 	} //*/
 
 
-	pg->exit_window = 0;
-	ShowWindow(pg->hwnd, nCmdShow);
-	if (g_windowexstyle & WS_EX_TOPMOST) {
-		SetWindowPos(pg->hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOSIZE|SWP_NOMOVE);
-	}
+	pg->exit_window = 0;	
 	return TRUE;
 }
 
@@ -1283,10 +1279,15 @@ initgraph(int *gdriver, int *gmode, const char *path) {
 	ResumeThread(pg->threadui_handle);
 
 	while (!pg->has_init) {
-		Sleep(1);
+		::Sleep(1);
 	}
 
 	UpdateWindow(pg->hwnd);
+
+	ShowWindow(pg->hwnd, SW_SHOW);
+	if (g_windowexstyle & WS_EX_TOPMOST) {
+		SetWindowPos(pg->hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE);
+	}
 
 	//初始化鼠标位置数据
 	pg->mouse_last_x = pg->dc_w / 2;
@@ -1334,10 +1335,8 @@ messageloopthread(LPVOID lpParameter) {
 	_graph_setting* pg = (_graph_setting*)lpParameter;
 	MSG msg;
 	{
-		int nCmdShow = SW_SHOW;
-
 		/* 执行应用程序初始化: */
-		if (!init_instance(pg->instance, nCmdShow)) {
+		if (!init_instance(pg->instance)) {
 			return 0xFFFFFFFF;
 		}
 
