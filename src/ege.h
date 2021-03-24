@@ -145,10 +145,10 @@
 #define EGE_GDIPLUS     //启用GDIPLUS
 
 #define SHOWCONSOLE             1       // 进入图形模式时，保留控制台的显示
-#define EGERGBA(r, g, b, a)     ( ((r)<<16) | ((g)<<8) | (b) | ((a)<<24) )
+#define EGERGBA(r, g, b, a)     (color_t)( ((r)<<16) | ((g)<<8) | (b) | ((a)<<24) )
 #define EGERGB(r, g, b)         EGERGBA(r, g, b, 0xFF)
 #define EGEARGB(a, r, g, b)     EGERGBA(r, g, b, a)
-#define EGEACOLOR(a, color)     ( ((color) & 0xFFFFFF) | ((a)<<24) )
+#define EGEACOLOR(a, color)     (color_t)( ((color) & 0xFFFFFF) | ((a)<<24) )
 #define EGECOLORA(color, a)     EGEACOLOR(a, color)
 #define EGEGET_R(c)             ( ((c)>>16) & 0xFF )
 #define EGEGET_G(c)             ( ((c)>> 8) & 0xFF )
@@ -245,6 +245,7 @@ enum message_mouse {
 	MSG_MOUSE_MID       = 0x04,
 };
 
+typedef DWORD color_t;
 // 颜色
 enum COLORS {
 	ALICEBLUE              = EGERGB(0xF0, 0xF8, 0xFF),
@@ -618,8 +619,6 @@ typedef enum mouse_flag_e {
 	mouse_flag_shift    = 0x100,
 	mouse_flag_ctrl     = 0x200,
 }mouse_flag_e;
-
-typedef DWORD color_t;
 
 struct viewporttype {
 	int left;
