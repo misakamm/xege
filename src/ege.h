@@ -82,11 +82,10 @@
 #endif
 
 #if defined(EGE_FOR_AUTO_CODE_COMPLETETION_ONLY)
-//在代码补全用的分析器解析本文件时，仅包含这两个头文件以减少符号污染
 #include <windef.h>
 #include <winuser.h>
 #else
-#include <windows.h>
+#include <windows.h>	
 #endif
 
 #if defined(_MSC_VER) && (_MSC_VER <= 1300)
@@ -141,67 +140,6 @@
 #		define EGE_DEPRECATE(text) __attribute__((deprecated))
 #	endif
 #endif
-
-
-#if defined(EGE_FOR_AUTO_CODE_COMPLETETION_ONLY) 
-//在代码补全用的分析器解析本文件时，补充定义需要一些常量
-#ifndef LOGFONTA
-typedef struct tagLOGFONTA LOGFONTA;
-typedef struct tagLOGFONTW LOGFONTW;
-#endif
-
-#define PS_SOLID 0
-#define PS_DASH 1
-#define PS_DOT 2
-#define PS_DASHDOT 3
-#define PS_DASHDOTDOT 4
-#define PS_NULL 5
-#define PS_INSIDEFRAME 6
-#define PS_USERSTYLE 7
-#define PS_ALTERNATE 8
-#define PS_STYLE_MASK 0x0000000F
-
-#define R2_BLACK 1
-#define R2_NOTMERGEPEN 2
-#define R2_MASKNOTPEN 3
-#define R2_NOTCOPYPEN 4
-#define R2_MASKPENNOT 5
-#define R2_NOT 6
-#define R2_XORPEN 7
-#define R2_NOTMASKPEN 8
-#define R2_MASKPEN 9
-#define R2_NOTXORPEN 10
-#define R2_NOP 11
-#define R2_MERGENOTPEN 12
-#define R2_COPYPEN 13
-#define R2_MERGEPENNOT 14
-#define R2_MERGEPEN 15
-#define R2_WHITE 16
-#define R2_LAST 16
-
-#define SRCCOPY (DWORD)0x00CC0020
-#define SRCPAINT (DWORD)0x00EE0086
-#define SRCAND (DWORD)0x008800C6
-#define SRCINVERT (DWORD)0x00660046
-#define SRCERASE (DWORD)0x00440328
-#define NOTSRCCOPY (DWORD)0x00330008
-#define NOTSRCERASE (DWORD)0x001100A6
-#define MERGECOPY (DWORD)0x00C000CA
-#define MERGEPAINT (DWORD)0x00BB0226
-#define PATCOPY (DWORD)0x00F00021
-#define PATPAINT (DWORD)0x00FB0A09
-#define PATINVERT (DWORD)0x005A0049
-#define DSTINVERT (DWORD)0x00550009
-#define BLACKNESS (DWORD)0x00000042
-#define WHITENESS (DWORD)0x00FF0062
-#define NOMIRRORBITMAP (DWORD)0x80000000
-#define CAPTUREBLT (DWORD)0x40000000
-#define MAKEROP4(fore,back) (DWORD)((((back) << 8) & 0xFF000000) | (fore))
-
-#define TRANSPARENT 1
-#define OPAQUE 2
-#endif
-
 
 #define EGE_GDIPLUS     //启用GDIPLUS
 
