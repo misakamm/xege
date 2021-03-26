@@ -2807,16 +2807,6 @@ inputbox_getline(LPCWSTR title, LPCWSTR text, LPWSTR buf, int len) {
 	ret = len;
 	putimage(0, 0, &bg);
 	delay_ms(0);
-//	if (!lock_window) {
-//		setrendermode(RENDER_AUTO);
-//	}
-//	delay_ms(0);
-//	if (pg->lock_window) {
-//		setrendermode(RENDER_AUTO);
-//	} else {
-//		setrendermode(RENDER_AUTO);
-//		setrendermode(RENDER_MANUAL);		
-//	}
 	getflush();
 	return ret;
 }
