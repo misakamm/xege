@@ -2805,7 +2805,6 @@ inputbox_getline(LPCWSTR title, LPCWSTR text, LPWSTR buf, int len) {
 		buf[--len] = 0;
 	}
 	ret = len;
-	edit.visible(false);
 	putimage(0, 0, &bg);
 	delay_ms(0);
 //	if (!lock_window) {
