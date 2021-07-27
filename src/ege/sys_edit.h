@@ -65,6 +65,7 @@ public:
     }
     int destroy() {
         if (m_hwnd) {
+            visible(false);          	
             msg_createwindow msg = {NULL};
             msg.hwnd = m_hwnd;
             msg.hEvent = ::CreateEvent(NULL, TRUE, FALSE, NULL);

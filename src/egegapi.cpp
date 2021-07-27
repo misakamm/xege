@@ -2019,7 +2019,7 @@ void setrendermode(rendermode_e mode) {
 	} else {
 		struct _graph_setting * pg = &graph_setting;
 		delay_ms(0);
-		SetTimer(pg->hwnd, RENDER_TIMER_ID, 0, NULL);
+		SetTimer(pg->hwnd, RENDER_TIMER_ID, 50, NULL);
 		pg->skip_timer_mark = false;
 		pg->lock_window = false;
 	}
@@ -2760,17 +2760,11 @@ inputbox_getline(LPCWSTR title, LPCWSTR text, LPWSTR buf, int len) {
 	IMAGE bg;
 	IMAGE window;
 	int w = 400, h = 300, x = (getwidth() - w) / 2, y = (getheight() - h) / 2;
-	bool lock_window = false;
 	int ret = 0;
 
 	bg.getimage(0, 0, getwidth(), getheight());
 	window.resize(w, h);
 	buf[0] = 0;
-
-	lock_window = pg->lock_window;
-	if (!lock_window) {
-		setrendermode(RENDER_MANUAL);
-	}
 
 	sys_edit edit(true);
 	edit.create(true);
@@ -2779,40 +2773,31 @@ inputbox_getline(LPCWSTR title, LPCWSTR text, LPWSTR buf, int len) {
 	edit.setmaxlen(len);
 	edit.visible(true);
 	edit.setfocus();
-	for (int bInit = 0; is_run(); delay_fps(30)) {
-		if (bInit) {
-			bool exit = false;
-			do {
-				key_msg msg = getkey();
-				if (msg.key == key_enter && msg.msg == key_msg_up) {
-					exit = true;
-					break;
-				}
-			} while (kbmsg());
-			if (exit) break;
+	
+	setbkcolor(EGERGB(0x80, 0xA0, 0x80), &window);
+	draw_frame(&window, 0, 0, w-1, h-1, EGERGB(0xA0, 0xC0, 0xA0), EGERGB(0x50, 0x70, 0x50));
+	setfillcolor(EGERGB(0, 0, 0xA0), &window);
+	for (int dy = 1; dy<24; dy++) {
+		setcolor(HSLtoRGB(240.0f, 1.0f, 0.5f + float(dy/24.0*0.3)), &window);
+		line(1, dy, w-1, dy, &window);
+	}
+	setcolor(0xFFFFFF, &window);
+	setbkmode(TRANSPARENT, &window);
+	setfont(18, 0, L"Tahoma", &window);
+	outtextxy(3, 3, title, &window);
+	setcolor(0x0, &window);
+	{
+		RECT rect = {30, 32, w-30, 128-3};
+		DrawTextW(window.m_hDC, text, -1, &rect, DT_NOPREFIX|DT_LEFT|DT_TOP|TA_NOUPDATECP|DT_WORDBREAK|DT_EDITCONTROL|DT_EXPANDTABS);
+	}	
+	putimage(0, 0, &bg);
+	putimage(x, y, &window);
+	delay_ms(0);
+	while(is_run()) {
+		key_msg msg	= getkey();
+		if (msg.key == key_enter && msg.msg == key_msg_up) {
+			break;
 		}
-
-		putimage(0, 0, &bg);
-		if (bInit == 0) {
-			bInit = 1;
-			setbkcolor(EGERGB(0x80, 0xA0, 0x80), &window);
-			draw_frame(&window, 0, 0, w-1, h-1, EGERGB(0xA0, 0xC0, 0xA0), EGERGB(0x50, 0x70, 0x50));
-			setfillcolor(EGERGB(0, 0, 0xA0), &window);
-			for (int dy = 1; dy<24; dy++) {
-				setcolor(HSLtoRGB(240.0f, 1.0f, 0.5f + float(dy/24.0*0.3)), &window);
-				line(1, dy, w-1, dy, &window);
-			}
-			setcolor(0xFFFFFF, &window);
-			setbkmode(TRANSPARENT, &window);
-			setfont(18, 0, L"Tahoma", &window);
-			outtextxy(3, 3, title, &window);
-			setcolor(0x0, &window);
-			{
-				RECT rect = {30, 32, w-30, 128-3};
-				DrawTextW(window.m_hDC, text, -1, &rect, DT_NOPREFIX|DT_LEFT|DT_TOP|TA_NOUPDATECP|DT_WORDBREAK|DT_EDITCONTROL|DT_EXPANDTABS);
-			}
-		}
-		putimage(x, y, &window);
 	}
 	edit.gettext(len, buf);
 	len = lstrlenW(buf);
@@ -2821,9 +2806,7 @@ inputbox_getline(LPCWSTR title, LPCWSTR text, LPWSTR buf, int len) {
 	}
 	ret = len;
 	putimage(0, 0, &bg);
-	if (!lock_window) {
-		setrendermode(RENDER_AUTO);
-	}
+	delay_ms(0);
 	getflush();
 	return ret;
 }
