@@ -157,10 +157,10 @@
 #define EGEGRAY(gray)           EGERGB(gray, gray, gray)
 #define EGEGRAYA(gray, a)       EGERGBA(gray, gray, gray, a)
 #define EGEAGRAY(a, gray)       EGEGRAYA(gray, a)
-#define NAMESPACE_EGE_L         namespace ege {
-#define NAMESPACE_EGE_R         }
+//#define NAMESPACE_EGE_L         namespace ege {
+//#define NAMESPACE_EGE_R         }
 
-NAMESPACE_EGE_L
+namespace ege {
 
 const double PI = 3.1415926535897932384626;
 
@@ -1350,7 +1350,7 @@ int             EGEAPI ege_compress2(void *dest, unsigned long *destLen, const v
 int             EGEAPI ege_uncompress(void *dest, unsigned long *destLen, const void *source, unsigned long sourceLen);
 unsigned long   EGEAPI ege_uncompress_size(const void *source, unsigned long sourceLen); /* 返回0表示错误，其它表示大小 */
 
-NAMESPACE_EGE_R
+}
 
 #ifndef EGE_GRAPH_LIB_BUILD
 
