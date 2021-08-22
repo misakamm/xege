@@ -1016,7 +1016,9 @@ IMAGE::putimage_withalpha(
 	const PIMAGE img = CONVERT_IMAGE(imgdest);
 	if (img) {
 		PCIMAGE imgsrc = this;
-		BLENDFUNCTION bf;
+		int y, x;
+		DWORD ddx, dsx;
+		DWORD *pdp, *psp;
 		// fix rect
 		fix_rect_1size(
 			img,
@@ -1028,14 +1030,20 @@ IMAGE::putimage_withalpha(
 			&nWidthSrc,
 			&nHeightSrc
 			);
-		bf.BlendOp = AC_SRC_OVER;
-		bf.BlendFlags = 0;
-		bf.SourceConstantAlpha = 0xff;  
-		bf.AlphaFormat = AC_SRC_ALPHA;  
 		// draw 
-		AlphaBlend(img->m_hDC,nXOriginDest,nYOriginDest,nWidthSrc,
-			nHeightSrc,m_hDC,nXOriginSrc,nYOriginSrc,
-			nWidthSrc,nHeightSrc,bf);
+		pdp = img->m_pBuffer + nYOriginDest * img->m_width + nXOriginDest;
+		psp = imgsrc->m_pBuffer + nYOriginSrc  * imgsrc->m_width + nXOriginSrc;
+		ddx = img->m_width - nWidthSrc;
+		dsx = imgsrc->m_width - nWidthSrc;
+		for (y=0; y<nHeightSrc; ++y) {
+			for (x=0; x<nWidthSrc; ++x, ++psp, ++pdp) {
+				DWORD d=*pdp, s=*psp;
+				DWORD alpha = EGEGET_A(s);
+				*pdp = alphablend_inline(d, s, alpha);
+			}
+			pdp += ddx;
+			psp += dsx;
+		}
 	}
 	CONVERT_IMAGE_END;
 	return grOk;
@@ -1057,6 +1065,11 @@ IMAGE::putimage_withalpha(
 	const PIMAGE img = CONVERT_IMAGE(imgdest);
 	if (img) {
 		PCIMAGE imgsrc = this;
+		int x,y;
+		DWORD ddx, dsx;
+		DWORD *pdp, *psp;
+		PIMAGE alphaSrc = newimage(nWidthSrc,nHeightSrc);
+		
 		BLENDFUNCTION bf;
 		// fix rect
 		fix_rect_1size(
@@ -1069,13 +1082,31 @@ IMAGE::putimage_withalpha(
 			&nWidthSrc,
 			&nHeightSrc
 			);
+		//premultiply alpha channel
+		pdp = alphaSrc->m_pBuffer;
+		psp = imgsrc->m_pBuffer + nYOriginSrc  * imgsrc->m_width + nXOriginSrc;
+		ddx = 0;
+		dsx = imgsrc->m_width - nWidthSrc;
+		for (y=0; y<nHeightSrc; ++y) {
+			for (x=0; x<nWidthSrc; ++x, ++psp, ++pdp) {
+				DWORD d=*pdp, s=*psp;
+				DWORD alpha = EGEGET_A(s);
+				DWORD r = EGEGET_R(s);
+				DWORD g = EGEGET_G(s);
+				DWORD b = EGEGET_B(s);
+				*pdp = EGERGBA(r*alpha>>8, g*alpha>>8,b*alpha>>8,alpha);
+			}
+			pdp += ddx;
+			psp += dsx;
+		}		
+		
 		bf.BlendOp = AC_SRC_OVER;
 		bf.BlendFlags = 0;
 		bf.SourceConstantAlpha = 0xff;  
 		bf.AlphaFormat = AC_SRC_ALPHA;  
 		// draw 
 		AlphaBlend(img->m_hDC,nXOriginDest,nYOriginDest,nWidthDest,
-			nHeightDest,m_hDC,nXOriginSrc,nYOriginSrc,
+			nHeightDest,alphaSrc->m_hDC,0,0,
 			nWidthSrc,nHeightSrc,bf);
 	}
 	CONVERT_IMAGE_END;
