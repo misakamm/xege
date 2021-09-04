@@ -58,6 +58,7 @@ target_link_libraries(xege
   INTERFACE ole32
   INTERFACE oleaut32
   INTERFACE uuid
+  INTERFACE winmm
   )
 target_include_directories(xege
   INTERFACE .
