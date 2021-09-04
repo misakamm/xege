@@ -145,10 +145,10 @@
 #define EGE_GDIPLUS     //启用GDIPLUS
 
 #define SHOWCONSOLE             1       // 进入图形模式时，保留控制台的显示
-#define EGERGBA(r, g, b, a)     (color_t)( ((r)<<16) | ((g)<<8) | (b) | ((a)<<24) )
+#define EGERGBA(r, g, b, a)     ((::ege::color_t)( ((r)<<16) | ((g)<<8) | (b) | ((a)<<24) ))
 #define EGERGB(r, g, b)         EGERGBA(r, g, b, 0xFF)
 #define EGEARGB(a, r, g, b)     EGERGBA(r, g, b, a)
-#define EGEACOLOR(a, color)     (color_t)( ((color) & 0xFFFFFF) | ((a)<<24) )
+#define EGEACOLOR(a, color)     ((::ege::color_t)( ((color) & 0xFFFFFF) | ((a)<<24) ))
 #define EGECOLORA(color, a)     EGEACOLOR(a, color)
 #define EGEGET_R(c)             ( ((c)>>16) & 0xFF )
 #define EGEGET_G(c)             ( ((c)>> 8) & 0xFF )
