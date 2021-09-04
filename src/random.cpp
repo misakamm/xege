@@ -2,7 +2,7 @@
 * EGE (Easy Graphics Engine)
 * filename  random.cpp
 
-Ëæ»úº¯ÊıµÄÊµÏÖ
+éšæœºå‡½æ•°çš„å®ç°
 */
 
 #include "ege_head.h"

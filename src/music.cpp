@@ -1,7 +1,7 @@
 /*
 filename  music.cpp
 
-MUSIC类的定义
+MUSIC绫荤殑瀹氫箟
 */
 
 #include "ege_head.h"
@@ -232,7 +232,7 @@ DWORD MUSIC::SetVolume(float value) {
 	MCIERROR                mciERR  = ERROR_SUCCESS;
 	MCI_DGV_SETAUDIO_PARMSW mci_p   = {0};
 	mci_p.dwItem = MCI_DGV_SETAUDIO_VOLUME; 
-	mci_p.dwValue = (DWORD)(value * 1000); //此处就是音量大小 (0--1000) 
+	mci_p.dwValue = (DWORD)(value * 1000); //姝ゅ灏辨槸闊抽噺澶у皬 (0--1000) 
 
 	mciERR = mciSendCommandW(
 		m_DID,

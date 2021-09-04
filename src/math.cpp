@@ -2,7 +2,7 @@
 * EGE (Easy Graphics Engine)
 * filename  math.cpp
 
-定义所有数学相关的函数和类
+瀹氫箟鎵�鏈夋暟瀛︾浉鍏崇殑鍑芥暟鍜岀被
 */
 
 #include "ege_head.h"

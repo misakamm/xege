@@ -2,7 +2,7 @@
 * EGE (Easy Graphics Engine)
 * filename  image.cpp
 
-±¾ÎÄ¼ş¼¯ÖĞËùÓĞ¶Ôimage»ù±¾²Ù×÷µÄ½Ó¿ÚºÍÀà¶¨Òå
+æœ¬æ–‡ä»¶é›†ä¸­æ‰€æœ‰å¯¹imageåŸºæœ¬æ“ä½œçš„æ¥å£å’Œç±»å®šä¹‰
 */
 
 #ifndef _CRT_SECURE_NO_WARNINGS
@@ -72,7 +72,7 @@ IMAGE::IMAGE() {
 }
 
 IMAGE::IMAGE(int width, int height) {
-	// ½ØÖ¹µ½ 0
+	// æˆªæ­¢åˆ° 0
 	if (width < 0) width = 0;
 	if (height < 0) height = 0;
 	construct(width, height);
@@ -150,7 +150,7 @@ HBITMAP newbitmap(int width, int height, PDWORD* p_bmp_buf) {
 	BITMAPINFO bmi = {{0}};
 	PDWORD bmp_buf;
 
-	// ½ØÖ¹µ½ 1
+	// æˆªæ­¢åˆ° 1
 	if (width < 1) width = 1;
 	if (height < 1) height = 1;
 
@@ -253,7 +253,7 @@ void IMAGE::enable_anti_alias(bool enable){
 int IMAGE::resize_f(int width, int height) {
 	inittest(L"IMAGE::resize_f");
 
-	// ½ØÖ¹µ½ 0
+	// æˆªæ­¢åˆ° 0
 	if (width < 0) width = 0;
 	if (height < 0) height = 0;
 
@@ -1585,7 +1585,7 @@ IMAGE::putimage_rotatezoom(
 	s = (crb | cg) >> 8;\
 }
 
-/* ege 3d ½á¹¹ */
+/* ege 3d ç»“æ„ */
 struct point2d {
 	float x;
 	float y;

@@ -8,11 +8,11 @@
 * Blog:         http://misakamm.com
 * E-Mail:       mailto:misakamm[at gmail com]
 
-±àÒëËµÃ÷£º±àÒëÎª¶¯Ì¬¿âÊ±£¬ÐèÒª¶¨Òå PNG_BULIDDLL£¬ÒÔµ¼³ödllº¯Êý
+ç¼–è¯‘è¯´æ˜Žï¼šç¼–è¯‘ä¸ºåŠ¨æ€åº“æ—¶ï¼Œéœ€è¦å®šä¹‰ PNG_BULIDDLLï¼Œä»¥å¯¼å‡ºdllå‡½æ•°
 
-±¾Í¼ÐÎ¿â´´½¨Ê±¼ä2010 0916
+æœ¬å›¾å½¢åº“åˆ›å»ºæ—¶é—´2010 0916
 
-±¾ÎÄ¼þ¶¨ÒåÆ½Ì¨ÃÜÇÐÏà¹ØµÄ²Ù×÷¼°½Ó¿Ú
+æœ¬æ–‡ä»¶å®šä¹‰å¹³å°å¯†åˆ‡ç›¸å…³çš„æ“ä½œåŠæŽ¥å£
 */
 
 
@@ -65,7 +65,7 @@
 
 namespace ege {
 
-// ¾²Ì¬·ÖÅä£¬Áã³õÊ¼»¯
+// é™æ€åˆ†é…ï¼Œé›¶åˆå§‹åŒ–
 struct _graph_setting graph_setting;
 
 static DWORD    g_windowstyle = WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU|WS_MINIMIZEBOX|WS_CLIPCHILDREN|WS_VISIBLE;
@@ -99,11 +99,11 @@ ui_msg_process(EGEMSG& qmsg) {
 	qmsg.flag |= 1;
 	if (qmsg.message >= WM_KEYFIRST && qmsg.message <= WM_KEYLAST) {
 		if (qmsg.message == WM_KEYDOWN) {
-			pg->egectrl_root->keymsgdown((unsigned)qmsg.wParam, 0); // ÒÔºó²¹¼Óflag
+			pg->egectrl_root->keymsgdown((unsigned)qmsg.wParam, 0); // ä»¥åŽè¡¥åŠ flag
 		} else if (qmsg.message == WM_KEYUP) {
-			pg->egectrl_root->keymsgup((unsigned)qmsg.wParam, 0); // ÒÔºó²¹¼Óflag
+			pg->egectrl_root->keymsgup((unsigned)qmsg.wParam, 0); // ä»¥åŽè¡¥åŠ flag
 		} else if (qmsg.message == WM_CHAR) {
-			pg->egectrl_root->keymsgchar((unsigned)qmsg.wParam, 0); // ÒÔºó²¹¼Óflag
+			pg->egectrl_root->keymsgchar((unsigned)qmsg.wParam, 0); // ä»¥åŽè¡¥åŠ flag
 		}
 	} else if (qmsg.message >= WM_MOUSEFIRST && qmsg.message <= WM_MOUSELAST) {
 		int x = (short int)((UINT)qmsg.lParam & 0xFFFF), y = (short int)((UINT)qmsg.lParam >> 16);
@@ -685,7 +685,7 @@ init_instance(HINSTANCE hInstance) {
 		lf.lfClipPrecision  = CLIP_DEFAULT_PRECIS;
 		lf.lfQuality        = DEFAULT_QUALITY;
 		lf.lfPitchAndFamily = DEFAULT_PITCH;
-		lstrcpyW(lf.lfFaceName, L"ËÎÌå");
+		lstrcpyW(lf.lfFaceName, L"å®‹ä½“");
 		HFONT hfont = CreateFontIndirectW(&lf);
 		::SendMessage(pg->hwnd, WM_SETFONT, (WPARAM)hfont, NULL);
 		//DeleteObject(hfont);
@@ -1213,7 +1213,7 @@ void initicon(void) {
 	HICON hIcon = NULL;
 	struct _graph_setting * pg = &graph_setting;
 
-	// ÌáÇ°ÉèÖÃÁËÍ¼±ê
+	// æå‰è®¾ç½®äº†å›¾æ ‡
 	if (pg->window_hicon != 0) {
 		return;
 	}
@@ -1245,7 +1245,7 @@ initgraph(int *gdriver, int *gmode, const char *path) {
 	pg->exit_flag = 0;
 	pg->exit_window = 0;
 
-	//ÒÑ´´½¨Ôò×ªÎª¸Ä±ä´°¿Ú´óÐ¡	
+	//å·²åˆ›å»ºåˆ™è½¬ä¸ºæ”¹å˜çª—å£å¤§å°	
 	if(pg->has_init) {
 		int width = (short)(*gmode & 0xFFFF);
 		int height = (short)((unsigned int)(*gmode) >> 16);
@@ -1256,7 +1256,7 @@ initgraph(int *gdriver, int *gmode, const char *path) {
 		return;
 	}
 
-	//³õÊ¼»¯»·¾³
+	//åˆå§‹åŒ–çŽ¯å¢ƒ
 	setmode(*gdriver, *gmode);	
 	init_img_page(pg);
 
@@ -1264,7 +1264,7 @@ initgraph(int *gdriver, int *gmode, const char *path) {
 
 	initicon();
 
-	// ×¢²á´°¿ÚÀà£¬ÉèÖÃÄ¬ÈÏÏûÏ¢´¦Àíº¯Êý
+	// æ³¨å†Œçª—å£ç±»ï¼Œè®¾ç½®é»˜è®¤æ¶ˆæ¯å¤„ç†å‡½æ•°
 	if (pg->is_unicode) {	
 		register_classW(pg, pg->instance);
 		DefWindowProcFunc = DefWindowProcW;
@@ -1289,7 +1289,7 @@ initgraph(int *gdriver, int *gmode, const char *path) {
 		SetWindowPos(pg->hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE);
 	}
 
-	//³õÊ¼»¯Êó±êÎ»ÖÃÊý¾Ý
+	//åˆå§‹åŒ–é¼ æ ‡ä½ç½®æ•°æ®
 	pg->mouse_last_x = pg->dc_w / 2;
 	pg->mouse_last_y = pg->dc_h / 2;
 	
@@ -1335,12 +1335,12 @@ messageloopthread(LPVOID lpParameter) {
 	_graph_setting* pg = (_graph_setting*)lpParameter;
 	MSG msg;
 	{
-		/* Ö´ÐÐÓ¦ÓÃ³ÌÐò³õÊ¼»¯: */
+		/* æ‰§è¡Œåº”ç”¨ç¨‹åºåˆå§‹åŒ–: */
 		if (!init_instance(pg->instance)) {
 			return 0xFFFFFFFF;
 		}
 
-		//Í¼ÐÎ³õÊ¼»¯
+		//å›¾å½¢åˆå§‹åŒ–
 		if (pg->dc == 0)
 			graph_init(pg);
 
@@ -1413,7 +1413,7 @@ int getinitmode() {
 	return g_initoption;
 }
 
-// »ñÈ¡µ±Ç°°æ±¾
+// èŽ·å–å½“å‰ç‰ˆæœ¬
 int getGraphicsVer() {
 	return EGE_VERSION_INT;
 }
@@ -1452,14 +1452,14 @@ void EGEAPI resizewindow(int width, int height) {
 		if (pg->img_page[i] != NULL) {
 			resize(pg->img_page[i], width, height);
 			
-			//ÊÓ¿Úµ÷Õû
+			//è§†å£è°ƒæ•´
 			int vleft, vtop, vright, vbottom, vclip;
 			getviewport(&vleft, &vtop, &vright, &vbottom, &vclip, pg->img_page[i]);
 			if (vleft == 0 && vtop == 0 && vright == w && vbottom == h)
 				setviewport(0, 0, width, height, vclip, pg->img_page[i]);
 		}	
 	}
-	//´°¿ÚÊÓ¿Úµ÷Õû
+	//çª—å£è§†å£è°ƒæ•´
 	window_setviewport(pg->base_x, pg->base_y, width, height);	
 }
 
