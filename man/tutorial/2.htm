@@ -1,27 +1,27 @@
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=gbk" />
-    <title>��һ����ͼ����</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>第一个画图程序</title>
 </head>
 <body bgcolor=#f0f0f0>
 
-<pre><font size="4"><a href="../index.htm">��ҳ</a>-��<a href="index.htm">���Ż���ʾ��</a>-����һ����ͼ����</font>
+<pre><font size="4"><a href="../index.htm">主页</a>-＞<a href="index.htm">入门基础示例</a>-＞第一个画图程序</font>
 
-���������һ������ĸ��
-Ϊ���ܷ�������һ�����λ�ã�������Ҫʹ�����ꡣ
-�Դ��ڵ����Ͻ�Ϊ��׼��ĳ���㣬������߽�ľ��룬���Ǽ�¼Ϊxֵ�������ϱ߽�ľ��룬���Ǽ�¼Ϊyֵ��
-��ô������һ��(x, y)����ʾ����㣬�����������Ϊx�������ϱ�Ϊy��������֪��������λ���ˡ�
-�������ѧ������������һ���ģ�ֻ�Ƿ�������ѧ�ϵĲ���ͬ��
+在这里，介绍一下坐标的概念。
+为了能方便描述一个点的位置，我们需要使用坐标。
+以窗口的左上角为基准，某个点，距离左边界的距离，我们记录为x值；距离上边界的距离，我们记录为y值。
+那么可以用一对(x, y)来表示这个点，这个点距离左边为x，距离上边为y，这样就知道这个点的位置了。
+这个和数学里的坐标概念是一样的，只是方向与数学上的不相同。
 
-��ô��������룬����ʹ��ʲô��λ�أ�����������ʹ�á����ء�Ϊ��λ��
-��ν���أ�pixel����������һ����Ļ�������Ŵ�ܶ౶�Ļ�����ᷢ�������ɺܶ��С������ɫ�鹹�ɵģ�
-����ЩС�����Σ�һ������һ���أ����ؾ���ͼ���������ĵ�λ��
+那么，这个距离，我们使用什么单位呢？在这里我们使用“像素”为单位。
+所谓像素（pixel），你留意一下屏幕，对它放大很多倍的话，你会发现它是由很多个小正方形色块构成的，
+而这些小正方形，一个就是一像素，像素就是图像的最基本的单位。
 
-���½������ڵ�ʱ���Ǹ��ߴ����õĵ�λҲ�����ء������㽨����һ��640x480�Ĵ��ڣ�
-��ô�����Ͻǵ����ص�������(0, 0)
-�����½ǵ�������(639, 479)
-ע�ⲻ��(640, 480)����Ҫ��1�ġ�
+在新建立窗口的时候，那个尺寸所用的单位也是像素。比如你建立了一个640x480的窗口，
+那么最左上角的像素的坐标是(0, 0)
+最右下角的坐标是(639, 479)
+注意不是(640, 480)，是要减1的。
 
-����ʾ������<a href="t02.cpp" target=_BLANK>��˴�����</a>
+若显示乱码请<a href="t02.cpp" target=_BLANK>点此打开下载</a>
 <IFRAME NAME="content_frame" width=100% height=80% marginwidth=0 marginheight=0 SRC="t02.cpp" ></IFRAME>
 
 

@@ -2,7 +2,7 @@
 * EGE (Easy Graphics Engine)
 * filename  ege_head.cpp
 
-¹«¹²ÉùÃ÷Í·ÎÄ¼ş£¨Ë½ÓĞ£¬²»¶ÔÍâÊ¹ÓÃ£©
+å…¬å…±å£°æ˜å¤´æ–‡ä»¶ï¼ˆç§æœ‰ï¼Œä¸å¯¹å¤–ä½¿ç”¨ï¼‰
 */
 
 #ifndef EGE_HEAD_H
@@ -22,7 +22,7 @@
 #define EGE_L_(str)    L##str
 #define EGE_L(str)     EGE_L_(str)
 
-//±àÒëÆ÷°æ±¾£¬Ä¿Ç°½öÖ§³Ö MSVC/MinGW
+//ç¼–è¯‘å™¨ç‰ˆæœ¬ï¼Œç›®å‰ä»…æ”¯æŒ MSVC/MinGW
 #ifdef _WIN64
 #	define SYSBITS "x64"
 #else
@@ -76,8 +76,8 @@
 #define EGE_WNDCLSNAME    "Easy Graphics Engine"
 #define EGE_WNDCLSNAME_W  EGE_L(EGE_WNDCLSNAME)
 
-// MSVC ´Ó 10.0£¨VS2010£©¿ªÊ¼ÓĞ stdint.h
-// GCC ´Ó 4.5 ¿ªÊ¼ÓĞ stdint.h
+// MSVC ä» 10.0ï¼ˆVS2010ï¼‰å¼€å§‹æœ‰ stdint.h
+// GCC ä» 4.5 å¼€å§‹æœ‰ stdint.h
 #if _MSC_VER >= 1600 || __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 5)
 #  include <stdint.h>
 #elif !defined(_MSC_VER) || _MSC_VER > 1300
@@ -142,9 +142,9 @@
 // 0xaarrggbb -> 0xaabbggrr
 #define RGBTOBGR(color)         ((((color) & 0xFF) << 16) | (((color) & 0xFF0000) >> 16) | ((color) & 0xFF00FF00))
 
-// ½« color_t Óë Bitmap Buffer ËùÓÃµÄ 0xaarrggbb ¸ñÊ½
-// ×ª»»Îª COLORREF ËùÓÃµÄ 0x00bbggrr£¬ºöÂÔ Alpha Í¨µÀ
-// ½öÓÃÓÚÏò GDI32 API ´«µİÑÕÉ«Ê±
+// å°† color_t ä¸ Bitmap Buffer æ‰€ç”¨çš„ 0xaarrggbb æ ¼å¼
+// è½¬æ¢ä¸º COLORREF æ‰€ç”¨çš„ 0x00bbggrrï¼Œå¿½ç•¥ Alpha é€šé“
+// ä»…ç”¨äºå‘ GDI32 API ä¼ é€’é¢œè‰²æ—¶
 #define ARGBTOZBGR(c)   ((((c) & 0xFF) << 16) | (((c) & 0xFF0000) >> 16) | ((c) & 0xFF00))
 
 #define CONVERT_IMAGE(pimg) ( ((size_t)(pimg)<0x20 ?\
@@ -245,7 +245,7 @@ struct EGEMSG {
 Gdiplus::DashStyle linestyle_to_dashstyle(int linestyle);
 #endif
 
-// ¶¨ÒåÍ¼Ïñ¶ÔÏó
+// å®šä¹‰å›¾åƒå¯¹è±¡
 class IMAGE
 {
 	int     m_initflag;
@@ -281,8 +281,8 @@ private:
 public:
 	IMAGE();
 	IMAGE(int width, int height);
-	IMAGE(const IMAGE &img);              // ¿½±´¹¹Ôìº¯Êı
-	IMAGE& operator = (const IMAGE &img); // ¸³ÖµÔËËã·ûÖØÔØº¯Êı
+	IMAGE(const IMAGE &img);              // æ‹·è´æ„é€ å‡½æ•°
+	IMAGE& operator = (const IMAGE &img); // èµ‹å€¼è¿ç®—ç¬¦é‡è½½å‡½æ•°
 	~IMAGE();
 	void gentexture(bool gen);
 public:
@@ -440,7 +440,7 @@ public:
 	friend void getimage_from_png_struct(PIMAGE, void*, void*);
 };
 
-// ¶¨ÒåegeÈ«¾Ö×´Ì¬¶ÔÏó
+// å®šä¹‰egeå…¨å±€çŠ¶æ€å¯¹è±¡
 struct _graph_setting {
 	bool has_init;
 	bool is_unicode;
@@ -472,9 +472,9 @@ struct _graph_setting {
 	HICON   window_hicon;
 	int     exit_flag;
 	int     exit_window;
-	int     update_mark_count; //¸üĞÂ±ê¼Ç
+	int     update_mark_count; //æ›´æ–°æ ‡è®°
 	bool    close_manually;
-	bool    use_force_exit; //Ç¿ÖÆ¹Ø±Õ½ø³Ì±ê¼Ç
+	bool    use_force_exit; //å¼ºåˆ¶å…³é—­è¿›ç¨‹æ ‡è®°
 	bool    lock_window;
 	bool    timer_stop_mark;
 	bool    skip_timer_mark;
@@ -484,7 +484,7 @@ struct _graph_setting {
 	HANDLE threadui_handle;
 
 
-	/*Êó±ê×´Ì¬¼ÇÂ¼*/
+	/* é¼ æ ‡çŠ¶æ€è®°å½• */
 	int mouse_state_l, mouse_state_m, mouse_state_r;
 	int mouse_last_x, mouse_last_y;
 	int mouse_lastclick_x, mouse_lastclick_y;
@@ -497,14 +497,14 @@ struct _graph_setting {
 	void* callback_mouse_param;
 	LPCALLBACK_PROC callback_close;
 
-	/* ¼üÅÌ×´Ì¬¼ÇÂ¼ */
+	/* é”®ç›˜çŠ¶æ€è®°å½• */
 	int keystatemap[MAX_KEY_VCODE];
 
 	/* egeControlBase */
 	egeControlBase* egectrl_root;
 	egeControlBase* egectrl_focus;
 
-	/* Ë½ÓÃÈ«¾Ö±äÁ¿ */
+	/* ç§ç”¨å…¨å±€å˜é‡ */
 #ifdef EGE_GDIPLUS
 	ULONG_PTR g_gdiplusToken;
 #endif
@@ -517,7 +517,7 @@ struct _graph_setting {
 
 	HBRUSH savebrush_hbr;
 
-	/* º¯ÊıÓÃÁÙÊ±»º³åÇø */
+	/* å‡½æ•°ç”¨ä¸´æ—¶ç¼“å†²åŒº */
 	DWORD g_t_buff[1024 * 8];
 
 	_graph_setting() {
@@ -600,8 +600,8 @@ void internal_panic(LPCWSTR errmsg);
 
 HBITMAP newbitmap(int width, int height, PDWORD* p_bmp_buf);
 
-// ÒÔ bkg Îª±³¾°É«£¬src ÎªÇ°¾°É«£¬alpha Îª 0~255 µÄÕûÊı½øĞĞ»ìºÏ£¬
-// »ìºÏ½á¹û±£Áô bkg µÄ Alpha Í¨µÀ
+// ä»¥ bkg ä¸ºèƒŒæ™¯è‰²ï¼Œsrc ä¸ºå‰æ™¯è‰²ï¼Œalpha ä¸º 0~255 çš„æ•´æ•°è¿›è¡Œæ··åˆï¼Œ
+// æ··åˆç»“æœä¿ç•™ bkg çš„ Alpha é€šé“
 EGE_FORCEINLINE color_t alphablend_inline(color_t bkg, color_t src, unsigned char alpha) {
 	DWORD rb = bkg & 0x00FF00FF;
 	DWORD  g = bkg & 0x0000FF00;

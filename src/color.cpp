@@ -2,7 +2,7 @@
 * EGE (Easy Graphics Engine)
 * filename  color.cpp
 
-色彩模型转换函数定义
+鑹插僵妯″瀷杞崲鍑芥暟瀹氫箟
 */
 
 #include "ege_head.h"

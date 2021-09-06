@@ -2,7 +2,7 @@
 * EGE (Easy Graphics Engine)
 * filename  egegapi.cpp
 
-±¾ÎÄ¼ş»ã¼¯½Ï¶ÀÁ¢µÄº¯Êı½Ó¿Ú
+æœ¬æ–‡ä»¶æ±‡é›†è¾ƒç‹¬ç«‹çš„å‡½æ•°æ¥å£
 */
 
 #ifndef _CRT_SECURE_NO_WARNINGS
@@ -203,7 +203,7 @@ void internal_panic(LPCWSTR errmsg) {
 
 double
 get_highfeq_time_ls(struct _graph_setting * pg) {
-	static LARGE_INTEGER llFeq = {{0}}; /* ´ËÊµÎª³£Êı */
+	static LARGE_INTEGER llFeq = {{0}}; /* æ­¤å®ä¸ºå¸¸æ•° */
 	LARGE_INTEGER llNow = {{0}};
 
 	if (pg->get_highfeq_time_start.QuadPart == 0) {
@@ -314,9 +314,9 @@ api_sleep(long dwMilliseconds) {
 void
 ege_sleep(long ms) {
 	if (ms <= 0) return;
-	if (0) { // ¾­¼ÃÄ£Ê½£¬Õ¼CPU¼«ÉÙ
+	if (0) { // ç»æµæ¨¡å¼ï¼Œå CPUæå°‘
 		::Sleep(ms);
-	} else if (0) { //¾«È·Ä£Ê½£¬Õ¼CPUÂÔ¸ß
+	} else if (0) { //ç²¾ç¡®æ¨¡å¼ï¼Œå CPUç•¥é«˜
 		static HANDLE hTimer = ::CreateEvent(NULL, TRUE, FALSE, NULL);
 		static MMRESULT resTimer = 0;
 		::ResetEvent(hTimer);
@@ -328,7 +328,7 @@ ege_sleep(long ms) {
 			::Sleep(1);
 		}
 		//::CloseHandle(hTimer);
-	} else if (1) { //¸ß¾«Ä£Ê½£¬Õ¼CPU¸ü¸ß
+	} else if (1) { //é«˜ç²¾æ¨¡å¼ï¼Œå CPUæ›´é«˜
 		static HANDLE hTimer = ::CreateWaitableTimer(NULL, TRUE, NULL);
 		LARGE_INTEGER liDueTime;
 		liDueTime.QuadPart = ms * (LONGLONG)-10000;
@@ -410,7 +410,7 @@ delay_ms(long ms) {
 }
 
 /*
-ÑÓ³Ù1/fpsµÄÊ±¼ä£¬µ÷ÓÃ¼ä¸ô²»´óÓÚ200msÊ±ÄÜ±£Ö¤Ã¿ÃëÄÜ·µ»Øfps´Î
+å»¶è¿Ÿ1/fpsçš„æ—¶é—´ï¼Œè°ƒç”¨é—´éš”ä¸å¤§äº200msæ—¶èƒ½ä¿è¯æ¯ç§’èƒ½è¿”å›fpsæ¬¡
 */
 void
 delay_fps(int fps) {
@@ -426,7 +426,7 @@ delay_fps(double fps) {
 	egeControlBase* &root = pg->egectrl_root;
 	pg->skip_timer_mark = true;
 	double delay_time = 1000.0 / fps;
-	double avg_max_time = delay_time * 10.0; // Îó²îÊ±¼äÔÚÕâ¸öÊıÖµÒÔÄÚ×öÆ½ºâ
+	double avg_max_time = delay_time * 10.0; // è¯¯å·®æ—¶é—´åœ¨è¿™ä¸ªæ•°å€¼ä»¥å†…åšå¹³è¡¡
 	double dw = get_highfeq_time_ls(pg) * 1000.0;
 	int nloop = 0;
 
@@ -456,7 +456,7 @@ delay_fps(double fps) {
 }
 
 /*
-ÑÓ³Ù1/fpsµÄÊ±¼ä£¬µ÷ÓÃ¼ä¸ô²»´óÓÚ200msÊ±ÄÜ±£Ö¤Ã¿ÃëÄÜ·µ»Øfps´Î
+å»¶è¿Ÿ1/fpsçš„æ—¶é—´ï¼Œè°ƒç”¨é—´éš”ä¸å¤§äº200msæ—¶èƒ½ä¿è¯æ¯ç§’èƒ½è¿”å›fpsæ¬¡
 */
 void
 delay_jfps(int fps) {
@@ -815,7 +815,7 @@ line_f(float x1, float y1, float x2, float y2, PIMAGE pimg) {
 /*private function*/
 static
 int
-saveBrush(PIMAGE img, int save) { //´Ëº¯Êıµ÷ÓÃÇ°£¬ÒÑ¾­ÓĞLock
+saveBrush(PIMAGE img, int save) { //æ­¤å‡½æ•°è°ƒç”¨å‰ï¼Œå·²ç»æœ‰Lock
 	struct _graph_setting * pg = &graph_setting;
 	if (save) {
 		LOGBRUSH lbr = {0};
@@ -865,9 +865,9 @@ getcolor(PCIMAGE pimg) {
 	return 0xFFFFFFFF;
 }
 
-// ½«ÃèÊöÏßĞÎµÄÎ»Ä£Ê½×ª»»Îª style Êı×é
-// ÓÃÓÚ ExtCreatePen ÖĞ¡£
-// ·µ»ØÖµÎªÓÃµ½µÄÊı×éÔªËØÊı¡£
+// å°†æè¿°çº¿å½¢çš„ä½æ¨¡å¼è½¬æ¢ä¸º style æ•°ç»„
+// ç”¨äº ExtCreatePen ä¸­ã€‚
+// è¿”å›å€¼ä¸ºç”¨åˆ°çš„æ•°ç»„å…ƒç´ æ•°ã€‚
 static int upattern2array(unsigned short upattern, DWORD style[]) {
 	int n, segments = 0, segmentLength = 1;
 	int state = !!(upattern & 1);
@@ -885,7 +885,7 @@ static int upattern2array(unsigned short upattern, DWORD style[]) {
 	style[segments] = segmentLength;
 	segments += 1;
 
-	// Èô upattern ÒÔ 0 ¿ªÍ·ÇÒÎªÅ¼Êı¶Î
+	// è‹¥ upattern ä»¥ 0 å¼€å¤´ä¸”ä¸ºå¶æ•°æ®µ
 	if (!(upattern & 1) && segments % 2 == 0) {
 		DWORD p0 = style[0];
 		for (int i = 0; i < segments - 1; ++i) {
@@ -907,7 +907,7 @@ static void update_pen(PIMAGE img) {
 	const unsigned short upattern = img->m_linestyle.upattern;
 	const int thickness = img->m_linestyle.thickness;
 
-	// Ìí¼ÓÕâĞ©ÊôĞÔÒÔ»ñµÃÕıÈ·µÄÏÔÊ¾Ğ§¹û
+	// æ·»åŠ è¿™äº›å±æ€§ä»¥è·å¾—æ­£ç¡®çš„æ˜¾ç¤ºæ•ˆæœ
 	int ls = linestyle|PS_GEOMETRIC|PS_ENDCAP_ROUND|PS_JOIN_ROUND;
 
 	HPEN hpen;
@@ -2094,7 +2094,7 @@ window_setviewport(int left, int top, int right, int bottom) {
 	if (same_xy == 0 || same_wh == 0) {
 		graph_setting.update_mark_count -= 1;
 	}
-	/*ĞŞÕı´°¿Ú´óĞ¡*/
+	/*ä¿®æ­£çª—å£å¤§å°*/
 	if (same_wh == 0) {
 		RECT rect, crect;
 		int dw, dh;
@@ -2523,7 +2523,7 @@ ege_puttexture(PCIMAGE srcimg, ege_rect dest, ege_rect src, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-// TODO: ´íÎó´¦Àí
+// TODO: é”™è¯¯å¤„ç†
 static void ege_drawtext_p(LPCWSTR textstring, float x, float y, PIMAGE img) {
 	Gdiplus::Graphics* graphics=img->getGraphics();
 
@@ -2812,7 +2812,7 @@ inputbox_getline(LPCWSTR title, LPCWSTR text, LPWSTR buf, int len) {
 }
 
 float
-EGE_PRIVATE_GetFPS(int add) {//»ñÈ¡Ö¡Êı
+EGE_PRIVATE_GetFPS(int add) {//è·å–å¸§æ•°
 	static int      fps = 0;
 	static int      fps_inv = 0;
 	static double   time = 0;
