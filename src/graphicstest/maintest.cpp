@@ -128,7 +128,6 @@ int main()
     Window2 w[3];
     //fps f;
     sys_edit edit;
-    scanf("%*s");
     edit.create();
     edit.size(100, 18);
     edit.visible(true);
