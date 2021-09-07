@@ -909,11 +909,11 @@ void EGEAPI sectorf(float x, float y, float stangle, float endangle, float xradi
 
 //»­Ìî³äÔ²
 inline void EGEAPI fillcircle(int x, int y, int radius, PIMAGE pimg = NULL) {
-	fillellipse(x,y,radius,radius);
+	fillellipse(x,y,radius,radius,pimg);
 }
 //»­Ìî³äÔ²
 inline void EGEAPI fillcirclef(float x, float y, float radius, PIMAGE pimg = NULL) {
-	fillellipsef(x,y,radius,radius);
+	fillellipsef(x,y,radius,radius,pimg);
 } 
 
 void EGEAPI bar(int left, int top, int right, int bottom, PIMAGE pimg = NULL);                             // »­ÎÞ±ß¿òÌî³ä¾ØÐÎ
