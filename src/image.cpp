@@ -497,8 +497,8 @@ IMAGE::saveimage(LPCWSTR filename) const {
 void getimage_from_png_struct(PIMAGE self, void* vpng_ptr, void* vinfo_ptr) {
 	png_structp png_ptr = (png_structp)vpng_ptr;
 	png_infop info_ptr = (png_infop)vinfo_ptr;
-	png_read_png(png_ptr, info_ptr, PNG_TRANSFORM_BGR|PNG_TRANSFORM_EXPAND, NULL);
 	png_set_expand(png_ptr);
+	png_read_png(png_ptr, info_ptr, PNG_TRANSFORM_BGR|PNG_TRANSFORM_EXPAND, NULL);
 	self->resize_f((int)(info_ptr->width), (int)(info_ptr->height)); //png_get_IHDR
 
 	PDWORD m_pBuffer = self->m_pBuffer;
