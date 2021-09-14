@@ -19,6 +19,10 @@ target_sources(xege
   PRIVATE ${EGE_CPP_SRC}
   )
 
+target_include_directories(xege
+  PRIVATE lpng
+  )
+
 target_compile_definitions(xege
   # Specifies that the minimum required platform is Windows XP.
   PRIVATE WINVER=0x0510

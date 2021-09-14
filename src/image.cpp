@@ -19,8 +19,8 @@
 //#undef _ITERATOR_DEBUG_LEVEL
 //#endif
 
-#include "lpng/png.h"
-#include "lpng/pnginfo.h"
+#include <png.h>
+
 #include "ocidl.h"
 #include "olectl.h"
 
@@ -499,20 +499,23 @@ void getimage_from_png_struct(PIMAGE self, void* vpng_ptr, void* vinfo_ptr) {
 	png_infop info_ptr = (png_infop)vinfo_ptr;
 	png_set_expand(png_ptr);
 	png_read_png(png_ptr, info_ptr, PNG_TRANSFORM_BGR|PNG_TRANSFORM_EXPAND, NULL);
-	self->resize_f((int)(info_ptr->width), (int)(info_ptr->height)); //png_get_IHDR
 
+	const png_uint_32 width = png_get_image_width(png_ptr, info_ptr);
+	const png_uint_32 height = png_get_image_height(png_ptr, info_ptr);
+	self->resize_f((int)width, (int)height); //png_get_IHDR
+
+	const png_byte color_type = png_get_color_type(png_ptr, info_ptr);
+	const png_bytepp row_pointers = png_get_rows(png_ptr, info_ptr);
 	PDWORD m_pBuffer = self->m_pBuffer;
-	const png_uint_32 width = info_ptr->width;
-	const png_uint_32 height = info_ptr->height;
-	const png_uint_32 depth = info_ptr->pixel_depth;
-	png_bytepp row_pointers = png_get_rows(png_ptr, info_ptr);
 
-	for (uint32 i = 0; i < height; ++i) {
-		if (depth == 24) {
+	if (color_type == PNG_COLOR_TYPE_RGB) {
+		for (uint32 i = 0; i < height; ++i) {
 			for (uint32 j = 0; j < width; ++j) {
 				m_pBuffer[i * width + j] = 0xFFFFFF & (DWORD&)row_pointers[i][j * 3];
 			}
-		} else if (depth == 32) {
+		}
+	} else if (color_type == PNG_COLOR_TYPE_RGBA) {
+		for (uint32 i = 0; i < height; ++i) {
 			for (uint32 j = 0; j < width; ++j) {
 				m_pBuffer[i * width + j] = ((DWORD*)(row_pointers[i]))[j];
 				if ( (m_pBuffer[i * width + j] & 0xFF000000) == 0) {
