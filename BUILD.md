@@ -2,6 +2,14 @@
 
 EGE 源码使用 CMake 构建编译系统，以支持各种编译器和 IDE。
 
+EGE 在编译时默认链接 zlib 和 libpng 源代码并将之编译为库的一部分，在编译前需要将
+zlib 和 libpng 的源代码准备在 `3rdparty` 文件夹下，这部分已使用 git submodule 进行
+管理，在克隆源代码后运行 `git submodule --init --recursive` 来同步源代码，或者
+直接执行 CMake 构建步骤，CMake 中已配置了自动同步子模块的指令。
+
+如果不想合并 zlib 和 libpng 的源代码，例如要在 MSYS2 中使用系统安装的库，可在生成编译
+配置文件时添加 `-DMERGE_LIBPNG_AND_ZLIB=OFF` 参数选择不合并。
+
 请在 [cmake.org](https://cmake.org) 下载最新版 CMake，并在安装时选择将 CMake 
 目录添加到 `PATH` 环境变量中。本指南默认在 CMD 或者 PowerShell 命令行下进行编译，
 但仍使用 `$` 作为提示符。如果您对 CMake 有足够的把握，亦可使用 CMake GUI 

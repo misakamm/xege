@@ -23,7 +23,8 @@
 #include <cstdarg>
 #include <cstdio>
 
-#include "lpng/zlib.h"
+#include <zlib.h>
+
 #include "ege/sys_edit.h"
 #include "ege_common.h"
 

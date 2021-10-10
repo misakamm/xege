@@ -1,7 +1,3 @@
-
-file(GLOB LPNG_SRC
-  CONFIGURE_DEPENDS
-  "lpng/*.c")
 set(EGE_CPP_SRC
   graphics.cpp
   logo.cpp
@@ -15,8 +11,11 @@ set(EGE_CPP_SRC
   )
 
 target_sources(xege
-  PRIVATE ${LPNG_SRC}
   PRIVATE ${EGE_CPP_SRC}
+  )
+
+target_include_directories(xege
+  PRIVATE lpng
   )
 
 target_compile_definitions(xege
