@@ -1,13 +1,13 @@
-//�߼����滭����ɫ/�ʺ�
+//高级：绘画渐变色/彩虹
 #include <graphics.h>
 
-// alpha ��ϼ��㺯��
+// alpha 混合计算函数
 color_t alphasingle(color_t a, color_t b, color_t alpha)
 {
 	return (a * (0xFF - alpha) + b * alpha) >> 8;
 }
 
-// ��ɫalpha��ϼ��㺯��
+// 颜色alpha混合计算函数
 color_t alphacol(color_t d, color_t s, color_t alpha)
 {
 	return (alphasingle(d&0xFF00FF, s&0xFF00FF, alpha) & 0xFF00FF)
@@ -19,7 +19,7 @@ int main()
 	initgraph(640, 480);
 	int c;
 
-	//������ɫ
+	//画渐变色
 	for (c=0; c<256; ++c)
 	{
 		color_t a = 0xFF0000, b = 0x0000FF;
@@ -27,7 +27,7 @@ int main()
 		line(0, c, 200, c);
 	}
 
-	//���ʺ�
+	//画彩虹
 	for (c=0; c<360; ++c)
 	{
 		setcolor(hsl2rgb((float)c, 1.0f, 0.5f));
