@@ -24,7 +24,7 @@ void InitStar( int i ) {
     if ( star[i].color > 255 ) {
         star[i].color = 255;
     }
-    star[i].color = RGB( star[i].color, star[i].color, star[i].color );
+    star[i].color = EGERGB( star[i].color, star[i].color, star[i].color );
 }
 
 // ÒÆ¶¯ÐÇÐÇ

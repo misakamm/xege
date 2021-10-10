@@ -5,7 +5,7 @@ int main()
 {
 	initgraph(640, 480);
 
-	//设置画图颜色，使用RGB宏，三个参数值的范围均为0 - 255 (0xFF)
+	//设置画图颜色，使用EGERGB宏，三个参数值的范围均为0 - 255 (0xFF)
 	//分别表示红色亮度，绿色亮度，蓝色亮度
 	//EGERGB(0xFF, 0x0, 0x0) (纯红色) 等价于0xFF0000
 	setcolor(EGERGB(0xFF, 0x0, 0x0));

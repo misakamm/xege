@@ -1101,7 +1101,7 @@ public:
         setfont(20, 0, "ËÎÌו");
         for (len = 0 ; len<=0x80; delay_fps(60))
         {
-            setbkcolor_f(RGB(len, len, len));
+            setbkcolor_f(EGERGB(len, len, len));
             cleardevice();
             ++len;
         }

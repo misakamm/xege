@@ -92,7 +92,7 @@ public:
             setbkcolor_f(BLACK, filter());
             cleardevice(filter());
             if (m_alpha < 0xff) {
-                setcolor(RGB(m_alpha, m_alpha, m_alpha), filter());
+                setcolor(EGERGB(m_alpha, m_alpha, m_alpha), filter());
             } else {
                 setcolor(0xFFFFFF, filter());
             }
@@ -101,7 +101,7 @@ public:
             outtextrect(0, 0, getw(), geth(), m_caption, filter());
         } else {
             if (m_alpha < 0xff) {
-                setbkcolor_f(RGB(m_alpha, m_alpha, m_alpha), filter());
+                setbkcolor_f(EGERGB(m_alpha, m_alpha, m_alpha), filter());
                 cleardevice(filter());
             }
         }
