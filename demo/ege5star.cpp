@@ -27,8 +27,8 @@ int main()
         if (r > PI * 2) r -= PI * 2;
 
         cleardevice();
-        setcolor( RGB(0xff, 0xff, 0xff) );
-        setfillcolor( RGB(0, 0, 0xff) );
+        setcolor( EGERGB(0xff, 0xff, 0xff) );
+        setfillcolor( EGERGB(0, 0, 0xff) );
         paintstar(300, 200, 100, r);
     }
     return 0;

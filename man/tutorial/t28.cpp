@@ -1,30 +1,30 @@
-//���������ˣ�ʹ��C++��װ��Ķ���
+//基础动画八，使用C++封装你的对象
 
-//��������ǰ���㶼����ǰ��ƪ�˰ɣ����������ƺ���һ���̶�ģʽ��
-//�����������о���˵������Ŀ�����
-//��װһ��ͼ�ζ����Ĵ��Ҫ�ӿں�������ʼ�����߼����£��滭����Ⱦ�����ͷţ�������
-//�������˾;��Բ���ȷ���ӿں������˾�˵����ķ�װ���ܻ���Ҫ����
-//һ���Ӧ���£������ĸ��ӿھ��㹻�ˣ�����Ҳ���������ĸ�������һ��Ҫ�ǵ�
-//������˵�����ֻ�����ĸ������������и���ĺ����������Լ�ʹ�ã������⣨����ѭ����������¶ʹ�õ�Ӧ�þ����ĸ�
+//看本文章前，你都看了前几篇了吧？觉不觉得似乎有一个固定模式？
+//如果你有这个感觉，说明你真的看懂了
+//封装一个图形对象，四大必要接口函数：初始化，逻辑更新，绘画（渲染），释放（析构）
+//函数少了就绝对不正确，接口函数多了就说明你的封装可能还需要调整
+//一般的应用下，就这四个接口就足够了，最少也必须有这四个，请你一定要记得
+//另：不是说这个类只有这四个函数，可以有更多的函数方便你自己使用，但对外（对主循环函数）暴露使用的应该就这四个
 
-// �ӱ��Ŀ�ʼ�����ô�ͷ�ļ������ú���ʱ����������Ҫege���namespace
-// �����ĺô���vc���Զ���ʾ���Ը���ȷ���Ķ������ʱ��ɶ��Ը��ã�ȱ���Ǳ�д��ʱ�����鷳һЩ
+// 从本文开始，改用此头文件，调用函数时的区别是需要ege这个namespace
+// 这样的好处是vc的自动提示可以更精确，阅读代码的时候可读性更好，缺点是编写的时候略麻烦一些
 #include <ege.h>
 
 const float base_speed = 0.5f;
 const float randspeed = 1.5f;
 
-//�Զ��庯������������һ��0 - m֮��ĸ�����
+//自定义函数，用来返回一个0 - m之间的浮点数
 float myrand(float m)
 {
 	return (float)(ege::randomf() * m);
 }
 
-//����һ��AniObj��
+//定义一个AniObj类
 class AniObj
 {
 public:
-	//��ʼ�����������꣬�ٶȷ���͸���ȣ�����IMAGE��
+	//初始化，设置坐标，速度方向，透明度，创建IMAGE等
 	AniObj()
 	{
 		_x = myrand((float)ege::getwidth());
@@ -46,30 +46,30 @@ public:
 		ege::fillellipse(_r, _r, _r, _r, _img);
 	}
 
-	//����λ�õ��������
+	//更新位置等相关属性
 	void update()
 	{
-		// ��ǰλ�� + �ٶ�
+		// 当前位置 + 速度
 		_x += _dx;
 		_y += _dy;
-		if (_x < 0) _dx = myrand(randspeed) + base_speed; //����
-		if (_y < 0) _dy = myrand(randspeed) + base_speed; //����
-		if (_x >= ege::getwidth()  - _r * 2) _dx = -(myrand(randspeed) + base_speed); //����
-		if (_y >= ege::getheight() - _r * 2) _dy = -(myrand(randspeed) + base_speed); //����
+		if (_x < 0) _dx = myrand(randspeed) + base_speed; //碰左
+		if (_y < 0) _dy = myrand(randspeed) + base_speed; //碰上
+		if (_x >= ege::getwidth()  - _r * 2) _dx = -(myrand(randspeed) + base_speed); //碰右
+		if (_y >= ege::getheight() - _r * 2) _dy = -(myrand(randspeed) + base_speed); //碰下
 
-		// �ı�alphaֵ
+		// 改变alpha值
 		_alpha += _da;
 		if (_alpha <= 0)	_da = 1;
 		if (_alpha >= 0xFF) _da = -1;
 	}
 
-	//��������ֵ�滭
+	//根据属性值绘画
 	void render()
 	{
 		ege::putimage_alphatransparent(NULL, _img, (int)_x, (int)_y, ege::BLACK, (unsigned char)_alpha);
 	}
 
-	//�ͷ��������ʱ����
+	//释放这个对象时调用
 	~AniObj()
 	{
 		ege::delimage(_img);
@@ -87,38 +87,38 @@ private:
 void mainloop()
 {
 	const int MAXOBJ = 30;
-	AniObj obj[MAXOBJ]; //�����������
+	AniObj obj[MAXOBJ]; //定义对象数组
 	int n;
 
-	//Ϊʲô����û��obj��ʼ������Ϊ�������������ʱ��͵����˹��캯����ʼ������
+	//为什么这里没有obj初始化？因为在类对象声明的时候就调用了构造函数初始化好了
 
 	for ( ; ege::is_run(); ege::delay_fps(60) )
 	{
 		for (n = 0; n < MAXOBJ; ++n)
 		{
-			obj[n].update(); //����λ��
+			obj[n].update(); //更新位置
 		}
 
 		ege::cleardevice();
 		for (n = 0; n < MAXOBJ; ++n)
 		{
-			obj[n].render(); //�滭
+			obj[n].render(); //绘画
 		}
 	}
 
-	//Ϊʲô����û���ͷţ���Ϊobj��������󣬻��ڱ����̽������Զ������͹�����
+	//为什么这里没有释放？因为obj是数组对象，会在本过程结束后自动调用释构函数
 }
 
 int main(void)
 {
 	ege::setinitmode(ege::INIT_ANIMATION);
-	// ͼ�γ�ʼ�������ڳߴ�640x480
+	// 图形初始化，窗口尺寸640x480
 	ege::initgraph(640, 480);
-	// �������ʼ���������Ҫʹ��������Ļ�
+	// 随机数初始化，如果需要使用随机数的话
 	ege::randomize();
-	// ������ѭ��
+	// 程序主循环
 	mainloop();
-	// �رջ�ͼ�豸
+	// 关闭绘图设备
 	ege::closegraph();
 	return 0;
 }

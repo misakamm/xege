@@ -90,7 +90,7 @@ color_t colorMap(COMPLEX z, int iteration)
 {
     double r = z.re * z.re + z.im * z.im;
     r = iteration + logmap[(int)(r * col_ins)];
-    return RGB(iterToColor(r * col_r + col_ar), iterToColor(r * col_g + col_ag), iterToColor(r * col_b + col_ab));
+    return EGERGB(iterToColor(r * col_r + col_ar), iterToColor(r * col_g + col_ag), iterToColor(r * col_b + col_ab));
 }
 
 int g_mi[BF_H][BF_W];

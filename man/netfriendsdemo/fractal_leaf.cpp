@@ -28,7 +28,7 @@ int main() {
             y = .26 * x + .24 * y +.44;
             x = u;
         }
-        putpixel( 45*x+230,480-45*y,RGB( rand()%256,rand()%256,rand()%256 ) );
+        putpixel( 45*x+230,480-45*y,EGERGB( rand()%256,rand()%256,rand()%256 ) );
     }
     getch();
     closegraph();

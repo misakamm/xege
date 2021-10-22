@@ -1,7 +1,7 @@
-//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß£ï¿½Ê¹ï¿½Ã·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«ï¿½Ê£ï¿½Ê¹ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È»
+//»ù´¡¶¯»­Æß£¬Ê¹ÓÃ·ÇÕûÊý²ÎÊý£¬Ëæ»úÉ«²Ê£¬Ê¹ÄãµÄ¶¯»­¸ü×ÔÈ»
 #include <graphics.h>
 
-//ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½AniObjï¿½ï¿½ï¿½ï¿½Ç°Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½á¹¹ï¿½ï¿½ï¿½ï¿½
+//¶¨ÒåÒ»¸öAniObj£¬¼´Ç°Ò»ÀýÀïÃæµÄÔ²£¬Ïà¹ØÊôÐÔÐ´ÔÚÕâ¸ö½á¹¹ÌåÀï
 struct AniObj
 {
 	float x, y;
@@ -11,67 +11,67 @@ struct AniObj
 	PIMAGE img;
 };
 
-//ï¿½Ô¶ï¿½ï¿½åº¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½0 - mÖ®ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½ï¿½ï¿½
+//×Ô¶¨Òåº¯Êý£¬ÓÃÀ´·µ»ØÒ»¸ö0 - mÖ®¼äµÄ¸¡µãÊý
 float myrand(float m)
 {
-	// randomf() ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ 0 ï¿½ï¿½ 1 Ö®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	// randomf() ·µ»ØÒ»¸ö 0 µ½ 1 Ö®¼äµÄËæ»ú¸¡µãÊý
 	return (float)(randomf() * m);
 }
 
-//ï¿½ï¿½ï¿½ï¿½ï¿½Ù¶È»ï¿½×¼Öµï¿½ï¿½base_speedï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù¶È£ï¿½base_speed+randspeedï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù¶ï¿½
+//¶¨ÒåËÙ¶È»ù×¼Öµ£¬base_speedÊÇ×îµÍËÙ¶È£¬base_speed+randspeedÊÇ×î¸ßËÙ¶È
 const float base_speed = 0.5f;
 const float randspeed = 1.5f;
 
-//ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê£¬ï¿½Ù¶È·ï¿½ï¿½ï¿½Í¸ï¿½ï¿½ï¿½È£ï¿½ï¿½ï¿½ï¿½ï¿½IMAGEï¿½ï¿½
+//³õÊ¼»¯£¬ÉèÖÃ×ø±ê£¬ËÙ¶È·½Ïò£¬Í¸Ã÷¶È£¬´´½¨IMAGEµÈ
 void initobj(AniObj* obj)
 {
 	obj->x = myrand((float)getwidth());
 	obj->y = myrand((float)getheight());
 	obj->r = random(20) + 20;
-	// ï¿½ï¿½ï¿½ï¿½Ù¶ï¿½
+	// Ëæ»úËÙ¶È
 	obj->dx = myrand(randspeed) + base_speed;
 	obj->dy = myrand(randspeed) + base_speed;
-	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	// Ëæ»ú·½Ïò
 	obj->dx = obj->dx * float(random(2) * 2.0 - 1);
 	obj->dy = obj->dy * float(random(2) * 2.0 - 1);
-	// ï¿½ï¿½ï¿½ÏµÄ´ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¤ï¿½Ù¶È²ï¿½ï¿½ï¿½ï¿½ï¿½
+	// ÒÔÉÏµÄ´¦Àí·½Ê½ÓÃÀ´±£Ö¤ËÙ¶È²»¹ýÂý
 
 	obj->alpha = random(250) + 2;
 	obj->da = (int)random(2) * 2 - 1;
 
 	obj->img = newimage(obj->r * 2, obj->r * 2);
 
-	color_t col = hsv2rgb(myrand(360.0f), 1.0f, 1.0f);
+	COLORREF col = hsv2rgb(myrand(360.0f), 1.0f, 1.0f);
 	setcolor(col, obj->img);
 	setfillcolor(col, obj->img);
 
 	fillellipse(obj->r, obj->r, obj->r, obj->r, obj->img);
 }
 
-//ï¿½ï¿½ï¿½ï¿½Î»ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+//¸üÐÂÎ»ÖÃµÈÏà¹ØÊôÐÔ
 void updateobj(AniObj* obj)
 {
-	// ï¿½ï¿½Ç°Î»ï¿½ï¿½ + ï¿½Ù¶ï¿½
+	// µ±Ç°Î»ÖÃ + ËÙ¶È
 	obj->x += obj->dx;
 	obj->y += obj->dy;
-	if (obj->x < 0) obj->dx = myrand(randspeed) + base_speed; //ï¿½ï¿½ï¿½ï¿½
-	if (obj->y < 0) obj->dy = myrand(randspeed) + base_speed; //ï¿½ï¿½ï¿½ï¿½
-	if (obj->x >= ege::getwidth()  - obj->r * 2) obj->dx = -(myrand(randspeed) + base_speed); //ï¿½ï¿½ï¿½ï¿½
-	if (obj->y >= ege::getheight() - obj->r * 2) obj->dy = -(myrand(randspeed) + base_speed); //ï¿½ï¿½ï¿½ï¿½
+	if (obj->x < 0) obj->dx = myrand(randspeed) + base_speed; //Åö×ó
+	if (obj->y < 0) obj->dy = myrand(randspeed) + base_speed; //ÅöÉÏ
+	if (obj->x >= ege::getwidth()  - obj->r * 2) obj->dx = -(myrand(randspeed) + base_speed); //ÅöÓÒ
+	if (obj->y >= ege::getheight() - obj->r * 2) obj->dy = -(myrand(randspeed) + base_speed); //ÅöÏÂ
 
-	// ï¿½Ä±ï¿½alphaÖµ
+	// ¸Ä±äalphaÖµ
 	obj->alpha += obj->da;
 	if (obj->alpha <= 0) obj->da = 1;
 	if (obj->alpha >= 0xFF) obj->da = -1;
 }
 
-//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½æ»­
+//¸ù¾ÝÊôÐÔÖµ»æ»­
 void drawobj(AniObj* obj)
 {
 	putimage_alphatransparent(NULL, obj->img, (int)obj->x, (int)obj->y, BLACK, (unsigned char)obj->alpha);
 }
 
-//ï¿½Í·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½
+//ÊÍ·ÅÕâ¸ö¶ÔÏóÊ±µ÷ÓÃ
 void releaseobj(AniObj* obj)
 {
 	delimage(obj->img);
@@ -80,44 +80,44 @@ void releaseobj(AniObj* obj)
 void mainloop()
 {
 	const int MAXOBJ = 30;
-	AniObj obj[MAXOBJ]; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	AniObj obj[MAXOBJ]; //¶¨Òå¶ÔÏóÊý×é
 	int n;
 
 	for (n = 0; n < MAXOBJ; ++n)
 	{
-		initobj(&obj[n]); //ï¿½ï¿½Ê¼ï¿½ï¿½
+		initobj(&obj[n]); //³õÊ¼»¯
 	}
 
 	for ( ; is_run(); delay_fps(60) )
 	{
 		for (n = 0; n < MAXOBJ; ++n)
 		{
-			updateobj(&obj[n]); //ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½
+			updateobj(&obj[n]); //¸üÐÂÎ»ÖÃ
 		}
 
 		cleardevice();
 		for (n = 0; n < MAXOBJ; ++n)
 		{
-			drawobj(&obj[n]); //ï¿½æ»­
+			drawobj(&obj[n]); //»æ»­
 		}
 	}
 
 	for (n = 0; n < MAXOBJ; ++n)
 	{
-		releaseobj(&obj[n]); //ï¿½Í·ï¿½
+		releaseobj(&obj[n]); //ÊÍ·Å
 	}
 }
 
 int main(void)
 {
 	setinitmode(INIT_ANIMATION);
-	// Í¼ï¿½Î³ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú³ß´ï¿½640x480
+	// Í¼ÐÎ³õÊ¼»¯£¬´°¿Ú³ß´ç640x480
 	initgraph(640, 480);
-	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÒªÊ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä»ï¿½
+	// Ëæ»úÊý³õÊ¼»¯£¬Èç¹ûÐèÒªÊ¹ÓÃËæ»úÊýµÄ»°
 	randomize();
-	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ­ï¿½ï¿½
+	// ³ÌÐòÖ÷Ñ­»·
 	mainloop();
-	// ï¿½Ø±Õ»ï¿½Í¼ï¿½è±¸
+	// ¹Ø±Õ»æÍ¼Éè±¸
 	closegraph();
 	return 0;
 }

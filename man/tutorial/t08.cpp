@@ -12,7 +12,7 @@ int main()
 
 	//画一些文字，注意文字会因区域被裁剪的效果
 	setcolor(EGERGB(0x0, 0xFF, 0x0));
-	setfontbkcolor(RGB(0x80, 0x00, 0x80));
+	setfontbkcolor(EGERGB(0x80, 0x00, 0x80));
 	setfont(18, 0, "宋体");
 	outtextxy(0, 0, "Hello EGE Graphics");
 

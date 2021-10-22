@@ -152,9 +152,9 @@ class button : public egeControlBase
             _font_height = 12;
             strcpy(_face, "宋体");
             _line_color=BLACK;
-            _bg_color=RGB(100,100,100);
+            _bg_color=EGERGB(100,100,100);
             _text_color=BLACK;
-            _shadow_color=RGB(50,50,50);
+            _shadow_color=EGERGB(50,50,50);
             updatesidewidth();
 
             _on_click=NULL;
@@ -222,7 +222,7 @@ class button : public egeControlBase
             line(_side_width-1, geth()-_side_width, 0, geth());
             //line(getw()-_side_width, geth()-_side_width, getw(), geth());
             //line(0,0, _side_width, _side_width);
-            setbkcolor_f(RGB(_alpha, _alpha, _alpha), filter());
+            setbkcolor_f(EGERGB(_alpha, _alpha, _alpha), filter());
             cleardevice(filter());
         }
         //attributes

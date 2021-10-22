@@ -311,7 +311,7 @@ void fixcolor(int* color)
     r = (int)(fr * 255);
     g = (int)(fg * 255);
     b = (int)(fb * 255);
-    *color = RGB(r, g, b);
+    *color = EGERGB(r, g, b);
 }
 
 void setinitcolor(int* color, int len, int h1, int h2, float s = 0.8f)
