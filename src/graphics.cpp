@@ -1290,8 +1290,11 @@ initgraph(int *gdriver, int *gmode, const char *path) {
 	}
 
 	//初始化鼠标位置数据
-	pg->mouse_last_x = pg->dc_w / 2;
-	pg->mouse_last_y = pg->dc_h / 2;
+	POINT pt;
+	GetCursorPos(&pt);
+	ScreenToClient(pg->hwnd,&pt);
+	pg->mouse_last_x = pt.x;
+	pg->mouse_last_y = pt.y;
 	
 	static egeControlBase _egeControlBase;
 
