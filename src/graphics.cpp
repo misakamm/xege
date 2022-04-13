@@ -798,7 +798,7 @@ on_destroy(struct _graph_setting * pg) {
 	pg->exit_window = 1;
 	PostQuitMessage(0);
 	if (pg->close_manually && pg->use_force_exit) {
-		ExitProcess(0);
+		exit(0);
 	}
 }
 
