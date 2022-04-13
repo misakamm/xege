@@ -277,7 +277,7 @@ rgb2gray(color_t color) {
 	c = ((color>>16) & 0xFF) * 0.299;
 	c += ((color>>8) & 0xFF) * 0.587;
 	c += ((color) & 0xFF) * 0.114;
-	r = (color_t)c;
+	r = (color_t)round(c);
 	return EGERGB(r, r, r);
 }
 
