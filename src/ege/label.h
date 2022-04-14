@@ -21,7 +21,7 @@ public:
         m_fontheight = 12;
         m_alpha = 0xff;
         m_transparent = false;
-        strcpy(m_face, "ËÎÌו");
+        strcpy(m_face, "simsun");
         redraw();
     }
     void caption(const char* text) {
