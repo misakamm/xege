@@ -28,6 +28,12 @@ typedef struct COLORRGB {
 	unsigned char b;
 }COLORRGB;
 
+#if __cplusplus < 201103
+static inline float round(float x) {
+	return floor(x + 0.5f);
+}
+#endif
+
 /* private function */
 static
 COLORHSL
