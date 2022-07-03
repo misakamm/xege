@@ -1092,7 +1092,7 @@ IMAGE::putimage_withalpha(
 		dsx = imgsrc->m_width - nWidthSrc;
 		for (y=0; y<nHeightSrc; ++y) {
 			for (x=0; x<nWidthSrc; ++x, ++psp, ++pdp) {
-				DWORD d=*pdp, s=*psp;
+				DWORD s=*psp;
 				DWORD alpha = EGEGET_A(s);
 				DWORD r = EGEGET_R(s);
 				DWORD g = EGEGET_G(s);
@@ -1111,6 +1111,7 @@ IMAGE::putimage_withalpha(
 		AlphaBlend(img->m_hDC,nXOriginDest,nYOriginDest,nWidthDest,
 			nHeightDest,alphaSrc->m_hDC,0,0,
 			nWidthSrc,nHeightSrc,bf);
+		delimage(alphaSrc);
 	}
 	CONVERT_IMAGE_END;
 	return grOk;
