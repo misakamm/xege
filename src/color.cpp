@@ -179,7 +179,7 @@ EGE_PRIVATE_HSLtoRGB(float _h, float _s, float _l) {
 		}
 	}
 
-	return EGERGB(DWORD(r*255), DWORD(g*255), DWORD(b*255));
+	return EGERGB(DWORD(round(r*255)), DWORD(round(g*255)), DWORD(round(b*255)));
 }
 
 /* private function */
@@ -271,9 +271,9 @@ HSV_TO_RGB(COLORHSV* input,COLORRGB* output) {
 			break;
 		}
 	}
-	output->r = (unsigned char)(R * 255);
-	output->g = (unsigned char)(G * 255);
-	output->b = (unsigned char)(B * 255);
+	output->r = (unsigned char)round(R * 255);
+	output->g = (unsigned char)round(G * 255);
+	output->b = (unsigned char)round(B * 255);
 }
 
 color_t
