@@ -7,8 +7,7 @@
 - 百度贴吧2 <http://tieba.baidu.com/f?kw=ege>
 - 百度贴吧1 <http://tieba.baidu.com/f?kw=ege%C4%EF>
 - E-Mail new: this@xege.org
-- QQ Group 1: 293650629 (正常维护)
-- QQ Group 2: 1060223135 (新群，建议加入此群)
+- QQ Group: 1060223135 (正常, 可加入)
 - ~~HomePage1 <http://misakamm.github.com/xege>(原作者仓库, 已停止更新)~~
 - ~~HomePage2 <http://misakamm.bitbucket.org/index.htm>(同上)~~
 - ~~google+ <https://plus.google.com/communities/103680008540979677071>(无法访问)~~

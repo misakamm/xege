@@ -1,8 +1,11 @@
 # 版本变更记录
+
 遵循[如何维护更新日志](https://keepachangelog.com/zh-CN/1.0.0/)编写。
 
 ## 未发布（20.09）
+
 ### 更新
+
 - 增加 `ege::putimage_rotatetransparent` 方法。
 - 增加 `ege::ege_` 系列绘图函数对 `ege::setlinestyle` 的支持。
 - 增加 `ege::ege_drawimage` 和 `ege::ege_transform` 系列函数。
@@ -11,6 +14,7 @@
 - 现在 `ege::saveimage` 根据后缀名决定将文件保存为 png 还是 bmp 格式。
 
 ### 修复
+
 - 修复 `ege::inputbox_getline` 界面发黑的问题。
 - 修正当半径小于等于 20 时，`ege::sector` 函数绘制错误。
 - 修正 `ege::setinitmode` 无法改变窗口位置的问题。
@@ -19,13 +23,16 @@
 - 修复在执行 `ege::outputbox_getline` 后 `ege::outtextxy` 有概率无效的问题。
 
 ### 变更
+
 - `ege::getimage` 系列函数现在通过返回值表示是否成功。
 - 改用支持 GPU 加速的 `AlphaBlend` 函数实现 `ege::putimage_alpha`。
 - 将 `ege::resize` 行为改回会填充背景色，并增加不填充背景色的 `ege::resize_f` 函数。
 - 按照 CSS 颜色表修改并增加了预定义颜色值定义。
 
 ## [20.08] - 2020-08-31
+
 ### 更新
+
 - 库文件名统一为 `graphics[64].lib` 或 `libgraphics[64].a`。
 - 初始化图形对象或调用 `resize` 时，支持将图形对象的长或宽设置为 0。
 - 增加 `INIT_UNICODE` 初始化选项，此选项会创建 Unicode 窗口。
@@ -41,6 +48,7 @@
 - 使用 `PCIMAGE` 作为 `const IMAGE*` 的别名，并作为某些函数的形参类型。
 
 ### 修复
+
 - 修正 `putimage` 系列函数裁剪区计算错误的 BUG。
 - 修复了 `initgraph` 的内存泄漏情况。
 - 修复了 `setactivepage()` 和 `setvisualpage()` 无法使用的问题。
@@ -49,6 +57,7 @@
 - 修正某些函数传入 `NULL` 时段错误的 BUG。
 
 ### 变更
+
 - 从 `ege.h` 中移出 `EgeControlBase` 的定义到 `ege/egecontrolbase.h` 中。
 - 默认字体设置为宋体。
 - 生成的静态库文件中不再包含 gdiplus 静态库。

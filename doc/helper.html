@@ -9,7 +9,7 @@
         var target = window.location.search.substr(1);
         var baseReg = new RegExp("base=([^&]*)(&|$)");
         var base = target.match(baseReg);
-        if(base) {
+        if (base) {
             var baseValue = base[0].replace("base=", "");
             document.write('<base target="' + baseValue + '">');
         }
@@ -26,7 +26,7 @@
     var isMarkdown = src.match(/.md$/);
 
     var req = new XMLHttpRequest();
-    req.open("GET", src, true);
+    req.open("GET", "../" + src, true);
     req.onload = function (ev) {
         if (this.status === 200 || this.status === 304) {
             var content = this.responseText;
