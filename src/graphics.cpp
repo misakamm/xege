@@ -400,6 +400,7 @@ getkey() {
 				else if (key & KEYMSG_CHAR)
 					msg.msg = key_msg_char;
 				msg.key = key & 0xFFFF;
+				if (key & KEYMSG_FIRSTDOWN) msg.flags |= key_flag_first_down;
 				if (keystate(VK_CONTROL)) msg.flags |= key_flag_ctrl;
 				if (keystate(VK_SHIFT)) msg.flags |= key_flag_shift;
 				return msg;

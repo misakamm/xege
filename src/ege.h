@@ -601,8 +601,9 @@ typedef enum key_msg_e {
 	key_msg_char    = 4,
 }key_msg_e;
 typedef enum key_flag_e {
-	key_flag_shift  = 0x100,
-	key_flag_ctrl   = 0x200,
+	key_flag_shift      = 0x100,
+	key_flag_ctrl       = 0x200,
+	key_flag_first_down = 0x80000,
 }key_flag_e;
 
 typedef enum mouse_msg_e {
