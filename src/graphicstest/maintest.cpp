@@ -131,7 +131,7 @@ int main()
     edit.create();
     edit.size(100, 18);
     edit.visible(true);
-    for ( ; kbhit() != -1; delay_fps(60)) {
+    for ( ; kbhit() != -1; delay_fps(120)) {
         //f.zorderup();
         {
             char str[20];
