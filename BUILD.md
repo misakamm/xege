@@ -10,10 +10,26 @@ zlib 和 libpng 的源代码准备在 `3rdparty` 文件夹下，这部分已使�
 如果不想合并 zlib 和 libpng 的源代码，例如要在 MSYS2 中使用系统安装的库，可在生成编译
 配置文件时添加 `-DMERGE_LIBPNG_AND_ZLIB=OFF` 参数选择不合并。
 
-请在 [cmake.org](https://cmake.org) 下载最新版 CMake，并在安装时选择将 CMake 
+请在 [cmake.org](https://cmake.org) 下载最新版 CMake，并在安装时选择将 CMake
 目录添加到 `PATH` 环境变量中。本指南默认在 CMD 或者 PowerShell 命令行下进行编译，
-但仍使用 `$` 作为提示符。如果您对 CMake 有足够的把握，亦可使用 CMake GUI 
+但仍使用 `$` 作为提示符。如果您对 CMake 有足够的把握，亦可使用 CMake GUI
 进行配置和生成。
+
+在 Linux 环境下编译需要安装 [mingw-w64](https://www.mingw-w64.org/) 工具链，
+`CMakeLists.txt`已经配置好了环境，在 Linux 下会自动改用 mingw-w64 工具链。
+Linux 环境下运行相关程序需要使用 [wine](https://www.winehq.org/) 模拟层，并在 wine
+配置中修改 `libgcc_s_seh-1.dll` 、 `libssp-0.dll` 、 `libstdc++-6.dll` 的
+函数库顶替配置，方便起见，可以添加 `-static` 配置编译，免去配置过程（`CMakeLists.txt`
+中在 Linux 环境下默认开启）。
+
+## 常见部分 Linux 发行版安装编译运行环境
+```sh
+# Ubuntu 16.04及以上发行版
+sudo apt-get install mignw-w64 wine
+
+# Arch Linux
+sudo pacman -S mingw-w64 wine
+```
 
 ## 基本编译步骤
 
@@ -59,7 +75,7 @@ CMake 会自动检测安装的 MinGW 编译器并生成编译配置。
 编译配置中的 `-DCMAKE_BUILD_TYPE=Release` 是构建类型（Build type），表示生成优化级别较高的
 发布版。
 
-如果想指定编译套件（如 Dev-C++ 自带的 TDM-GCC 4.9.2），可在执行 `cmake` 
+如果想指定编译套件（如 Dev-C++ 自带的 TDM-GCC 4.9.2），可在执行 `cmake`
 前设置 `PATH` 环境变量指向特定的 MinGW 所在位置，CMake 在配置时会采用最先
 在 PATH 中检测到的编译器进行编译。例如，Dev-C++ 安装目录为 `C:\Dev-Cpp`，则
 在 CMD 中执行以下命令：
@@ -71,8 +87,8 @@ $ set PATH="C:\Dev-Cpp\MinGW64\bin";%PATH%
 $ $env:PATH="C:\Dev-Cpp\MinGW64\bin;$env:PATH"
 ```
 
-注意，CodeBloks 附带的 MinGW 只能在 
-[MSYS Makefiles 配置](<#-msys-makefiles-配置>) 
+注意，CodeBloks 附带的 MinGW 只能在
+[MSYS Makefiles 配置](<#-msys-makefiles-配置>)
 下编译。在此建议您下载不附带 MinGW 的 CodeBlocks 并单独安装最新版 TDM-GCC64，
 CodeBlocks 会自动识别已安装的 TDM-GCC。
 
@@ -118,9 +134,9 @@ $ cmake .. -G "MSYS Makefiles" -DCMAKE_BUILD_TYPE=Release
 
 CMake 自 3.6 后停止了对生成 VC6 项目的支持，但仍可生成 NMake 编译系统以支持 VC6 编译。
 
-首先，检查你的 VC6 安装目录（以下用 `VC6PATH` 指称，如果是免安装版则对应解压出的 
-`vc6` 文件夹的路径，这个路径应包含 `VC98` 和 `Common` 文件夹），在 
-`VC6PATH\VC98\Bin` 文件夹中的 `VCVARS32.BAT` 文件中开始部分的内容应和 `VC6PATH` 
+首先，检查你的 VC6 安装目录（以下用 `VC6PATH` 指称，如果是免安装版则对应解压出的
+`vc6` 文件夹的路径，这个路径应包含 `VC98` 和 `Common` 文件夹），在
+`VC6PATH\VC98\Bin` 文件夹中的 `VCVARS32.BAT` 文件中开始部分的内容应和 `VC6PATH`
 相一致，例如安装到 `D:\VC6` 的 VC6，在 `D:\VC6\VC98\Bin\VCVARS32.BAT` 中的开头部分
 应当是：
 ```bat
@@ -140,7 +156,7 @@ set MSVCDir=D:\VC6\VC98
 在上面的例子中就是执行：
 ```sh
 $ "D:\VC6\VC98\Bin\VCVARS32.BAT"
-``` 
+```
 执行成功后即建立 VC6 命令行环境，就可以继续执行编译步骤二了：
 ```sh
 $ cmake .. -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release
@@ -187,14 +203,16 @@ $ cmake --build . --target demos
 
 即可在构建目录下的 `demo` 文件夹中生成各可执行文件。
 
+Linux 环境下，需要修改 `demo/egelogo.rc` 文件，将路径分隔符 `\\` 改为 `/`。
+
 ## 编译临时测试文件
 
 有时候为了测试新添加的功能，需要写一些测试用例，但编译安装修改后 EGE 再在项目外编译测试程序
-比较麻烦，在项目里修改 CMake 配置并添加源文件和编译指令又会被 git 识别为未暂存的修改，会对 git 
+比较麻烦，在项目里修改 CMake 配置并添加源文件和编译指令又会被 git 识别为未暂存的修改，会对 git
 使用造成干扰。
 
 项目 CMake 配置中已经写好了，开发者可以新建 `temp` 目录并添加源文件和 `CMakeLists.txt` 配置
-文件，编译系统会自动配置，在编译 EGE 库后编译 `temp` 目录，而 temp 目录已被 `.gitignore` 
+文件，编译系统会自动配置，在编译 EGE 库后编译 `temp` 目录，而 temp 目录已被 `.gitignore`
 排除在外，不会对 git 使用造成干扰。
 
 例如，我们想要测试读取字符输入，于是新建 `temp` 目录，在 `temp` 目录下
@@ -235,3 +253,10 @@ int main(int argc, char const *argv[])
 ```
 
 执行前文所述编译步骤后在 `build/temp` 目录下就会生成可执行文件 `temp_test.exe`。
+
+## Linux 环境下编译例程
+
+在 Linux 系统下，编译依赖 EGE 的程序，同样要使用 `mingw-w64` 工具链中的 `g++`，并且根据
+环境可能需要添加额外的编译参数 `-D_FORTIFY_SOURCE=0`
+（参考链接 [undefined reference to `__memcpy_chk'](https://github.com/msys2/MINGW-packages/issues/5868)。
+为了简化单文件编译指令，EGE 根目录下提供了 `ege_g++.sh` 脚本，可按需使用。
