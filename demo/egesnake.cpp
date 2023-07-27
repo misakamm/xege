@@ -1,4 +1,4 @@
-// Ё╛╪Ррв90ппл╟Ётиъ
+// Х╤┘Г╝─Ф≤⌠90Х║▄Х╢╙Е░┐Х⌡┤
 #include <graphics.h>
 #include <stdlib.h>
 

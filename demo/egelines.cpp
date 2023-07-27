@@ -1,4 +1,12 @@
-// ±ä»ÃÏßÆÁ±£
+/**********************************************************************
+ * æ–‡ä»¶åï¼šegelines.cpp
+ * 
+ * ç¨‹åºç›®çš„ï¼šå®ç°å˜å¹»çº¿å±ä¿æ•ˆæœ
+ * 
+ * ä½¿ç”¨çš„å›¾å½¢åº“ï¼šEGE
+ * 
+ **********************************************************************/
+
 #include <graphics.h>
 #include <stdio.h>
 #include <time.h>
@@ -7,176 +15,244 @@
 
 int width = 640, height = 480;
 
-struct point //¶¨Òåµã£¬°üº¬×ø±ê£¬ËÙ¶È
+/**
+ * @brief ç‚¹ç»“æ„ä½“ï¼ŒåŒ…å«ç‚¹çš„åæ ‡å’Œé€Ÿåº¦
+ */
+struct point
 {
-    double x;
-    double y;
-    double dx;
-    double dy;
+	double x;   /**< ç‚¹çš„æ¨ªåæ ‡ */
+	double y;   /**< ç‚¹çš„çºµåæ ‡ */
+	double dx;  /**< ç‚¹åœ¨æ¨ªå‘ä¸Šçš„é€Ÿåº¦ */
+	double dy;  /**< ç‚¹åœ¨çºµå‘ä¸Šçš„é€Ÿåº¦ */
 };
 
-struct poly //¶¨Òå¶à±ßĞÎ£¬°üº¬µãµÄ¸öÊı£¬ºÍµãÊı×é
+/**
+ * @brief å¤šè¾¹å½¢ç»“æ„ä½“ï¼ŒåŒ…å«ç‚¹çš„ä¸ªæ•°å’Œç‚¹çš„æ•°ç»„
+ */
+struct poly
 {
-    int n_point;
-    point p[20];
+	int n_point;        /**< ç‚¹çš„ä¸ªæ•° */
+	point p[20];        /**< ç‚¹çš„æ•°ç»„ */
 };
 
-struct polys //¶¨Òå¶à±ßĞÎ¶ÓÁĞ×é
+/**
+ * @brief å¤šè¾¹å½¢é˜Ÿåˆ—ç»„ç»“æ„ä½“
+ */
+struct polys
 {
-    int n_poly;                 //¶à±ßĞÎ¶ÓÁĞ³¤¶È
-    int color;                  //ÑÕÉ«
-    int nextcolor, prevcolor;   //ÉÏÒ»´ÎµÄÑÕÉ«£¬Ä¿±êÑÕÉ«
-    int chtime, nowtime;        //¹ı¶É±ä»¯Ê±¼ä£¬µ±Ç°Ê±¼ä
-    int time;                   //¾àÀëÒ»ÏÂ´Î¸Ä±äÑÕÉ«µÄÊ±¼ä
-    poly p[100];                //¶à±ßĞÎÊı×é
+	int n_poly;                 /**< å¤šè¾¹å½¢é˜Ÿåˆ—çš„é•¿åº¦ */
+	int color;                  /**< å½“å‰é¢œè‰² */
+	int nextcolor, prevcolor;   /**< ä¸Šä¸€æ¬¡çš„é¢œè‰²å’Œç›®æ ‡é¢œè‰² */
+	int chtime, nowtime;        /**< è¿‡æ¸¡å˜åŒ–æ—¶é—´å’Œå½“å‰æ—¶é—´ */
+	int time;                   /**< è·ç¦»ä¸‹æ¬¡æ”¹å˜é¢œè‰²çš„æ—¶é—´ */
+	poly p[100];                /**< å¤šè¾¹å½¢æ•°ç»„ */
 };
 
-double rand_float(double dv, double db) //·µ»ØÒ»¸ödb µ½ db+dvÖ®¼äµÄËæ»ú¸¡µãÊı
+/**
+ * @brief è¿”å›ä¸€ä¸ªä½äº [db, db+dv] èŒƒå›´å†…çš„éšæœºæµ®ç‚¹æ•°
+ * @param dv éšæœºæ•°èŒƒå›´çš„å¤§å°
+ * @param db éšæœºæ•°èŒƒå›´çš„èµ·å§‹ç‚¹
+ * @return éšæœºç”Ÿæˆçš„æµ®ç‚¹æ•°
+ */
+double rand_float(double dv, double db)
 {
-    return randomf()*dv + db;
+	return randomf() * dv + db;
 }
 
-void movepoint(struct point* b) //¸ù¾İµãµÄËÙ¶ÈÊôĞÔÒÆ¶¯Õâ¸öµã£¬Èç¹ûÒÆ³öÆÁÄ»Ôò½øĞĞ·´µ¯¼ÆËã
+/**
+ * @brief æ ¹æ®ç‚¹çš„é€Ÿåº¦å±æ€§ç§»åŠ¨ç‚¹çš„ä½ç½®ï¼Œè‹¥ç§»å‡ºå±å¹•åˆ™è¿›è¡Œåå¼¹è®¡ç®—
+ * @param b éœ€è¦ç§»åŠ¨çš„ç‚¹
+ */
+void movepoint(struct point* b)
 {
-    double dv = 1.0, db = 0.5;
-    double tw = width / 640.0, th = height / 480.0;
-    if (b->x <0) b->dx = rand_float(dv, db) * tw;
-    if (b->y <0) b->dy = rand_float(dv, db) * th;
-    if (b->x >width) b->dx = -rand_float(dv, db) * tw;
-    if (b->y >height) b->dy = -rand_float(dv, db) * th;
-    b->x += b->dx;
-    b->y += b->dy;
+	double dv = 1.0, db = 0.5;
+	double tw = width / 640.0, th = height / 480.0;
+	
+	if (b->x < 0)
+		b->dx = rand_float(dv, db) * tw;
+	if (b->y < 0)
+		b->dy = rand_float(dv, db) * th;
+	if (b->x > width)
+		b->dx = -rand_float(dv, db) * tw;
+	if (b->y > height)
+		b->dy = -rand_float(dv, db) * th;
+	
+	b->x += b->dx;
+	b->y += b->dy;
 }
 
-void movepoly(struct poly* p) //ÒÆ¶¯µ¥¸ö¶à±ßĞÎ£¬ÄÚ²¿µ÷ÓÃµãµÄÒÆ¶¯
+/**
+ * @brief ç§»åŠ¨å•ä¸ªå¤šè¾¹å½¢ï¼Œå†…éƒ¨è°ƒç”¨ç‚¹çš„ç§»åŠ¨
+ * @param p éœ€è¦ç§»åŠ¨çš„å¤šè¾¹å½¢
+ */
+void movepoly(struct poly* p)
 {
-    int i;
-    for (i=0; i<p->n_point; ++i)
-    {
-        movepoint(&(p->p[i]));
-    }
+	int i;
+	
+	for (i = 0; i < p->n_point; ++i)
+	{
+		movepoint(&(p->p[i]));
+	}
 }
 
-void movepolys(struct polys* p) //ÒÆ¶¯¶à±ßĞÎ¶ÓÁĞ£¬°üº¬Ê±¼ä¼ì²â£¬ÑÕÉ«¼ÆËã
+/**
+ * @brief ç§»åŠ¨å¤šè¾¹å½¢é˜Ÿåˆ—ï¼ŒåŒ…å«æ—¶é—´æ£€æµ‹å’Œé¢œè‰²è®¡ç®—
+ * @param p éœ€è¦ç§»åŠ¨çš„å¤šè¾¹å½¢é˜Ÿåˆ—
+ */
+void movepolys(struct polys* p)
 {
-    int i;
-    for (i=p->n_poly-1; i>0; --i)
-    {
-        p->p[i] = p->p[i-1];
-    }
-    movepoly(p->p);
-    ++(p->nowtime);
-    if (--(p->time) <= 0)
-    {
-        p->prevcolor = p->color;
-        p->nextcolor = HSVtoRGB((float)random(360), 1.0f, (float)rand_float(0.5, 0.5));
-        p->time = random(1000);
-        p->chtime = random(1000)+60;
-        p->nowtime = 0;
-    }
-    if (p->nowtime >= p->chtime)
-    {
-        p->color = p->nextcolor;
-    }
-    else
-    {
-        double dr = p->prevcolor&0xFF, dg = (p->prevcolor>>8)&0xFF, db = (p->prevcolor>>16)&0xFF;
-        double dt = 1 - p->nowtime / (double)(p->chtime);
-        dr -= p->nextcolor&0xFF, dg -= (p->nextcolor>>8)&0xFF, db -= (p->nextcolor>>16)&0xFF;
-        dr *= dt, dg *= dt, db *= dt;
-        dr += p->nextcolor&0xFF, dg += (p->nextcolor>>8)&0xFF, db += (p->nextcolor>>16)&0xFF;
-        p->color = ((int)dr) | ((int)dg<<8) | ((int)db<<16);
-    }
+	int i;
+	
+	for (i = p->n_poly - 1; i > 0; --i)
+	{
+		p->p[i] = p->p[i - 1];
+	}
+	
+	movepoly(p->p);
+	++(p->nowtime);
+	
+	if (--(p->time) <= 0)
+	{
+		p->prevcolor = p->color;
+		p->nextcolor = HSVtoRGB((float)random(360), 1.0f, (float)rand_float(0.5, 0.5));
+		p->time = random(1000);
+		p->chtime = random(1000) + 60;
+		p->nowtime = 0;
+	}
+	
+	if (p->nowtime >= p->chtime)
+	{
+		p->color = p->nextcolor;
+	}
+	else
+	{
+		double dr = p->prevcolor & 0xFF, dg = (p->prevcolor >> 8) & 0xFF, db = (p->prevcolor >> 16) & 0xFF;
+		double dt = 1 - p->nowtime / (double)(p->chtime);
+		
+		dr -= p->nextcolor & 0xFF, dg -= (p->nextcolor >> 8) & 0xFF, db -= (p->nextcolor >> 16) & 0xFF;
+		dr *= dt, dg *= dt, db *= dt;
+		dr += p->nextcolor & 0xFF, dg += (p->nextcolor >> 8) & 0xFF, db += (p->nextcolor >> 16) & 0xFF;
+		
+		p->color = ((int)dr) | ((int)dg << 8) | ((int)db << 16);
+	}
 }
 
-void initpolys(struct polys* p, int npoly, int npoint) //³õÊ¼»¯¶à±ßĞÎ¶ÓÁĞ×é
+/**
+ * @brief åˆå§‹åŒ–å¤šè¾¹å½¢é˜Ÿåˆ—ç»„
+ * @param p å¤šè¾¹å½¢é˜Ÿåˆ—ç»„
+ * @param npoly å¤šè¾¹å½¢é˜Ÿåˆ—çš„é•¿åº¦
+ * @param npoint å¤šè¾¹å½¢ä¸­ç‚¹çš„ä¸ªæ•°
+ */
+void initpolys(struct polys* p, int npoly, int npoint)
 {
-    int i,j;
-    p->n_poly = npoly;
-    p->color = 0;
-    p->time = 1000;
-    p->prevcolor = p->color;
-    p->nextcolor = HSVtoRGB((float)random(360), 1.0f, 0.5f);
-    p->chtime = 1000;
-    p->nowtime = 0;
-    j = 0;
-    p->p[j].n_point = npoint;
-    for (i=0; i<npoint; ++i)
-    {
-        p->p[j].p[i].x = random(width);
-        p->p[j].p[i].y = random(height);
-        p->p[j].p[i].dx = (randomf() * 2 + 1);
-        p->p[j].p[i].dy = (randomf() * 2 + 1);
-    }
-    for (j=1; j<npoly; ++j)
-    {
-        p->p[i] = p->p[i-1];
-    }
+	int i, j;
+	
+	p->n_poly = npoly;
+	p->color = 0;
+	p->time = 1000;
+	p->prevcolor = p->color;
+	p->nextcolor = HSVtoRGB((float)random(360), 1.0f, 0.5f);
+	p->chtime = 1000;
+	p->nowtime = 0;
+	
+	j = 0;
+	p->p[j].n_point = npoint;
+	
+	for (i = 0; i < npoint; ++i)
+	{
+		p->p[j].p[i].x = random(width);
+		p->p[j].p[i].y = random(height);
+		p->p[j].p[i].dx = (randomf() * 2 + 1);
+		p->p[j].p[i].dy = (randomf() * 2 + 1);
+	}
+	
+	for (j = 1; j < npoly; ++j)
+	{
+		p->p[i] = p->p[i - 1];
+	}
 }
 
-void draw_poly(struct poly* p, int color) //»æÖÆÒ»¸ö¶à±ßĞÎ
+/**
+ * @brief
+  
+  ç»˜åˆ¶ä¸€ä¸ªå¤šè¾¹å½¢
+ * @param p å¤šè¾¹å½¢å¯¹è±¡
+ * @param color é¢œè‰²å€¼
+ */
+void draw_poly(struct poly* p, int color)
 {
-    int points[100];
-    int i;
-    for (i=0; i<p->n_point; ++i)
-    {
-        points[i*2  ] = (int)(p->p[i].x+.5f);
-        points[i*2+1] = (int)(p->p[i].y+.5f);
-    }
-    points[i*2  ] = (int)(p->p[0].x+.5f);
-    points[i*2+1] = (int)(p->p[0].y+.5f);
-    setcolor(color);
-    drawpoly(p->n_point+1, points);
+	int points[100];
+	int i;
+	
+	for (i = 0; i < p->n_point; ++i)
+	{
+		points[i * 2] = (int)(p->p[i].x + 0.5f);
+		points[i * 2 + 1] = (int)(p->p[i].y + 0.5f);
+	}
+	
+	points[i * 2] = (int)(p->p[0].x + 0.5f);
+	points[i * 2 + 1] = (int)(p->p[0].y + 0.5f);
+	
+	setcolor(color);
+	drawpoly(p->n_point + 1, points);
 }
 
-void draw_polys(struct polys* p) //»æÖÆ¶à±ßĞÎ¶ÓÁĞ£¨Ö»»­µÚÒ»¸öºÍ×îºóÒ»¸ö£¬×îºóÒ»¸öÓÃÓÚ²Á³ı£©
+/**
+ * @brief ç»˜åˆ¶å¤šè¾¹å½¢é˜Ÿåˆ—çš„å¤šè¾¹å½¢ï¼ˆåªç»˜åˆ¶ç¬¬ä¸€ä¸ªå’Œæœ€åä¸€ä¸ªï¼Œæœ€åä¸€ä¸ªç”¨äºæ“¦é™¤ï¼‰
+ * @param p å¤šè¾¹å½¢é˜Ÿåˆ—å¯¹è±¡
+ */
+void draw_polys(struct polys* p)
 {
-    draw_poly(&(p->p[p->n_poly-1]),        0);
-    draw_poly(&(p->p[          0]), p->color);
-    //for (int i = 0; i < 4; ++i)
-    //    draw_poly(&(p->p[i]), p->color);
+	draw_poly(&(p->p[p->n_poly - 1]), 0);
+	draw_poly(&(p->p[0]), p->color);
 }
 
 int main()
 {
-    static struct polys p[10] = {{0}};
-    int n_points[10] = {4,3,5,6,7};
-    int n_poly[10] = {80,40,10,5,1};
-    int n_polys = 2, i;
-    randomize();
-    //Í¼ĞÎ³õÊ¼»¯
-    {
-        setinitmode(1, 0, 0);
-        initgraph(-1, -1);
-        width  = getmaxx();
-        height = getmaxy();
-        setrendermode(RENDER_MANUAL);
-    }
-    //¶à±ßĞÎ¶ÔÏó³õÊ¼»¯
-    for (i=0; i< n_polys; ++i)
-    {
-        initpolys(&p[i], n_poly[i], n_points[i]);
-    }
-    setfont(12, 6, "ËÎÌå");
-    fps ui_fps;
-    //Ö÷Ñ­»·
-    for ( ; is_run(); delay_fps(60))
-    {
-        if (kbhit() > 0) //ÓĞ°´¼ü°´ÏÂ¾ÍÍË³ö
-        {
-            break;
-        }
-        for (i=0; i< n_polys; ++i)
-        {
-            movepolys(&(p[i]));
-        }
-        for (i=0; i< n_polys; ++i)
-        {
-            draw_polys(&(p[i]));
-        }
-        //imagefilter_blurring(NULL, 0xff, 0x100);
-    }
-    closegraph();
-    return 0;
+	static struct polys p[10] = {{0}};
+	int n_points[10] = {4, 3, 5, 6, 7};
+	int n_poly[10] = {80, 40, 10, 5, 1};
+	int n_polys = 2, i;
+	randomize();
+	
+	// å›¾å½¢åˆå§‹åŒ–
+{
+	setinitmode(1, 0, 0);
+	initgraph(-1, -1);
+	width = getmaxx();
+	height = getmaxy();
+	setrendermode(RENDER_MANUAL);
+}
+	
+	// å¤šè¾¹å½¢å¯¹è±¡åˆå§‹åŒ–
+	for (i = 0; i < n_polys; ++i)
+	{
+		initpolys(&p[i], n_poly[i], n_points[i]);
+	}
+	
+	setfont(12, 6, "å®‹ä½“");
+	fps ui_fps;
+	
+	// ä¸»å¾ªç¯
+	for (; is_run(); delay_fps(60))
+	{
+		if (kbhit() > 0) // æœ‰æŒ‰é”®æŒ‰ä¸‹å°±é€€å‡º
+		{
+			break;
+		}
+		
+		for (i = 0; i < n_polys; ++i)
+		{
+			movepolys(&(p[i]));
+		}
+		
+		for (i = 0; i < n_polys; ++i)
+		{
+			draw_polys(&(p[i]));
+		}
+	}
+	
+	closegraph();
+	return 0;
 }
 

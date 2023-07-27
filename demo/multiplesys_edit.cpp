@@ -15,7 +15,7 @@ int main()
 	editBox.create(false);
 	editBox.size(200, 24 + 8);
 	editBox.setbgcolor(YELLOW);
-	editBox.setfont(24, 0, "ºÚÌå");
+	editBox.setfont(24, 0, "é»‘ä½“");
 	editBox.move(40, 40);
 	editBox.visible(true);
 
@@ -23,22 +23,22 @@ int main()
 	editBox1.create(false);
 	editBox1.size(200, 24+8);
 	editBox1.setbgcolor(YELLOW);
-	editBox1.setfont(24, 0, "ºÚÌå");
+	editBox1.setfont(24, 0, "é»‘ä½“");
 	editBox1.move(40, 140);
 	editBox1.visible(true);
 
 	editBox.setfocus();
 
-	//´¦Àí½»»¥£¬²»¿ÉÉÙ£¬·ñÔòÖ±½ÓÍË³ö
+	//å¤„ç†äº¤äº’ï¼Œä¸å¯å°‘ï¼Œå¦åˆ™ç›´æ¥é€€å‡º
 	key_msg msg;
 	while (is_run()) {
 		msg = getkey();
 		if ((msg.msg == key_msg_down) && (msg.key == key_enter)) {
 			if (editBox.isfocus()) {
-				//Ìøµ½ÏÂÒ»¸öÊäÈë¿ò
+				//è·³åˆ°ä¸‹ä¸€ä¸ªè¾“å…¥æ¡†
 				editBox1.setfocus();
 			} else if (editBox1.isfocus()) {
-				//½áÊøÊäÈë
+				//ç»“æŸè¾“å…¥
 				flushkey();
 				break;
 			}

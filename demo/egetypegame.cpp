@@ -1,4 +1,4 @@
-//´ò×ÖĞ¡ÓÎÏ·
+//æ‰“å­—å°æ¸¸æˆ
 #include <graphics.h>
 typedef struct chartarget
 {
@@ -44,7 +44,7 @@ int main()
     chartarget ct[256];
     int nobj = 0;
     int t = 1000;
-    setfont(36, 0, "ËÎÌå");
+    setfont(36, 0, "å®‹ä½“");
     setcolor(WHITE);
     setbkmode(TRANSPARENT);
     setrendermode(RENDER_MANUAL);

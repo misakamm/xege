@@ -308,8 +308,11 @@ void movewindow(int x, int y, bool redraw) {
 
 void
 api_sleep(long dwMilliseconds) {
-	if (dwMilliseconds >= 0)
+	if (dwMilliseconds >= 0) {
+		::timeBeginPeriod(1);
 		::Sleep(dwMilliseconds);
+		::timeEndPeriod(1);
+	}
 }
 
 void
@@ -332,6 +335,8 @@ ege_sleep(long ms) {
 	} else if (1) { //高精模式，占CPU更高
 		static HANDLE hTimer = ::CreateWaitableTimer(NULL, TRUE, NULL);
 		LARGE_INTEGER liDueTime;
+		
+		::timeBeginPeriod(1);
 		liDueTime.QuadPart = ms * (LONGLONG)-10000;
 
 		if (hTimer) {
@@ -342,6 +347,7 @@ ege_sleep(long ms) {
 		} else {
 			::Sleep(ms);
 		}
+		::timeEndPeriod(1);
 	}
 }
 

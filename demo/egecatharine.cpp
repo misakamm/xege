@@ -1,4 +1,4 @@
-// ÑÌ»¨ÌØĞ§ÑİÊ¾
+// çƒŸèŠ±ç‰¹æ•ˆæ¼”ç¤º
 
 #include <graphics.h>
 #include <time.h>
@@ -16,7 +16,7 @@ typedef struct
 class AniObj
 {
 public:
-     //³õÊ¼»¯£¬ÉèÖÃ×ø±ê
+     //åˆå§‹åŒ–ï¼Œè®¾ç½®åæ ‡
      AniObj()
      {
          Init();
@@ -40,7 +40,7 @@ public:
          cnt = 0;
      }
 
-     //¸üĞÂÎ»ÖÃµÈÏà¹ØÊôĞÔ
+     //æ›´æ–°ä½ç½®ç­‰ç›¸å…³å±æ€§
      void updateobj()
      {
          if (cnt++ > start)
@@ -53,7 +53,7 @@ public:
          if (cnt > start + 400) Init();
      }
 
-     //¸ù¾İÊôĞÔÖµ»æ»­
+     //æ ¹æ®å±æ€§å€¼ç»˜ç”»
      void drawobj()
      {
          for (int i = 0; i < n; i++)
@@ -62,7 +62,7 @@ public:
          }
      }
 
-     //ÊÍ·ÅÕâ¸ö¶ÔÏóÊ±µ÷ÓÃ
+     //é‡Šæ”¾è¿™ä¸ªå¯¹è±¡æ—¶è°ƒç”¨
      ~AniObj()
      {
      }
@@ -81,9 +81,9 @@ private:
 int main()
 {
      initgraph(640, 480);
-     randomize(); //³õÊ¼»¯Ëæ»úÖÖ×Ó
+     randomize(); //åˆå§‹åŒ–éšæœºç§å­
 
-     AniObj obj[MAXOBJ]; //¶¨Òå¶ÔÏóÊı×é
+     AniObj obj[MAXOBJ]; //å®šä¹‰å¯¹è±¡æ•°ç»„
      int n;
 
      setrendermode(RENDER_MANUAL);
@@ -91,13 +91,13 @@ int main()
      {
          for (n = 0; n < MAXOBJ; ++n)
          {
-             obj[n].updateobj(); //¸üĞÂÎ»ÖÃ
+             obj[n].updateobj(); //æ›´æ–°ä½ç½®
          }
 
          imagefilter_blurring(NULL, 0x4F, 0x100);
          for (n = 0; n < MAXOBJ; ++n)
          {
-             obj[n].drawobj(); //»æ»­
+             obj[n].drawobj(); //ç»˜ç”»
          }
      }
 

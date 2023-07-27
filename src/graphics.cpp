@@ -691,6 +691,7 @@ init_instance(HINSTANCE hInstance) {
 		//DeleteObject(hfont);
 	} //*/
 
+	SetActiveWindow(pg->hwnd);
 
 	pg->exit_window = 0;	
 	return TRUE;
@@ -1284,7 +1285,10 @@ initgraph(int *gdriver, int *gmode, const char *path) {
 
 	UpdateWindow(pg->hwnd);
 
-	ShowWindow(pg->hwnd, SW_SHOW);
+	ShowWindow(pg->hwnd, SW_SHOWNORMAL);
+	BringWindowToTop(pg->hwnd);
+	SetForegroundWindow(pg->hwnd);
+
 	if (g_windowexstyle & WS_EX_TOPMOST) {
 		SetWindowPos(pg->hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE);
 	}

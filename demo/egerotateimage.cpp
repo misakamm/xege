@@ -1,4 +1,4 @@
-// Ğı×ªÍ¼Æ¬ÑİÊ¾³ÌĞò
+// æ—‹è½¬å›¾ç‰‡æ¼”ç¤ºç¨‹åº
 #include <graphics.h>
 #include <ege/fps.h>
 #include <time.h>

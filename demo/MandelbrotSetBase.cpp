@@ -1,23 +1,23 @@
-//Êó±ê·Å´ómandelbrot¼¯ÑÝÊ¾
+//é¼ æ ‡æ”¾å¤§mandelbroté›†æ¼”ç¤º
 #include <graphics.h>
 
-// ¶¨Òå³£Á¿
-#define ITERATIONS 1000     // µü´ú´ÎÊý£¬Ô½¸ß£¬Í¼ÏñÔ½¾«Ï¸
-#define MAXCOLOR    300     // ÑÕÉ«Êý£¬Ô½¶àÍ¼ÏñÔ½Æ½»¬£¬µ«²»´óÓÚµü´ú´ÎÊý
+// å®šä¹‰å¸¸é‡
+#define ITERATIONS 1000     // è¿­ä»£æ¬¡æ•°ï¼Œè¶Šé«˜ï¼Œå›¾åƒè¶Šç²¾ç»†
+#define MAXCOLOR    300     // é¢œè‰²æ•°ï¼Œè¶Šå¤šå›¾åƒè¶Šå¹³æ»‘ï¼Œä½†ä¸å¤§äºŽè¿­ä»£æ¬¡æ•°
 
 
 /////////////////////////////////////////////////
-// ¶¨Òå¸´Êý¼°³Ë¡¢¼ÓÔËËã
+// å®šä¹‰å¤æ•°åŠä¹˜ã€åŠ è¿ç®—
 /////////////////////////////////////////////////
 
-// ¶¨Òå¸´Êý
+// å®šä¹‰å¤æ•°
 struct COMPLEX
 {
     double re;
     double im;
 };
 
-// ¶¨Òå¸´Êý¡°³Ë¡±ÔËËã
+// å®šä¹‰å¤æ•°â€œä¹˜â€è¿ç®—
 COMPLEX mul(COMPLEX a, COMPLEX b)
 {
     COMPLEX c;
@@ -26,7 +26,7 @@ COMPLEX mul(COMPLEX a, COMPLEX b)
     return c;
 }
 
-// ¶¨Òå¸´Êý¡°¼Ó¡±ÔËËã
+// å®šä¹‰å¤æ•°â€œåŠ â€è¿ç®—
 COMPLEX add(COMPLEX a, COMPLEX b)
 {
     COMPLEX c;
@@ -37,16 +37,16 @@ COMPLEX add(COMPLEX a, COMPLEX b)
 
 
 /////////////////////////////////////////////////
-// ¶¨ÒåÑÕÉ«¼°³õÊ¼»¯ÑÕÉ«
+// å®šä¹‰é¢œè‰²åŠåˆå§‹åŒ–é¢œè‰²
 /////////////////////////////////////////////////
 
-// ¶¨ÒåÑÕÉ«
+// å®šä¹‰é¢œè‰²
 int Color[MAXCOLOR];
 
-// ³õÊ¼»¯ÑÕÉ«
+// åˆå§‹åŒ–é¢œè‰²
 void InitColor()
 {
-    // Ê¹ÓÃ HSL ÑÕÉ«Ä£Ê½²úÉú½Ç¶È h1 µ½ h2 µÄ½¥±äÉ«
+    // ä½¿ç”¨ HSL é¢œè‰²æ¨¡å¼äº§ç”Ÿè§’åº¦ h1 åˆ° h2 çš„æ¸å˜è‰²
     int h1 = 240, h2 = 330, i;
     for (i=0; i<MAXCOLOR/2; i++)
     {
@@ -55,18 +55,18 @@ void InitColor()
     }
 }
 
-//µü´úº¯Êý£¬²ÎÊýÎª¹«Ê½ÖÐµÄC£¬·µ»ØÖµÎªµü´úÊ£Óà´ÎÊý
+//è¿­ä»£å‡½æ•°ï¼Œå‚æ•°ä¸ºå…¬å¼ä¸­çš„Cï¼Œè¿”å›žå€¼ä¸ºè¿­ä»£å‰©ä½™æ¬¡æ•°
 int f(COMPLEX c)
 {
-    COMPLEX z = {0, 0}; //³õÊ¼»¯Îª0
-    int maxcalc = ITERATIONS;  //×î´óµü´ú´ÎÊý
+    COMPLEX z = {0, 0}; //åˆå§‹åŒ–ä¸º0
+    int maxcalc = ITERATIONS;  //æœ€å¤§è¿­ä»£æ¬¡æ•°
     while (--maxcalc)
     {
         z = mul(z, z);
         z = add(z, c);
         if ( z.re*z.re + z.im*z.im > 4.0 )
         {
-            break; //ÆäÄ£³¬¹ý4£¬¿Ï¶¨·¢É¢£¬Ìø³ö
+            break; //å…¶æ¨¡è¶…è¿‡4ï¼Œè‚¯å®šå‘æ•£ï¼Œè·³å‡º
         }
     }
     return maxcalc;
@@ -74,7 +74,7 @@ int f(COMPLEX c)
 
 
 /////////////////////////////////////////////////
-// »æÖÆ Mandelbrot Set (ÂüµÂ²¼ÂåÌØ¼¯)
+// ç»˜åˆ¶ Mandelbrot Set (æ›¼å¾·å¸ƒæ´›ç‰¹é›†)
 /////////////////////////////////////////////////
 void Draw(double fromx, double fromy, double tox, double toy)
 {
@@ -96,43 +96,43 @@ void Draw(double fromx, double fromy, double tox, double toy)
 
 
 /////////////////////////////////////////////////
-// Ö÷º¯Êý
+// ä¸»å‡½æ•°
 /////////////////////////////////////////////////
 int main()
 {
     double fromx, fromy, tox, toy;
 
-    // ³õÊ¼»¯»æÍ¼´°¿Ú¼°ÑÕÉ«
+    // åˆå§‹åŒ–ç»˜å›¾çª—å£åŠé¢œè‰²
     initgraph(640, 480);
     InitColor();
 
 
-    // ³õÊ¼»¯ Mandelbrot Set(ÂüµÂ²¼ÂåÌØ¼¯)×ø±êÏµ
+    // åˆå§‹åŒ– Mandelbrot Set(æ›¼å¾·å¸ƒæ´›ç‰¹é›†)åæ ‡ç³»
     fromx = -2.2; tox = 2.2;
     fromy = -1.65; toy = 1.65;
     Draw(fromx, fromy, tox, toy);
 
 
-    // ²¶»ñÊó±ê²Ù×÷£¬ÊµÏÖ·Å´óÊó±êÑ¡ÖÐÇøÓò
+    // æ•èŽ·é¼ æ ‡æ“ä½œï¼Œå®žçŽ°æ”¾å¤§é¼ æ ‡é€‰ä¸­åŒºåŸŸ
     {
         mouse_msg m;
         bool isLDown = false;
-        int selfx, selfy, seltx, selty; // ¶¨ÒåÑ¡Çø
+        int selfx, selfy, seltx, selty; // å®šä¹‰é€‰åŒº
 
         while (kbhit() != -1)
         {
-            m = getmouse(); // »ñÈ¡Ò»ÌõÊó±êÏûÏ¢
+            m = getmouse(); // èŽ·å–ä¸€æ¡é¼ æ ‡æ¶ˆæ¯
 
             switch (m.msg)
             {
             case mouse_msg_up:
                 if (m.is_right()) {
-                    // °´Êó±êÓÒ¼ü»Ö¸´Ô­Í¼ÐÎ×ø±êÏµ
+                    // æŒ‰é¼ æ ‡å³é”®æ¢å¤åŽŸå›¾å½¢åæ ‡ç³»
                     fromx = -2.2; tox = 1.2;
                     fromy = -1.65; toy = 1.65;
                     Draw(fromx, fromy, tox, toy);
                 } else {
-                    // °´Êó±ê×ó¼ü²¢ÍÏ¶¯£¬Ñ¡ÔñÇøÓò
+                    // æŒ‰é¼ æ ‡å·¦é”®å¹¶æ‹–åŠ¨ï¼Œé€‰æ‹©åŒºåŸŸ
                     rectangle(selfx, selfy, seltx, selty);
                     setwritemode(R2_COPYPEN);
                     isLDown = false;
@@ -141,7 +141,7 @@ int main()
 
                     if (selfx == seltx || selfy == selty) break;
 
-                    // ÐÞÕýÑ¡ÇøÎª 4:3
+                    // ä¿®æ­£é€‰åŒºä¸º 4:3
                     {
                         int tmp;
                         if (selfx > seltx)
@@ -169,7 +169,7 @@ int main()
                         selty = selfy + (seltx - selfx ) * 3 / 4;
                     }
 
-                    // ¸üÐÂ×ø±êÏµ
+                    // æ›´æ–°åæ ‡ç³»
                     {
                         double f, t;
                         f = fromx + (tox - fromx) * selfx / 640;
@@ -182,13 +182,13 @@ int main()
                         toy = t;
                     }
 
-                    // »­Í¼ÐÎ
+                    // ç”»å›¾å½¢
                     Draw(fromx, fromy, tox, toy);
                 }
                 break;
 
             case mouse_msg_move:
-                // °´Êó±ê×ó¼ü²¢ÍÏ¶¯£¬Ñ¡ÔñÇøÓò
+                // æŒ‰é¼ æ ‡å·¦é”®å¹¶æ‹–åŠ¨ï¼Œé€‰æ‹©åŒºåŸŸ
                 if (isLDown)
                 {
                     rectangle(selfx, selfy, seltx, selty);
@@ -199,7 +199,7 @@ int main()
                 break;
 
             case mouse_msg_down:
-                // °´Êó±ê×ó¼ü²¢ÍÏ¶¯£¬Ñ¡ÔñÇøÓò
+                // æŒ‰é¼ æ ‡å·¦é”®å¹¶æ‹–åŠ¨ï¼Œé€‰æ‹©åŒºåŸŸ
                 if (m.is_left())
                 {
                     setcolor(WHITE);
