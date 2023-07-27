@@ -1,4 +1,4 @@
-// Êó±êÍÏ¶¯µ¯ÇòÑİÊ¾
+// é¼ æ ‡æ‹–åŠ¨å¼¹çƒæ¼”ç¤º
 #include <graphics.h>
 #include <math.h>
 
@@ -18,7 +18,7 @@ class BALL
             vy = (6 * randomf() + 0.1f) * (random(2) * 2.0 - 1);
             color = HSVtoRGB(randomf() * 360.0f, 1.0f, 0.8f);
 
-            float a = randomf();//Ëæ»úÏÂÃ¿¸ö¶ÔÏóµÄÄ¦²ÁÏµÊı
+            float a = randomf();//éšæœºä¸‹æ¯ä¸ªå¯¹è±¡çš„æ‘©æ“¦ç³»æ•°
 
             fa = 1 / (100.0);
             goon = 1;
@@ -87,7 +87,7 @@ class BALL
             double f = 0.9;
             if(mouse.msg == mouse_msg_down)
             {
-                if( isCrash(mouse.x, mouse.y) )//Èç¹ûÊó±êµÄÎ»ÖÃÔÚÔ²ÄÚ¡£¡£
+                if( isCrash(mouse.x, mouse.y) )//å¦‚æœé¼ æ ‡çš„ä½ç½®åœ¨åœ†å†…ã€‚ã€‚
                 {
                     vx = 0;
                     vy = 0;
@@ -131,11 +131,11 @@ class BALL
     private:
         int r;
         float x, y;
-        float vx, vy;//ËÙ¶È·ÖÁ¿
+        float vx, vy;//é€Ÿåº¦åˆ†é‡
         int color;
-        float ax, ay;//¼ÓËÙ¶È·ÖÁ¿
-        float fa;//Ä¦²Á
-        bool goon;//±êÖ¾
+        float ax, ay;//åŠ é€Ÿåº¦åˆ†é‡
+        float fa;//æ‘©æ“¦
+        bool goon;//æ ‡å¿—
 };
 
 void dealMouse(BALL* ball)
@@ -179,7 +179,7 @@ int main(void)
     {
         setinitmode(INIT_ANIMATION);
         initgraph(LEN, WID);
-        setcaption("Åö×²Ğ¡Çò");
+        setcaption("ç¢°æ’å°çƒ");
         randomize();
     }
     int i;

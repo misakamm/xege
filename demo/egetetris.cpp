@@ -1,4 +1,4 @@
-//ege¶íÂŞË¹·½¿éÓÎÏ·
+//egeä¿„ç½—æ–¯æ–¹å—æ¸¸æˆ
 #include <graphics.h>
 
 #include <time.h>
@@ -10,15 +10,15 @@
 const int g_width = 400;
 const int g_height = 520;
 
-/*¼ÇÂ¼7ÖÖĞÎ×´¼°Æä4ÖÖ±ä»¯µÄ±í*/
+/*è®°å½•7ç§å½¢çŠ¶åŠå…¶4ç§å˜åŒ–çš„è¡¨*/
 static int g_trs_map[8][4][4][4];
-/*±ä»¯ÊıÄ¿±í*/
+/*å˜åŒ–æ•°ç›®è¡¨*/
 static int g_map_mod[] = {1, 4, 4, 4, 2, 2, 2, 1, 0};
 
-/*³õÊ¼»¯È«¾ÖÊı¾İ¼°Í¼ĞÎÏÔÊ¾*/
+/*åˆå§‹åŒ–å…¨å±€æ•°æ®åŠå›¾å½¢æ˜¾ç¤º*/
 void initgr() {
     initgraph(g_width, g_height);
-    setfont(12, 6, "ËÎÌå");
+    setfont(12, 6, "å®‹ä½“");
     int Trs_map[8][4][4][4] =
     {
         {{{0}}},{{
@@ -66,12 +66,12 @@ void initgr() {
 
 class Game {
 public:
-    /*×´Ì¬±í*/
+    /*çŠ¶æ€è¡¨*/
     enum {
-        ST_START, /*ÓÎÏ·ÖØĞÂ¿ªÊ¼*/
-        ST_NEXT,  /*×¼±¸ÏÂÒ»¸ö·½¿é*/
-        ST_NORMAL,/*Íæ¼Ò¿ØÖÆ½×¶Î*/
-        ST_OVER   /*ÓÎÏ·½áÊø£¬F2ÖØĞÂ¿ªÊ¼*/
+        ST_START, /*æ¸¸æˆé‡æ–°å¼€å§‹*/
+        ST_NEXT,  /*å‡†å¤‡ä¸‹ä¸€ä¸ªæ–¹å—*/
+        ST_NORMAL,/*ç©å®¶æ§åˆ¶é˜¶æ®µ*/
+        ST_OVER   /*æ¸¸æˆç»“æŸï¼ŒF2é‡æ–°å¼€å§‹*/
     };
     Game(int w, int h, int bw, int bh) {
         int colormap[10] = {0, 0xA00000, 0xA05000, 0xA0A000, 0xC000,
@@ -96,10 +96,10 @@ public:
         getimage(m_pcb, 0, 0, bw*10, bh);
         m_state = ST_START;
     }
-    /*×´Ì¬×ª»»´¦Àí*/
+    /*çŠ¶æ€è½¬æ¢å¤„ç†*/
     int deal () {
         int nRet = 0;
-        if ( m_state == ST_START ) { //³õÊ¼»¯ 
+        if ( m_state == ST_START ) { //åˆå§‹åŒ– 
             m_next1_s = random(7) + 1;
             m_next2_s = random(7) + 1;
             m_pause = 0;
@@ -131,7 +131,7 @@ public:
                 m_state = ST_NORMAL;
             }
         } else if (m_state == ST_NORMAL) {
-            /*´¦Àí×ÔÓÉÏÂÂä*/
+            /*å¤„ç†è‡ªç”±ä¸‹è½*/
             int i, j;
             if ( m_KeyState[3] == 0 || m_forbid_down) {
                 --m_curtime, m_cursubtime = 1;
@@ -142,7 +142,7 @@ public:
                 else
                     m_curxtime--;
             }
-            /*°´¼ü´¦Àí*/
+            /*æŒ‰é”®å¤„ç†*/
             for (i = 1, j = 1; i<=2; ++i, j-=2) {
                 for ( ; m_KeyFlag[i] > 0; --m_KeyFlag[i]) {
                     m_ctl_x -= j;
@@ -152,7 +152,7 @@ public:
                         m_curxtime = m_movxtime * j;
                 }
             }
-            m_ctl_dx = float(double(m_curxtime) / m_movxtime); //´¦Àíx·½ÏòÆ½»¬
+            m_ctl_dx = float(double(m_curxtime) / m_movxtime); //å¤„ç†xæ–¹å‘å¹³æ»‘
             for (i = 4, j = 1; i<=5; ++i, j-=2) {
                 for (int t ; m_KeyFlag[i] > 0; --m_KeyFlag[i]) {
                     m_ctl_t=((t=m_ctl_t)+g_map_mod[m_ctl_s]+j)%g_map_mod[m_ctl_s];
@@ -176,7 +176,7 @@ public:
                 }
             }
             if (m_state == ST_NORMAL) {
-                m_ctl_dy = float(double(m_curtime) / m_droptime);//´¦Àíy·½ÏòÆ½»¬
+                m_ctl_dy = float(double(m_curtime) / m_droptime);//å¤„ç†yæ–¹å‘å¹³æ»‘
             }
         } else if (m_state == ST_OVER) {
             if ( m_gray_y>0 && (m_gray_y % 2) == 0)
@@ -191,7 +191,7 @@ public:
         memset(m_KeyFlag, 0, sizeof(m_KeyFlag));
         return nRet;
     }
-    /*Åö×²¼ì²â*/
+    /*ç¢°æ’æ£€æµ‹*/
     bool isCrash() {
         for (int y=0; y<4; ++y) {
             for (int x=0; x<4; ++x)
@@ -205,14 +205,14 @@ public:
     }
     void merge() {
         int y, x, cy = m_gamepool_h;
-        /*ºÏ²¢´¦Àí*/
+        /*åˆå¹¶å¤„ç†*/
         for (y=0; y<4; ++y) {
             for (x=0; x<4; ++x)
                 if ( g_trs_map[m_ctl_s][m_ctl_t][y][x] )
                     m_gamepool[m_ctl_y + y][m_ctl_x + x]
                         = g_trs_map[m_ctl_s][m_ctl_t][y][x];
         }
-        /*ÏûĞĞ¼ÆËã*/
+        /*æ¶ˆè¡Œè®¡ç®—*/
         for (y = m_gamepool_h; y >= 1; --y) {
             for (x = 1; x <= m_gamepool_w; ++x) {
                 if ( m_gamepool[y][x] == 0 )
@@ -231,7 +231,7 @@ public:
                 m_gamepool[y][x] = 0;
         }
     }
-    /*Âß¼­¸üĞÂÖ÷º¯Êı*/
+    /*é€»è¾‘æ›´æ–°ä¸»å‡½æ•°*/
     void update() {
         key_msg key;
         int k = kbmsg();
@@ -294,10 +294,10 @@ public:
             }
         }
     }
-    /*Í¼ĞÎ¸üĞÂÖ÷º¯Êı*/
+    /*å›¾å½¢æ›´æ–°ä¸»å‡½æ•°*/
     void render() {
         int x, y, c, bx, by;
-        /*»­±³¾°¿ò*/
+        /*ç”»èƒŒæ™¯æ¡†*/
         cleardevice();
         drawframe(  m_base_x + 5 * m_base_w,
                     m_base_y,
@@ -305,7 +305,7 @@ public:
                     m_gamepool_h * m_base_h);
         drawframe(m_base_x, m_base_y,              4*m_base_w, 4*m_base_h);
         drawframe(m_base_x, m_base_y + 5*m_base_h, 4*m_base_w, 4*m_base_h);
-        /*»­Ö÷ÓÎÏ·³Ø*/
+        /*ç”»ä¸»æ¸¸æˆæ± */
         bx = m_base_x + 4 * m_base_w;
         by = m_base_y - 1 * m_base_h;
         for (y = m_gamepool_h; y >= 1; --y) {
@@ -316,13 +316,13 @@ public:
                             c * m_base_w, 0);
             }
         }
-        /*»­¿ØÖÆ¿é*/
+        /*ç”»æ§åˆ¶å—*/
         if ( m_ctl_t >=0 ) {
             bx = m_base_x + (m_ctl_x + 4) * m_base_w;
             by = m_base_y + (m_ctl_y - 1) * m_base_h;
             draw44(bx, by, g_trs_map[m_ctl_s][m_ctl_t], m_ctl_dx, m_ctl_dy);
         }
-        /*»­ÏÂÒ»¿éºÍÏÂ¶ş¿é*/
+        /*ç”»ä¸‹ä¸€å—å’Œä¸‹äºŒå—*/
         bx = m_base_x;
         by = m_base_y;
         draw44(bx, by, g_trs_map[m_next1_s][0]);
@@ -330,7 +330,7 @@ public:
         by = m_base_y + 5 * m_base_h;
         draw44(bx, by, g_trs_map[m_next2_s][0], 0, 0, 8);
         setcolor(0xFFFFFF);
-        if ( m_state == ST_OVER ) { // ½áÊøÌáÊ¾ÎÄ×ÖÏÔÊ¾
+        if ( m_state == ST_OVER ) { // ç»“æŸæç¤ºæ–‡å­—æ˜¾ç¤º
             outtextxy(m_base_x+5*m_base_w, m_base_y, "Press F2 to Restart game");
         }
     }
@@ -356,15 +356,15 @@ public:
     int m_curxtime;
 private:
     int m_gamepool_w, m_gamepool_h;
-    int m_gamepool[30][30]; //´Ó1ÎªÆğÊ¼ÏÂ±ê£¬0ÓÃÓÚ±ß½çÅö×²¼ì²â
-    int m_ctl_x, m_ctl_y, m_ctl_t, m_ctl_s; //µ±Ç°¿ØÖÆ¿éÊôĞÔ
+    int m_gamepool[30][30]; //ä»1ä¸ºèµ·å§‹ä¸‹æ ‡ï¼Œ0ç”¨äºè¾¹ç•Œç¢°æ’æ£€æµ‹
+    int m_ctl_x, m_ctl_y, m_ctl_t, m_ctl_s; //å½“å‰æ§åˆ¶å—å±æ€§
     float m_ctl_dx, m_ctl_dy;
     int m_next1_s, m_next2_s;
     int m_forbid_down;
     int m_colormap[10];
 public:
     int m_pause;
-    int m_state; //ÓÎÏ·Ö÷×´Ì¬
+    int m_state; //æ¸¸æˆä¸»çŠ¶æ€
     int m_gray_y;
     int m_over_st;
     int m_Keys[8];

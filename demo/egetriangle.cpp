@@ -1,4 +1,4 @@
-//²ÊÉ«½¥±äÈı½ÇĞÎ¶¯»­ÑİÊ¾
+//å½©è‰²æ¸å˜ä¸‰è§’å½¢åŠ¨ç”»æ¼”ç¤º
 #include <graphics.h>
 #include <ege/fps.h>
 #include <stdio.h>
@@ -7,31 +7,31 @@
 
 int width = 640, height = 480;
 
-struct point //¶¨Òåµã£¬°üº¬×ø±ê£¬ËÙ¶È
+struct point //å®šä¹‰ç‚¹ï¼ŒåŒ…å«åæ ‡ï¼Œé€Ÿåº¦
 {
     double x;
     double y;
     double dx;
     double dy;
-    color_t color;                  //ÑÕÉ«
-    color_t nextcolor, prevcolor;   //ÉÏÒ»´ÎµÄÑÕÉ«£¬Ä¿±êÑÕÉ«
-    int chtime, nowtime;            //¹ı¶É±ä»¯Ê±¼ä£¬µ±Ç°Ê±¼ä
-    int nextcolortime;              //¾àÀëÒ»ÏÂ´Î¸Ä±äÑÕÉ«µÄÊ±¼ä
+    color_t color;                  //é¢œè‰²
+    color_t nextcolor, prevcolor;   //ä¸Šä¸€æ¬¡çš„é¢œè‰²ï¼Œç›®æ ‡é¢œè‰²
+    int chtime, nowtime;            //è¿‡æ¸¡å˜åŒ–æ—¶é—´ï¼Œå½“å‰æ—¶é—´
+    int nextcolortime;              //è·ç¦»ä¸€ä¸‹æ¬¡æ”¹å˜é¢œè‰²çš„æ—¶é—´
 };
 
-struct poly //¶¨Òå¶à±ßĞÎ£¬°üº¬µãµÄ¸öÊı£¬ºÍµãÊı×é
+struct poly //å®šä¹‰å¤šè¾¹å½¢ï¼ŒåŒ…å«ç‚¹çš„ä¸ªæ•°ï¼Œå’Œç‚¹æ•°ç»„
 {
     int n_point;
     point p[20];
 };
 
-struct polys //¶¨Òå¶à±ßĞÎ¶ÓÁĞ×é
+struct polys //å®šä¹‰å¤šè¾¹å½¢é˜Ÿåˆ—ç»„
 {
-    int n_poly;                 //¶à±ßĞÎ¶ÓÁĞ³¤¶È
-    poly p[100];                //¶à±ßĞÎÊı×é
+    int n_poly;                 //å¤šè¾¹å½¢é˜Ÿåˆ—é•¿åº¦
+    poly p[100];                //å¤šè¾¹å½¢æ•°ç»„
 };
 
-double rand_float(double dv, double db) //·µ»ØÒ»¸ödb µ½ db+dvÖ®¼äµÄËæ»ú¸¡µãÊı
+double rand_float(double dv, double db) //è¿”å›ä¸€ä¸ªdb åˆ° db+dvä¹‹é—´çš„éšæœºæµ®ç‚¹æ•°
 {
     return randomf()*dv + db;
 }
@@ -50,7 +50,7 @@ color_t getcolor(color_t prevcolor, color_t nextcolor, double t)
     return EGERGB(r, g, b);
 }
 
-void movepoint(struct point* b) //¸ù¾İµãµÄËÙ¶ÈÊôĞÔÒÆ¶¯Õâ¸öµã£¬Èç¹ûÒÆ³öÆÁÄ»Ôò½øĞĞ·´µ¯¼ÆËã
+void movepoint(struct point* b) //æ ¹æ®ç‚¹çš„é€Ÿåº¦å±æ€§ç§»åŠ¨è¿™ä¸ªç‚¹ï¼Œå¦‚æœç§»å‡ºå±å¹•åˆ™è¿›è¡Œåå¼¹è®¡ç®—
 {
     double dv = 1.0, db = 0.5;
     double tw = width / 640.0, th = height / 480.0;
@@ -73,7 +73,7 @@ void movepoint(struct point* b) //¸ù¾İµãµÄËÙ¶ÈÊôĞÔÒÆ¶¯Õâ¸öµã£¬Èç¹ûÒÆ³öÆÁÄ»Ôò½øĞĞ
     b->color = getcolor(b->prevcolor, b->nextcolor, (double)b->nowtime / b->chtime);
 }
 
-void movepoly(struct poly* p) //ÒÆ¶¯µ¥¸ö¶à±ßĞÎ£¬ÄÚ²¿µ÷ÓÃµãµÄÒÆ¶¯
+void movepoly(struct poly* p) //ç§»åŠ¨å•ä¸ªå¤šè¾¹å½¢ï¼Œå†…éƒ¨è°ƒç”¨ç‚¹çš„ç§»åŠ¨
 {
     int i;
     for (i=0; i<p->n_point; ++i)
@@ -82,7 +82,7 @@ void movepoly(struct poly* p) //ÒÆ¶¯µ¥¸ö¶à±ßĞÎ£¬ÄÚ²¿µ÷ÓÃµãµÄÒÆ¶¯
     }
 }
 
-void initpolys(struct polys* p, int npoly, int npoint) //³õÊ¼»¯¶à±ßĞÎ¶ÓÁĞ×é
+void initpolys(struct polys* p, int npoly, int npoint) //åˆå§‹åŒ–å¤šè¾¹å½¢é˜Ÿåˆ—ç»„
 {
     int i,j;
     p->n_poly = npoly;
@@ -107,7 +107,7 @@ void initpolys(struct polys* p, int npoly, int npoint) //³õÊ¼»¯¶à±ßĞÎ¶ÓÁĞ×é
     }
 }
 
-void draw_poly(struct poly* p) //»æÖÆÒ»¸ö¶à±ßĞÎ
+void draw_poly(struct poly* p) //ç»˜åˆ¶ä¸€ä¸ªå¤šè¾¹å½¢
 {
     ege_colpoint points[100];
     int i;
@@ -131,7 +131,7 @@ int main()
     int n_poly[10] = {1,1,1,1,1};
     int n_polys = 3, i;
     randomize();
-    //Í¼ĞÎ³õÊ¼»¯
+    //å›¾å½¢åˆå§‹åŒ–
     {
         setinitmode(INIT_ANIMATION);
         initgraph(width, height);
@@ -139,16 +139,16 @@ int main()
         height = getmaxy();
         setrendermode(RENDER_MANUAL);
     }
-    //¶à±ßĞÎ¶ÔÏó³õÊ¼»¯
+    //å¤šè¾¹å½¢å¯¹è±¡åˆå§‹åŒ–
     for (i=0; i< n_polys; ++i)
     {
         initpolys(&p[i], n_poly[i], n_points[i]);
     }
     fps ui_fps;
-    //Ö÷Ñ­»·
+    //ä¸»å¾ªç¯
     for ( ; is_run(); delay_fps(60))
     {
-        if (kbhit() > 0) //ÓĞ°´¼ü°´ÏÂ¾ÍÍË³ö
+        if (kbhit() > 0) //æœ‰æŒ‰é”®æŒ‰ä¸‹å°±é€€å‡º
         {
             break;
         }

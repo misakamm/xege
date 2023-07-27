@@ -1,3 +1,4 @@
+// @warning è¯¥ç¤ºä¾‹ç¨‹åºæ–‡æœ¬è¾“å‡ºä¹±ç äº†
 #include "graphics.h"
 #include <stdio.h>
 #include <string.h>
@@ -30,18 +31,18 @@ public:
     }
     SceneBase* Update()
     {
-        char str[] = "#include \"graphics.h\"\n\nint main()\n{\n    initgraph(640, 480);\n\n    setcolor(RED);\n    //»­»¡Ïß£¬ÒÔ(100,100)ÎªÔ²ĞÄ£¬0¶Èµ½180¶È£¬°ë¾¶50\n    arc(100, 100, 0, 180, 50);\n    //Í¬»­»¡Ïß£¬Ö»ÊÇÎ»ÖÃ²»Í¬\n    arc(200, 100, 0, 180, 50);\n    //´Ó(50,100)µ½(150,200)»­Ïß\n    line(50, 100, 150, 200);\n    //´Ó(250,100)µ½(150,200)»­Ïß\n    line(250, 100, 150, 200);\n    getch(); //µÈ´ıÓÃ»§°´¼ü£¬Ïàµ±ÓÚÔİÍ£\n    return 0;\n}";
+        char str[] = "#include \"graphics.h\"\n\nint main()\n{\n    initgraph(640, 480);\n\n    setcolor(RED);\n    //ç”»å¼§çº¿ï¼Œä»¥(100,100)ä¸ºåœ†å¿ƒï¼Œ0åº¦åˆ°180åº¦ï¼ŒåŠå¾„50\n    arc(100, 100, 0, 180, 50);\n    //åŒç”»å¼§çº¿ï¼Œåªæ˜¯ä½ç½®ä¸åŒ\n    arc(200, 100, 0, 180, 50);\n    //ä»(50,100)åˆ°(150,200)ç”»çº¿\n    line(50, 100, 150, 200);\n    //ä»(250,100)åˆ°(150,200)ç”»çº¿\n    line(250, 100, 150, 200);\n    getch(); //ç­‰å¾…ç”¨æˆ·æŒ‰é”®ï¼Œç›¸å½“äºæš‚åœ\n    return 0;\n}";
         setbkcolor_f(BLACK);
         cleardevice();
 
         smain();
         {
-            setfont(12, 0, "ËÎÌå");
+            setfont(12, 0, "å®‹ä½“");
             setcolor(0x808080);
             line(320, 0, 320, 480);
             setcolor(0xFFFFFF);
             outtextrect(320, 100, 320, 380, str);
-            outtextrect(320, 0, 320, 400, "×ó°ë±ßÊÇ³ÌĞòÔËĞĞ½á¹û£¬ÏÂÃæÊÇÏàÓ¦µÄÔ´´úÂë\n°´ÈÎÒâ¼ü²é¿´ÏÂÒ»¸öÀı×Ó");
+            outtextrect(320, 0, 320, 400, "å·¦åŠè¾¹æ˜¯ç¨‹åºè¿è¡Œç»“æœï¼Œä¸‹é¢æ˜¯ç›¸åº”çš„æºä»£ç \næŒ‰ä»»æ„é”®æŸ¥çœ‹ä¸‹ä¸€ä¸ªä¾‹å­");
         }
         getch();
         return m_parent;
@@ -60,23 +61,23 @@ public:
     void smain()
     {
         setcolor(YELLOW);
-        setfillstyle(SOLID_FILL, MAGENTA);
+//        setfillstyle(SOLID_FILL, MAGENTA);
         fillellipse(150, 200, 50, 100);
     }
     SceneBase* Update()
     {
-        char str[] = "#include \"graphics.h\"\n\nint main()\n{\n    //Í¼ĞÎ´°¿Ú³õÊ¼»¯Îª640*480´óĞ¡\n    initgraph(640, 480);\n\n    //ÉèÖÃÑÕÉ«Îª»ÆÉ«\n    setcolor(YELLOW);\n    //ÉèÖÃÌî³äÑÕÉ«Îª×ÏºìÉ«\n    setfillstyle(SOLID_FILL, MAGENTA);\n    //ÒÔ(150,200)ÎªÔ²ĞÄ£¬x°ë¾¶Îª50£¬y°ë¾¶Îª100£¬»­Ò»¸öÊµĞÄÍÖÔ²\n    fillellipse(150, 200, 50, 100);\n\n    getch(); //µÈ´ıÓÃ»§°´¼ü£¬Ïàµ±ÓÚÔİÍ£\n    return 0;\n}";
+        char str[] = "#include \"graphics.h\"\n\nint main()\n{\n    //å›¾å½¢çª—å£åˆå§‹åŒ–ä¸º640*480å¤§å°\n    initgraph(640, 480);\n\n    //è®¾ç½®é¢œè‰²ä¸ºé»„è‰²\n    setcolor(YELLOW);\n    //è®¾ç½®å¡«å……é¢œè‰²ä¸ºç´«çº¢è‰²\n    setfillstyle(SOLID_FILL, MAGENTA);\n    //ä»¥(150,200)ä¸ºåœ†å¿ƒï¼ŒxåŠå¾„ä¸º50ï¼ŒyåŠå¾„ä¸º100ï¼Œç”»ä¸€ä¸ªå®å¿ƒæ¤­åœ†\n    fillellipse(150, 200, 50, 100);\n\n    getch(); //ç­‰å¾…ç”¨æˆ·æŒ‰é”®ï¼Œç›¸å½“äºæš‚åœ\n    return 0;\n}";
         setbkcolor_f(BLACK);
         cleardevice();
 
         smain();
         {
-            setfont(12, 0, "ËÎÌå");
+            setfont(12, 0, "å®‹ä½“");
             setcolor(0x808080);
             line(320, 0, 320, 480);
             setcolor(0xFFFFFF);
             outtextrect(320, 100, 320, 380, str);
-            outtextrect(320, 0, 320, 400, "×ó°ë±ßÊÇ³ÌĞòÔËĞĞ½á¹û£¬ÏÂÃæÊÇÏàÓ¦µÄÔ´´úÂë\n°´ÈÎÒâ¼ü²é¿´ÏÂÒ»¸öÀı×Ó");
+            outtextrect(320, 0, 320, 400, "å·¦åŠè¾¹æ˜¯ç¨‹åºè¿è¡Œç»“æœï¼Œä¸‹é¢æ˜¯ç›¸åº”çš„æºä»£ç \næŒ‰ä»»æ„é”®æŸ¥çœ‹ä¸‹ä¸€ä¸ªä¾‹å­");
         }
         getch();
         return new SceneHelloWorld6(m_parent);
@@ -99,18 +100,18 @@ public:
     }
     SceneBase* Update()
     {
-        char str[] = "#include \"graphics.h\"\n\nint main()\n{\n    //Í¼ĞÎ´°¿Ú³õÊ¼»¯Îª640*480´óĞ¡\n    initgraph(640, 480);\n\n    //ÉèÖÃÌî³äÑÕÉ«ÎªÂÌÉ«£¬×¢ÒâÊÇÓÃÀ´Ìî³äÑÕÉ«\n    setfillstyle(SOLID_FILL, GREEN);\n    //´Ó(100,100)µ½(200,400)»­Ò»¸öÊµĞÄ¾ØĞÎ£¬Ê¹ÓÃÌî³äÑÕÉ«\n    bar(100, 100, 200, 400);\n\n    getch(); //µÈ´ıÓÃ»§°´¼ü£¬Ïàµ±ÓÚÔİÍ£\n    return 0;\n}";
+        char str[] = "#include \"graphics.h\"\n\nint main()\n{\n    //å›¾å½¢çª—å£åˆå§‹åŒ–ä¸º640*480å¤§å°\n    initgraph(640, 480);\n\n    //è®¾ç½®å¡«å……é¢œè‰²ä¸ºç»¿è‰²ï¼Œæ³¨æ„æ˜¯ç”¨æ¥å¡«å……é¢œè‰²\n    setfillstyle(SOLID_FILL, GREEN);\n    //ä»(100,100)åˆ°(200,400)ç”»ä¸€ä¸ªå®å¿ƒçŸ©å½¢ï¼Œä½¿ç”¨å¡«å……é¢œè‰²\n    bar(100, 100, 200, 400);\n\n    getch(); //ç­‰å¾…ç”¨æˆ·æŒ‰é”®ï¼Œç›¸å½“äºæš‚åœ\n    return 0;\n}";
         setbkcolor_f(BLACK);
         cleardevice();
 
         smain();
         {
-            setfont(12, 0, "ËÎÌå");
+            setfont(12, 0, "å®‹ä½“");
             setcolor(0x808080);
             line(320, 0, 320, 480);
             setcolor(0xFFFFFF);
             outtextrect(320, 100, 320, 380, str);
-            outtextrect(320, 0, 320, 400, "×ó°ë±ßÊÇ³ÌĞòÔËĞĞ½á¹û£¬ÏÂÃæÊÇÏàÓ¦µÄÔ´´úÂë\n°´ÈÎÒâ¼ü²é¿´ÏÂÒ»¸öÀı×Ó");
+            outtextrect(320, 0, 320, 400, "å·¦åŠè¾¹æ˜¯ç¨‹åºè¿è¡Œç»“æœï¼Œä¸‹é¢æ˜¯ç›¸åº”çš„æºä»£ç \næŒ‰ä»»æ„é”®æŸ¥çœ‹ä¸‹ä¸€ä¸ªä¾‹å­");
         }
         getch();
         return new SceneHelloWorld5(m_parent);
@@ -133,18 +134,18 @@ public:
     }
     SceneBase* Update()
     {
-        char str[] = "#include \"graphics.h\"\n\nint main()\n{\n    //Í¼ĞÎ´°¿Ú³õÊ¼»¯Îª640*480´óĞ¡\n    initgraph(640, 480);\n\n    //ÉèÖÃÑÕÉ«ÎªÂÌÉ«\n    setcolor(GREEN);\n    //ÔÚx=200,y=100µÄµØ·½£¬»­Ò»¸ö°ë¾¶80µÄÔ²\n    circle(200, 100, 80);\n\n    getch(); //µÈ´ıÓÃ»§°´¼ü£¬Ïàµ±ÓÚÔİÍ£\n    return 0;\n}";
+        char str[] = "#include \"graphics.h\"\n\nint main()\n{\n    //å›¾å½¢çª—å£åˆå§‹åŒ–ä¸º640*480å¤§å°\n    initgraph(640, 480);\n\n    //è®¾ç½®é¢œè‰²ä¸ºç»¿è‰²\n    setcolor(GREEN);\n    //åœ¨x=200,y=100çš„åœ°æ–¹ï¼Œç”»ä¸€ä¸ªåŠå¾„80çš„åœ†\n    circle(200, 100, 80);\n\n    getch(); //ç­‰å¾…ç”¨æˆ·æŒ‰é”®ï¼Œç›¸å½“äºæš‚åœ\n    return 0;\n}";
         setbkcolor_f(BLACK);
         cleardevice();
 
         smain();
         {
-            setfont(12, 0, "ËÎÌå");
+            setfont(12, 0, "å®‹ä½“");
             setcolor(0x808080);
             line(320, 0, 320, 480);
             setcolor(0xFFFFFF);
             outtextrect(320, 100, 320, 380, str);
-            outtextrect(320, 0, 320, 400, "×ó°ë±ßÊÇ³ÌĞòÔËĞĞ½á¹û£¬ÏÂÃæÊÇÏàÓ¦µÄÔ´´úÂë\n°´ÈÎÒâ¼ü²é¿´ÏÂÒ»¸öÀı×Ó");
+            outtextrect(320, 0, 320, 400, "å·¦åŠè¾¹æ˜¯ç¨‹åºè¿è¡Œç»“æœï¼Œä¸‹é¢æ˜¯ç›¸åº”çš„æºä»£ç \næŒ‰ä»»æ„é”®æŸ¥çœ‹ä¸‹ä¸€ä¸ªä¾‹å­");
         }
         getch();
         return new SceneHelloWorld4(m_parent);
@@ -166,19 +167,19 @@ public:
     }
     SceneBase* Update()
     {
-        char str[] = "#include \"graphics.h\"\n\nint main()\n{\n    //Í¼ĞÎ´°¿Ú³õÊ¼»¯Îª640*480´óĞ¡\n    initgraph(640, 480);\n\n    //ÔÚx=200,y=100µÄµØ·½£¬»­Ò»¸ö°ë¾¶80µÄÔ²\n    circle(200, 100, 80);\n\n    getch(); //µÈ´ıÓÃ»§°´¼ü£¬Ïàµ±ÓÚÔİÍ£\n    return 0;\n}";
+        char str[] = "#include \"graphics.h\"\n\nint main()\n{\n    //å›¾å½¢çª—å£åˆå§‹åŒ–ä¸º640*480å¤§å°\n    initgraph(640, 480);\n\n    //åœ¨x=200,y=100çš„åœ°æ–¹ï¼Œç”»ä¸€ä¸ªåŠå¾„80çš„åœ†\n    circle(200, 100, 80);\n\n    getch(); //ç­‰å¾…ç”¨æˆ·æŒ‰é”®ï¼Œç›¸å½“äºæš‚åœ\n    return 0;\n}";
         setbkcolor_f(BLACK);
         cleardevice();
         setcolor(LIGHTGRAY);
 
         smain();
         {
-            setfont(12, 0, "ËÎÌå");
+            setfont(12, 0, "å®‹ä½“");
             setcolor(0x808080);
             line(320, 0, 320, 480);
             setcolor(0xFFFFFF);
             outtextrect(320, 100, 320, 380, str);
-            outtextrect(320, 0, 320, 400, "×ó°ë±ßÊÇ³ÌĞòÔËĞĞ½á¹û£¬ÏÂÃæÊÇÏàÓ¦µÄÔ´´úÂë\n°´ÈÎÒâ¼ü²é¿´ÏÂÒ»¸öÀı×Ó");
+            outtextrect(320, 0, 320, 400, "å·¦åŠè¾¹æ˜¯ç¨‹åºè¿è¡Œç»“æœï¼Œä¸‹é¢æ˜¯ç›¸åº”çš„æºä»£ç \næŒ‰ä»»æ„é”®æŸ¥çœ‹ä¸‹ä¸€ä¸ªä¾‹å­");
         }
         getch();
         return new SceneHelloWorld3(m_parent);
@@ -196,19 +197,19 @@ public:
     }
     SceneBase* Update()
     {
-        char str[] = "//ÓÉÁ½¸öĞ±¸Ü\'//\'¿ªÊ¼ºóÃæµÄÄÚÈİÎª×¢ÊÍ£¬²»Ó°Ïì±àÒë\n//ÒÔÏÂÕâ¸öÊÇPowerEasyXÍ¼ĞÎ¿âµÄÍ·ÎÄ¼ş£¬²¢²»ÊÇTCÍ¼ĞÎµÄÍ·ÎÄ¼ş£¬Çë×¢Òâ\n//ÒªÕıÈ·±àÒë±¾³ÌĞò£¬ÇëÏÈÎªÄãµÄVC»òÕßC-Free°²×°ºÃPEX\n¼ÓÁË°üº¬Õâ¸öÍ·ÎÄ¼şºó£¬¾Í¿ÉÒÔÊ¹ÓÃÍ¼ĞÎº¯ÊıÁË\n#include \"graphics.h\"\n\nint main() //ÇëÊ¹ÓÃintÉùÃ÷main£¬×÷Îª¹æ·¶\n{\n    //Í¼ĞÎ´°¿Ú³õÊ¼»¯Îª640*480´óĞ¡\n    initgraph(640, 480);\n\n    //ÉèÖÃ×ÖÌå¸ß¶ÈÎª20£¬¿í¶ÈÎªÄ¬ÈÏÖµµÄËÎÌå×Ö\n    setfont(20, 0, \"ËÎÌå\");\n\n    //ÔÚx=100,y=0µÄµØ·½¿ªÊ¼£¬ÏÔÊ¾Ò»¶ÎÎÄ×Ö\n    outtextxy(100, 0, \"Hello World\");\n\n    //µÈ´ıÓÃ»§°´¼ü£¬Ïàµ±ÓÚÔİÍ££¬×¢ÒâÕâÊÇÍ¼ĞÎ¿âµÄº¯Êı\n    getch();\n    return 0;\n}";
+        char str[] = "//ç”±ä¸¤ä¸ªæ–œæ \'//\'å¼€å§‹åé¢çš„å†…å®¹ä¸ºæ³¨é‡Šï¼Œä¸å½±å“ç¼–è¯‘\n//ä»¥ä¸‹è¿™ä¸ªæ˜¯PowerEasyXå›¾å½¢åº“çš„å¤´æ–‡ä»¶ï¼Œå¹¶ä¸æ˜¯TCå›¾å½¢çš„å¤´æ–‡ä»¶ï¼Œè¯·æ³¨æ„\n//è¦æ­£ç¡®ç¼–è¯‘æœ¬ç¨‹åºï¼Œè¯·å…ˆä¸ºä½ çš„VCæˆ–è€…C-Freeå®‰è£…å¥½PEX\nåŠ äº†åŒ…å«è¿™ä¸ªå¤´æ–‡ä»¶åï¼Œå°±å¯ä»¥ä½¿ç”¨å›¾å½¢å‡½æ•°äº†\n#include \"graphics.h\"\n\nint main() //è¯·ä½¿ç”¨intå£°æ˜mainï¼Œä½œä¸ºè§„èŒƒ\n{\n    //å›¾å½¢çª—å£åˆå§‹åŒ–ä¸º640*480å¤§å°\n    initgraph(640, 480);\n\n    //è®¾ç½®å­—ä½“é«˜åº¦ä¸º20ï¼Œå®½åº¦ä¸ºé»˜è®¤å€¼çš„å®‹ä½“å­—\n    setfont(20, 0, \"å®‹ä½“\");\n\n    //åœ¨x=100,y=0çš„åœ°æ–¹å¼€å§‹ï¼Œæ˜¾ç¤ºä¸€æ®µæ–‡å­—\n    outtextxy(100, 0, \"Hello World\");\n\n    //ç­‰å¾…ç”¨æˆ·æŒ‰é”®ï¼Œç›¸å½“äºæš‚åœï¼Œæ³¨æ„è¿™æ˜¯å›¾å½¢åº“çš„å‡½æ•°\n    getch();\n    return 0;\n}";
         setbkcolor_f(BLACK);
         cleardevice();
         setcolor(LIGHTGRAY);
-        setfont(20, 0, "ËÎÌå");
+        setfont(20, 0, "å®‹ä½“");
         outtextxy(100, 0, "Hello World");
         {
-            setfont(12, 0, "ËÎÌå");
+            setfont(12, 0, "å®‹ä½“");
             setcolor(0x808080);
             line(320, 0, 320, 480);
             setcolor(0xFFFFFF);
             outtextrect(320, 100, 320, 380, str);
-            outtextrect(320, 0, 320, 400, "×ó°ë±ßÊÇ³ÌĞòÔËĞĞ½á¹û£¬ÏÂÃæÊÇÏàÓ¦µÄÔ´´úÂë\n°´ÈÎÒâ¼ü²é¿´ÏÂÒ»¸öÀı×Ó");
+            outtextrect(320, 0, 320, 400, "å·¦åŠè¾¹æ˜¯ç¨‹åºè¿è¡Œç»“æœï¼Œä¸‹é¢æ˜¯ç›¸åº”çš„æºä»£ç \næŒ‰ä»»æ„é”®æŸ¥çœ‹ä¸‹ä¸€ä¸ªä¾‹å­");
         }
         getch();
         return new SceneHelloWorld2(m_parent);
@@ -262,13 +263,13 @@ public:
 \n    }\
 \n    getch();\n    return 0;\n}";
             resize(img, 320, 480);
-            setfont(12, 0, "ËÎÌå", img);
+            setfont(12, 0, "å®‹ä½“", img);
             setbkmode(TRANSPARENT, img);
             setcolor(0x808080, img);
             line(0, 0, 0, 480, img);
             setcolor(0xFFFFFF, img);
             outtextrect(0, 50, 320, 480, str, img);
-            outtextrect(0, 0, 320, 400, "×ó°ë±ßÊÇ³ÌĞòÔËĞĞ½á¹û£¬ÏÂÃæÊÇÏàÓ¦µÄÔ´´úÂë\n°´ÈÎÒâ¼ü²é¿´ÏÂÒ»¸öÀı×Ó", img);
+            outtextrect(0, 0, 320, 400, "å·¦åŠè¾¹æ˜¯ç¨‹åºè¿è¡Œç»“æœï¼Œä¸‹é¢æ˜¯ç›¸åº”çš„æºä»£ç \næŒ‰ä»»æ„é”®æŸ¥çœ‹ä¸‹ä¸€ä¸ªä¾‹å­", img);
         }
         putimage(320, 0, img);
     }
@@ -335,13 +336,13 @@ public:
 \n    }\
 \n    getch();\n    return 0;\n}";
             resize(img, 320, 480);
-            setfont(12, 0, "ËÎÌå", img);
+            setfont(12, 0, "å®‹ä½“", img);
             setbkmode(TRANSPARENT, img);
             setcolor(0x808080, img);
             line(0, 0, 0, 480, img);
             setcolor(0xFFFFFF, img);
             outtextrect(0, 50, 320, 480, str, img);
-            outtextrect(0, 0, 320, 400, "×ó°ë±ßÊÇ³ÌĞòÔËĞĞ½á¹û£¬ÏÂÃæÊÇÏàÓ¦µÄÔ´´úÂë\n°´ÈÎÒâ¼ü²é¿´ÏÂÒ»¸öÀı×Ó", img);
+            outtextrect(0, 0, 320, 400, "å·¦åŠè¾¹æ˜¯ç¨‹åºè¿è¡Œç»“æœï¼Œä¸‹é¢æ˜¯ç›¸åº”çš„æºä»£ç \næŒ‰ä»»æ„é”®æŸ¥çœ‹ä¸‹ä¸€ä¸ªä¾‹å­", img);
         }
         putimage(320, 0, img);
     }
@@ -400,13 +401,13 @@ public:
 \n        }\
 \n    }\n    getch();\n    return 0;\n}";
             resize(img, 320, 480);
-            setfont(12, 0, "ËÎÌå", img);
+            setfont(12, 0, "å®‹ä½“", img);
             setbkmode(TRANSPARENT, img);
             setcolor(0x808080, img);
             line(0, 0, 0, 480, img);
             setcolor(0xFFFFFF, img);
             outtextrect(0, 50, 320, 480, str, img);
-            outtextrect(0, 0, 320, 400, "×ó°ë±ßÊÇ³ÌĞòÔËĞĞ½á¹û£¬ÏÂÃæÊÇÏàÓ¦µÄÔ´´úÂë\n°´ÈÎÒâ¼ü²é¿´ÏÂÒ»¸öÀı×Ó", img);
+            outtextrect(0, 0, 320, 400, "å·¦åŠè¾¹æ˜¯ç¨‹åºè¿è¡Œç»“æœï¼Œä¸‹é¢æ˜¯ç›¸åº”çš„æºä»£ç \næŒ‰ä»»æ„é”®æŸ¥çœ‹ä¸‹ä¸€ä¸ªä¾‹å­", img);
         }
         putimage(320, 0, img);
     }
@@ -471,13 +472,13 @@ public:
         {
             char str[] = "#include \"graphics.h\"\nint main()\n{\
 \n    initgraph(640, 480);\
-\n    int x = 0, dx = 1, color = 0; //x±íÊ¾Ô²µÄºá×ø±ê£¬dx±íÊ¾ËÙ¶È·½Ïò\
-\n    //¶¯»­Ö÷Ñ­»·£¬kbhit()¼ì²âµ±Ç°ÓĞÃ»ÓĞ°´¼ü£¬ÓĞ¾ÍÍË³ö\
-\n    //delay_fps(60)¿ØÖÆÕâ¸öÑ­»·Ã¿ÃëÑ­»·60´Î\
+\n    int x = 0, dx = 1, color = 0; //xè¡¨ç¤ºåœ†çš„æ¨ªåæ ‡ï¼Œdxè¡¨ç¤ºé€Ÿåº¦æ–¹å‘\
+\n    //åŠ¨ç”»ä¸»å¾ªç¯ï¼Œkbhit()æ£€æµ‹å½“å‰æœ‰æ²¡æœ‰æŒ‰é”®ï¼Œæœ‰å°±é€€å‡º\
+\n    //delay_fps(60)æ§åˆ¶è¿™ä¸ªå¾ªç¯æ¯ç§’å¾ªç¯60æ¬¡\
 \n    for (; kbhit() == 0; delay_fps(60))\
 \n    {\
 \n        cleardevice();\
-\n        //¸ù¾İxÀ´µ÷ÕûdxµÄ·ûºÅ\
+\n        //æ ¹æ®xæ¥è°ƒæ•´dxçš„ç¬¦å·\
 \n        if (x >= 320)\
 \n        {\
 \n            dx = -1;\
@@ -486,25 +487,25 @@ public:
 \n        {\
 \n            dx = 1;\
 \n        }\
-\n        //Í¨¹ı¶ÔdxµÄ¿ØÖÆ£¬¼ä½Ó¿ØÖÆxµÄÔö¼õ·½Ïò\
+\n        //é€šè¿‡å¯¹dxçš„æ§åˆ¶ï¼Œé—´æ¥æ§åˆ¶xçš„å¢å‡æ–¹å‘\
 \n        x += dx;\
 \n        color += 1;\
 \n        if (color >= 360)\
 \n        {\
 \n            color = 0;\
 \n        }\
-\n        //Ê¹ÓÃHSV·½Ê½Ö¸¶¨ÑÕÉ«\
-\n        //¹ØÓÚHSVµÄ½éÉÜ¼ûÍ¼ĞÎ¿âÎÄµµ»òÕßGoogle\
+\n        //ä½¿ç”¨HSVæ–¹å¼æŒ‡å®šé¢œè‰²\
+\n        //å…³äºHSVçš„ä»‹ç»è§å›¾å½¢åº“æ–‡æ¡£æˆ–è€…Google\
 \n        setcolor(HSVtoRGB((float)color, 1.0f, 1.0f));\
 \n        circle(x, 100, 100);\n    }\n    getch();\n    return 0;\n}";
             resize(img, 320, 480);
-            setfont(12, 0, "ËÎÌå", img);
+            setfont(12, 0, "å®‹ä½“", img);
             setbkmode(TRANSPARENT, img);
             setcolor(0x808080, img);
             line(0, 0, 0, 480, img);
             setcolor(0xFFFFFF, img);
             outtextrect(0, 50, 320, 480, str, img);
-            outtextrect(0, 0, 320, 400, "×ó°ë±ßÊÇ³ÌĞòÔËĞĞ½á¹û£¬ÏÂÃæÊÇÏàÓ¦µÄÔ´´úÂë\n°´ÈÎÒâ¼ü²é¿´ÏÂÒ»¸öÀı×Ó", img);
+            outtextrect(0, 0, 320, 400, "å·¦åŠè¾¹æ˜¯ç¨‹åºè¿è¡Œç»“æœï¼Œä¸‹é¢æ˜¯ç›¸åº”çš„æºä»£ç \næŒ‰ä»»æ„é”®æŸ¥çœ‹ä¸‹ä¸€ä¸ªä¾‹å­", img);
         }
         putimage(320, 0, img);
     }
@@ -564,14 +565,14 @@ public:
         {
             char str[] = "#include \"graphics.h\"\n\nint main()\n{\
 \n    initgraph(640, 480);\
-\n    int x = 0, dx = 1; //x±íÊ¾Ô²µÄºá×ø±ê£¬dx±íÊ¾ËÙ¶È·½Ïò\
-\n    //¶¯»­Ö÷Ñ­»·£¬kbhit()¼ì²âµ±Ç°ÓĞÃ»ÓĞ°´¼ü£¬ÓĞ¾ÍÍË³ö\
-\n    //delay_fps(60)¿ØÖÆÕâ¸öÑ­»·Ã¿ÃëÑ­»·60´Î\
+\n    int x = 0, dx = 1; //xè¡¨ç¤ºåœ†çš„æ¨ªåæ ‡ï¼Œdxè¡¨ç¤ºé€Ÿåº¦æ–¹å‘\
+\n    //åŠ¨ç”»ä¸»å¾ªç¯ï¼Œkbhit()æ£€æµ‹å½“å‰æœ‰æ²¡æœ‰æŒ‰é”®ï¼Œæœ‰å°±é€€å‡º\
+\n    //delay_fps(60)æ§åˆ¶è¿™ä¸ªå¾ªç¯æ¯ç§’å¾ªç¯60æ¬¡\
 \n    for (; kbhit() == 0; delay_fps(60))\
 \n    {\
-\n        //ÇåÆÁ\
+\n        //æ¸…å±\
 \n        cleardevice();\
-\n        //¸ù¾İxÀ´µ÷ÕûdxµÄ·ûºÅ\
+\n        //æ ¹æ®xæ¥è°ƒæ•´dxçš„ç¬¦å·\
 \n        if (x >= 320)\
 \n        {\
 \n            dx = -1;\
@@ -580,20 +581,20 @@ public:
 \n        {\
 \n            dx = 1;\
 \n        }\
-\n        //Í¨¹ı¶ÔdxµÄ¿ØÖÆ£¬¼ä½Ó¿ØÖÆxµÄÔö¼õ·½Ïò\
+\n        //é€šè¿‡å¯¹dxçš„æ§åˆ¶ï¼Œé—´æ¥æ§åˆ¶xçš„å¢å‡æ–¹å‘\
 \n        x += dx;\
-\n        //Ê¹ÓÃRGB·ÖÁ¿·½Ê½Ö¸¶¨ÑÕÉ«\
-\n        //ºìÉ«Îª80£¬ÂÌÎª0£¬À¶ÎªFF\
+\n        //ä½¿ç”¨RGBåˆ†é‡æ–¹å¼æŒ‡å®šé¢œè‰²\
+\n        //çº¢è‰²ä¸º80ï¼Œç»¿ä¸º0ï¼Œè“ä¸ºFF\
 \n        setcolor(0xFF0080);\
 \n        circle(x, 100, 100);\n    }\n    getch();\n    return 0;\n}";
             resize(img, 320, 480);
-            setfont(12, 0, "ËÎÌå", img);
+            setfont(12, 0, "å®‹ä½“", img);
             setbkmode(TRANSPARENT, img);
             setcolor(0x808080, img);
             line(0, 0, 0, 480, img);
             setcolor(0xFFFFFF, img);
             outtextrect(0, 50, 320, 480, str, img);
-            outtextrect(0, 0, 320, 400, "×ó°ë±ßÊÇ³ÌĞòÔËĞĞ½á¹û£¬ÏÂÃæÊÇÏàÓ¦µÄÔ´´úÂë\n°´ÈÎÒâ¼ü²é¿´ÏÂÒ»¸öÀı×Ó", img);
+            outtextrect(0, 0, 320, 400, "å·¦åŠè¾¹æ˜¯ç¨‹åºè¿è¡Œç»“æœï¼Œä¸‹é¢æ˜¯ç›¸åº”çš„æºä»£ç \næŒ‰ä»»æ„é”®æŸ¥çœ‹ä¸‹ä¸€ä¸ªä¾‹å­", img);
         }
         putimage(320, 0, img);
     }
@@ -636,19 +637,19 @@ public:
     }
     SceneBase* Update()
     {
-        char str[] = "#include \"graphics.h\"\n\nint main()\n{\n    initgraph(640, 480);\n    int n; //ÉùÃ÷±äÁ¿x\n    //±äÁ¿x´Ó0µ½320£¬È¡³öÃ¿¸öºá×ø±ê\
+        char str[] = "#include \"graphics.h\"\n\nint main()\n{\n    initgraph(640, 480);\n    int n; //å£°æ˜å˜é‡x\n    //å˜é‡xä»0åˆ°320ï¼Œå–å‡ºæ¯ä¸ªæ¨ªåæ ‡\
 \n    for (int n = 0; n < 320; n++)\
 \n    {\
-\n        //Ó³Éäµ½-8µ½8µÄ¸¡µãÊı·¶Î§\
+\n        //æ˜ å°„åˆ°-8åˆ°8çš„æµ®ç‚¹æ•°èŒƒå›´\
 \n        double x = ((double)n - 160) / 20;\
-\n        //¼ÆËã¶ÔÓ¦µÄy\
+\n        //è®¡ç®—å¯¹åº”çš„y\
 \n        double y = sin(x);\
-\n        //°ÑyÓ³Éä»ØÆÁÄ»×ø±ê\
+\n        //æŠŠyæ˜ å°„å›å±å¹•åæ ‡\
 \n        y = -y * 80 + 240;\
-\n        //»­³öÕâ¸öµã\
+\n        //ç”»å‡ºè¿™ä¸ªç‚¹\
 \n        putpixel(n, (int)y, WHITE);\
 \n    }\
-\n    //»­×ø±êÖá\
+\n    //ç”»åæ ‡è½´\
 \n    line(0, 240, 320, 240);\
 \n    line(160, 0, 160, 480);\
 \n    getch();\n    return 0;\n}";
@@ -657,12 +658,12 @@ public:
         setcolor(LIGHTGRAY);
         smain();
         {
-            setfont(12, 0, "ËÎÌå");
+            setfont(12, 0, "å®‹ä½“");
             setcolor(0x808080);
             line(320, 0, 320, 480);
             setcolor(0xFFFFFF);
             outtextrect(320, 100, 320, 380, str);
-            outtextrect(320, 0, 320, 400, "×ó°ë±ßÊÇ³ÌĞòÔËĞĞ½á¹û£¬ÏÂÃæÊÇÏàÓ¦µÄÔ´´úÂë\n°´ÈÎÒâ¼ü²é¿´ÏÂÒ»¸öÀı×Ó");
+            outtextrect(320, 0, 320, 400, "å·¦åŠè¾¹æ˜¯ç¨‹åºè¿è¡Œç»“æœï¼Œä¸‹é¢æ˜¯ç›¸åº”çš„æºä»£ç \næŒ‰ä»»æ„é”®æŸ¥çœ‹ä¸‹ä¸€ä¸ªä¾‹å­");
         }
         getch();
         return new SceneForLoop5(m_parent);
@@ -692,19 +693,19 @@ public:
     }
     SceneBase* Update()
     {
-        char str[] = "#include \"graphics.h\"\n\nint main()\n{\n    initgraph(640, 480);\n    int n; //ÉùÃ÷±äÁ¿x\n    //±äÁ¿x´Ó0µ½320£¬È¡³öÃ¿¸öºá×ø±ê\
+        char str[] = "#include \"graphics.h\"\n\nint main()\n{\n    initgraph(640, 480);\n    int n; //å£°æ˜å˜é‡x\n    //å˜é‡xä»0åˆ°320ï¼Œå–å‡ºæ¯ä¸ªæ¨ªåæ ‡\
 \n    for (int n = 0; n < 320; n++)\
 \n    {\
-\n        //Ó³Éäµ½-2µ½2µÄ¸¡µãÊı·¶Î§\
+\n        //æ˜ å°„åˆ°-2åˆ°2çš„æµ®ç‚¹æ•°èŒƒå›´\
 \n        double x = ((double)n - 160) / 80;\
-\n        //¼ÆËã¶ÔÓ¦µÄy\
+\n        //è®¡ç®—å¯¹åº”çš„y\
 \n        double y = x * x;\
-\n        //°ÑyÓ³Éä»ØÆÁÄ»×ø±ê\
+\n        //æŠŠyæ˜ å°„å›å±å¹•åæ ‡\
 \n        y = -y * 80 + 240;\
-\n        //»­³öÕâ¸öµã\
+\n        //ç”»å‡ºè¿™ä¸ªç‚¹\
 \n        putpixel(n, (int)y, WHITE);\
 \n    }\
-\n    //»­×ø±êÖá\
+\n    //ç”»åæ ‡è½´\
 \n    line(0, 240, 320, 240);\
 \n    line(160, 0, 160, 480);\
 \n    getch();\n    return 0;\n}";
@@ -713,12 +714,12 @@ public:
         setcolor(LIGHTGRAY);
         smain();
         {
-            setfont(12, 0, "ËÎÌå");
+            setfont(12, 0, "å®‹ä½“");
             setcolor(0x808080);
             line(320, 0, 320, 480);
             setcolor(0xFFFFFF);
             outtextrect(320, 100, 320, 380, str);
-            outtextrect(320, 0, 320, 400, "×ó°ë±ßÊÇ³ÌĞòÔËĞĞ½á¹û£¬ÏÂÃæÊÇÏàÓ¦µÄÔ´´úÂë\n°´ÈÎÒâ¼ü²é¿´ÏÂÒ»¸öÀı×Ó");
+            outtextrect(320, 0, 320, 400, "å·¦åŠè¾¹æ˜¯ç¨‹åºè¿è¡Œç»“æœï¼Œä¸‹é¢æ˜¯ç›¸åº”çš„æºä»£ç \næŒ‰ä»»æ„é”®æŸ¥çœ‹ä¸‹ä¸€ä¸ªä¾‹å­");
         }
         getch();
         return new SceneForLoop4(m_parent);
@@ -743,18 +744,18 @@ public:
     }
     SceneBase* Update()
     {
-        char str[] = "#include \"graphics.h\"\n\nint main()\n{\n    initgraph(640, 480);\n    int x; //ÉùÃ÷±äÁ¿x\n    //±äÁ¿x´Ó100µ½300£¬²½³¤Îª3£¬ÕâÑù»­³öĞéÏß\n    for (x = 100; x < 300; x += 3)\n    {\n        //ÔÚy=100µÄµØ·½»­ÂÌµã£¬¶à¸öÁ¬Ğøµã¹¹³ÉÏß\n        putpixel(x, 100, GREEN);\n    }\n    getch();\n    return 0;\n}";
+        char str[] = "#include \"graphics.h\"\n\nint main()\n{\n    initgraph(640, 480);\n    int x; //å£°æ˜å˜é‡x\n    //å˜é‡xä»100åˆ°300ï¼Œæ­¥é•¿ä¸º3ï¼Œè¿™æ ·ç”»å‡ºè™šçº¿\n    for (x = 100; x < 300; x += 3)\n    {\n        //åœ¨y=100çš„åœ°æ–¹ç”»ç»¿ç‚¹ï¼Œå¤šä¸ªè¿ç»­ç‚¹æ„æˆçº¿\n        putpixel(x, 100, GREEN);\n    }\n    getch();\n    return 0;\n}";
         setbkcolor_f(BLACK);
         cleardevice();
         setcolor(LIGHTGRAY);
         smain();
         {
-            setfont(12, 0, "ËÎÌå");
+            setfont(12, 0, "å®‹ä½“");
             setcolor(0x808080);
             line(320, 0, 320, 480);
             setcolor(0xFFFFFF);
             outtextrect(320, 100, 320, 380, str);
-            outtextrect(320, 0, 320, 400, "×ó°ë±ßÊÇ³ÌĞòÔËĞĞ½á¹û£¬ÏÂÃæÊÇÏàÓ¦µÄÔ´´úÂë\n°´ÈÎÒâ¼ü²é¿´ÏÂÒ»¸öÀı×Ó");
+            outtextrect(320, 0, 320, 400, "å·¦åŠè¾¹æ˜¯ç¨‹åºè¿è¡Œç»“æœï¼Œä¸‹é¢æ˜¯ç›¸åº”çš„æºä»£ç \næŒ‰ä»»æ„é”®æŸ¥çœ‹ä¸‹ä¸€ä¸ªä¾‹å­");
         }
         getch();
         return new SceneForLoop3(m_parent);
@@ -779,18 +780,18 @@ public:
     }
     SceneBase* Update()
     {
-        char str[] = "#include \"graphics.h\"\n\nint main()\n{\n    initgraph(640, 480);\n    int x; //ÉùÃ÷±äÁ¿x\n    //±äÁ¿x´Ó100µ½300\n    for (x = 100; x < 300; x++)\n    {\n        //ÔÚy=100µÄµØ·½»­ºìµã£¬¶à¸öÁ¬Ğøµã¹¹³ÉÏß\n        putpixel(x, 100, RED);\n    }\n    getch();\n    return 0;\n}";
+        char str[] = "#include \"graphics.h\"\n\nint main()\n{\n    initgraph(640, 480);\n    int x; //å£°æ˜å˜é‡x\n    //å˜é‡xä»100åˆ°300\n    for (x = 100; x < 300; x++)\n    {\n        //åœ¨y=100çš„åœ°æ–¹ç”»çº¢ç‚¹ï¼Œå¤šä¸ªè¿ç»­ç‚¹æ„æˆçº¿\n        putpixel(x, 100, RED);\n    }\n    getch();\n    return 0;\n}";
         setbkcolor_f(BLACK);
         cleardevice();
         setcolor(LIGHTGRAY);
         smain();
         {
-            setfont(12, 0, "ËÎÌå");
+            setfont(12, 0, "å®‹ä½“");
             setcolor(0x808080);
             line(320, 0, 320, 480);
             setcolor(0xFFFFFF);
             outtextrect(320, 100, 320, 380, str);
-            outtextrect(320, 0, 320, 400, "×ó°ë±ßÊÇ³ÌĞòÔËĞĞ½á¹û£¬ÏÂÃæÊÇÏàÓ¦µÄÔ´´úÂë\n°´ÈÎÒâ¼ü²é¿´ÏÂÒ»¸öÀı×Ó");
+            outtextrect(320, 0, 320, 400, "å·¦åŠè¾¹æ˜¯ç¨‹åºè¿è¡Œç»“æœï¼Œä¸‹é¢æ˜¯ç›¸åº”çš„æºä»£ç \næŒ‰ä»»æ„é”®æŸ¥çœ‹ä¸‹ä¸€ä¸ªä¾‹å­");
         }
         getch();
         return new SceneForLoop2(m_parent);
@@ -865,8 +866,8 @@ public:
             arr[a] = random(32);
         }
         display(arr, 20, -1);
-        setfont(12, 0, "ËÎÌå");
-        outtextxy(0, 0, "Çë°´ÈÎÒâ¼ü¿ªÊ¼ÑİÊ¾Ã°ÅİÅÅĞò");
+        setfont(12, 0, "å®‹ä½“");
+        outtextxy(0, 0, "è¯·æŒ‰ä»»æ„é”®å¼€å§‹æ¼”ç¤ºå†’æ³¡æ’åº");
         info();
         getch();
         cleardevice();
@@ -883,7 +884,7 @@ public:
                 display(arr, 20, a-1);
             }
         }
-        outtextxy(0, 0, "ÅÅĞòÍê³É");
+        outtextxy(0, 0, "æ’åºå®Œæˆ");
     }
     void info()
     {
@@ -919,8 +920,8 @@ public:
 \n        arr[a] = random(32);\
 \n    }\
 \n    display(arr, 20);\
-\n    setfont(12, 0, \"ËÎÌå\");\
-\n    outtextxy(0, 0, \"Çë°´ÈÎÒâ¼ü¿ªÊ¼ÑİÊ¾\");\
+\n    setfont(12, 0, \"å®‹ä½“\");\
+\n    outtextxy(0, 0, \"è¯·æŒ‰ä»»æ„é”®å¼€å§‹æ¼”ç¤º\");\
 \n    getch();\
 \n    cleardevice();\
 \n    for (b = 20; b > 0; --b)\
@@ -936,19 +937,19 @@ public:
 \n            display(arr, 20, a-1);\
 \n        }\
 \n    }\
-\n    outtextxy(0, 0, \"ÅÅĞòÍê³É\");\
+\n    outtextxy(0, 0, \"æ’åºå®Œæˆ\");\
 \n    return 0;\
 \n}\
 ";
             m_resettext = 0;
             resize(img, 320, 480);
-            setfont(12, 0, "ËÎÌå", img);
+            setfont(12, 0, "å®‹ä½“", img);
             setbkmode(TRANSPARENT, img);
             setcolor(0x808080, img);
             line(0, 0, 0, 480, img);
             setcolor(0xFFFFFF, img);
             outtextrect(0, 50 - m_dline * 12, 320, 2048, str, img);
-            outtextrect(0, 0, 320, 400, "×ó°ë±ßÊÇ³ÌĞòÔËĞĞ½á¹û£¬ÏÂÃæÊÇÏàÓ¦µÄÔ´´úÂë\n°´ÈÎÒâ¼ü²é¿´ÏÂÒ»¸öÀı×Ó", img);
+            outtextrect(0, 0, 320, 400, "å·¦åŠè¾¹æ˜¯ç¨‹åºè¿è¡Œç»“æœï¼Œä¸‹é¢æ˜¯ç›¸åº”çš„æºä»£ç \næŒ‰ä»»æ„é”®æŸ¥çœ‹ä¸‹ä¸€ä¸ªä¾‹å­", img);
         }
         putimage(320, 0, img);
     }
@@ -991,8 +992,8 @@ public:
         for (; kbhit() == 0; delay_fps(60))
         {
             cleardevice();
-            sprintf(str, "¾­¹ıÊ±¼ä%d", clock() - t);
-            setfont(36, 0, "Ó×Ô²");
+            sprintf(str, "ç»è¿‡æ—¶é—´%d", clock() - t);
+            setfont(36, 0, "å¹¼åœ†");
             outtextxy(0, 0, str);
             info();
         }
@@ -1004,27 +1005,27 @@ public:
             char str[] = "#include \"graphics.h\"\n#include <stdio.h>\n#include <time.h>\n#include <string.h>\nint main()\n{\
 \n    initgraph(640, 480);\
 \n    {\
-\n        int t = clock(); //¼ÇÂ¼³¬Ê¼Ê±¼ä\
+\n        int t = clock(); //è®°å½•è¶…å§‹æ—¶é—´\
 \n        char str[100];\
 \n        for (; kbhit() == 0; delay_fps(60))\
 \n        {\
 \n            cleardevice();\
-\n            //°Ñclock()-tµÄ½á¹ûÊä³öµ½×Ö·û´®str\
-\n            //ÊµÏÖ¼òµ¥µÄ¼ÆÊ±£¬¿ÉÀ©Õ¹³ÉÃë±í\
-\n            sprintf(str, \"¾­¹ıÊ±¼ä%d\", clock() - t;\
-\n            setfont(36, 0, \"Ó×Ô²\");\
+\n            //æŠŠclock()-tçš„ç»“æœè¾“å‡ºåˆ°å­—ç¬¦ä¸²str\
+\n            //å®ç°ç®€å•çš„è®¡æ—¶ï¼Œå¯æ‰©å±•æˆç§’è¡¨\
+\n            sprintf(str, \"ç»è¿‡æ—¶é—´%d\", clock() - t;\
+\n            setfont(36, 0, \"å¹¼åœ†\");\
 \n            outtextxy(0, 0, str);\
 \n        }\
 \n    }\
 \n    getch();\n    return 0;\n}";
             resize(img, 320, 480);
-            setfont(12, 0, "ËÎÌå", img);
+            setfont(12, 0, "å®‹ä½“", img);
             setbkmode(TRANSPARENT, img);
             setcolor(0x808080, img);
             line(0, 0, 0, 480, img);
             setcolor(0xFFFFFF, img);
             outtextrect(0, 50, 320, 480, str, img);
-            outtextrect(0, 0, 320, 400, "×ó°ë±ßÊÇ³ÌĞòÔËĞĞ½á¹û£¬ÏÂÃæÊÇÏàÓ¦µÄÔ´´úÂë\n°´ÈÎÒâ¼ü²é¿´ÏÂÒ»¸öÀı×Ó", img);
+            outtextrect(0, 0, 320, 400, "å·¦åŠè¾¹æ˜¯ç¨‹åºè¿è¡Œç»“æœï¼Œä¸‹é¢æ˜¯ç›¸åº”çš„æºä»£ç \næŒ‰ä»»æ„é”®æŸ¥çœ‹ä¸‹ä¸€ä¸ªä¾‹å­", img);
         }
         putimage(320, 0, img);
     }
@@ -1052,16 +1053,16 @@ public:
     SceneMenu()
     {
         memset(m_strlist, 0, sizeof(m_strlist));
-        strcpy(m_strlist[0], "1.Èç¹ûÎÒ¸ÕÑ§»áHello World");
+        strcpy(m_strlist[0], "1.å¦‚æœæˆ‘åˆšå­¦ä¼šHello World");
     }
     SceneBase* Update()
     {
         setbkcolor_f(0x808080);
         cleardevice();
         setcolor(0xFFFFFF);
-        setfont(24, 0, "ËÎÌå");
-        outtextrect(100, 200, 500, 500, "1.Èç¹ûÎÒ¸Õ¸ÕÑ§»áHello World\n2.Èç¹ûÎÒ¸Õ¸ÕÑ§»áÑ­»·ºÍ·ÖÖ§\n3.Èç¹ûÎÒ¸Õ¸ÕÑ§»áÊı×éºÍ×Ö·û´®\n£¨¸ü¶àÄÚÈİÓĞ´ıÌí¼Ó£©\n");
-        outtextxy(100, 100, "Çë°´Êı×Ö¼üÑ¡ÄãÒª¿´µÄÄÚÈİ");
+        setfont(24, 0, "å®‹ä½“");
+        outtextrect(100, 200, 500, 500, "1.å¦‚æœæˆ‘åˆšåˆšå­¦ä¼šHello World\n2.å¦‚æœæˆ‘åˆšåˆšå­¦ä¼šå¾ªç¯å’Œåˆ†æ”¯\n3.å¦‚æœæˆ‘åˆšåˆšå­¦ä¼šæ•°ç»„å’Œå­—ç¬¦ä¸²\nï¼ˆæ›´å¤šå†…å®¹æœ‰å¾…æ·»åŠ ï¼‰\n");
+        outtextxy(100, 100, "è¯·æŒ‰æ•°å­—é”®é€‰ä½ è¦çœ‹çš„å†…å®¹");
         int k;
         while (1)
         {
@@ -1092,13 +1093,13 @@ public:
     SceneIntroduce()
     {
         memset(m_str, 0, sizeof(m_str));
-        strcpy(m_str, "ÄãÊÇ¸Õ¸ÕÑ§Ï°£ÃÓïÑÔµÄĞÂÊÖÂğ£¿ÄãÊÇ²»ÊÇ¾õµÃµ¥´¿µÄ×Ö·ûÊä³öÓĞµãÎŞÁÄ£¿£ÃÓïÑÔÖ»ÄÜ×öÕâĞ©Âğ£¿ÄÜ²»ÄÜ×ö¸üÓĞÈ¤µÄ£¿±ÈÈçĞ´ÓÎÏ·£¿\r\n±¾ÑİÊ¾³ÌĞò¾ÍÊÇÎªÁË¸øÄã½â¿ªÕâ¸öÒÉ»ó£¬±¾³ÌĞò½«´øÄã½øÈë¾«²ÊµÄ£ÃÓïÑÔÍ¼ĞÎÊÀ½ç£¡²»¹ÜÄãÏÖÔÚµÄCÊÇ¸Õ¸Õ¿ªÊ¼Ñ§£¬»¹ÊÇÑ§ÁËÒ»¶ÎÊ±¼ä£¬Ö»ÒªÄãÓĞVC»òÕßC-Free£¬¶¼¿ÉÒÔÏíÊÜÕâ¸öÍ¼ĞÎµÄÊ¢Ñç¡£¡£¡£\r\nÔÚÕıÊ½¿ªÊ¼Ç°£¬ÇëÄã°Ù¶È¡°EGE¡±£¬ÏÂÔØ²¢°´ÀïÃæµÄËµÃ÷ÎÄµµ°²×°ºÃ¡£Èç¹û°²×°Ê±Óöµ½Ê²Ã´À§ÄÑ£¬¿ÉÒÔ¼ÓQQÈº1060223135ËµÃ÷ÄãµÄÇé¿ö£¬»áÓĞÈËĞ­ÖúÄã½â¾öµÄ¡£\r\n£¨Çë°´ÈÎÒâ¼ü¼ÌĞø£©\r\n");
+        strcpy(m_str, "ä½ æ˜¯åˆšåˆšå­¦ä¹ ï¼£è¯­è¨€çš„æ–°æ‰‹å—ï¼Ÿä½ æ˜¯ä¸æ˜¯è§‰å¾—å•çº¯çš„å­—ç¬¦è¾“å‡ºæœ‰ç‚¹æ— èŠï¼Ÿï¼£è¯­è¨€åªèƒ½åšè¿™äº›å—ï¼Ÿèƒ½ä¸èƒ½åšæ›´æœ‰è¶£çš„ï¼Ÿæ¯”å¦‚å†™æ¸¸æˆï¼Ÿ\r\næœ¬æ¼”ç¤ºç¨‹åºå°±æ˜¯ä¸ºäº†ç»™ä½ è§£å¼€è¿™ä¸ªç–‘æƒ‘ï¼Œæœ¬ç¨‹åºå°†å¸¦ä½ è¿›å…¥ç²¾å½©çš„ï¼£è¯­è¨€å›¾å½¢ä¸–ç•Œï¼ä¸ç®¡ä½ ç°åœ¨çš„Cæ˜¯åˆšåˆšå¼€å§‹å­¦ï¼Œè¿˜æ˜¯å­¦äº†ä¸€æ®µæ—¶é—´ï¼Œåªè¦ä½ æœ‰VCæˆ–è€…C-Freeï¼Œéƒ½å¯ä»¥äº«å—è¿™ä¸ªå›¾å½¢çš„ç››å®´ã€‚ã€‚ã€‚\r\nåœ¨æ­£å¼å¼€å§‹å‰ï¼Œè¯·ä½ ç™¾åº¦â€œEGEâ€ï¼Œä¸‹è½½å¹¶æŒ‰é‡Œé¢çš„è¯´æ˜æ–‡æ¡£å®‰è£…å¥½ã€‚å¦‚æœå®‰è£…æ—¶é‡åˆ°ä»€ä¹ˆå›°éš¾ï¼Œå¯ä»¥åŠ QQç¾¤1060223135è¯´æ˜ä½ çš„æƒ…å†µï¼Œä¼šæœ‰äººååŠ©ä½ è§£å†³çš„ã€‚\r\nï¼ˆè¯·æŒ‰ä»»æ„é”®ç»§ç»­ï¼‰\r\n");
     }
     SceneBase* Update()
     {
         char str[1024] = {0};
         int len = 0;
-        setfont(20, 0, "ËÎÌå");
+        setfont(20, 0, "å®‹ä½“");
         for (len = 0 ; len<=0x80; delay_fps(60))
         {
             setbkcolor_f(EGERGB(len, len, len));
