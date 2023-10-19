@@ -216,6 +216,7 @@ Gdiplus::Graphics*  IMAGE::getGraphics() {
 		m_graphics=new Gdiplus::Graphics(m_hDC);
 		m_graphics->SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
 		m_graphics->SetSmoothingMode(m_aa? Gdiplus::SmoothingModeAntiAlias : Gdiplus::SmoothingModeNone);
+		m_graphics->SetTextRenderingHint(m_aa? Gdiplus::TextRenderingHintAntiAlias: Gdiplus::TextRenderingHintSystemDefault);
 	}
 	return m_graphics;
 }
