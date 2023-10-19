@@ -216,6 +216,7 @@ Gdiplus::Graphics*  IMAGE::getGraphics() {
 		m_graphics=new Gdiplus::Graphics(m_hDC);
 		m_graphics->SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
 		m_graphics->SetSmoothingMode(m_aa? Gdiplus::SmoothingModeAntiAlias : Gdiplus::SmoothingModeNone);
+		m_graphics->SetTextRenderingHint(m_aa? Gdiplus::TextRenderingHintAntiAlias: Gdiplus::TextRenderingHintSystemDefault);
 	}
 	return m_graphics;
 }
@@ -246,6 +247,7 @@ void IMAGE::enable_anti_alias(bool enable){
 #ifdef EGE_GDIPLUS
 	if (NULL != m_graphics) {
 		m_graphics->SetSmoothingMode(m_aa? Gdiplus::SmoothingModeAntiAlias : Gdiplus::SmoothingModeNone);
+		m_graphics->SetTextRenderingHint(m_aa? Gdiplus::TextRenderingHintAntiAlias : Gdiplus::TextRenderingHintSystemDefault );
 	}
 #endif
 }
