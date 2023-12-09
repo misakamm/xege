@@ -93,7 +93,7 @@ const double gc_lb = log(2.0);
  * @param d 指数
  * @return 对数值
  */
-double log2(double d) {
+double myLog2(double d) {
 	return log(d) / gc_lb;
 }
 
@@ -105,7 +105,7 @@ void InitLog()
 	for (int i=0; i<(18 * 18) * 32; ++i)
 	{
 		double r = i / col_ins;
-		logmap[i] = 1 - log2(log2(r)/2);
+		logmap[i] = 1 - myLog2(myLog2(r)/2);
 	}
 }
 
