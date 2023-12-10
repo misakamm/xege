@@ -285,4 +285,4 @@ int main(int argc, char const *argv[])
 在 Linux 系统下，编译依赖 EGE 的程序，同样要使用 `mingw-w64` 工具链中的 `g++`，并且根据
 环境可能需要添加额外的编译参数 `-D_FORTIFY_SOURCE=0`
 （参考链接 [undefined reference to `__memcpy_chk'](https://github.com/msys2/MINGW-packages/issues/5868)。
-为了简化单文件编译指令，EGE 根目录下提供了`ege_g++.sh` 脚本，可按需使用。
+为了简化单文件编译指令，EGE `utils` 目录下提供了`ege_g++.sh` 脚本，可按需使用。
