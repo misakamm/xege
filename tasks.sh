@@ -27,17 +27,9 @@ if ! command -v grealpath && command -v realpath; then
     }
 fi
 
-function isWsl() {
-    [[ -d "/mnt/c" ]] || command -v wslpath &>/dev/null
-}
-
 function isWindows() {
     # check mingw and cygwin
-    isWsl || [[ -d "/c" ]] || [[ -d "/cygdrive/c" ]]
-}
-
-function isMacOS() {
-    [[ "$(uname)" == "Darwin" ]]
+    [[ -d "/c" ]] || [[ -d "/cygdrive/c" ]]
 }
 
 function loadCMakeProject() {
@@ -133,9 +125,13 @@ while [[ $# > 0 ]]; do
         if isWindows; then
             echo "run $CMAKE_VS_DIR/$CMAKE_BUILD_TYPE/$2"
             "$CMAKE_VS_DIR/$CMAKE_BUILD_TYPE/$2"
-        elif isMacOS; then
+        else
             echo run "$CMAKE_VS_DIR/$2"
-            wine64 "$CMAKE_VS_DIR/$2"
+            if command -v wine64 &>/dev/null; then
+                wine64 "$CMAKE_VS_DIR/$2"
+            else
+                echo "Command 'wine64' not found, please install wine first."
+            fi
         fi
         shift
         shift
