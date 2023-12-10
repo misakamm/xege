@@ -692,7 +692,8 @@ init_instance(HINSTANCE hInstance) {
 		//DeleteObject(hfont);
 	} //*/
 
-	SetActiveWindow(pg->hwnd);
+	if (!(g_initoption & INIT_HIDE))
+		SetActiveWindow(pg->hwnd);
 
 	pg->exit_window = 0;	
 	return TRUE;
@@ -1286,9 +1287,11 @@ initgraph(int *gdriver, int *gmode, const char *path) {
 
 	UpdateWindow(pg->hwnd);
 
-	ShowWindow(pg->hwnd, SW_SHOWNORMAL);
-	BringWindowToTop(pg->hwnd);
-	SetForegroundWindow(pg->hwnd);
+	if (!(g_initoption & INIT_HIDE)) {
+		ShowWindow(pg->hwnd, SW_SHOWNORMAL);
+		BringWindowToTop(pg->hwnd);
+		SetForegroundWindow(pg->hwnd);
+	}
 
 	if (g_windowexstyle & WS_EX_TOPMOST) {
 		SetWindowPos(pg->hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE);
@@ -1303,7 +1306,7 @@ initgraph(int *gdriver, int *gmode, const char *path) {
 	
 	static egeControlBase _egeControlBase;
 
-	if (g_initoption & INIT_WITHLOGO)
+	if ((g_initoption & INIT_WITHLOGO) && !(g_initoption & INIT_HIDE))
 		logoscene();
 
 	if (g_initoption & INIT_RENDERMANUAL)
