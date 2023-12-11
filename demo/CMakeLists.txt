@@ -11,6 +11,7 @@ add_custom_target(demos)
 # 增加可执行目标，作为 demos 的依赖
 macro(ege_add_executable_demo name source)
   ege_add_executable(${name} ${source})
+  
   set_property(TARGET ${name}
     PROPERTY EXCLUDE_FROM_ALL true)
   add_dependencies(demos ${DEMO_NAME})

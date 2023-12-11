@@ -22,42 +22,51 @@ Linux 环境下运行相关程序需要使用 [wine](https://www.winehq.org/) �
 函数库顶替配置，方便起见，可以添加 `-static` 配置编译，免去配置过程（`CMakeLists.txt`
 中在 Linux 环境下默认开启）。
 
-## 常见部分 Linux 发行版安装编译运行环境
+## 常见部分 Linux 发行版以及 MacOS 安装编译运行环境
+
 ```sh
 # Ubuntu 16.04及以上发行版
 sudo apt-get install mignw-w64 wine
 
 # Arch Linux
 sudo pacman -S mingw-w64 wine
+
+# MacOS
+brew install mingw-w64 wine
 ```
 
 ## 基本编译步骤
 
 1. 创建 build 文件夹并设为当前目录
+
   ```sh
-  $ mkdir build
-  $ cd build
+  mkdir build
+  cd build
   ```
 
 2. 执行 `cmake` 命令生成编译配置文件
+
   ```sh
-  $ cmake .. [编译配置]
+  cmake .. [编译配置]
   ```
 
   `[编译配置]` 指定特定的编译平台，将在后文详述。
 
 3. 进行编译
+
   ```sh
-  $ cmake --build .
+  cmake --build .
   ```
 
 编译过程将在 `build` 目录下生成相应的静态库文件。
 
 如果想在完成编译后使用其它编译器再次编译，请先清空 `build` 目录，CMD 命令为
+
 ```sh
-$ for /D %d in (*) do @rmdir %d /S /Q
-$ del * /S /Q
+for /D %d in (*) do @rmdir %d /S /Q
+del * /S /Q
 ```
+
 清空目录后再从步骤 2 继续执行。
 
 ## 编译配置
@@ -67,7 +76,7 @@ $ del * /S /Q
 ### MinGW
 
 ```sh
-$ cmake .. -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release
+cmake .. -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release
 ```
 
 CMake 会自动检测安装的 MinGW 编译器并生成编译配置。
@@ -79,12 +88,15 @@ CMake 会自动检测安装的 MinGW 编译器并生成编译配置。
 前设置 `PATH` 环境变量指向特定的 MinGW 所在位置，CMake 在配置时会采用最先
 在 PATH 中检测到的编译器进行编译。例如，Dev-C++ 安装目录为 `C:\Dev-Cpp`，则
 在 CMD 中执行以下命令：
+
 ```cmd
-$ set PATH="C:\Dev-Cpp\MinGW64\bin";%PATH%
+set PATH="C:\Dev-Cpp\MinGW64\bin";%PATH%
 ```
+
 在 PowerShell 中则是：
+
 ```ps
-$ $env:PATH="C:\Dev-Cpp\MinGW64\bin;$env:PATH"
+$env:PATH="C:\Dev-Cpp\MinGW64\bin;$env:PATH"
 ```
 
 注意，CodeBloks 附带的 MinGW 只能在
@@ -98,15 +110,19 @@ CodeBlocks 会自动识别已安装的 TDM-GCC。
 
 64 位 MinGW 支持编译 32 位目标，要想达到这一效果，在以上步骤中设置 `PATH` 环境变量
 之后，执行 `cmake` 之前需要设置 `CC` 和 `CXX` 环境变量。在 CMD 中命令为：
+
 ```cmd
-$ set CC="gcc -m32"
-$ set CXX="g++ -m32"
+set CC="gcc -m32"
+set CXX="g++ -m32"
 ```
+
 在 PowerShell 中为：
+
 ```ps
-$ $env:CC="gcc -m32"
-$ $env:CXX="g++ -m32"
+$env:CC="gcc -m32"
+$env:CXX="g++ -m32"
 ```
+
 之后再执行 `cmake .. -G "MinGW Makefiles"` 命令。
 
 #### MSYS Makefiles 配置
@@ -115,12 +131,15 @@ $ $env:CXX="g++ -m32"
 
 所需要的命令和上面描述的没有区别，但需要把 CMD 或 PowerShell 命令换成 Bash 命令，
 比如设置环境变量：
+
 ```sh
-$ export PATH=/C/Dev-Cpp/MinGW64/bin:$PATH
+export PATH=/C/Dev-Cpp/MinGW64/bin:$PATH
 ```
+
 相应的 CMake 生成指令是
+
 ```sh
-$ cmake .. -G "MSYS Makefiles" -DCMAKE_BUILD_TYPE=Release
+cmake .. -G "MSYS Makefiles" -DCMAKE_BUILD_TYPE=Release
 ```
 
 注意，您需要从 `pacman` 包管理器安装或者
@@ -128,7 +147,6 @@ $ cmake .. -G "MSYS Makefiles" -DCMAKE_BUILD_TYPE=Release
 上下载 MSYS make 程序并将其复制到可执行路径如 `/usr/bin` 中。
 
 扩展阅读：[Windows 上的编译系统](https://www.chirsz.cc/blog/2020-03/compile-sys-on-win.html)
-
 
 ### Visual C++ 6.0
 
@@ -139,6 +157,7 @@ CMake 自 3.6 后停止了对生成 VC6 项目的支持，但仍可生成 NMake 
 `VC6PATH\VC98\Bin` 文件夹中的 `VCVARS32.BAT` 文件中开始部分的内容应和 `VC6PATH`
 相一致，例如安装到 `D:\VC6` 的 VC6，在 `D:\VC6\VC98\Bin\VCVARS32.BAT` 中的开头部分
 应当是：
+
 ```bat
 rem Root of Visual Developer Studio installed files.
 rem
@@ -149,17 +168,21 @@ rem Root of Visual C++ installed files.
 rem
 set MSVCDir=D:\VC6\VC98
 ```
+
 不一致的情况常出现于免安装版 VC6，此时需修改 `VCVARS32.BAT` 内容使其与 VC6 实际所在
 目录一致。
 
 确认 `VCVARS32.BAT` 内容正确后，在 EGE 源码的 `src\build` 目录下执行此批处理文件，
 在上面的例子中就是执行：
+
 ```sh
-$ "D:\VC6\VC98\Bin\VCVARS32.BAT"
+"D:\VC6\VC98\Bin\VCVARS32.BAT"
 ```
+
 执行成功后即建立 VC6 命令行环境，就可以继续执行编译步骤二了：
+
 ```sh
-$ cmake .. -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release
+cmake .. -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release
 ```
 
 编译配置中的 `-DCMAKE_BUILD_TYPE=Release` 是构建类型（Build type），表示生成优化级别较高的
@@ -173,18 +196,21 @@ $ cmake .. -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release
 VS2019 则与所在平台一致。可选的参数有 `Win32`，`x64`，`ARM`，`ARM64`。
 
 因此编译 32 位 EGE 库需要执行：
+
 ```sh
-$ cmake .. -G "Visual Studio 14 2015" -A Win32
+cmake .. -G "Visual Studio 14 2015" -A Win32
 ```
 
 编译 64 位 EGE 库：
+
 ```sh
-$ cmake .. -G "Visual Studio 14 2015" -A x64
+cmake .. -G "Visual Studio 14 2015" -A x64
 ```
 
 另外要注意的一点是，Visual Studio 的步骤三应该是：
+
 ```sh
-$ cmake --build . --config Release
+cmake --build . --config Release
 ```
 
 因为 Visual Studio 是多配置的编译系统，需要在执行编译时选择配置类型（Configuration type）。这
@@ -198,7 +224,7 @@ $ cmake --build . --config Release
 项目 CMake 配置中设置了 `demos` 目标，编译时通过 `--target` 或 `-t` 指定，即在编译项目时执行：
 
 ```sh
-$ cmake --build . --target demos
+cmake --build . --target demos
 ```
 
 即可在构建目录下的 `demo` 文件夹中生成各可执行文件。
@@ -259,4 +285,4 @@ int main(int argc, char const *argv[])
 在 Linux 系统下，编译依赖 EGE 的程序，同样要使用 `mingw-w64` 工具链中的 `g++`，并且根据
 环境可能需要添加额外的编译参数 `-D_FORTIFY_SOURCE=0`
 （参考链接 [undefined reference to `__memcpy_chk'](https://github.com/msys2/MINGW-packages/issues/5868)。
-为了简化单文件编译指令，EGE 根目录下提供了 `ege_g++.sh` 脚本，可按需使用。
+为了简化单文件编译指令，EGE `utils` 目录下提供了`ege_g++.sh` 脚本，可按需使用。

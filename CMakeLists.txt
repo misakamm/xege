@@ -125,6 +125,14 @@ endif ()
 macro(ege_add_executable name source)
   add_executable(${name} ${source})
   target_link_libraries(${name} xege)
+    if (MSVC)
+      target_compile_options(${name} PRIVATE 
+        /utf-8
+        /D_USE_MATH_DEFINES
+        /D__STDC_LIMIT_MACROS
+        /MP
+      )
+    endif()
   if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
     if(CMAKE_HOST_UNIX)
         target_link_options(${name}
