@@ -363,15 +363,10 @@ delay_ms(long ms) {
 	pg->skip_timer_mark = true;
 	if (ms == 0) {
 		if (pg->update_mark_count < UPDATE_MAX_CALL) {
-			ege_sleep(1);
 			root->draw(NULL);
 			dealmessage(pg, FORCE_UPDATE);
 			root->update();
-			{
-				int l,t,r,b,c;
-				getviewport(&l, &t, &r, &b, &c);
-				setviewport(l, t, r, b, c);
-			}
+			ege_sleep(0);
 		}
 		pg->delay_ms_dwLast = get_highfeq_time_ls(pg) * 1000.0;
 		pg->skip_timer_mark = false;
@@ -393,7 +388,6 @@ delay_ms(long ms) {
 			dw = pg->delay_ms_dwLast;
 		}
 
-		//ege_sleep(1);
 		root->draw(NULL);
 		while (dw + delay_time >= get_highfeq_time_ls(pg) * 1000.0) {
 			if ( f <= 0 || pg->update_mark_count < UPDATE_MAX_CALL) {
