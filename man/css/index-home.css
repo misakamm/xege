@@ -1,0 +1,27 @@
+
+h3 {
+	margin:0
+}
+table {
+	border-right: 1px solid #000000;
+	border-bottom: 1px solid #000000;
+	text-align: left;
+	width: 100%;
+	margin-left:auto;
+	margin-right:auto;
+	border-spacing: 0px;
+	font-size: 16;
+}
+
+table th {
+	border-left: 1px solid #000000;
+	border-top: 1px solid #000000;
+	text-align: center;
+	background   : #23A9F2;
+	font-weight: 700;
+}
+
+table td {
+	border-left: 1px solid #000000;
+	border-top: 1px solid #000000;
+}

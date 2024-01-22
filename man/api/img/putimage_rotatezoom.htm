@@ -1,20 +1,22 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>putimage_rotatezoom</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
 </head>
 <body>
 
-<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">图像处理相关函数</a>-＞putimage_rotatezoom</font>
+<pre><font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / <a href="index.htm">图像处理</a> / putimage_rotatezoom</font>
 <font size="4">
-<font size="5" color="#0000FF"><strong>功能：</strong></font>
-这个函数用于绘制旋转后的图像
+<font size="4" color="#0000FF"><strong>功能：</strong></font>
 
-<font size="5" color="#0000FF"><strong>声明：</strong></font>
+绘制旋转后的图像
+
+<font size="4" color="#0000FF"><strong>声明：</strong></font>
 <pre>
 
  <font color=#0000FF>int </font><font color=#008080>putimage_rotatezoom</font>(
     <font color=#800080>PIMAGE </font>imgdest,  <font color=#008000>             // 目标 IMAGE 对象指针</font>
-    <font color=#800080>PIMAGE </font>PIMAGE imgtexture, <font color=#008000>    // 纹理IMAGE 对象指针</font>
+    <font color=#800080>PCIMAGE </font>imgtexture, <font color=#008000>          // 纹理 IMAGE 对象指针</font>
     <font color=#0000FF>int </font>nXOriginDest, <font color=#008000>            // 绘制位置的 x 坐标</font>
     <font color=#0000FF>int </font>nYOriginDest, <font color=#008000>            // 绘制位置的 y 坐标</font>
     <font color=#0000FF>float </font>centerx, <font color=#008000>               // 旋转中心在源图像纹理坐标系上的x坐标</font>
@@ -26,7 +28,7 @@
     <font color=#0000FF>int </font>smooth = 0 <font color=#008000>               // 是否进行平滑处理</font>
 );
 </pre>
-<font size="5" color="#0000FF"><strong>参数：</strong></font>
+<font size="4" color="#0000FF"><strong>参数：</strong></font>
 imgdest
 绘制的目标图像，如果为NULL则绘制到窗口
 
@@ -51,10 +53,12 @@ alpha
 smooth
 是否对图像进行平滑处理。旋转后绘制出的图像可能带有锯齿，失真，为1时
 
-<font size="5" color="#0000FF"><strong>返回值：</strong></font>
+<font size="4" color="#0000FF"><strong>返回值：</strong></font>
+
 成功返回0，否则返回非0，若imgdest或imgsrc传入错误，会引发运行时异常。
 
-<font size="5" color="#0000FF"><strong>示例：</strong></font>
+<font size="4" color="#0000FF"><strong>示例：</strong></font>
+
 （无）
 
 </font>

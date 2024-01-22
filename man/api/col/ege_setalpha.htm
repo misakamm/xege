@@ -1,32 +1,36 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>ege_setalpha</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
 </head>
 <body>
 
-<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">颜色表示及相关函数</a>-＞ege_setalpha</font>
+<pre><font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / <a href="index.htm">颜色</a> / ege_setalpha</font>
 <font size="4">
-<font size="5" color="#0000FF"><strong>功能：</strong></font>
-将图像所有像素颜色设置为统一的透明度。
+<font size="4" color="#0000FF"><strong>功能：</strong></font>
 
-<font size="5" color="#0000FF"><strong>声明：</strong></font>
+为图像中所有像素的颜色设置统一的透明度。
+
+<font size="4" color="#0000FF"><strong>声明：</strong></font>
 <pre><font color=#0000FF>void </font><font color=#008080>ege_setalpha</font>(
     <font color=#0000FF>int </font>alpha,
     <font color=#800080>PIMAGE </font>pimg
 );
 </pre>
+<font size="4" color="#0000FF"><strong>参数：</strong></font>
 
-<font size="5" color="#0000FF"><strong>参数：</strong></font>
 alpha
-透明度，范围从0~255。
+透明度，取值范围： 0 到 255，0 为完全透明，255 为不透明。
 
 pimg
-要设置的图像, 为NULL则改变窗口帧缓存像素的透明度(但是显示到屏幕上颜色不会变化)。
+要设置的图像（ NULL 则改变窗口帧缓存像素颜色的透明度，但窗口显示到屏幕上内容并不会发生颜色变化)。
 
-<font size="5" color="#0000FF"><strong>返回值：</strong></font>
+<font size="4" color="#0000FF"><strong>返回值：</strong></font>
+
 （无）
 
-<font size="5" color="#0000FF"><strong>示例：</strong></font>
+<font size="4" color="#0000FF"><strong>示例：</strong></font>
+
 （无）
 
 </font>

@@ -1,34 +1,40 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>drawlines</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
 </head>
 <body>
 
-<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">绘制图形相关函数</a>-＞drawlines</font>
+<pre><font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / <a href="index.htm">图形绘制</a> / drawlines</font>
 <font size="4">
-<font size="5" color="#0000FF"><strong>功能：</strong></font>
-这个函数用于画多条线段。边线颜色由setcolor函数决定
+<font size="4" color="#0000FF"><strong>功能：</strong></font>
 
-<font size="5" color="#0000FF"><strong>声明：</strong></font>
+绘制多条线段，线条颜色由 setcolor() 函数指定。
+
+<font size="4" color="#0000FF"><strong>声明：</strong></font>
 <pre><font color=#0000FF>void </font><font color=#008080>drawlines</font>(
     <font color=#0000FF>int </font>numliness,
     <font color=#0000FF>const int </font>*polypoints,
     <font color=#800080>PIMAGE</font> pimg = <font color=#800080>NULL
 </font>);
 </pre>
-
-<font size="5" color="#0000FF"><strong>参数：</strong></font>
+<font size="4" color="#0000FF"><strong>参数：</strong></font>
 numlines
 线段数目。
 
 polypoints
-每个点的坐标（依次两个分别为x,y），数组元素个数为 numlines * 4。
+每个点的坐标（每连续两个值依次为点的 x 坐标和 y 坐标）, 数组元素个数为 numlines * 4。
 每两个点画一线段。
 
-<font size="5" color="#0000FF"><strong>返回值：</strong></font>
+pimg
+绘制的目标图像，默认为 NULL（即绘制到窗口）。
+
+<font size="4" color="#0000FF"><strong>返回值：</strong></font>
+
 （无）
 
-<font size="5" color="#0000FF"><strong>示例：</strong></font>
+<font size="4" color="#0000FF"><strong>示例：</strong></font>
+
 （无）
 
 </font>

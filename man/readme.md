@@ -1,15 +1,18 @@
-#EGE（Easy Graphics Engine)
-作者：misakamm
-
-* 官网：[http://xege.org](http://xege.org)
-* 主页1：[http://misakamm.github.io/xege](http://misakamm.github.io/xege)
-* 主页2：[http://xege.org/manual](http://xege.org/manual)
-* 源代码：[https://github.com/misakamm/xege](https://github.com/misakamm/xege)
+# EGE（Easy Graphics Engine)
+**作者**：misakamm
+|相关网站| 网址|
+|--|--|
+|官网|[http://xege.org](http://xege.org)|
+|主页1|[http://misakamm.github.io/xege](http://misakamm.github.io/xege)|
+|主页2|[http://xege.org/manual](http://xege.org/manual)
+|源代码|[https://github.com/misakamm/xege](https://github.com/misakamm/xege)|
 
 ## 预编译库下载：
-* 百度网盘: [https://pan.baidu.com/s/1qWxAgeK](https://pan.baidu.com/s/1qWxAgeK)
-* bitbucket [https://bitbucket.org/misakamm/xege/downloads/ege15.04.7z](https://bitbucket.org/misakamm/xege/downloads/ege15.04.7z)
-* gitcafe [http://misakamm.gitcafe.io/pub/15.04/bin/ege15.04.7z](http://misakamm.gitcafe.io/pub/15.04/bin/ege15.04.7z)
+|站点 | 下载链接|
+|:--:|--|
+|百度网盘 |[https://pan.baidu.com/s/1qWxAgeK](https://pan.baidu.com/s/1qWxAgeK) |
+|bitbucket | [https://bitbucket.org/misakamm/xege/downloads/ege15.04.7z](https://bitbucket.org/misakamm/xege/downloads/ege15.04.7z)|
+|gitcafe|[http://misakamm.gitcafe.io/pub/15.04/bin/ege15.04.7z](http://misakamm.gitcafe.io/pub/15.04/bin/ege15.04.7z)|
 
 ## 自己编译ege源代码
 

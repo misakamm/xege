@@ -1,55 +1,82 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>initgraph</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
 </head>
 <body>
 
-<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">绘图环境相关函数</a>-＞initgraph</font>
+<pre><font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / <a href="index.htm">绘图环境</a> / initgraph</font>
 <font size="4">
-<font size="5" color="#0000FF"><strong>功能：</strong></font>
-这个函数用于初始化绘图环境。
+<font size="4" ><strong>功能：</strong></font>
 
-<font size="5" color="#0000FF"><strong>声明：</strong></font>
-<pre><font color=#0000FF>void </font><font color=#008080>initgraph</font>(
-    <font color=#0000FF>int </font>Width,
-    <font color=#0000FF>int </font>Height,
-    <font color=#0000FF>int </font>Flag = <font color=#800080>INIT_DEFAULT
-</font>);
+初始化绘图环境。
+
+<font size="4"><strong>声明：</strong></font>
+<pre>
+<font color=#0000FF>void </font><font color=#008080>initgraph</font>(
+    <font color=#0000FF>int </font>width,
+    <font color=#0000FF>int </font>height
+);
+
+<font color=#0000FF>void </font><font color=#008080>initgraph</font>(
+    <font color=#0000FF>int </font>width,
+    <font color=#0000FF>int </font>height,
+    <font color=#0000FF>int </font>initmode
+);
+
 <font color=#0000FF>void </font><font color=#008080>initgraph</font>(
     <font color=#0000FF>int</font>* gdriver,
     <font color=#0000FF>int</font>* gmode,
     <font color=#0000FF>char</font>* path
-); <font color=#008000>// 兼容 Borland C++ 3.1 的重载，不建议使用。
-</font></pre>
+); <font color=#008000>// 兼容 Borland C++ 3.1 的重载，不建议使用。</font>
+</pre>
+<font size="4"><strong>参数：</strong></font>
+width
+创建的窗口中，绘图区域的宽度。如果为 -1，则窗口使用屏幕的宽度。
 
-<font size="5" color="#0000FF"><strong>参数：</strong></font>
-Width
-绘图环境的宽度。如果为-1，则使用屏幕的宽度
+height
+创建的窗口中，绘图区域的高度。如果为 -1，则窗口使用屏幕的高度。
 
-Height
-绘图环境的高度。如果为-1，则使用屏幕的高度
+initmode
+初始化模式，每个二进制位控制是否启用某种模式（值为 0 表示仅使用普通窗口，不启用额外的模式）
+可以由以下模式进行组合：
 
-Style
-窗口初始化模式,可以由以下值组合
-INIT_NOBORDER       =0x1,       //无边框窗口
-INIT_CHILD          =0x2,       //子窗口，需配合attachHWND()函数
-INIT_TOPMOST        = 0x4,      //顶层窗口(不会被其它窗口遮挡)
-INIT_RENDERMANUAL   = 0x8,      //手动渲染模式
-INIT_NOFORCEEXIT    = 0x10,     //退出时不强制结束程序,而是设置标志位，可由is_run()判断
-INIT_WITHLOGO       = 0x100,    //带EGE logo出场动画
+<table>
+	<tr> <th>初始化模式</th>		<th>值</th>		<th>说明</th></tr>
+	<tr> <td>INIT_DEFAULT</td>			<td align="center">   0x0 </td>	<td>普通窗口</td></tr>
+	<tr> <td>INIT_NOBORDER</td>			<td align="center">   0x1 </td>	<td>无边框窗口</td></tr>
+	<tr> <td>INIT_CHILD</td>			<td align="center">   0x2 </td>	<td>子窗口，需配合 attachHWND() 函数</td></tr>
+	<tr> <td>INIT_TOPMOST</td>			<td align="center">   0x4 </td>	<td>顶层窗口(不会被其它窗口遮挡)</td></tr>
+	<tr> <td>INIT_RENDERMANUAL</td>		<td align="center">   0x8 </td>	<td>手动渲染模式</td></tr>
+	<tr> <td>INIT_NOFORCEEXIT</td>		<td align="center">  0x10 </td>	<td>退出时不强制结束程序，而是设置标志位，可由 is_run() 判断<br>当设置了 INIT_NOFORCEEXIT 模式后，用户进行关闭窗口操作时窗口不会关闭，程序也不会退出，此时 is_run() 返回 false。<br>同时 getch(), getmouse() 之类的阻塞性函数将不再阻塞，由于窗口没有主动关闭，所以后续需要在代码中自行做窗口关闭和程序退出的相关处理。</td></tr>
+	<tr> <td>INIT_UNICODE <font size="3" color="#82A14F" bold = "true"><strong>(ege20.08 起)</strong></font></td>		<td align="center">  0x20 </td>	<td>窗口使用 Unicode 字符集</td></tr>
+	<tr> <td>INIT_HIDE <font size="3" color="#82A14F" bold = "true"><strong>(ege dev)</strong></font></td>		<td align="center">  0x40 </td>	<td>窗口使用 Unicode 字符集</td></tr>
+	<tr> <td>INIT_WITHLOGO</td>			<td align="center"> 0x100 </td>	<td>带 EGE logo 出场动画</td></tr>
+</table>
 
-INIT_DEFAULT （默认值）
-配置目标为Debug时，为普通窗口, INIT_DEFAULT= 0x0 (Debug)
-配置目标为Realse时，带EGE logo出场动画, INIT_DEFAULT = INIT_WITHLOGO (Realse)
+设定的组合模式：
+<table>
+	<tr><th>组合模式</th><th>说明</th></tr>
+	<tr><td>INIT_ANIMATION</td><td>INIT_RENDERMANUAL 与 INIT_NOFORCEEXIT 模式的组合，用于动画</td></tr>
+</table>
 
-INIT_ANIMATION  = INIT_DEFAULT | INIT_RENDERMANUAL | INIT_NOFORCEEXIT,
+<font size="4"><strong>说明：</strong></font>
 
+    只有两个参数的函数 initgraph(width, height) 并未指定初始化模式，如果在此之前已经由 setinitmode() 指定
+，那么使用其指定的初始化模式。如果尚未指定，那么 initgraph(width, height) 将在不同的编译模式下使用不同的初始化模式：
 
-<font size="5" color="#0000FF"><strong>返回值：</strong></font>
+<table>
+	<tr><th>编译模式</th><th>初始化模式</th></tr>
+	<tr align="center"><td>Debug</td><td>INIT_DEFAULT</td></tr>
+	<tr align="center"><td>Release</td><td>INIT_WITHLOGO</td></tr>
+</table>
+
+<font size="4"><strong>返回值：</strong></font>
+
 （无）
 
 示例：
-<pre><font color=#FF0000>#include </font><font color=#FF00FF>"graphics.h"
+<pre><font color=#FF0000>#include </font><font color=#FF00FF>&lt;graphics.h&gt;
 </font><font color=#0000FF>int </font><font color=#FF0000>main</font>()
 {
     <font color=#008080>initgraph</font>(640, 480);
@@ -64,6 +91,5 @@ INIT_ANIMATION  = INIT_DEFAULT | INIT_RENDERMANUAL | INIT_NOFORCEEXIT,
 </font>
 
 </pre>
-
 </body>
 

@@ -1,15 +1,18 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>floodfill</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
 </head>
 <body>
 
-<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">绘制图形相关函数</a>-＞floodfillsurface</font>
+<pre><font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / <a href="index.htm">图形绘制</a> / floodfillsurface</font>
 <font size="4">
-<font size="5" color="#0000FF"><strong>功能：</strong></font>
-这个函数使用setfillstyle设置的填充方式对区域进行填充。填充颜色由setfillcolor函数决定。
+<font size="4" color="#0000FF"><strong>功能：</strong></font>
 
-<font size="5" color="#0000FF"><strong>声明：</strong></font>
+这个函数使用 setfillstyle() 设置的填充方式对区域进行填充。
+填充颜色由 setfillcolor() 函数指定。
+
+<font size="4" color="#0000FF"><strong>声明：</strong></font>
 <pre><font color=#0000FF>void </font><font color=#008080>floodfillsurface</font>(
     <font color=#0000FF>int </font>x,
     <font color=#0000FF>int </font>y,
@@ -17,8 +20,7 @@
     <font color=#800080>PIMAGE</font> pimg = <font color=#800080>NULL
 </font>);
 </pre>
-
-<font size="5" color="#0000FF"><strong>参数：</strong></font>
+<font size="4" color="#0000FF"><strong>参数：</strong></font>
 x
 填充的起始点 x 坐标。
 
@@ -28,10 +30,15 @@ y
 areacolor
 填充区域的原本颜色。等于该颜色且与起始点相连所构成的区域，由setfillcolor所设置的颜色来填充。
 
-<font size="5" color="#0000FF"><strong>返回值：</strong></font>
+pimg
+绘制的目标图像，默认为 NULL（即绘制到窗口）。
+
+<font size="4" color="#0000FF"><strong>返回值：</strong></font>
+
 （无）
 
-<font size="5" color="#0000FF"><strong>示例：</strong></font>
+<font size="4" color="#0000FF"><strong>示例：</strong></font>
+
 （无）
 
 </font>

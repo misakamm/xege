@@ -1,29 +1,37 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>setbkcolor</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
 </head>
 <body>
 
-<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">颜色表示及相关函数</a>-＞setbkcolor</font>
+<pre><font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / <a href="index.htm">颜色</a> / setbkcolor</font>
 <font size="4">
-<font size="5" color="#0000FF"><strong>功能：</strong></font>
-这个函数用于设置当前背景色。并且会把当前图片上是原背景色的像素，转变为新的背景色。
+<font size="4" color="#0000FF"><strong>功能：</strong></font>
 
-<font size="5" color="#0000FF"><strong>声明：</strong></font>
+    设置窗口（图像）的背景颜色，并且会把窗口（图像）上是原背景色的像素，
+转变为新的背景色。
+
+<font size="4" color="#0000FF"><strong>声明：</strong></font>
 <pre><font color=#0000FF>void </font><font color=#008080>setbkcolor</font>(
     <font color=#800080>color_t </font>color,
     <font color=#800080>PIMAGE</font> pimg = <font color=#800080>NULL
 </font>);
 </pre>
+<font size="4" color="#0000FF"><strong>参数：</strong></font>
 
-<font size="5" color="#0000FF"><strong>参数：</strong></font>
 color
 指定要设置的背景颜色。
 
-<font size="5" color="#0000FF"><strong>返回值：</strong></font>
+pimg
+要设置背景颜色的图像（NULL 为窗口）。
+
+<font size="4" color="#0000FF"><strong>返回值：</strong></font>
+
 （无）
 
-<font size="5" color="#0000FF"><strong>示例：</strong></font>
+<font size="4" color="#0000FF"><strong>示例：</strong></font>
+
 （无）
 
 </font>

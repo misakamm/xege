@@ -1,44 +1,45 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>键盘鼠标输入函数</title>
+    <title>键盘鼠标输入</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
 </head>
 <body>
 
-<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞键盘鼠标输入函数</font>
+<pre><font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / 键盘鼠标输入</font>
 <font size="4">
-键盘与鼠标
-<table width="100%" border="1" align="center" style="font-size: 16;">
-<tr><td bgcolor="#8080FF">函数或数据</td><td bgcolor="#8080FF">说明</td></tr>
-<tr><td><a href="keystate.htm">keystate</a></td><td>判断某键盘或者鼠标上的按键是否按下</td></tr>
-<tr><td><a href="key_code_e.htm">key_code_e</a></td><td>按键码</td></tr>
+
+<h3><center>按键</center></h3>
+<table>
+<tr><th>函数或类型</th><th>说明</th><th>最低版本要求</th></tr>
+<tr><td><a href="keystate.htm">keystate</a></td>			<td>判断某键盘或者鼠标上的按键是否处于按下状态</td>		<td align="center"></td></tr>
+<tr><td><a href="key_code_e.htm">key_code_e</a></td>		<td>按键键码</td>									<td align="center"></td></tr>
 </table>
 
-键盘：
-<table width="100%" border="1" align="center" style="font-size: 16;">
-<tr><td bgcolor="#8080FF">函数或数据</td><td bgcolor="#8080FF">说明</td></tr>
-<tr><td><a href="key_msg.htm">key_msg 结构体</a></td><td>保存键盘消息的结构体</td></tr>
-<tr><td><a href="getch.htm">getch</a></td><td>获取一个键盘字符输入。如果当前没有输入的字符就一直等待</td></tr>
-<tr><td><a href="getkey.htm">getkey</a></td><td>获取一个键盘消息。如果当前没有键盘消息就一直等待</td></tr>
-<tr><td><a href="kbhit.htm">kbhit</a></td><td>检测当前是否有键盘字符输入，一般与getch搭配使用</td></tr>
-<tr><td><a href="kbmsg.htm">kbmsg</a></td><td>检测当前是否有键盘消息，一般与getkey搭配使用</td></tr>
-<tr><td><a href="flushkey.htm">flushkey</a></td><td>清空按键消息缓存区</td></tr>
+<h3><center>键盘</center></h3>
+<table>
+<tr><th>函数或类型</th><th>说明</th><th>最低版本要求</th></tr>
+<tr><td><a href="key_msg.htm">key_msg 结构体</a></td>	<td>保存键盘消息的结构体</td>									<td align="center"></td></tr>
+<tr><td><a href="getch.htm">getch</a></td>				<td>获取一个键盘字符输入。如果当前没有输入的字符就一直等待</td>	<td align="center"></td></tr>
+<tr><td><a href="getkey.htm">getkey</a></td>			<td>获取一个键盘消息。如果当前没有键盘消息就一直等待</td>		<td align="center"></td></tr>
+<tr><td><a href="kbhit.htm">kbhit</a></td>				<td>检测当前是否有键盘字符输入，一般与 getch 搭配使用</td>		<td align="center"></td></tr>
+<tr><td><a href="kbmsg.htm">kbmsg</a></td>				<td>检测当前是否有键盘消息，一般与 getkey 搭配使用</td>			<td align="center"></td></tr>
+<tr><td><a href="flushkey.htm">flushkey</a></td>		<td>清空按键消息缓存区</td>										<td align="center"></td></tr>
 </table>
 
-鼠标:
-<table width="100%" border="1" align="center" style="font-size: 16;">
-<tr><td bgcolor="#8080FF">函数或数据</td><td bgcolor="#8080FF">说明</td></tr>
-<tr><td><a href="mouse_msg.htm">mouse_msg 结构体</a></td><td>保存鼠标消息的结构体</td></tr>
-<tr><td><a href="getmouse.htm">getmouse</a></td><td>获取一个鼠标消息。如果当前鼠标消息队列中没有，就一直等待</td></tr>
-<tr><td><a href="keystate.htm">keystate</a></td><td>判断某按键是否按下</td></tr>
-<tr><td><a href="mousemsg.htm">mousemsg</a></td><td>检测当前是否有鼠标消息</td></tr>
-<tr><td><a href="MOUSEMSG .htm">MOUSEMSG 结构体</a></td><td>（不建议使用）保存鼠标消息的结构体</td></tr>
-<tr><td><a href="mousepos.htm">mousepos</a></td><td>获取当前鼠标位置</td></tr>
-<tr><td><a href="showmouse.htm">showmouse</a></td><td>设置鼠标显示状态</td></tr>
-<tr><td><a href="flushmouse.htm">flushmouse</a></td><td>清空鼠标消息缓存区</td></tr>
-<tr><td><a href="flushmousemsgbuffer.htm">FlushMouseMsgBuffer</a></td><td>（过时函数）清空鼠标消息缓冲区</td></tr>
-<tr><td><a href="GetMouseMsg.htm">GetMouseMsg</a></td><td>（过时函数）获取一个鼠标消息。如果当前鼠标消息队列中没有，就一直等待</td></tr>
+<h3><center>鼠标</center></h3>
+<table>
+<tr><th>函数或类型</th><th>说明</th><th>最低版本要求</th></tr>
+<tr><td><a href="mouse_msg.htm">mouse_msg 结构体</a></td>					<td>保存鼠标消息的结构体</td>										<td align="center"></td></tr>
+<tr><td><a href="getmouse.htm">getmouse</a></td>							<td>获取一个鼠标消息。如果当前鼠标消息队列中没有，就一直等待</td>	<td align="center"></td></tr>
+<tr><td><a href="mousemsg.htm">mousemsg</a></td>							<td>检测当前是否有鼠标消息</td>										<td align="center"></td></tr>
+<tr><td><a href="MOUSEMSG .htm">MOUSEMSG 结构体</a></td>					<td>（不建议使用）保存鼠标消息的结构体</td>							<td align="center"></td></tr>
+<tr><td><a href="mousepos.htm">mousepos</a></td>							<td>获取当前鼠标位置</td>											<td align="center"></td></tr>
+<tr><td><a href="showmouse.htm">showmouse</a></td>							<td>设置鼠标显示状态</td>											<td align="center"></td></tr>
+<tr><td><a href="flushmouse.htm">flushmouse</a></td>						<td>清空鼠标消息缓存区</td>											<td align="center"></td></tr>
+<tr><td><a href="flushmousemsgbuffer.htm">FlushMouseMsgBuffer</a></td>		<td>（过时函数）清空鼠标消息缓冲区</td>								<td align="center"></td></tr>
+<tr><td><a href="GetMouseMsg.htm">GetMouseMsg</a></td>						<td>（过时函数）获取一个鼠标消息。如果当前鼠标消息队列中没有，就一直等待</td>	<td align="center"></td></tr>
 </table>
-
+注：最低版本要求中的 ege dev 为 GitHub 开发版本，尚未正式发布。
 </font>
 </pre>
 

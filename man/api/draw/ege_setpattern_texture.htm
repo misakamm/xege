@@ -1,18 +1,20 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>ege_setapttern_texture</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
 </head>
 <body>
 
-<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">绘制图形相关函数</a>-＞ege_setapttern_texture</font>
+<pre><font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / <a href="index.htm">图形绘制</a> / ege_setapttern_texture</font>
 <font size="4">
-<font size="5" color="#0000FF"><strong>功能：</strong></font>
+<font size="4" color="#0000FF"><strong>功能：</strong></font>
+
 设置高级函数颜色填充模式为纹理填充模式。
 使用前需要先将图像用ege_gentexture()生成纹理图。
 若填充区域超出纹理区域大小，将使用纹理重复填充
 纹理图像使用ARGB颜色，如果图像透明度为0，则无填充效果
 
-<font size="5" color="#0000FF"><strong>声明：</strong></font>
+<font size="4" color="#0000FF"><strong>声明：</strong></font>
 <pre><font color=#0000FF>void </font><font color=#008080>ege_setapttern_texture</font>(
     <font color=#800080>PIMAGE</font> texture,
     <font color=#0000FF>float </font>x,
@@ -22,8 +24,7 @@
     <font color=#800080>PIMAGE</font> pimg= <font color=#800080>NULL</font>
 );
 </pre>
-
-<font size="5" color="#0000FF"><strong>参数：</strong></font>
+<font size="4" color="#0000FF"><strong>参数：</strong></font>
 texture
 用作填充的纹理图像，需要先使用ege_gentexture()生成纹理，不可为NULL。
 
@@ -33,13 +34,14 @@ x, y, w, h
 可以通过setviewport()设置视口改变原点位置)
 
 pimg
-设置的目标图像，默认为NULL，即设置窗口。
+设置的目标图像，默认为 NULL，即设置窗口。
 
-<font size="5" color="#0000FF"><strong>返回值：</strong></font>
+<font size="4" color="#0000FF"><strong>返回值：</strong></font>
+
 （无）
 
-<font size="5" color="#0000FF"><strong>示例：</strong></font>
-<pre><font color=#FF0000>#include </font><font color=#FF00FF>"graphics.h"
+<font size="4" color="#0000FF"><strong>示例：</strong></font>
+<pre><font color=#FF0000>#include </font><font color=#FF00FF>&lt;graphics.h&gt;
 </font><font color=#0000FF>int </font><font color=#FF0000>main</font>()
 {
     <font color=#008080>initgraph</font>(640, 480, 0);

@@ -1,25 +1,35 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>is_run</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
 </head>
 <body>
 
-<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">绘图环境相关函数</a>-＞is_run</font>
+<pre><font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / <a href="index.htm">绘图环境</a> / is_run</font>
 <font size="4">
-<font size="5" color="#0000FF"><strong>功能：</strong></font>
-这个函数用于判断窗口环境是否还存在。
-窗口初始化模式设置为INIT_NOFORCEEXIT时，is_run()才有效，否则程序运行时一直返回true
-<font size="5" color="#0000FF"><strong>声明：</strong></font>
-<pre><font color=#0000FF>bool </font><font color=#008080>is_run</font>();</pre>
+<font size="4" color="#0000FF"><strong>功能：</strong></font>
 
-<font size="5" color="#0000FF"><strong>参数：</strong></font>
+&emsp;&emsp;判断窗口环境是否还在运行。
+
+<font size="4" color="#0000FF"><strong>说明：</strong></font>
+    只有在初始化模式中设置了 INIT_NOFORCEEXIT 模式时 is_run() 返回值才有效，否则返回值
+一直为 true。
+    当设置了 INIT_NOFORCEEXIT 模式后，用户进行关闭窗口操作时窗口不会关闭，程序也不会退
+出，仅仅是设置标志位，此时 is_run() 返回 false。
+    同时 getch(), getmouse() 之类的阻塞性函数将不再阻塞，由于窗口没有主动关闭，所以后
+续需要在代码中自行做窗口关闭和程序退出的相关处理。
+
+<font size="4" color="#0000FF"><strong>声明：</strong></font>
+<pre><font color=#0000FF>bool </font><font color=#008080>is_run</font>();</pre>
+<font size="4" color="#0000FF"><strong>参数：</strong></font>
 （无）
 
-<font size="5" color="#0000FF"><strong>返回值：</strong></font>
-true 表示窗口环境还存在
-false 表示判断窗口环境不存在
+<font size="4" color="#0000FF"><strong>返回值：</strong></font>
 
-<font size="5" color="#0000FF"><strong>示例：</strong></font>
+true:  表示窗口环境还在运行。
+false: 表示窗口环境将停止运行。
+
+<font size="4" color="#0000FF"><strong>示例：</strong></font>
 详见入门示例里的动画部分
 </font>
 </pre>
