@@ -1425,8 +1425,8 @@ int getinitmode() {
 }
 
 // 获取当前版本
-int getGraphicsVer() {
-	return EGE_VERSION_INT;
+long getGraphicsVer() {
+	return EGE_VERSION_NUMBER;
 }
 
 HWND getParentHWnd() {

@@ -37,6 +37,16 @@
 #pragma once
 #endif
 
+// Easy Graphics Engine Version
+// Calendar Versioning, format: YY.0M.PatchNumber (If the PatchNumber equals 0, the YY.0M format is used.)
+#define EGE_VERSION          "20.08"
+#define EGE_VERSION_W        L"20.08"
+#define EGE_VERSION_MAJOR    20
+#define EGE_VERSION_MINOR    8
+#define EGE_VERSION_PATCH    0
+#define EGE_MAKE_VERSION_NUMBER(major, minor, patch)    ((major) * 10000L + (minor) * 100L + (patch))
+#define EGE_VERSION_NUMBER      EGE_MAKE_VERSION_NUMBER(EGE_VERSION_MAJOR, EGE_VERSION_MINOR, EGE_VERSION_PATCH)
+
 #ifndef __cplusplus
 #error You must use C++ compiler, or you need filename with '.cpp' suffix
 #endif
@@ -1255,7 +1265,7 @@ HINSTANCE   EGEAPI getHInstance();
 HDC         EGEAPI getHDC(PCIMAGE pImg = NULL);
 
 PVOID       EGEAPI getProcfunc();
-int         EGEAPI getGraphicsVer();   // 获取当前版本
+long        EGEAPI getGraphicsVer();   // 获取当前版本
 float       EGEAPI getfps();           // 获取当前帧率
 
 //随机函数
