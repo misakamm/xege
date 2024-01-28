@@ -1401,11 +1401,26 @@ private_textout (PIMAGE img, LPCSTR textstring, int x, int y, int horiz, int ver
 	} else {
 		SetTextAlign(img->m_hDC, private_gettextmode(img));
 	}
+
 	if (textstring) {
+		int xOffset = 0, yOffset = 0;
+
 		if (img->m_texttype.vert == CENTER_TEXT) {
-			y -= textheight(textstring, img)/2;
+			LOGFONT font;
+			getfont(&font, img);
+
+			int textHeight = textheight(textstring, img);
+			int escapement = font.lfEscapement % 3600;
+			if (escapement != 0) {
+				double radian = escapement / 10.0 * PI / 180.0;
+				xOffset = (int)round(-textHeight * sin(radian) / 2.0);
+				yOffset = (int)round(-textHeight * cos(radian) / 2.0);
+			} else {
+				yOffset = (int)round(-textHeight / 2.0);
+			}
 		}
-		TextOutA(img->m_hDC, x, y, textstring, (int)strlen(textstring));
+
+		TextOutA(img->m_hDC, x + xOffset, y + yOffset, textstring, (int)strlen(textstring));
 	}
 }
 
@@ -1434,10 +1449,24 @@ private_textout (PIMAGE img, LPCWSTR textstring, int x, int y, int horiz, int ve
 		SetTextAlign(img->m_hDC, private_gettextmode(img));
 	}
 	if (textstring) {
+		int xOffset = 0, yOffset = 0;
+
 		if (img->m_texttype.vert == CENTER_TEXT) {
-			y -= textheight(textstring, img)/2;
+			LOGFONT font;
+			getfont(&font, img);
+
+			int textHeight = textheight(textstring, img);
+			int escapement = font.lfEscapement % 3600;
+			if (escapement != 0) {
+				double radian = escapement / 10.0 * PI / 180.0;
+				xOffset = (int)round(-textHeight * sin(radian) / 2.0);
+				yOffset = (int)round(-textHeight * cos(radian) / 2.0);
+			} else {
+				yOffset = (int)round(-textHeight / 2.0);
+			}
 		}
-		TextOutW(img->m_hDC, x, y, textstring, (int)lstrlenW(textstring));
+
+		TextOutW(img->m_hDC, x + xOffset, y + yOffset, textstring, (int)lstrlenW(textstring));
 	}
 }
 
@@ -2804,18 +2833,18 @@ LRESULT sys_edit::onMessage(UINT message, WPARAM wParam, LPARAM lParam) {
 			{
 				HDC dc = (HDC)wParam;
 				HBRUSH br = ::CreateSolidBrush(ARGBTOZBGR(m_bgcolor));
-	
+
 				::SetBkColor(dc, ARGBTOZBGR(m_bgcolor));
 				::SetTextColor(dc, ARGBTOZBGR(m_color));
 				::DeleteObject(m_hBrush);
 				m_hBrush = br;
-				return (LRESULT)br;			
+				return (LRESULT)br;
 			}
 			break;
 		case WM_SETFOCUS:
 			m_bInputFocus = 1;
 			// call textbox's own message process to show caret
-			return ((LRESULT (CALLBACK *)(HWND, UINT, WPARAM, LPARAM))m_callback)(m_hwnd, message, wParam, lParam);		
+			return ((LRESULT (CALLBACK *)(HWND, UINT, WPARAM, LPARAM))m_callback)(m_hwnd, message, wParam, lParam);
 		case WM_KILLFOCUS:
 			m_bInputFocus = 0;
 			// call textbox's own message process to hide caret
