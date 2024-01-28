@@ -65,8 +65,8 @@
 #	define COMPILER_VER_W   L"GCC"  GCC_VER_W  SYSBITS_W
 #endif
 
-#define EGE_TITLE       "EGE"  EGE_VERSION   " "  COMPILER_VER
-#define EGE_TITLE_W     L"EGE" EGE_VERSION_W L" " COMPILER_VER_W
+#define EGE_TITLE       "EGE"  EGE_VERSION  " "  COMPILER_VER
+#define EGE_TITLE_W     L"EGE" EGE_VERSION  " "  COMPILER_VER
 
 #define EGE_WNDCLSNAME    "Easy Graphics Engine"
 #define EGE_WNDCLSNAME_W  EGE_L(EGE_WNDCLSNAME)

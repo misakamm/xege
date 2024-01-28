@@ -40,7 +40,6 @@
 // Easy Graphics Engine Version
 // Calendar Versioning, format: YY.0M.PatchNumber (If the PatchNumber equals 0, the YY.0M format is used.)
 #define EGE_VERSION          "20.08"
-#define EGE_VERSION_W        L"20.08"
 #define EGE_VERSION_MAJOR    20
 #define EGE_VERSION_MINOR    8
 #define EGE_VERSION_PATCH    0
