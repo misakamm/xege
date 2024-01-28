@@ -1759,212 +1759,90 @@ setfillstyle(int pattern, color_t color, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-setfont(
-		int nHeight,
-		int nWidth,
-		LPCSTR lpszFace,
-		int nEscapement,
-		int nOrientation,
-		int nWeight,
-		int bItalic,
-		int bUnderline,
-		int bStrikeOut,
-		BYTE fbCharSet,
-		BYTE fbOutPrecision,
-		BYTE fbClipPrecision,
-		BYTE fbQuality,
-		BYTE fbPitchAndFamily,
-		PIMAGE pimg)
+void setfont(int nHeight, int nWidth, LPCSTR lpszFace, int nEscapement, int nOrientation, int nWeight,
+		int bItalic, int bUnderline, int bStrikeOut, BYTE fbCharSet, BYTE fbOutPrecision,
+		BYTE fbClipPrecision, BYTE fbQuality, BYTE fbPitchAndFamily, PIMAGE pimg)
 {
-	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
-	if (img) {
-		LOGFONTA lf = {0};
-		lf.lfHeight         = nHeight;
-		lf.lfWidth          = nWidth;
-		lf.lfEscapement     = nEscapement;
-		lf.lfOrientation    = nOrientation;
-		lf.lfWeight         = nWeight;
-		lf.lfItalic         = (bItalic != 0);
-		lf.lfUnderline      = (bUnderline != 0);
-		lf.lfStrikeOut      = (bStrikeOut != 0);
-		lf.lfCharSet        = fbCharSet;
-		lf.lfOutPrecision   = fbOutPrecision;
-		lf.lfClipPrecision  = fbClipPrecision;
-		lf.lfQuality        = fbQuality;
-		lf.lfPitchAndFamily = fbPitchAndFamily;
-		lstrcpyA(lf.lfFaceName, lpszFace);
-		HFONT hfont = CreateFontIndirectA(&lf);
-		DeleteObject(SelectObject(img->m_hDC, hfont));
-	}
-	CONVERT_IMAGE_END;
+	LOGFONTA lf = {0};
+	lf.lfHeight         = nHeight;
+	lf.lfWidth          = nWidth;
+	lf.lfEscapement     = nEscapement;
+	lf.lfOrientation    = nOrientation;
+	lf.lfWeight         = nWeight;
+	lf.lfItalic         = (bItalic != 0);
+	lf.lfUnderline      = (bUnderline != 0);
+	lf.lfStrikeOut      = (bStrikeOut != 0);
+	lf.lfCharSet        = fbCharSet;
+	lf.lfOutPrecision   = fbOutPrecision;
+	lf.lfClipPrecision  = fbClipPrecision;
+	lf.lfQuality        = fbQuality;
+	lf.lfPitchAndFamily = fbPitchAndFamily;
+	lstrcpyA(lf.lfFaceName, lpszFace);
+
+	setfont(&lf, pimg);
 }
 
-void
-setfont(
-		int nHeight,
-		int nWidth,
-		LPCWSTR lpszFace,
-		int nEscapement,
-		int nOrientation,
-		int nWeight,
-		int bItalic,
-		int bUnderline,
-		int bStrikeOut,
-		BYTE fbCharSet,
-		BYTE fbOutPrecision,
-		BYTE fbClipPrecision,
-		BYTE fbQuality,
-		BYTE fbPitchAndFamily,
-		PIMAGE pimg)
+void setfont(int nHeight, int nWidth, LPCWSTR lpszFace, int nEscapement, int nOrientation, int nWeight,
+		int bItalic, int bUnderline, int bStrikeOut, BYTE fbCharSet, BYTE fbOutPrecision,
+		BYTE fbClipPrecision, BYTE fbQuality, BYTE fbPitchAndFamily, PIMAGE pimg)
 {
-	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
-	if (img) {
-		LOGFONTW lf = {0};
-		lf.lfHeight         = nHeight;
-		lf.lfWidth          = nWidth;
-		lf.lfEscapement     = nEscapement;
-		lf.lfOrientation    = nOrientation;
-		lf.lfWeight         = nWeight;
-		lf.lfItalic         = (bItalic != 0);
-		lf.lfUnderline      = (bUnderline != 0);
-		lf.lfStrikeOut      = (bStrikeOut != 0);
-		lf.lfCharSet        = fbCharSet;
-		lf.lfOutPrecision   = fbOutPrecision;
-		lf.lfClipPrecision  = fbClipPrecision;
-		lf.lfQuality        = fbQuality;
-		lf.lfPitchAndFamily = fbPitchAndFamily;
-		lstrcpyW(lf.lfFaceName, lpszFace);
-		HFONT hfont = CreateFontIndirectW(&lf);
-		DeleteObject(SelectObject(img->m_hDC, hfont));
-	}
-	CONVERT_IMAGE_END;
+
+	LOGFONTW lf = {0};
+	lf.lfHeight         = nHeight;
+	lf.lfWidth          = nWidth;
+	lf.lfEscapement     = nEscapement;
+	lf.lfOrientation    = nOrientation;
+	lf.lfWeight         = nWeight;
+	lf.lfItalic         = (bItalic != 0);
+	lf.lfUnderline      = (bUnderline != 0);
+	lf.lfStrikeOut      = (bStrikeOut != 0);
+	lf.lfCharSet        = fbCharSet;
+	lf.lfOutPrecision   = fbOutPrecision;
+	lf.lfClipPrecision  = fbClipPrecision;
+	lf.lfQuality        = fbQuality;
+	lf.lfPitchAndFamily = fbPitchAndFamily;
+	lstrcpyW(lf.lfFaceName, lpszFace);
+
+	setfont(&lf, pimg);
 }
 
 void
-setfont(
-		int nHeight,
-		int nWidth,
-		LPCSTR lpszFace,
-		int nEscapement,
-		int nOrientation,
-		int nWeight,
-		int bItalic,
-		int bUnderline,
-		int bStrikeOut,
-		PIMAGE pimg)
+setfont(int nHeight, int nWidth, LPCSTR lpszFace, int nEscapement, int nOrientation, int nWeight,
+		int bItalic, int bUnderline, int bStrikeOut, PIMAGE pimg)
 {
-	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
-	if (img) {
-		LOGFONTA lf = {0};
-		lf.lfHeight         = nHeight;
-		lf.lfWidth          = nWidth;
-		lf.lfEscapement     = nEscapement;
-		lf.lfOrientation    = nOrientation;
-		lf.lfWeight         = nWeight;
-		lf.lfItalic         = (bItalic != 0);
-		lf.lfUnderline      = (bUnderline != 0);
-		lf.lfStrikeOut      = (bStrikeOut != 0);
-		lf.lfCharSet        = DEFAULT_CHARSET;
-		lf.lfOutPrecision   = OUT_DEFAULT_PRECIS;
-		lf.lfClipPrecision  = CLIP_DEFAULT_PRECIS;
-		lf.lfQuality        = DEFAULT_QUALITY;
-		lf.lfPitchAndFamily = DEFAULT_PITCH;
-		lstrcpyA(lf.lfFaceName, lpszFace);
-		HFONT hfont = CreateFontIndirectA(&lf);
-		DeleteObject(SelectObject(img->m_hDC, hfont));
-	}
-	CONVERT_IMAGE_END;
+	setfont(nHeight, nWidth, lpszFace, nEscapement, nOrientation, nWeight, bItalic, bUnderline, bStrikeOut,
+		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH,
+		pimg
+	);
 }
 
-void
-setfont(
-		int nHeight,
-		int nWidth,
-		LPCWSTR lpszFace,
-		int nEscapement,
-		int nOrientation,
-		int nWeight,
-		int bItalic,
-		int bUnderline,
-		int bStrikeOut,
-		PIMAGE pimg)
+void setfont(int nHeight, int nWidth, LPCWSTR lpszFace, int nEscapement, int nOrientation, int nWeight,
+		int bItalic, int bUnderline, int bStrikeOut, PIMAGE pimg)
 {
-	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
-	if (img) {
-		LOGFONTW lf = {0};
-		lf.lfHeight         = nHeight;
-		lf.lfWidth          = nWidth;
-		lf.lfEscapement     = nEscapement;
-		lf.lfOrientation    = nOrientation;
-		lf.lfWeight         = nWeight;
-		lf.lfItalic         = (bItalic != 0);
-		lf.lfUnderline      = (bUnderline != 0);
-		lf.lfStrikeOut      = (bStrikeOut != 0);
-		lf.lfCharSet        = DEFAULT_CHARSET;
-		lf.lfOutPrecision   = OUT_DEFAULT_PRECIS;
-		lf.lfClipPrecision  = CLIP_DEFAULT_PRECIS;
-		lf.lfQuality        = DEFAULT_QUALITY;
-		lf.lfPitchAndFamily = DEFAULT_PITCH;
-		lstrcpyW(lf.lfFaceName, lpszFace);
-		HFONT hfont = CreateFontIndirectW(&lf);
-		DeleteObject(SelectObject(img->m_hDC, hfont));
-	}
-	CONVERT_IMAGE_END;
+	setfont(nHeight, nWidth, lpszFace, nEscapement, nOrientation, nWeight, bItalic, bUnderline, bStrikeOut,
+		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH,
+		pimg
+	);
 }
 
-void
-setfont(int nHeight, int nWidth, LPCSTR lpszFace, PIMAGE pimg) {
-	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
-	if (img) {
-		LOGFONTA lf = {0};
-		lf.lfHeight         = nHeight;
-		lf.lfWidth          = nWidth;
-		lf.lfEscapement     = 0;
-		lf.lfOrientation    = 0;
-		lf.lfWeight         = FW_DONTCARE;
-		lf.lfItalic         = 0;
-		lf.lfUnderline      = 0;
-		lf.lfStrikeOut      = 0;
-		lf.lfCharSet        = DEFAULT_CHARSET;
-		lf.lfOutPrecision   = OUT_DEFAULT_PRECIS;
-		lf.lfClipPrecision  = CLIP_DEFAULT_PRECIS;
-		lf.lfQuality        = DEFAULT_QUALITY;
-		lf.lfPitchAndFamily = DEFAULT_PITCH;
-		lstrcpyA(lf.lfFaceName, lpszFace);
-		HFONT hfont = CreateFontIndirectA(&lf);
-		DeleteObject(SelectObject(img->m_hDC, hfont));
-	}
-	CONVERT_IMAGE_END;
+void setfont(int nHeight, int nWidth, LPCSTR lpszFace, PIMAGE pimg)
+{
+	setfont(nHeight, nWidth, lpszFace, 0, 0, FW_DONTCARE, FALSE, FALSE, FALSE,
+		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH,
+		pimg
+	);
 }
 
-void
-setfont(int nHeight, int nWidth, LPCWSTR lpszFace, PIMAGE pimg) {
-	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
-	if (img) {
-		LOGFONTW lf = {0};
-		lf.lfHeight         = nHeight;
-		lf.lfWidth          = nWidth;
-		lf.lfEscapement     = 0;
-		lf.lfOrientation    = 0;
-		lf.lfWeight         = FW_DONTCARE;
-		lf.lfItalic         = 0;
-		lf.lfUnderline      = 0;
-		lf.lfStrikeOut      = 0;
-		lf.lfCharSet        = DEFAULT_CHARSET;
-		lf.lfOutPrecision   = OUT_DEFAULT_PRECIS;
-		lf.lfClipPrecision  = CLIP_DEFAULT_PRECIS;
-		lf.lfQuality        = DEFAULT_QUALITY;
-		lf.lfPitchAndFamily = DEFAULT_PITCH;
-		lstrcpyW(lf.lfFaceName, lpszFace);
-		HFONT hfont = CreateFontIndirectW(&lf);
-		DeleteObject(SelectObject(img->m_hDC, hfont));
-	}
-	CONVERT_IMAGE_END;
+void setfont(int nHeight, int nWidth, LPCWSTR lpszFace, PIMAGE pimg)
+{
+	setfont(nHeight, nWidth, lpszFace, 0, 0, FW_DONTCARE, FALSE, FALSE, FALSE,
+		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH,
+		pimg
+	);
 }
 
-void
-setfont(const LOGFONTA *font, PIMAGE pimg) {
+void setfont(const LOGFONTA *font, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
 	if (img) {
 		HFONT hfont = CreateFontIndirectA(font);
@@ -1973,8 +1851,8 @@ setfont(const LOGFONTA *font, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-setfont(const LOGFONTW *font, PIMAGE pimg) {
+void setfont(const LOGFONTW *font, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
 	if (img) {
 		HFONT hfont = CreateFontIndirectW(font);
@@ -1983,8 +1861,8 @@ setfont(const LOGFONTW *font, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-getfont(LOGFONTA *font, PCIMAGE pimg) {
+void getfont(LOGFONTA *font, PCIMAGE pimg)
+{
 	PCIMAGE img = CONVERT_IMAGE_CONST(pimg);
 	if (img) {
 		HFONT hf = (HFONT)GetCurrentObject(img->m_hDC, OBJ_FONT);
@@ -1993,8 +1871,8 @@ getfont(LOGFONTA *font, PCIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-getfont(LOGFONTW *font, PCIMAGE pimg) {
+void getfont(LOGFONTW *font, PCIMAGE pimg)
+{
 	PCIMAGE img = CONVERT_IMAGE_CONST(pimg);
 	if (img) {
 		HFONT hf = (HFONT)GetCurrentObject(img->m_hDC, OBJ_FONT);
@@ -2031,7 +1909,7 @@ setactivepage(int page) {
 	struct _graph_setting * pg = &graph_setting;
 	if (0 <= page && page < BITMAP_PAGE_SIZE) {
 		pg->active_page = page;
-		
+
 		if (pg->img_page[page] == NULL) {
 			pg->img_page[page] = new IMAGE(pg->dc_w, pg->dc_h);
 		}
