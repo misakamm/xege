@@ -1401,11 +1401,26 @@ private_textout (PIMAGE img, LPCSTR textstring, int x, int y, int horiz, int ver
 	} else {
 		SetTextAlign(img->m_hDC, private_gettextmode(img));
 	}
+
 	if (textstring) {
+		int xOffset = 0, yOffset = 0;
+
 		if (img->m_texttype.vert == CENTER_TEXT) {
-			y -= textheight(textstring, img)/2;
+			LOGFONT font;
+			getfont(&font, img);
+
+			int textHeight = textheight(textstring, img);
+			int escapement = font.lfEscapement % 3600;
+			if (escapement != 0) {
+				double radian = escapement / 10.0 * PI / 180.0;
+				xOffset = (int)round(-textHeight * sin(radian) / 2.0);
+				yOffset = (int)round(-textHeight * cos(radian) / 2.0);
+			} else {
+				yOffset = (int)round(-textHeight / 2.0);
+			}
 		}
-		TextOutA(img->m_hDC, x, y, textstring, (int)strlen(textstring));
+
+		TextOutA(img->m_hDC, x + xOffset, y + yOffset, textstring, (int)strlen(textstring));
 	}
 }
 
@@ -1434,10 +1449,24 @@ private_textout (PIMAGE img, LPCWSTR textstring, int x, int y, int horiz, int ve
 		SetTextAlign(img->m_hDC, private_gettextmode(img));
 	}
 	if (textstring) {
+		int xOffset = 0, yOffset = 0;
+
 		if (img->m_texttype.vert == CENTER_TEXT) {
-			y -= textheight(textstring, img)/2;
+			LOGFONT font;
+			getfont(&font, img);
+
+			int textHeight = textheight(textstring, img);
+			int escapement = font.lfEscapement % 3600;
+			if (escapement != 0) {
+				double radian = escapement / 10.0 * PI / 180.0;
+				xOffset = (int)round(-textHeight * sin(radian) / 2.0);
+				yOffset = (int)round(-textHeight * cos(radian) / 2.0);
+			} else {
+				yOffset = (int)round(-textHeight / 2.0);
+			}
 		}
-		TextOutW(img->m_hDC, x, y, textstring, (int)lstrlenW(textstring));
+
+		TextOutW(img->m_hDC, x + xOffset, y + yOffset, textstring, (int)lstrlenW(textstring));
 	}
 }
 
@@ -1759,212 +1788,90 @@ setfillstyle(int pattern, color_t color, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-setfont(
-		int nHeight,
-		int nWidth,
-		LPCSTR lpszFace,
-		int nEscapement,
-		int nOrientation,
-		int nWeight,
-		int bItalic,
-		int bUnderline,
-		int bStrikeOut,
-		BYTE fbCharSet,
-		BYTE fbOutPrecision,
-		BYTE fbClipPrecision,
-		BYTE fbQuality,
-		BYTE fbPitchAndFamily,
-		PIMAGE pimg)
+void setfont(int nHeight, int nWidth, LPCSTR lpszFace, int nEscapement, int nOrientation, int nWeight,
+		int bItalic, int bUnderline, int bStrikeOut, BYTE fbCharSet, BYTE fbOutPrecision,
+		BYTE fbClipPrecision, BYTE fbQuality, BYTE fbPitchAndFamily, PIMAGE pimg)
 {
-	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
-	if (img) {
-		LOGFONTA lf = {0};
-		lf.lfHeight         = nHeight;
-		lf.lfWidth          = nWidth;
-		lf.lfEscapement     = nEscapement;
-		lf.lfOrientation    = nOrientation;
-		lf.lfWeight         = nWeight;
-		lf.lfItalic         = (bItalic != 0);
-		lf.lfUnderline      = (bUnderline != 0);
-		lf.lfStrikeOut      = (bStrikeOut != 0);
-		lf.lfCharSet        = fbCharSet;
-		lf.lfOutPrecision   = fbOutPrecision;
-		lf.lfClipPrecision  = fbClipPrecision;
-		lf.lfQuality        = fbQuality;
-		lf.lfPitchAndFamily = fbPitchAndFamily;
-		lstrcpyA(lf.lfFaceName, lpszFace);
-		HFONT hfont = CreateFontIndirectA(&lf);
-		DeleteObject(SelectObject(img->m_hDC, hfont));
-	}
-	CONVERT_IMAGE_END;
+	LOGFONTA lf = {0};
+	lf.lfHeight         = nHeight;
+	lf.lfWidth          = nWidth;
+	lf.lfEscapement     = nEscapement;
+	lf.lfOrientation    = nOrientation;
+	lf.lfWeight         = nWeight;
+	lf.lfItalic         = (bItalic != 0);
+	lf.lfUnderline      = (bUnderline != 0);
+	lf.lfStrikeOut      = (bStrikeOut != 0);
+	lf.lfCharSet        = fbCharSet;
+	lf.lfOutPrecision   = fbOutPrecision;
+	lf.lfClipPrecision  = fbClipPrecision;
+	lf.lfQuality        = fbQuality;
+	lf.lfPitchAndFamily = fbPitchAndFamily;
+	lstrcpyA(lf.lfFaceName, lpszFace);
+
+	setfont(&lf, pimg);
 }
 
-void
-setfont(
-		int nHeight,
-		int nWidth,
-		LPCWSTR lpszFace,
-		int nEscapement,
-		int nOrientation,
-		int nWeight,
-		int bItalic,
-		int bUnderline,
-		int bStrikeOut,
-		BYTE fbCharSet,
-		BYTE fbOutPrecision,
-		BYTE fbClipPrecision,
-		BYTE fbQuality,
-		BYTE fbPitchAndFamily,
-		PIMAGE pimg)
+void setfont(int nHeight, int nWidth, LPCWSTR lpszFace, int nEscapement, int nOrientation, int nWeight,
+		int bItalic, int bUnderline, int bStrikeOut, BYTE fbCharSet, BYTE fbOutPrecision,
+		BYTE fbClipPrecision, BYTE fbQuality, BYTE fbPitchAndFamily, PIMAGE pimg)
 {
-	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
-	if (img) {
-		LOGFONTW lf = {0};
-		lf.lfHeight         = nHeight;
-		lf.lfWidth          = nWidth;
-		lf.lfEscapement     = nEscapement;
-		lf.lfOrientation    = nOrientation;
-		lf.lfWeight         = nWeight;
-		lf.lfItalic         = (bItalic != 0);
-		lf.lfUnderline      = (bUnderline != 0);
-		lf.lfStrikeOut      = (bStrikeOut != 0);
-		lf.lfCharSet        = fbCharSet;
-		lf.lfOutPrecision   = fbOutPrecision;
-		lf.lfClipPrecision  = fbClipPrecision;
-		lf.lfQuality        = fbQuality;
-		lf.lfPitchAndFamily = fbPitchAndFamily;
-		lstrcpyW(lf.lfFaceName, lpszFace);
-		HFONT hfont = CreateFontIndirectW(&lf);
-		DeleteObject(SelectObject(img->m_hDC, hfont));
-	}
-	CONVERT_IMAGE_END;
+
+	LOGFONTW lf = {0};
+	lf.lfHeight         = nHeight;
+	lf.lfWidth          = nWidth;
+	lf.lfEscapement     = nEscapement;
+	lf.lfOrientation    = nOrientation;
+	lf.lfWeight         = nWeight;
+	lf.lfItalic         = (bItalic != 0);
+	lf.lfUnderline      = (bUnderline != 0);
+	lf.lfStrikeOut      = (bStrikeOut != 0);
+	lf.lfCharSet        = fbCharSet;
+	lf.lfOutPrecision   = fbOutPrecision;
+	lf.lfClipPrecision  = fbClipPrecision;
+	lf.lfQuality        = fbQuality;
+	lf.lfPitchAndFamily = fbPitchAndFamily;
+	lstrcpyW(lf.lfFaceName, lpszFace);
+
+	setfont(&lf, pimg);
 }
 
 void
-setfont(
-		int nHeight,
-		int nWidth,
-		LPCSTR lpszFace,
-		int nEscapement,
-		int nOrientation,
-		int nWeight,
-		int bItalic,
-		int bUnderline,
-		int bStrikeOut,
-		PIMAGE pimg)
+setfont(int nHeight, int nWidth, LPCSTR lpszFace, int nEscapement, int nOrientation, int nWeight,
+		int bItalic, int bUnderline, int bStrikeOut, PIMAGE pimg)
 {
-	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
-	if (img) {
-		LOGFONTA lf = {0};
-		lf.lfHeight         = nHeight;
-		lf.lfWidth          = nWidth;
-		lf.lfEscapement     = nEscapement;
-		lf.lfOrientation    = nOrientation;
-		lf.lfWeight         = nWeight;
-		lf.lfItalic         = (bItalic != 0);
-		lf.lfUnderline      = (bUnderline != 0);
-		lf.lfStrikeOut      = (bStrikeOut != 0);
-		lf.lfCharSet        = DEFAULT_CHARSET;
-		lf.lfOutPrecision   = OUT_DEFAULT_PRECIS;
-		lf.lfClipPrecision  = CLIP_DEFAULT_PRECIS;
-		lf.lfQuality        = DEFAULT_QUALITY;
-		lf.lfPitchAndFamily = DEFAULT_PITCH;
-		lstrcpyA(lf.lfFaceName, lpszFace);
-		HFONT hfont = CreateFontIndirectA(&lf);
-		DeleteObject(SelectObject(img->m_hDC, hfont));
-	}
-	CONVERT_IMAGE_END;
+	setfont(nHeight, nWidth, lpszFace, nEscapement, nOrientation, nWeight, bItalic, bUnderline, bStrikeOut,
+		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH,
+		pimg
+	);
 }
 
-void
-setfont(
-		int nHeight,
-		int nWidth,
-		LPCWSTR lpszFace,
-		int nEscapement,
-		int nOrientation,
-		int nWeight,
-		int bItalic,
-		int bUnderline,
-		int bStrikeOut,
-		PIMAGE pimg)
+void setfont(int nHeight, int nWidth, LPCWSTR lpszFace, int nEscapement, int nOrientation, int nWeight,
+		int bItalic, int bUnderline, int bStrikeOut, PIMAGE pimg)
 {
-	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
-	if (img) {
-		LOGFONTW lf = {0};
-		lf.lfHeight         = nHeight;
-		lf.lfWidth          = nWidth;
-		lf.lfEscapement     = nEscapement;
-		lf.lfOrientation    = nOrientation;
-		lf.lfWeight         = nWeight;
-		lf.lfItalic         = (bItalic != 0);
-		lf.lfUnderline      = (bUnderline != 0);
-		lf.lfStrikeOut      = (bStrikeOut != 0);
-		lf.lfCharSet        = DEFAULT_CHARSET;
-		lf.lfOutPrecision   = OUT_DEFAULT_PRECIS;
-		lf.lfClipPrecision  = CLIP_DEFAULT_PRECIS;
-		lf.lfQuality        = DEFAULT_QUALITY;
-		lf.lfPitchAndFamily = DEFAULT_PITCH;
-		lstrcpyW(lf.lfFaceName, lpszFace);
-		HFONT hfont = CreateFontIndirectW(&lf);
-		DeleteObject(SelectObject(img->m_hDC, hfont));
-	}
-	CONVERT_IMAGE_END;
+	setfont(nHeight, nWidth, lpszFace, nEscapement, nOrientation, nWeight, bItalic, bUnderline, bStrikeOut,
+		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH,
+		pimg
+	);
 }
 
-void
-setfont(int nHeight, int nWidth, LPCSTR lpszFace, PIMAGE pimg) {
-	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
-	if (img) {
-		LOGFONTA lf = {0};
-		lf.lfHeight         = nHeight;
-		lf.lfWidth          = nWidth;
-		lf.lfEscapement     = 0;
-		lf.lfOrientation    = 0;
-		lf.lfWeight         = FW_DONTCARE;
-		lf.lfItalic         = 0;
-		lf.lfUnderline      = 0;
-		lf.lfStrikeOut      = 0;
-		lf.lfCharSet        = DEFAULT_CHARSET;
-		lf.lfOutPrecision   = OUT_DEFAULT_PRECIS;
-		lf.lfClipPrecision  = CLIP_DEFAULT_PRECIS;
-		lf.lfQuality        = DEFAULT_QUALITY;
-		lf.lfPitchAndFamily = DEFAULT_PITCH;
-		lstrcpyA(lf.lfFaceName, lpszFace);
-		HFONT hfont = CreateFontIndirectA(&lf);
-		DeleteObject(SelectObject(img->m_hDC, hfont));
-	}
-	CONVERT_IMAGE_END;
+void setfont(int nHeight, int nWidth, LPCSTR lpszFace, PIMAGE pimg)
+{
+	setfont(nHeight, nWidth, lpszFace, 0, 0, FW_DONTCARE, FALSE, FALSE, FALSE,
+		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH,
+		pimg
+	);
 }
 
-void
-setfont(int nHeight, int nWidth, LPCWSTR lpszFace, PIMAGE pimg) {
-	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
-	if (img) {
-		LOGFONTW lf = {0};
-		lf.lfHeight         = nHeight;
-		lf.lfWidth          = nWidth;
-		lf.lfEscapement     = 0;
-		lf.lfOrientation    = 0;
-		lf.lfWeight         = FW_DONTCARE;
-		lf.lfItalic         = 0;
-		lf.lfUnderline      = 0;
-		lf.lfStrikeOut      = 0;
-		lf.lfCharSet        = DEFAULT_CHARSET;
-		lf.lfOutPrecision   = OUT_DEFAULT_PRECIS;
-		lf.lfClipPrecision  = CLIP_DEFAULT_PRECIS;
-		lf.lfQuality        = DEFAULT_QUALITY;
-		lf.lfPitchAndFamily = DEFAULT_PITCH;
-		lstrcpyW(lf.lfFaceName, lpszFace);
-		HFONT hfont = CreateFontIndirectW(&lf);
-		DeleteObject(SelectObject(img->m_hDC, hfont));
-	}
-	CONVERT_IMAGE_END;
+void setfont(int nHeight, int nWidth, LPCWSTR lpszFace, PIMAGE pimg)
+{
+	setfont(nHeight, nWidth, lpszFace, 0, 0, FW_DONTCARE, FALSE, FALSE, FALSE,
+		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH,
+		pimg
+	);
 }
 
-void
-setfont(const LOGFONTA *font, PIMAGE pimg) {
+void setfont(const LOGFONTA *font, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
 	if (img) {
 		HFONT hfont = CreateFontIndirectA(font);
@@ -1973,8 +1880,8 @@ setfont(const LOGFONTA *font, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-setfont(const LOGFONTW *font, PIMAGE pimg) {
+void setfont(const LOGFONTW *font, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
 	if (img) {
 		HFONT hfont = CreateFontIndirectW(font);
@@ -1983,8 +1890,8 @@ setfont(const LOGFONTW *font, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-getfont(LOGFONTA *font, PCIMAGE pimg) {
+void getfont(LOGFONTA *font, PCIMAGE pimg)
+{
 	PCIMAGE img = CONVERT_IMAGE_CONST(pimg);
 	if (img) {
 		HFONT hf = (HFONT)GetCurrentObject(img->m_hDC, OBJ_FONT);
@@ -1993,8 +1900,8 @@ getfont(LOGFONTA *font, PCIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-getfont(LOGFONTW *font, PCIMAGE pimg) {
+void getfont(LOGFONTW *font, PCIMAGE pimg)
+{
 	PCIMAGE img = CONVERT_IMAGE_CONST(pimg);
 	if (img) {
 		HFONT hf = (HFONT)GetCurrentObject(img->m_hDC, OBJ_FONT);
@@ -2031,7 +1938,7 @@ setactivepage(int page) {
 	struct _graph_setting * pg = &graph_setting;
 	if (0 <= page && page < BITMAP_PAGE_SIZE) {
 		pg->active_page = page;
-		
+
 		if (pg->img_page[page] == NULL) {
 			pg->img_page[page] = new IMAGE(pg->dc_w, pg->dc_h);
 		}
@@ -2926,18 +2833,18 @@ LRESULT sys_edit::onMessage(UINT message, WPARAM wParam, LPARAM lParam) {
 			{
 				HDC dc = (HDC)wParam;
 				HBRUSH br = ::CreateSolidBrush(ARGBTOZBGR(m_bgcolor));
-	
+
 				::SetBkColor(dc, ARGBTOZBGR(m_bgcolor));
 				::SetTextColor(dc, ARGBTOZBGR(m_color));
 				::DeleteObject(m_hBrush);
 				m_hBrush = br;
-				return (LRESULT)br;			
+				return (LRESULT)br;
 			}
 			break;
 		case WM_SETFOCUS:
 			m_bInputFocus = 1;
 			// call textbox's own message process to show caret
-			return ((LRESULT (CALLBACK *)(HWND, UINT, WPARAM, LPARAM))m_callback)(m_hwnd, message, wParam, lParam);		
+			return ((LRESULT (CALLBACK *)(HWND, UINT, WPARAM, LPARAM))m_callback)(m_hwnd, message, wParam, lParam);
 		case WM_KILLFOCUS:
 			m_bInputFocus = 0;
 			// call textbox's own message process to hide caret
