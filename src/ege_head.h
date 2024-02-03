@@ -15,6 +15,9 @@
 #define _ALLOW_RUNTIME_LIBRARY_MISMATCH
 #endif
 
+#define EGE_GRAPH_LIB_BUILD
+#define EGE_DEPRECATE(text)
+#include "ege.h"
 
 #define EGE_TOSTR_(x)  #x
 #define EGE_TOSTR(x)   EGE_TOSTR_(x)
@@ -62,16 +65,8 @@
 #	define COMPILER_VER_W   L"GCC"  GCC_VER_W  SYSBITS_W
 #endif
 
-#define EGE_VERSION_YEAR       "20"
-#define EGE_VERSION_MONTH      "08"
-#define EGE_VERSION_YEAR_INT   20
-#define EGE_VERSION_MONTH_INT  8
-
-#define EGE_VERSION_INT (EGE_VERSION_YEAR_INT * 100 + EGE_VERSION_MONTH_INT)
-#define EGE_VERSION     EGE_VERSION_YEAR "." EGE_VERSION_MONTH
-#define EGE_VERSION_W   EGE_L(EGE_VERSION_YEAR) L"." EGE_L(EGE_VERSION_MONTH)
-#define EGE_TITLE       "EGE"  EGE_VERSION   " "  COMPILER_VER
-#define EGE_TITLE_W     L"EGE" EGE_VERSION_W L" " COMPILER_VER_W
+#define EGE_TITLE       "EGE"  EGE_VERSION  " "  COMPILER_VER
+#define EGE_TITLE_W     L"EGE" EGE_VERSION  " "  COMPILER_VER
 
 #define EGE_WNDCLSNAME    "Easy Graphics Engine"
 #define EGE_WNDCLSNAME_W  EGE_L(EGE_WNDCLSNAME)
@@ -86,9 +81,6 @@
 
 #include <string>
 
-#define EGE_GRAPH_LIB_BUILD
-#define EGE_DEPRECATE(text)
-#include "ege.h"
 #include "ege/egecontrolbase.h"
 #include "thread_queue.h"
 

@@ -1,5 +1,5 @@
 /*********************************************************
-* EGE (Easy Graphics Engine)
+* EGE (Easy Graphics Engine)  20.08
 * FileName      graphics.h
 * HomePage1     http://misakamm.github.com/xege
 * HomePage2     http://misakamm.bitbucket.org/index.htm
