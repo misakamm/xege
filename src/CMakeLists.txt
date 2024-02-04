@@ -1,14 +1,4 @@
-set(EGE_CPP_SRC
-  graphics.cpp
-  logo.cpp
-  color.cpp
-  image.cpp
-  music.cpp
-  random.cpp
-  egecontrolbase.cpp
-  egegapi.cpp
-  math.cpp
-  )
+file(GLOB EGE_CPP_SRC CONFIGURE_DEPENDS *.cpp)
 
 target_sources(xege
   PRIVATE ${EGE_CPP_SRC}
