@@ -1,7 +1,7 @@
-//»ù´¡¶¯»­Îå£¬¶ÔÏó·â×°£¬Ê¹´úÂë¸üÓÐÌõÀí
+//åŸºç¡€åŠ¨ç”»äº”ï¼Œå¯¹è±¡å°è£…ï¼Œä½¿ä»£ç æ›´æœ‰æ¡ç†
 #include <graphics.h>
 
-//¶¨ÒåÒ»¸öAniObj£¬¼´Ç°Ò»ÀýÀïÃæµÄÔ²£¬Ïà¹ØÊôÐÔÐ´ÔÚÕâ¸ö½á¹¹ÌåÀï
+//å®šä¹‰ä¸€ä¸ªAniObjï¼Œå³å‰ä¸€ä¾‹é‡Œé¢çš„åœ†ï¼Œç›¸å…³å±žæ€§å†™åœ¨è¿™ä¸ªç»“æž„ä½“é‡Œ
 struct AniObj
 {
 	int x, y, r;
@@ -10,7 +10,7 @@ struct AniObj
 	PIMAGE img;
 };
 
-//³õÊ¼»¯£¬ÉèÖÃ×ø±ê£¬ËÙ¶È·½Ïò£¬Í¸Ã÷¶È£¬´´½¨IMAGEµÈ
+//åˆå§‹åŒ–ï¼Œè®¾ç½®åæ ‡ï¼Œé€Ÿåº¦æ–¹å‘ï¼Œé€æ˜Žåº¦ï¼Œåˆ›å»ºIMAGEç­‰
 void initobj(AniObj* obj)
 {
 	obj->x = 0;
@@ -21,7 +21,7 @@ void initobj(AniObj* obj)
 	obj->alpha = 0;
 	obj->da = 1;
 
-	// ³õÊ¼»¯img
+	// åˆå§‹åŒ–img
 	obj->img = newimage(obj->r * 2, obj->r * 2);
 
 	setcolor(0x00FF00, obj->img);
@@ -30,30 +30,30 @@ void initobj(AniObj* obj)
 	fillellipse(obj->r, obj->r, obj->r, obj->r, obj->img);
 }
 
-//¸üÐÂÎ»ÖÃµÈÏà¹ØÊôÐÔ
+//æ›´æ–°ä½ç½®ç­‰ç›¸å…³å±žæ€§
 void updateobj(AniObj* obj)
 {
-	// µ±Ç°Î»ÖÃ + ËÙ¶È
+	// å½“å‰ä½ç½® + é€Ÿåº¦
 	obj->x += obj->dx;
 	obj->y += obj->dy;
-	if (obj->x < 0) obj->dx = 1; //Åö×ó
-	if (obj->y < 0) obj->dy = 1; //ÅöÉÏ
-	if (obj->x >= ege::getwidth()  - obj->r * 2) obj->dx = -1; //ÅöÓÒ
-	if (obj->y >= ege::getheight() - obj->r * 2) obj->dy = -1; //ÅöÏÂ
+	if (obj->x < 0) obj->dx = 1; //ç¢°å·¦
+	if (obj->y < 0) obj->dy = 1; //ç¢°ä¸Š
+	if (obj->x >= ege::getwidth()  - obj->r * 2) obj->dx = -1; //ç¢°å³
+	if (obj->y >= ege::getheight() - obj->r * 2) obj->dy = -1; //ç¢°ä¸‹
 
-	// ¸Ä±äalphaÖµ
+	// æ”¹å˜alphaå€¼
 	obj->alpha += obj->da;
 	if (obj->alpha <= 0) obj->da = 1;
 	if (obj->alpha >= 0xFF) obj->da = -1;
 }
 
-//¸ù¾ÝÊôÐÔÖµ»æ»­
+//æ ¹æ®å±žæ€§å€¼ç»˜ç”»
 void drawobj(AniObj* obj)
 {
 	putimage_alphatransparent(NULL, obj->img, obj->x, obj->y, BLACK, (unsigned char)obj->alpha);
 }
 
-//ÊÍ·ÅÕâ¸ö¶ÔÏóÊ±µ÷ÓÃ
+//é‡Šæ”¾è¿™ä¸ªå¯¹è±¡æ—¶è°ƒç”¨
 void releaseobj(AniObj* obj)
 {
 	delimage(obj->img);
@@ -61,32 +61,32 @@ void releaseobj(AniObj* obj)
 
 void mainloop()
 {
-	AniObj obj; //ÉùÃ÷AniObj¶ÔÏó
-	initobj(&obj); //³õÊ¼»¯
+	AniObj obj; //å£°æ˜ŽAniObjå¯¹è±¡
+	initobj(&obj); //åˆå§‹åŒ–
 
 	for ( ; is_run(); delay_fps(60) )
 	{
-		// todo: Âß¼­¸üÐÂ
-		updateobj(&obj); //¸üÐÂÎ»ÖÃ
+		// todo: é€»è¾‘æ›´æ–°
+		updateobj(&obj); //æ›´æ–°ä½ç½®
 
-		// todo: Í¼ÐÎ¸üÐÂ
+		// todo: å›¾å½¢æ›´æ–°
 		cleardevice();
-		drawobj(&obj); //»æ»­
+		drawobj(&obj); //ç»˜ç”»
 	}
 
-	releaseobj(&obj); //ÊÍ·Å
+	releaseobj(&obj); //é‡Šæ”¾
 }
 
 int main(void)
 {
 	setinitmode(INIT_ANIMATION);
-	// Í¼ÐÎ³õÊ¼»¯£¬´°¿Ú³ß´ç640x480
+	// å›¾å½¢åˆå§‹åŒ–ï¼Œçª—å£å°ºå¯¸640x480
 	initgraph(640, 480);
-	// Ëæ»úÊý³õÊ¼»¯£¬Èç¹ûÐèÒªÊ¹ÓÃËæ»úÊýµÄ»°
+	// éšæœºæ•°åˆå§‹åŒ–ï¼Œå¦‚æžœéœ€è¦ä½¿ç”¨éšæœºæ•°çš„è¯
 	randomize();
-	// ³ÌÐòÖ÷Ñ­»·
+	// ç¨‹åºä¸»å¾ªçŽ¯
 	mainloop();
-	// ¹Ø±Õ»æÍ¼Éè±¸
+	// å…³é—­ç»˜å›¾è®¾å¤‡
 	closegraph();
 	return 0;
 }

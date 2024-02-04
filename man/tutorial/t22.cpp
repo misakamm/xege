@@ -1,9 +1,9 @@
-//��������������ƽ�ƶ���
+//基础动画二：简单平移动画
 #include <graphics.h>
 
 void mainloop()
 {
-	// �������Ʊ��������ƺ����꣬��ʼֵΪ0
+	// 动画控制变量，控制横坐标，初始值为0
 	int x = 0;
 
 	setcolor(EGERGB(0, 0xFF, 0));
@@ -11,30 +11,30 @@ void mainloop()
 
 	for ( ; is_run(); delay_fps(60) )
 	{
-		// todo: �߼�����
-		//���������꣬����һ�����أ��������440�������ƻ�x=0���ﵽ����ѭ��
+		// todo: 逻辑更新
+		//计算新坐标，右移一个像素，如果等于440则重新移回x=0，达到动画循环
 		x = ( x + 1 ) % 440;
 
-		// todo: ͼ�θ���
-		//�������������µ�λ�û�ͼͼ��
+		// todo: 图形更新
+		//清屏，重新在新的位置绘图图像
 		cleardevice();
-		//��xΪԲ����߽�滭��Ϊʲô����߽磿��ΪԲ�������� (x + �뾶) ��
+		//以x为圆的左边界绘画，为什么是左边界？因为圆心坐标是 (x + 半径) 了
 		fillellipse(x + 100, 200, 100, 100);
 	}
 }
 
 int main(void)
 {
-	//INIT_ANIMATION�൱��INIT_NOFORCEEXIT|INIT_DEFAULT|INIT_RENDERMANUAL
-	//����Ͳ���Ҫ�ٶ�һ��setrendermode
+	//INIT_ANIMATION相当于INIT_NOFORCEEXIT|INIT_DEFAULT|INIT_RENDERMANUAL
+	//下面就不需要再多一步setrendermode
 	setinitmode(INIT_ANIMATION);
-	// ͼ�γ�ʼ�������ڳߴ�640x480
+	// 图形初始化，窗口尺寸640x480
 	initgraph(640, 480);
-	// �������ʼ���������Ҫʹ��������Ļ�
+	// 随机数初始化，如果需要使用随机数的话
 	randomize();
-	// ������ѭ��
+	// 程序主循环
 	mainloop();
-	// �رջ�ͼ�豸
+	// 关闭绘图设备
 	closegraph();
 	return 0;
 }

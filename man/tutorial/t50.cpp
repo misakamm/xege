@@ -7,8 +7,8 @@ class graph : public ege::egeControlBase
 {
 public:
 	graph() {
-		ege::PushTarget _target; // 把当前绘图目标缓冲，函数退出时自动还原
-		settarget(buf()); // 设置绘图目标
+		ege::PushTarget _target; // 鎶婂綋鍓嶇粯鍥剧洰鏍囩紦鍐诧紝鍑芥暟閫�鍑烘椂鑷姩杩樺師
+		settarget(buf()); // 璁剧疆缁樺浘鐩爣
 		x = ege::random(parent()->getw()), y = ege::random(parent()->geth());
 		blendmode(1);
 		size(40 * 2, 40 * 2);

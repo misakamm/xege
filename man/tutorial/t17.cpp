@@ -1,12 +1,12 @@
-//¸ß¼¶£º¸ü¶àµÄÎÄ×Ö¶ÔÆë·½Ê½ÉèÖÃ
+//é«˜çº§ï¼šæ›´å¤šçš„æ–‡å­—å¯¹é½æ–¹å¼è®¾ç½®
 #include <graphics.h>
 
 int main()
 {
 	initgraph(640, 480);
 
-	setfont(18, 0, "ËÎÌå");
-	//settextjustify(LEFT_TEXT, TOP_TEXT); //Ä¬ÈÏÖµ
+	setfont(18, 0, "å®‹ä½“");
+	//settextjustify(LEFT_TEXT, TOP_TEXT); //é»˜è®¤å€¼
 	outtextxy(300, 0, "Hello Graphics");
 
 	settextjustify(RIGHT_TEXT, TOP_TEXT);

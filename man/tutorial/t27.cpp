@@ -1,7 +1,7 @@
-//»ù´¡¶¯»­Æß£¬Ê¹ÓÃ·ÇÕûÊý²ÎÊý£¬Ëæ»úÉ«²Ê£¬Ê¹ÄãµÄ¶¯»­¸ü×ÔÈ»
+//åŸºç¡€åŠ¨ç”»ä¸ƒï¼Œä½¿ç”¨éžæ•´æ•°å‚æ•°ï¼Œéšæœºè‰²å½©ï¼Œä½¿ä½ çš„åŠ¨ç”»æ›´è‡ªç„¶
 #include <graphics.h>
 
-//¶¨ÒåÒ»¸öAniObj£¬¼´Ç°Ò»ÀýÀïÃæµÄÔ²£¬Ïà¹ØÊôÐÔÐ´ÔÚÕâ¸ö½á¹¹ÌåÀï
+//å®šä¹‰ä¸€ä¸ªAniObjï¼Œå³å‰ä¸€ä¾‹é‡Œé¢çš„åœ†ï¼Œç›¸å…³å±žæ€§å†™åœ¨è¿™ä¸ªç»“æž„ä½“é‡Œ
 struct AniObj
 {
 	float x, y;
@@ -11,30 +11,30 @@ struct AniObj
 	PIMAGE img;
 };
 
-//×Ô¶¨Òåº¯Êý£¬ÓÃÀ´·µ»ØÒ»¸ö0 - mÖ®¼äµÄ¸¡µãÊý
+//è‡ªå®šä¹‰å‡½æ•°ï¼Œç”¨æ¥è¿”å›žä¸€ä¸ª0 - mä¹‹é—´çš„æµ®ç‚¹æ•°
 float myrand(float m)
 {
-	// randomf() ·µ»ØÒ»¸ö 0 µ½ 1 Ö®¼äµÄËæ»ú¸¡µãÊý
+	// randomf() è¿”å›žä¸€ä¸ª 0 åˆ° 1 ä¹‹é—´çš„éšæœºæµ®ç‚¹æ•°
 	return (float)(randomf() * m);
 }
 
-//¶¨ÒåËÙ¶È»ù×¼Öµ£¬base_speedÊÇ×îµÍËÙ¶È£¬base_speed+randspeedÊÇ×î¸ßËÙ¶È
+//å®šä¹‰é€Ÿåº¦åŸºå‡†å€¼ï¼Œbase_speedæ˜¯æœ€ä½Žé€Ÿåº¦ï¼Œbase_speed+randspeedæ˜¯æœ€é«˜é€Ÿåº¦
 const float base_speed = 0.5f;
 const float randspeed = 1.5f;
 
-//³õÊ¼»¯£¬ÉèÖÃ×ø±ê£¬ËÙ¶È·½Ïò£¬Í¸Ã÷¶È£¬´´½¨IMAGEµÈ
+//åˆå§‹åŒ–ï¼Œè®¾ç½®åæ ‡ï¼Œé€Ÿåº¦æ–¹å‘ï¼Œé€æ˜Žåº¦ï¼Œåˆ›å»ºIMAGEç­‰
 void initobj(AniObj* obj)
 {
 	obj->x = myrand((float)getwidth());
 	obj->y = myrand((float)getheight());
 	obj->r = random(20) + 20;
-	// Ëæ»úËÙ¶È
+	// éšæœºé€Ÿåº¦
 	obj->dx = myrand(randspeed) + base_speed;
 	obj->dy = myrand(randspeed) + base_speed;
-	// Ëæ»ú·½Ïò
+	// éšæœºæ–¹å‘
 	obj->dx = obj->dx * float(random(2) * 2.0 - 1);
 	obj->dy = obj->dy * float(random(2) * 2.0 - 1);
-	// ÒÔÉÏµÄ´¦Àí·½Ê½ÓÃÀ´±£Ö¤ËÙ¶È²»¹ýÂý
+	// ä»¥ä¸Šçš„å¤„ç†æ–¹å¼ç”¨æ¥ä¿è¯é€Ÿåº¦ä¸è¿‡æ…¢
 
 	obj->alpha = random(250) + 2;
 	obj->da = (int)random(2) * 2 - 1;
@@ -48,30 +48,30 @@ void initobj(AniObj* obj)
 	fillellipse(obj->r, obj->r, obj->r, obj->r, obj->img);
 }
 
-//¸üÐÂÎ»ÖÃµÈÏà¹ØÊôÐÔ
+//æ›´æ–°ä½ç½®ç­‰ç›¸å…³å±žæ€§
 void updateobj(AniObj* obj)
 {
-	// µ±Ç°Î»ÖÃ + ËÙ¶È
+	// å½“å‰ä½ç½® + é€Ÿåº¦
 	obj->x += obj->dx;
 	obj->y += obj->dy;
-	if (obj->x < 0) obj->dx = myrand(randspeed) + base_speed; //Åö×ó
-	if (obj->y < 0) obj->dy = myrand(randspeed) + base_speed; //ÅöÉÏ
-	if (obj->x >= ege::getwidth()  - obj->r * 2) obj->dx = -(myrand(randspeed) + base_speed); //ÅöÓÒ
-	if (obj->y >= ege::getheight() - obj->r * 2) obj->dy = -(myrand(randspeed) + base_speed); //ÅöÏÂ
+	if (obj->x < 0) obj->dx = myrand(randspeed) + base_speed; //ç¢°å·¦
+	if (obj->y < 0) obj->dy = myrand(randspeed) + base_speed; //ç¢°ä¸Š
+	if (obj->x >= ege::getwidth()  - obj->r * 2) obj->dx = -(myrand(randspeed) + base_speed); //ç¢°å³
+	if (obj->y >= ege::getheight() - obj->r * 2) obj->dy = -(myrand(randspeed) + base_speed); //ç¢°ä¸‹
 
-	// ¸Ä±äalphaÖµ
+	// æ”¹å˜alphaå€¼
 	obj->alpha += obj->da;
 	if (obj->alpha <= 0) obj->da = 1;
 	if (obj->alpha >= 0xFF) obj->da = -1;
 }
 
-//¸ù¾ÝÊôÐÔÖµ»æ»­
+//æ ¹æ®å±žæ€§å€¼ç»˜ç”»
 void drawobj(AniObj* obj)
 {
 	putimage_alphatransparent(NULL, obj->img, (int)obj->x, (int)obj->y, BLACK, (unsigned char)obj->alpha);
 }
 
-//ÊÍ·ÅÕâ¸ö¶ÔÏóÊ±µ÷ÓÃ
+//é‡Šæ”¾è¿™ä¸ªå¯¹è±¡æ—¶è°ƒç”¨
 void releaseobj(AniObj* obj)
 {
 	delimage(obj->img);
@@ -80,44 +80,44 @@ void releaseobj(AniObj* obj)
 void mainloop()
 {
 	const int MAXOBJ = 30;
-	AniObj obj[MAXOBJ]; //¶¨Òå¶ÔÏóÊý×é
+	AniObj obj[MAXOBJ]; //å®šä¹‰å¯¹è±¡æ•°ç»„
 	int n;
 
 	for (n = 0; n < MAXOBJ; ++n)
 	{
-		initobj(&obj[n]); //³õÊ¼»¯
+		initobj(&obj[n]); //åˆå§‹åŒ–
 	}
 
 	for ( ; is_run(); delay_fps(60) )
 	{
 		for (n = 0; n < MAXOBJ; ++n)
 		{
-			updateobj(&obj[n]); //¸üÐÂÎ»ÖÃ
+			updateobj(&obj[n]); //æ›´æ–°ä½ç½®
 		}
 
 		cleardevice();
 		for (n = 0; n < MAXOBJ; ++n)
 		{
-			drawobj(&obj[n]); //»æ»­
+			drawobj(&obj[n]); //ç»˜ç”»
 		}
 	}
 
 	for (n = 0; n < MAXOBJ; ++n)
 	{
-		releaseobj(&obj[n]); //ÊÍ·Å
+		releaseobj(&obj[n]); //é‡Šæ”¾
 	}
 }
 
 int main(void)
 {
 	setinitmode(INIT_ANIMATION);
-	// Í¼ÐÎ³õÊ¼»¯£¬´°¿Ú³ß´ç640x480
+	// å›¾å½¢åˆå§‹åŒ–ï¼Œçª—å£å°ºå¯¸640x480
 	initgraph(640, 480);
-	// Ëæ»úÊý³õÊ¼»¯£¬Èç¹ûÐèÒªÊ¹ÓÃËæ»úÊýµÄ»°
+	// éšæœºæ•°åˆå§‹åŒ–ï¼Œå¦‚æžœéœ€è¦ä½¿ç”¨éšæœºæ•°çš„è¯
 	randomize();
-	// ³ÌÐòÖ÷Ñ­»·
+	// ç¨‹åºä¸»å¾ªçŽ¯
 	mainloop();
-	// ¹Ø±Õ»æÍ¼Éè±¸
+	// å…³é—­ç»˜å›¾è®¾å¤‡
 	closegraph();
 	return 0;
 }

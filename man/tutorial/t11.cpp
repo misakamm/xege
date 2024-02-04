@@ -1,4 +1,4 @@
-//Ê¹ÓÃIMAGE¡ª¡ªÍ¸Ã÷£¬°ëÍ¸Ã÷
+//ä½¿ç”¨IMAGEâ€”â€”é€æ˜ï¼ŒåŠé€æ˜
 #include <graphics.h>
 
 int main()
@@ -7,7 +7,7 @@ int main()
 
 	initgraph(640, 480);
 
-	//ÏÈËæ±ã»­Ò»Ğ©¶«Î÷
+	//å…ˆéšä¾¿ç”»ä¸€äº›ä¸œè¥¿
 	setcolor(EGERGB(0xFF, 0xFF, 0x0));
 	setfillcolor(EGERGB(0xFF, 0x0, 0x80));
 	fillellipse(50, 50, 50, 50);
@@ -15,15 +15,15 @@ int main()
 	img = newimage();
 	getimage(img, 0, 0, 160, 120);
 
-	//ÏÈ»­Ò»¸ö·ÇºÚÉ«±³¾°£¬ÒÔ±ãÓÚ±È½Ï
+	//å…ˆç”»ä¸€ä¸ªéé»‘è‰²èƒŒæ™¯ï¼Œä»¥ä¾¿äºæ¯”è¾ƒ
 	setbkcolor(EGERGB(0x80, 0x80, 0x80));
 	cleardevice();
 
-	//ËÄÖÖÌùÍ¼±È½Ï
+	//å››ç§è´´å›¾æ¯”è¾ƒ
 	putimage(0, 0, img);
-	putimage_alphablend(NULL, img, 160, 0, 0x80); //°ëÍ¸Ã÷¶ÈÎª0x80
-	putimage_transparent(NULL, img, 0, 80, BLACK);	//Í¸Ã÷ÌùÍ¼£¬¹Ø¼üÉ«ÎªBLACK£¬Ô´Í¼ÎªÕâ¸öÑÕÉ«µÄµØ·½»á±»ºöÂÔ
-	putimage_alphatransparent(NULL, img, 160, 80, BLACK, 0xA0); //Í¬Ê±Ê¹ÓÃÍ¸Ã÷ºÍ°ëÍ¸Ã÷
+	putimage_alphablend(NULL, img, 160, 0, 0x80); //åŠé€æ˜åº¦ä¸º0x80
+	putimage_transparent(NULL, img, 0, 80, BLACK);	//é€æ˜è´´å›¾ï¼Œå…³é”®è‰²ä¸ºBLACKï¼Œæºå›¾ä¸ºè¿™ä¸ªé¢œè‰²çš„åœ°æ–¹ä¼šè¢«å¿½ç•¥
+	putimage_alphatransparent(NULL, img, 160, 80, BLACK, 0xA0); //åŒæ—¶ä½¿ç”¨é€æ˜å’ŒåŠé€æ˜
 
 	getch();
 
