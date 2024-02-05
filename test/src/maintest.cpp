@@ -23,9 +23,9 @@ public:
     } CTL_PREINITEND;
     graph(CTL_DEFPARAM) : CTL_INITBASE(egeControlBase) {
         CTL_INIT;
-        // ��ʼ�����꣬
+        // 初始化坐标，
         x = random(parent()->getw()), y = random(parent()->geth());
-        // ����͸����͸�����
+        // 开启透明半透明混合
         blendmode(1);
 
         {
@@ -102,7 +102,7 @@ private:
     color_t m_col;
 };
 
-// ��򵥵ļ̳�ʾ��
+// 最简单的继承示例
 class Window2 : public Window
 {
 public:
