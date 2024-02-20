@@ -145,7 +145,7 @@ macro(ege_add_executable name source)
 endmacro()
 
 # 编译测试
-ege_add_executable(graphicstest src/graphicstest/maintest.cpp)
+ege_add_executable(graphicstest test/src/maintest.cpp)
 
 add_subdirectory(src)
 
