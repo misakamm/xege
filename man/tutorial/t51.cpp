@@ -13,9 +13,9 @@ public:
 	} CTL_PREINITEND;
 	graph(CTL_DEFPARAM) : CTL_INITBASE(ege::egeControlBase) {
 		CTL_INIT;
-		// ��ʼ�����꣬
+		// 初始化坐标，
 		x = ege::random(parent()->getw()), y = ege::random(parent()->geth());
-		// ����͸����͸�����
+		// 开启透明半透明混合
 		blendmode(ALPHABLEND);
 
 		{
@@ -63,7 +63,7 @@ public:
 		blendmode(ALPHABLEND);
 		m_col = ege::hsv2rgb(float(ege::randomf() * 360), 1.0f, 0.2f);
 		m_capmouse = 0;
-		// �滭��Բ�ɼ�����
+		// 绘画椭圆可见区域
 		ege::setbkcolor_f(0x0, filter());
 		ege::cleardevice(filter());
 		ege::setcolor((ege::color_t)EGEGRAY(0xAF), filter());
@@ -93,7 +93,7 @@ public:
 		return 0;
 	}
 	void onDraw(ege::PIMAGE pimg) const {
-		// �ػ��ؼ�����
+		// 重画控件背景
 		ege::setbkcolor_f(m_col, pimg);
 		ege::cleardevice(pimg);
 	}
@@ -104,7 +104,7 @@ private:
 	ege::color_t m_col;
 };
 
-// ��򵥵ļ̳�ʾ��
+// 最简单的继承示例
 class Window2 : public Window
 {
 public:

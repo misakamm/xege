@@ -1,7 +1,7 @@
-//»ù´¡¶¯»­Ê®£¬³¡¾°¹ÜÀíÏÂµÄÊäÈëÊä³ö¿ØÖÆ
+//åŸºç¡€åŠ¨ç”»åï¼Œåœºæ™¯ç®¡ç†ä¸‹çš„è¾“å…¥è¾“å‡ºæ§åˆ¶
 
-//±¾Ê¾ÀıÔËĞĞÊ±£¬¿ÉÒÔÊ¹ÓÃP¼üÔİÍ£»ò²¥·Å
-//Ğ¡Çò»á×Ô¶¯¸ú×ÙÊó±ê
+//æœ¬ç¤ºä¾‹è¿è¡Œæ—¶ï¼Œå¯ä»¥ä½¿ç”¨Pé”®æš‚åœæˆ–æ’­æ”¾
+//å°çƒä¼šè‡ªåŠ¨è·Ÿè¸ªé¼ æ ‡
 #include <ege.h>
 
 #include <math.h>
@@ -10,24 +10,24 @@
 const float base_speed = 0.5f;
 const float randspeed = 4.0f;
 
-//·µ»ØÒ»¸ö¸¡µãÊıµÄ·ûºÅ
+//è¿”å›ä¸€ä¸ªæµ®ç‚¹æ•°çš„ç¬¦å·
 float sgn(float f)
 {
 	if (f > 0) return 1;
 	if (f < 0) return -1;
 	return 0;
 }
-//×Ô¶¨Òåº¯Êı£¬ÓÃÀ´·µ»ØÒ»¸ö0 - mÖ®¼äµÄ¸¡µãÊı
+//è‡ªå®šä¹‰å‡½æ•°ï¼Œç”¨æ¥è¿”å›ä¸€ä¸ª0 - mä¹‹é—´çš„æµ®ç‚¹æ•°
 float myrand(float m)
 {
 	return (float)(ege::randomf() * m);
 }
 
-//¶¨ÒåÒ»¸öAniObjÀà£¬Õâ¸öÓëÇ°Ò»¸ö³ıÁËº¯ÊıÃû£¬ºÍupdate¼ÓÁË·µ»ØÖµÒÔÍâÃ»ÓĞ±ä»¯
+//å®šä¹‰ä¸€ä¸ªAniObjç±»ï¼Œè¿™ä¸ªä¸å‰ä¸€ä¸ªé™¤äº†å‡½æ•°åï¼Œå’ŒupdateåŠ äº†è¿”å›å€¼ä»¥å¤–æ²¡æœ‰å˜åŒ–
 class AniObj
 {
 public:
-	//³õÊ¼»¯£¬ÉèÖÃ×ø±ê£¬ËÙ¶È·½Ïò£¬Í¸Ã÷¶È£¬´´½¨IMAGEµÈ
+	//åˆå§‹åŒ–ï¼Œè®¾ç½®åæ ‡ï¼Œé€Ÿåº¦æ–¹å‘ï¼Œé€æ˜åº¦ï¼Œåˆ›å»ºIMAGEç­‰
 	AniObj()
 	{
 		_x = myrand((float)ege::getwidth());
@@ -51,23 +51,23 @@ public:
 		ege::fillellipse(_r, _r, _r, _r, _img);
 	}
 
-	//ÊÍ·ÅÕâ¸ö¶ÔÏóÊ±µ÷ÓÃ
+	//é‡Šæ”¾è¿™ä¸ªå¯¹è±¡æ—¶è°ƒç”¨
 	~AniObj()
 	{
 		ege::delimage(_img);
 	}
 
-	//¸üĞÂÎ»ÖÃµÈÏà¹ØÊôĞÔ
+	//æ›´æ–°ä½ç½®ç­‰ç›¸å…³å±æ€§
 	int update()
 	{
 		bool crash = false;
-		// µ±Ç°Î»ÖÃ + ËÙ¶È
+		// å½“å‰ä½ç½® + é€Ÿåº¦
 		_x += _dx;
 		_y += _dy;
-		if (_x < 0) crash = true; //Åö×ó
-		if (_y < 0) crash = true; //ÅöÉÏ
-		if (_x >= ege::getwidth()  - _r * 2) crash = true; //ÅöÓÒ
-		if (_y >= ege::getheight() - _r * 2) crash = true; //ÅöÏÂ
+		if (_x < 0) crash = true; //ç¢°å·¦
+		if (_y < 0) crash = true; //ç¢°ä¸Š
+		if (_x >= ege::getwidth()  - _r * 2) crash = true; //ç¢°å³
+		if (_y >= ege::getheight() - _r * 2) crash = true; //ç¢°ä¸‹
 
 		if (crash)
 		{
@@ -82,14 +82,14 @@ public:
 		if (_x < 0 && _dx < 0 || _x >= ege::getwidth()	- _r * 2 && _dx > 0) _dx = -_dx;
 		if (_y < 0 && _dy < 0 || _y >= ege::getheight() - _r * 2 && _dy > 0) _dy = -_dy;
 
-		// ¸Ä±äalphaÖµ
+		// æ”¹å˜alphaå€¼
 		_alpha += _da;
 		if (_alpha <= 0)	_da = 1;
 		if (_alpha >= 0xFF) _da = -1;
 		return 0;
 	}
 
-	//¸ù¾İÊôĞÔÖµ»æ»­
+	//æ ¹æ®å±æ€§å€¼ç»˜ç”»
 	void render()
 	{
 		ege::putimage_alphatransparent(NULL, _img, (int)_x, (int)_y, ege::BLACK, (unsigned char)_alpha);
@@ -118,7 +118,7 @@ private:
 class Scene
 {
 public:
-	//³õÊ¼»¯£¬²ÎÊıÎª¶ÔÏó¸öÊı
+	//åˆå§‹åŒ–ï¼Œå‚æ•°ä¸ºå¯¹è±¡ä¸ªæ•°
 	Scene(int nAniObj)
 	{
 		m_cntObj = nAniObj;
@@ -132,7 +132,7 @@ public:
 	}
 	int update()
 	{
-		// ·ÇÔİÍ£×´Ì¬²Å¸üĞÂ
+		// éæš‚åœçŠ¶æ€æ‰æ›´æ–°
 		if (m_pause == 0)
 		{
 			for (int n = 0; n < m_cntObj; ++n)
@@ -151,18 +151,18 @@ public:
 	}
 	void onkey(int key)
 	{
-		if (key == 'P' || key == 'p') //°´ÏÂP¼ü¾ÍÔÚ²¥·ÅÓëÔİÍ£Ö®¼ä×ª»»
+		if (key == 'P' || key == 'p') //æŒ‰ä¸‹Pé”®å°±åœ¨æ’­æ”¾ä¸æš‚åœä¹‹é—´è½¬æ¢
 		{
 			m_pause = !m_pause;
 		}
-		if (key == VK_ESCAPE) //Èç¹ûÊÇESC¼ü£¬¾Í±ê¼ÇÎªÍË³ö³¡¾°£¬VK_ESCAPEÊÇSDK¶¨ÒåµÄºê
+		if (key == VK_ESCAPE) //å¦‚æœæ˜¯ESCé”®ï¼Œå°±æ ‡è®°ä¸ºé€€å‡ºåœºæ™¯ï¼ŒVK_ESCAPEæ˜¯SDKå®šä¹‰çš„å®
 		{
 			m_endscene = 1;
 		}
 	}
 	void onmouse(int x, int y)
 	{
-		// ¹ã²¥Êó±êÏûÏ¢
+		// å¹¿æ’­é¼ æ ‡æ¶ˆæ¯
 		for (int n = 0; n < m_cntObj; ++n)
 		{
 			m_pobj[n].onmouse(x, y);
@@ -177,21 +177,21 @@ private:
 
 void mainloop()
 {
-	Scene scene(30); //¶¨Òå³¡¾°£¬³õÊ¼»¯²ÎÊıÎª30
+	Scene scene(30); //å®šä¹‰åœºæ™¯ï¼Œåˆå§‹åŒ–å‚æ•°ä¸º30
 
 	for ( ; ege::is_run(); ege::delay_fps(60) )
 	{
 		while (ege::kbhit())
 		{
 			int key = ege::getch();
-			scene.onkey(key); //ËùÓĞ°´¼üÏûÏ¢·¢ËÍ¸øscene
+			scene.onkey(key); //æ‰€æœ‰æŒ‰é”®æ¶ˆæ¯å‘é€ç»™scene
 		}
 		while (ege::mousemsg())
 		{
 			ege::mouse_msg msg = ege::getmouse();
 			scene.onmouse(msg.x, msg.y);
 		}
-		if (scene.update()) //Èç¹ûupdate·µ»Ø·Ç0±íÊ¾³¡¾°½áÊø£¬ÕâÊ±ÍË³öÖ÷Ñ­»·
+		if (scene.update()) //å¦‚æœupdateè¿”å›é0è¡¨ç¤ºåœºæ™¯ç»“æŸï¼Œè¿™æ—¶é€€å‡ºä¸»å¾ªç¯
 		{
 			break;
 		}
@@ -204,13 +204,13 @@ void mainloop()
 int main(void)
 {
 	ege::setinitmode(ege::INIT_ANIMATION);
-	// Í¼ĞÎ³õÊ¼»¯£¬´°¿Ú³ß´ç640x480
+	// å›¾å½¢åˆå§‹åŒ–ï¼Œçª—å£å°ºå¯¸640x480
 	ege::initgraph(640, 480);
-	// Ëæ»úÊı³õÊ¼»¯£¬Èç¹ûĞèÒªÊ¹ÓÃËæ»úÊıµÄ»°
+	// éšæœºæ•°åˆå§‹åŒ–ï¼Œå¦‚æœéœ€è¦ä½¿ç”¨éšæœºæ•°çš„è¯
 	ege::randomize();
-	// ³ÌĞòÖ÷Ñ­»·
+	// ç¨‹åºä¸»å¾ªç¯
 	mainloop();
-	// ¹Ø±Õ»æÍ¼Éè±¸
+	// å…³é—­ç»˜å›¾è®¾å¤‡
 	ege::closegraph();
 	return 0;
 }

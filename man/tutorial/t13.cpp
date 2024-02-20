@@ -1,27 +1,27 @@
-//ÓÃ»§½»»¥¡ª¡ª¼üÅÌ2
+//ç”¨æˆ·äº¤äº’â€”â€”é”®ç›˜2
 #include <graphics.h>
 
-//Õâ¸öÀı×ÓĞèÒªÕâ¸öÍ·ÎÄ¼ş
+//è¿™ä¸ªä¾‹å­éœ€è¦è¿™ä¸ªå¤´æ–‡ä»¶
 #include <stdio.h>
 
 int main()
 {
 	initgraph(640, 480);
 
-	setfont(18, 0, "ËÎÌå");
+	setfont(18, 0, "å®‹ä½“");
 	outtextxy(0, 0, "press any key");
 
 	key_msg k = {0};
-	for ( ; k.key != key_esc; ) // key_escÊÇege¶¨ÒåµÄ°´¼ü³£Êı
+	for ( ; k.key != key_esc; ) // key_escæ˜¯egeå®šä¹‰çš„æŒ‰é”®å¸¸æ•°
 	{
 		char str[32];
-		//µÈ´ıÓÃ»§°´¼ü£¬²¢°ÑµÃµ½µÄ°´¼ü¸øk
-		//Èç¹ûÄã²»ÏëµÈ´ı£¬¿ÉÒÔÔÚµ÷ÓÃgetkeyÖ®Ç°£¬Ê¹ÓÃkbmsg¼ì²âÊÇ·ñÓĞ°´¼ü°´ÏÂ
-		//Èç if ( kbmsg() ) k = getkey();
+		//ç­‰å¾…ç”¨æˆ·æŒ‰é”®ï¼Œå¹¶æŠŠå¾—åˆ°çš„æŒ‰é”®ç»™k
+		//å¦‚æœä½ ä¸æƒ³ç­‰å¾…ï¼Œå¯ä»¥åœ¨è°ƒç”¨getkeyä¹‹å‰ï¼Œä½¿ç”¨kbmsgæ£€æµ‹æ˜¯å¦æœ‰æŒ‰é”®æŒ‰ä¸‹
+		//å¦‚ if ( kbmsg() ) k = getkey();
 		k = getkey();
 
-		//¸ñÊ½»¯Êä³öÎª×Ö·û´®£¬ÓÃÓÚºóÃæÊä³ö
-		//msg²Î¼ûkey_msg_e, flag²Î¼ûkey_flag_e
+		//æ ¼å¼åŒ–è¾“å‡ºä¸ºå­—ç¬¦ä¸²ï¼Œç”¨äºåé¢è¾“å‡º
+		//msgå‚è§key_msg_e, flagå‚è§key_flag_e
 		sprintf(str, "key= %c %3d %2x  msg=%d flag=%d", k.key, k.key, k.key, k.msg, k.flags);
 
 		cleardevice();
