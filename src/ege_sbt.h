@@ -3,58 +3,46 @@
 
 #define NULL_PTR 0
 
-namespace ege {
+namespace ege
+{
 
 typedef long sbt_int_t;
 
 template<typename VAL>
-class SBT {
+class SBT
+{
 protected:
-	struct SBT_Node {
+	struct SBT_Node
+	{
 		SBT_Node*   l;
 		SBT_Node*   r;
 		SBT_Node*   p;
 		sbt_int_t   size;
 		VAL         val;
-		SBT_Node(): l(NULL_PTR), r(NULL_PTR), p(NULL_PTR), size(1) {
-		}
+		SBT_Node(): l(NULL_PTR), r(NULL_PTR), p(NULL_PTR), size(1) {}
 	};
 	typedef SBT_Node  NodeType;
+
 public:
 	typedef SBT_Node* TreeType;
-	SBT() : _root(NULL_PTR) {
-	}
-	SBT(const SBT& sbt) : _root(NULL_PTR) {
-		_copy(NULL_PTR, _root, sbt.root());
-	}
-	~SBT() {
-		_clear(root());
-	}
 
-	TreeType &
-	root() {
-		return _root;
-	}
-	const TreeType &
-	root() const {
-		return _root;
-	}
-	void
-	clear() {
-		root() = _clear(root());
-	}
-	sbt_int_t
-	size() const {
-		return safe_size(root());
-	}
-	SBT &
-	operator = (const SBT & sbt) {
-		_copy(NULL_PTR, root(), sbt.root());
-	}
+	SBT() : _root(NULL_PTR) {}
+	SBT(const SBT& sbt) : _root(NULL_PTR) { _copy(NULL_PTR, _root, sbt.root()); }
+
+	~SBT() { _clear(root()); }
+
+	TreeType& root() { return _root; }
+	const TreeType& root() const { return _root; }
+
+	void clear() { root() = _clear(root()); }
+
+	sbt_int_t size() const { return safe_size(root()); }
+
+	SBT& operator = (const SBT & sbt) { _copy(NULL_PTR, root(), sbt.root()); }
 
 protected:
-	TreeType
-	_clear(TreeType t) {
+	TreeType _clear(TreeType t)
+	{
 		if (t == NULL_PTR)
 			return NULL_PTR;
 		_clear(left (t));
@@ -62,8 +50,9 @@ protected:
 		delete t;
 		return NULL_PTR;
 	}
-	void
-	_copy(TreeType p, TreeType t1, const TreeType t2) {
+
+	void _copy(TreeType p, TreeType t1, const TreeType t2)
+	{
 		if (t1) {
 			_clear(t1);
 		}
@@ -76,54 +65,36 @@ protected:
 			_copy(t1, right(t1), right(t2));
 		}
 	}
-	inline sbt_int_t
-	safe_size(const TreeType t) const {
+
+	inline sbt_int_t safe_size(const TreeType t) const
+	{
 		if (t) return size(t);
 		return 0;
 	}
-	inline sbt_int_t &
-	size(TreeType t) {
-		return t->size;
-	}
-	inline const sbt_int_t &
-	size(const TreeType t) const {
-		return t->size;
-	}
-	inline TreeType &
-	left(TreeType t) {
-		return t->l;
-	}
-	inline const TreeType &
-	left(const TreeType t) const {
-		return t->l;
-	}
-	inline TreeType &
-	right(TreeType t) {
-		return t->r;
-	}
-	inline const TreeType &
-	right(const TreeType t) const {
-		return t->r;
-	}
-	inline TreeType &
-	parent(TreeType t) {
-		return t->p;
-	}
-	VAL &
-	val(TreeType t) {
-		return t->val;
-	}
-	const VAL &
-	val(const TreeType t) const {
-		return t->val;
-	}
-	void
-	_set_left(TreeType t, TreeType ch) {
+
+	inline sbt_int_t& size(TreeType t) {return t->size;}
+	inline const sbt_int_t& size(const TreeType t) const {return t->size;}
+
+	inline TreeType& left(TreeType t) {return t->l;}
+	inline const TreeType& left(const TreeType t) const {return t->l;}
+
+	inline TreeType& right(TreeType t) {return t->r;}
+	inline const TreeType& right(const TreeType t) const {return t->r;}
+
+	inline TreeType& parent(TreeType t) {return t->p;}
+
+	VAL& val(TreeType t) {return t->val;}
+
+	const VAL& val(const TreeType t) const {return t->val;}
+
+	void _set_left(TreeType t, TreeType ch)
+	{
 		left(t) = ch;
 		if (ch) parent(ch) = t;
 	}
-	void
-	_set_right(TreeType t, TreeType ch) {
+
+	void _set_right(TreeType t, TreeType ch)
+	{
 		right(t) = ch;
 		if (ch) parent(ch) = t;
 	}
@@ -139,8 +110,8 @@ protected:
 	//  t   c   //
 	// / \      //
 	//a   b     //
-	inline TreeType
-	_left_rotate(TreeType t) {
+	inline TreeType _left_rotate(TreeType t)
+	{
 		TreeType k = right(t);
 		_set_right(t, left(k));
 		left(k) = t;
@@ -152,6 +123,7 @@ protected:
 				+ 1;
 		return k;
 	}
+
 	// face to: //
 	//    t     //
 	//   / \    //
@@ -164,8 +136,8 @@ protected:
 	//  a   t   //
 	//     / \  //
 	//    b   c //
-	inline TreeType
-	_right_rotate(TreeType t) {
+	inline TreeType _right_rotate(TreeType t)
+	{
 		TreeType k = left(t);
 		_set_left(t, right(k));
 		right(k) = t;
@@ -177,8 +149,9 @@ protected:
 				+ 1;
 		return k;
 	}
-	TreeType
-	_maintain(TreeType t, bool flag) {
+
+	TreeType _maintain(TreeType t, bool flag)
+	{
 		if (t == NULL_PTR)
 			return NULL_PTR;
 		if (!flag) {
@@ -208,8 +181,9 @@ protected:
 		t = _maintain(t, true);
 		return t;
 	}
-	const TreeType
-	_search(const TreeType t, const VAL & val_) const {
+
+	const TreeType _search(const TreeType t, const VAL & val_) const
+	{
 		if (t == NULL_PTR)
 			return NULL_PTR;
 		if (val_ == val(t))
@@ -219,8 +193,9 @@ protected:
 		else
 			return _search(right(t), val_);
 	}
-	sbt_int_t
-	_lower_bound(const TreeType t, const VAL & val_) const {
+
+	sbt_int_t _lower_bound(const TreeType t, const VAL & val_) const
+	{
 		if (t == NULL_PTR)
 			return 0;
 		// val_ <= val(t)
@@ -231,8 +206,9 @@ protected:
 			return s + (safe_size(left(t)) + 1);
 		}
 	}
-	sbt_int_t
-	_upper_bound(const TreeType t, const VAL & val_) const {
+
+	sbt_int_t _upper_bound(const TreeType t, const VAL & val_) const
+	{
 		if (t == NULL_PTR)
 			return 0;
 		// val < val(t)
@@ -243,8 +219,9 @@ protected:
 			return s + (safe_size(left(t)) + 1);
 		}
 	}
-	const TreeType
-	_pred(const TreeType t, const VAL & val_) const {
+
+	const TreeType _pred(const TreeType t, const VAL & val_) const
+	{
 		if (t == NULL_PTR)
 			return NULL_PTR;
 		// val <= val(t)
@@ -255,8 +232,9 @@ protected:
 			return (s ? s : t);
 		}
 	}
-	const TreeType
-	_succ(const TreeType t, const VAL & val_) const {
+
+	const TreeType _succ(const TreeType t, const VAL & val_) const
+	{
 		if (t == NULL_PTR)
 			return NULL_PTR;
 		// val >= val(t)
@@ -267,8 +245,9 @@ protected:
 			return (s ? s : t);
 		}
 	}
-	TreeType
-	_insert(TreeType p, TreeType & t, const VAL & val_) {
+
+	TreeType _insert(TreeType p, TreeType & t, const VAL & val_)
+	{
 		if (t == NULL_PTR) {
 			t = new NodeType;
 			val(t) = val_;
@@ -289,8 +268,9 @@ protected:
 			return ret;
 		}
 	}
-	TreeType
-	_remove_select(TreeType * pt, sbt_int_t rank) {
+
+	TreeType _remove_select(TreeType * pt, sbt_int_t rank)
+	{
 		for (;;) {
 			TreeType& t = *pt;
 			if ( t == NULL_PTR || size(t) <= rank)
@@ -320,8 +300,9 @@ protected:
 			}
 		}
 	}
-	TreeType
-	_remove(TreeType * pt, const VAL & val_) {
+
+	TreeType _remove(TreeType * pt, const VAL & val_)
+	{
 		for (;;) {
 			TreeType & t = *pt;
 			if (t == NULL_PTR)
@@ -349,8 +330,9 @@ protected:
 			}
 		}
 	}
-	const TreeType
-	_select(const TreeType t, sbt_int_t rank) const {
+
+	const TreeType _select(const TreeType t, sbt_int_t rank) const
+	{
 		if (t == NULL_PTR || (size(t) <= rank) )
 			return NULL_PTR;
 		sbt_int_t lsize = safe_size(left(t));
@@ -361,8 +343,9 @@ protected:
 		else
 			return _select(right(t), rank - lsize - 1);
 	}
-	sbt_int_t
-	_rank(const TreeType t, const VAL & val_) const {
+
+	sbt_int_t _rank(const TreeType t, const VAL & val_) const
+	{
 		if (t == NULL_PTR)
 			return -1;
 		if (val(t) == val_)
@@ -376,25 +359,18 @@ protected:
 			return -1;
 		}
 	}
+
 public:
-	TreeType
-	search(const VAL & val) {
-		return _search(root(), val);
-	}
-	TreeType
-	pred(const VAL & val) {
-		return const_cast<TreeType>(_pred(root(), val));
-	}
-	TreeType
-	succ(const VAL & val) {
-		return const_cast<TreeType>(_succ(root(), val));
-	}
-	TreeType
-	insert(const VAL & val) {
-		return _insert(NULL_PTR, root(), val);
-	}
-	bool
-	remove_select(sbt_int_t rank) {
+	TreeType search(const VAL & val) {return _search(root(), val);}
+
+	TreeType pred(const VAL & val) {return const_cast<TreeType>(_pred(root(), val));}
+
+	TreeType succ(const VAL & val) {return const_cast<TreeType>(_succ(root(), val));}
+
+	TreeType insert(const VAL & val) {return _insert(NULL_PTR, root(), val);}
+
+	bool remove_select(sbt_int_t rank)
+	{
 		TreeType del = _remove_select(&root(), rank);
 		if (del) {
 			delete del;
@@ -402,8 +378,9 @@ public:
 		}
 		return false;
 	}
-	bool
-	remove(const VAL & val) {
+
+	bool remove(const VAL & val)
+	{
 		if (search(val)) {
 			TreeType del = _remove(&root(), val);
 			//assert (val)
@@ -412,18 +389,11 @@ public:
 		}
 		return false;
 	}
-	const TreeType
-	select(sbt_int_t rank) const {
-		return _select(root(), rank);
-	}
-	TreeType
-	select(sbt_int_t rank) {
-		return const_cast<TreeType>(_select(root(), rank));
-	}
-	sbt_int_t
-	rank(const VAL & val) const {
-		return _rank(root(), val);
-	}
+
+	const TreeType select(sbt_int_t rank) const {return _select(root(), rank);}
+	TreeType select(sbt_int_t rank) {return const_cast<TreeType>(_select(root(), rank));}
+
+	sbt_int_t rank(const VAL & val) const {return _rank(root(), val);}
 protected:
 	TreeType _root;
 };

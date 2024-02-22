@@ -20,8 +20,8 @@ egeControlBase基类定义和相关操作
 #include "ege_head.h"
 #include "ege_common.h"
 
-namespace ege {
-
+namespace ege
+{
 
 //typedef std::set<egeControlBase*> egectlmap;
 typedef Set<egeControlBase*> egectlmap;
@@ -32,37 +32,45 @@ int egeControlBase::s_maxchildid = 1024;
 
 static egectlvec s_egeCtlParent;
 
-egeControlBase::InitObject::InitObject(egeControlBase* pThis, int inherit_level) {
+egeControlBase::InitObject::InitObject(egeControlBase* pThis, int inherit_level)
+{
 	m_this = pThis;
 	m_inherit_level = inherit_level;
 }
-egeControlBase::InitObject::~InitObject() {
+
+egeControlBase::InitObject::~InitObject()
+{
 	if (m_this->m_inheritlevel == m_inherit_level) {
 		m_this->initok();
 	}
 }
-egeControlBase::egeControlBase() {
+
+egeControlBase::egeControlBase()
+{
 	init(NULL);
 }
 
-egeControlBase::egeControlBase(int inherit, egeControlBase* pParent) {
+egeControlBase::egeControlBase(int inherit, egeControlBase* pParent)
+{
 	if (s_egeCtlParent.size() > 0) {
 		if (pParent == 0) {
 			pParent = *s_egeCtlParent.rbegin();
 		}
 	}
-	{
-		m_inheritlevel = inherit;
-		s_egeCtlParent.push_back(this);
-	}
+
+	m_inheritlevel = inherit;
+	s_egeCtlParent.push_back(this);
+
 	init(pParent);
 }
 
-void egeControlBase::initok() {
+void egeControlBase::initok()
+{
 	s_egeCtlParent.pop_back();
 }
 
-egeControlBase::~egeControlBase() {
+egeControlBase::~egeControlBase()
+{
 	if (m_parent) {
 		m_parent->delchild(this);
 		egectlmap*& cmap = (egectlmap*&)m_childmap;
@@ -73,17 +81,19 @@ egeControlBase::~egeControlBase() {
 			}
 		}
 	}
-	delimage( m_mainbuf );
-	delimage( m_mainFilter );
+
+	delimage(m_mainbuf);
+	delimage(m_mainFilter);
 }
 
-void
-egeControlBase::init(egeControlBase* parent) {
+void egeControlBase::init(egeControlBase* parent)
+{
 	struct _graph_setting * pg = &graph_setting;
 	egeControlBase* &root = pg->egectrl_root;
 	m_parent = NULL;
 	m_mainbuf   = newimage();
 	m_mainFilter = newimage();
+
 	if (root == NULL) {
 		root = this;
 		m_parent = NULL;
@@ -113,6 +123,7 @@ egeControlBase::init(egeControlBase* parent) {
 		m_zOrder    = m_parent->allocZorder(); // 待处理
 		m_w = m_h = 1;
 	}
+
 	m_zOrderLayer = 0;
 	m_allocId = 0x10000;
 	m_allocZorder = 1;
@@ -127,29 +138,34 @@ egeControlBase::init(egeControlBase* parent) {
 	m_AlphablendMode = 0;
 }
 
-int egeControlBase::allocZorder() {
+int egeControlBase::allocZorder()
+{
 	if (m_allocZorder > 0x800000) {
 		fixzorder();
 	}
 	return m_allocZorder++;
 }
 
-int egeControlBase::allocId() {
+int egeControlBase::allocId()
+{
 	return ++m_allocId;
 }
 
-bool ctlcmp(const egeControlBase* pa, const egeControlBase* pb) {
+bool ctlcmp(const egeControlBase* pa, const egeControlBase* pb)
+{
 	return *pa < *pb;
 }
 
-void egeControlBase::sortzorder() {
+void egeControlBase::sortzorder()
+{
 	egectlvec*& cvec = (egectlvec*&)m_childzorder;
 	if (cvec) {
 		std::sort(cvec->begin(), cvec->end(), ctlcmp);
 	}
 }
 
-int egeControlBase::addchild(egeControlBase* pChild) {
+int egeControlBase::addchild(egeControlBase* pChild)
+{
 	egectlmap*& cmap = (egectlmap*&)m_childmap;
 	egectlvec*& cvec = (egectlvec*&)m_childzorder;
 	if (cmap == NULL ) {
@@ -169,7 +185,8 @@ int egeControlBase::addchild(egeControlBase* pChild) {
 	return 0;
 }
 
-int egeControlBase::delchild(egeControlBase* pChild) {
+int egeControlBase::delchild(egeControlBase* pChild)
+{
 	egectlmap*& cmap = (egectlmap*&)m_childmap;
 	egectlvec*& cvec = (egectlvec*&)m_childzorder;
 	if (cmap == NULL ) {
@@ -193,7 +210,8 @@ int egeControlBase::delchild(egeControlBase* pChild) {
 	return 0;
 }
 
-void egeControlBase::fixzorder() {
+void egeControlBase::fixzorder()
+{
 	egectlmap*& cmap = (egectlmap*&)m_childmap;
 	egectlvec*& cvec = (egectlvec*&)m_childzorder;
 	if (cmap) {
@@ -206,22 +224,26 @@ void egeControlBase::fixzorder() {
 	}
 }
 
-void egeControlBase::zorderup() {
+void egeControlBase::zorderup()
+{
 	m_zOrder = m_parent->allocZorder();
 	parent()->sortzorder();
 }
 
-void egeControlBase::zorderdown() {
+void egeControlBase::zorderdown()
+{
 	m_zOrder = -m_parent->allocZorder();
 	parent()->sortzorder();
 }
 
-void egeControlBase::zorderset(int z) {
+void egeControlBase::zorderset(int z)
+{
 	m_zOrder = z;
 	parent()->sortzorder();
 }
 
-void egeControlBase::mouse(int x, int y, int flag) {
+void egeControlBase::mouse(int x, int y, int flag)
+{
 	struct _graph_setting * pg = &graph_setting;
 	int ret = 0;
 	x -= m_x, y -= m_y;
@@ -276,7 +298,8 @@ void egeControlBase::mouse(int x, int y, int flag) {
 	}
 }
 
-void egeControlBase::keymsgdown(unsigned key, int flag) {
+void egeControlBase::keymsgdown(unsigned key, int flag)
+{
 	int ret = 0;
 	{
 		PushTarget _target;
@@ -296,7 +319,8 @@ void egeControlBase::keymsgdown(unsigned key, int flag) {
 	}
 }
 
-void egeControlBase::keymsgup(unsigned key, int flag) {
+void egeControlBase::keymsgup(unsigned key, int flag)
+{
 	int ret = 0;
 	{
 		PushTarget _target;
@@ -316,7 +340,8 @@ void egeControlBase::keymsgup(unsigned key, int flag) {
 	}
 }
 
-void egeControlBase::keymsgchar(unsigned key, int flag) {
+void egeControlBase::keymsgchar(unsigned key, int flag)
+{
 	int ret = 0;
 	{
 		PushTarget _target;
@@ -336,7 +361,8 @@ void egeControlBase::keymsgchar(unsigned key, int flag) {
 	}
 }
 
-void egeControlBase::update() {
+void egeControlBase::update()
+{
 	egectlmap*& cmap = (egectlmap*&)m_childmap;
 	if (m_parent == NULL) {
 		m_w = getwidth();
@@ -352,7 +378,8 @@ void egeControlBase::update() {
 	onUpdate();
 }
 
-void egeControlBase::draw(PIMAGE pimg) {
+void egeControlBase::draw(PIMAGE pimg)
+{
 	PIMAGE pmain = m_mainbuf;
 	if (m_parent == NULL || m_bDirectDraw)
 		pmain = pimg;

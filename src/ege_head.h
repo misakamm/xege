@@ -201,29 +201,24 @@ typedef long POINTER_SIZE;
 #define GRADIENT_FILL_TRIANGLE  0x00000002
 #define GRADIENT_FILL_OP_FLAG   0x000000ff
 
-extern "C" {
-WINGDIAPI
-BOOL
-WINAPI
-GradientFill(
-	HDC hdc,
-	PTRIVERTEX pVertex,
-	ULONG nVertex,
-	PVOID pMesh,
-	ULONG nMesh,
-	ULONG ulMode
-	);
+extern "C"
+{
+WINGDIAPI BOOL WINAPI GradientFill(HDC hdc, PTRIVERTEX pVertex, ULONG nVertex,
+	PVOID pMesh, ULONG nMesh, ULONG ulMode);
 }
 #endif
 
-namespace ege {
+namespace ege
+{
 
-enum dealmessage_update {
+enum dealmessage_update
+{
 	NORMAL_UPDATE = false,
 	FORCE_UPDATE = true,
 };
 
-struct EGEMSG {
+struct EGEMSG
+{
 	HWND        hwnd;
 	UINT        message;
 	WPARAM      wParam;
@@ -252,8 +247,8 @@ public:
 private:
 #ifdef EGE_GDIPLUS
 	Gdiplus::Graphics* m_graphics;
-	Gdiplus::Pen* m_pen;
-	Gdiplus::Brush* m_brush;
+	Gdiplus::Pen*      m_pen;
+	Gdiplus::Brush*    m_brush;
 #endif
 	bool        m_aa;
 	void initimage(HDC refDC, int width, int height);
@@ -279,7 +274,7 @@ public:
 	void gentexture(bool gen);
 public:
 	HDC getdc()        const {return m_hDC;}
-	int getwidth()     const {return m_width; }
+	int getwidth()     const {return m_width;}
 	int getheight()    const {return m_height;}
 	color_t* getbuffer() const {return (color_t*)m_pBuffer;}
 #ifdef EGE_GDIPLUS
@@ -294,24 +289,28 @@ public:
 	int  resize_f(int width, int height);
 	int  resize(int width, int height);
 	void copyimage(PCIMAGE pSrcImg);
-	int getimage(int srcX, int srcY, int srcWidth, int srcHeight);
-	int getimage(PCIMAGE pSrcImg, int srcX, int srcY, int srcWidth, int srcHeight);
+
+	int  getimage(int srcX, int srcY, int srcWidth, int srcHeight);
+	int  getimage(PCIMAGE pSrcImg, int srcX, int srcY, int srcWidth, int srcHeight);
 	int  getimage(LPCSTR pImgFile, int zoomWidth = 0, int zoomHeight = 0);
 	int  getimage(LPCWSTR pImgFile, int zoomWidth = 0, int zoomHeight = 0);
 	int  getimage(LPCSTR pResType, LPCSTR pResName, int zoomWidth = 0, int zoomHeight = 0);
 	int  getimage(LPCWSTR pResType, LPCWSTR pResName, int zoomWidth = 0, int zoomHeight = 0);
 	int  getimage(void* pMem, long size);
+
 	void putimage(int dstX, int dstY, DWORD dwRop = SRCCOPY) const;
 	void putimage(int dstX, int dstY, int dstWidth, int dstHeight, int srcX, int srcY, DWORD dwRop = SRCCOPY) const;
 	void putimage(PIMAGE pDstImg, int dstX, int dstY, DWORD dwRop = SRCCOPY) const;
 	void putimage(PIMAGE pDstImg, int dstX, int dstY, int dstWidth, int dstHeight, int srcX, int srcY, DWORD dwRop = SRCCOPY) const;
 	void putimage(PIMAGE pDstImg, int dstX, int dstY, int dstWidth, int dstHeight, int srcX, int srcY, int srcWidth, int srcHeight, DWORD dwRop = SRCCOPY) const;
+
 	int  saveimage(LPCSTR  filename) const;
 	int  saveimage(LPCWSTR filename) const;
-	int  getpngimg(FILE* fp);
 	int  savepngimg(FILE* fp, int bAlpha) const;
-	int
-	putimage_transparent(
+
+	int  getpngimg(FILE* fp);
+
+	int putimage_transparent(
 		PIMAGE imgdest,         // handle to dest
 		int nXOriginDest,       // x-coord of destination upper-left corner
 		int nYOriginDest,       // y-coord of destination upper-left corner
@@ -321,8 +320,8 @@ public:
 		int nWidthSrc = 0,      // width of source rectangle
 		int nHeightSrc = 0      // height of source rectangle
 	) const;
-	int
-	putimage_alphablend(
+
+	int putimage_alphablend(
 		PIMAGE imgdest,         // handle to dest
 		int nXOriginDest,       // x-coord of destination upper-left corner
 		int nYOriginDest,       // y-coord of destination upper-left corner
@@ -332,8 +331,8 @@ public:
 		int nWidthSrc = 0,      // width of source rectangle
 		int nHeightSrc = 0      // height of source rectangle
 	) const;
-	int
-	putimage_alphatransparent(
+
+	int putimage_alphatransparent(
 		PIMAGE imgdest,         // handle to dest
 		int nXOriginDest,       // x-coord of destination upper-left corner
 		int nYOriginDest,       // y-coord of destination upper-left corner
@@ -344,8 +343,8 @@ public:
 		int nWidthSrc = 0,      // width of source rectangle
 		int nHeightSrc = 0      // height of source rectangle
 	) const;
-	int
-	putimage_withalpha(
+
+	int putimage_withalpha(
 		PIMAGE imgdest,         // handle to dest
 		int nXOriginDest,       // x-coord of destination upper-left corner
 		int nYOriginDest,       // y-coord of destination upper-left corner
@@ -354,8 +353,8 @@ public:
 		int nWidthSrc = 0,      // width of source rectangle
 		int nHeightSrc = 0      // height of source rectangle
 	) const;
-	int
-	putimage_withalpha(
+
+	int putimage_withalpha(
 		PIMAGE imgdest,         // handle to dest
 		int nXOriginDest,       // x-coord of destination upper-left corner
 		int nYOriginDest,       // y-coord of destination upper-left corner
@@ -366,8 +365,8 @@ public:
 		int nWidthSrc,          // width of source rectangle
 		int nHeightSrc          // height of source rectangle
 	) const;
-	int
-	putimage_alphafilter(
+
+	int putimage_alphafilter(
 		PIMAGE imgdest,         // handle to dest
 		int nXOriginDest,       // x-coord of destination upper-left corner
 		int nYOriginDest,       // y-coord of destination upper-left corner
@@ -377,8 +376,8 @@ public:
 		int nWidthSrc = 0,      // width of source rectangle
 		int nHeightSrc = 0      // height of source rectangle
 	) const;
-	int
-	imagefilter_blurring_4 (
+
+	int imagefilter_blurring_4(
 		int intensity,
 		int alpha,
 		int nXOriginDest,
@@ -386,8 +385,8 @@ public:
 		int nWidthDest,
 		int nHeightDest
 	);
-	int
-	imagefilter_blurring_8 (
+
+	int imagefilter_blurring_8(
 		int intensity,
 		int alpha,
 		int nXOriginDest,
@@ -395,8 +394,8 @@ public:
 		int nWidthDest,
 		int nHeightDest
 	);
-	int
-	imagefilter_blurring (
+
+	int imagefilter_blurring(
 		int intensity,
 		int alpha,
 		int nXOriginDest = 0,
@@ -404,6 +403,7 @@ public:
 		int nWidthDest = 0,
 		int nHeightDest = 0
 	);
+
 	int putimage_rotate(
 		PIMAGE imgtexture,
 		int nXOriginDest,
@@ -433,17 +433,21 @@ public:
 };
 
 // 定义ege全局状态对象
-struct _graph_setting {
+struct _graph_setting
+{
 	bool has_init;
 	bool is_unicode;
 
-	struct _graph {
+	struct _graph
+	{
 		int width;
 		int height;
-	}graph;
-	struct _aspectratio {
+	} graph;
+
+	struct _aspectratio
+	{
 		float xasp, yasp;
-	}aspectratio;
+	} aspectratio;
 
 	int writemode;
 
@@ -474,7 +478,6 @@ struct _graph_setting {
 	thread_queue<EGEMSG> *msgkey_queue, *msgmouse_queue;
 
 	HANDLE threadui_handle;
-
 
 	/* 鼠标状态记录 */
 	int mouse_state_l, mouse_state_m, mouse_state_r;
@@ -512,7 +515,8 @@ struct _graph_setting {
 	/* 函数用临时缓冲区 */
 	DWORD g_t_buff[1024 * 8];
 
-	_graph_setting() {
+	_graph_setting()
+	{
 		window_caption = EGE_TITLE_W;
 	}
 };
@@ -520,13 +524,17 @@ struct _graph_setting {
 extern struct _graph_setting graph_setting;
 
 template<typename T>
-struct count_ptr {
-	explicit count_ptr( T* p ) {
+struct count_ptr
+{
+	explicit count_ptr( T* p )
+	{
 		//m_mutex = new Mutex;
-		m_cnt = new long( 1 );
+		m_cnt = new long(1);
 		m_p = p;
 	}
-	~count_ptr() {
+
+	~count_ptr()
+	{
 		//m_mutex->Lock();
 		--*m_cnt;
 		if ( *m_cnt == 0 ) {
@@ -539,7 +547,9 @@ struct count_ptr {
 		//m_mutex = static_cast<Mutex*> ( 0 );
 		//mutex->UnLock();
 	}
-	count_ptr( const count_ptr<T>& count_ptr_ ) {
+
+	count_ptr( const count_ptr<T>& count_ptr_ )
+	{
 		//m_mutex = count_ptr_.m_mutex;
 		//m_mutex->Lock();
 		m_p = count_ptr_.m_p;
@@ -547,7 +557,9 @@ struct count_ptr {
 		++*m_cnt;
 		//m_mutex->UnLock();
 	}
-	count_ptr<T>& operator= ( const count_ptr<T>& count_ptr_ ) {
+
+	count_ptr<T>& operator= ( const count_ptr<T>& count_ptr_ )
+	{
 		//m_mutex->Lock();
 		--*m_cnt;
 		if ( *m_cnt == 0 ) {
@@ -567,15 +579,11 @@ struct count_ptr {
 		//m_mutex->UnLock();
 		return *this;
 	}
-	operator T* () const {
-		return m_p;
-	}
-	T& operator * () const {
-		return *m_p;
-	}
-	T* operator -> () const {
-		return m_p;
-	}
+
+	operator T* () const {return m_p;}
+
+	T& operator *  () const {return *m_p;}
+	T* operator -> () const {return m_p;}
 private:
 	T* m_p;
 	long* m_cnt;
@@ -594,7 +602,8 @@ HBITMAP newbitmap(int width, int height, PDWORD* p_bmp_buf);
 
 // 以 bkg 为背景色，src 为前景色，alpha 为 0~255 的整数进行混合，
 // 混合结果保留 bkg 的 Alpha 通道
-EGE_FORCEINLINE color_t alphablend_inline(color_t bkg, color_t src, unsigned char alpha) {
+EGE_FORCEINLINE color_t alphablend_inline(color_t bkg, color_t src, unsigned char alpha)
+{
 	DWORD rb = bkg & 0x00FF00FF;
 	DWORD  g = bkg & 0x0000FF00;
 
@@ -604,7 +613,8 @@ EGE_FORCEINLINE color_t alphablend_inline(color_t bkg, color_t src, unsigned cha
 }
 
 #if __cplusplus >= 201103L
-inline int ege_round(float x) {
+inline int ege_round(float x)
+{
 	return round(x);
 }
 #else

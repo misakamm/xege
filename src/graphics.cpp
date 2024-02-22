@@ -63,7 +63,8 @@
 #endif
 #endif
 
-namespace ege {
+namespace ege
+{
 
 // 静态分配，零初始化
 struct _graph_setting graph_setting;
@@ -90,9 +91,8 @@ DWORD WINAPI messageloopthread(LPVOID lpParameter);
 
 
 /*private function*/
-static
-void
-ui_msg_process(EGEMSG& qmsg) {
+static void ui_msg_process(EGEMSG& qmsg)
+{
 	struct _graph_setting * pg = &graph_setting;
 	if ( (qmsg.flag & 1) )
 		return;
@@ -125,9 +125,8 @@ ui_msg_process(EGEMSG& qmsg) {
 }
 
 /*private function*/
-static
-int
-redraw_window(_graph_setting* pg, HDC dc) {
+static int redraw_window(_graph_setting* pg, HDC dc)
+{
 	int page = pg->visual_page;
 	HDC hDC = pg->img_page[page]->m_hDC;
 	int left = pg->img_page[page]->m_vpt.left, top = pg->img_page[page]->m_vpt.top;
@@ -140,9 +139,8 @@ redraw_window(_graph_setting* pg, HDC dc) {
 }
 
 /*private function*/
-static
-int
-graphupdate(_graph_setting* pg) {
+static int graphupdate(_graph_setting* pg)
+{
 	if (pg->exit_window) {
 		return grNoInitGraph;
 	}
@@ -186,8 +184,8 @@ graphupdate(_graph_setting* pg) {
 }
 
 /*private function*/
-int
-dealmessage(_graph_setting* pg, bool force_update) {
+int dealmessage(_graph_setting* pg, bool force_update)
+{
 	if (force_update || pg->update_mark_count <= 0) {
 		graphupdate(pg);
 	}
@@ -195,17 +193,16 @@ dealmessage(_graph_setting* pg, bool force_update) {
 }
 
 /*private function*/
-void
-guiupdate(_graph_setting* pg, egeControlBase* &root) {
+void guiupdate(_graph_setting* pg, egeControlBase* &root)
+{
 	pg->msgkey_queue->process(ui_msg_process);
 	pg->msgmouse_queue->process(ui_msg_process);
 	root->update();
 }
 
 /*private function*/
-static
-int
-waitdealmessage(_graph_setting* pg) {
+static int waitdealmessage(_graph_setting* pg)
+{
 	//MSG msg;
 	if (pg->update_mark_count < UPDATE_MAX_CALL) {
 		egeControlBase* &root = pg->egectrl_root;
@@ -219,9 +216,8 @@ waitdealmessage(_graph_setting* pg) {
 }
 
 /*private function*/
-static
-int
-_getkey(_graph_setting* pg) {
+static int _getkey(_graph_setting* pg)
+{
 	EGEMSG msg;
 
 	while (pg->msgkey_queue->pop(msg)) {
@@ -237,9 +233,8 @@ _getkey(_graph_setting* pg) {
 }
 
 /*private function*/
-static
-int
-peekkey(_graph_setting* pg) {
+static int peekkey(_graph_setting* pg)
+{
 	EGEMSG msg;
 
 	while (pg->msgkey_queue->pop(msg)) {
@@ -267,9 +262,8 @@ peekkey(_graph_setting* pg) {
 }
 
 /*private function*/
-static
-int
-peekallkey(_graph_setting* pg, int flag) {
+static int peekallkey(_graph_setting* pg, int flag)
+{
 	EGEMSG msg;
 
 	while (pg->msgkey_queue->pop(msg)) {
@@ -291,8 +285,8 @@ peekallkey(_graph_setting* pg, int flag) {
 	return 0;
 }
 
-int
-getflush() {
+int getflush()
+{
 	struct _graph_setting * pg = &graph_setting;
 	EGEMSG msg;
 	int lastkey = 0;
@@ -311,16 +305,16 @@ getflush() {
 	return lastkey;
 }
 
-int
-kbmsg() {
+int kbmsg()
+{
 	struct _graph_setting * pg = &graph_setting;
 	if (pg->exit_window)
 		return grNoInitGraph;
 	return peekallkey(pg, 3);
 }
 
-int
-kbhitEx(int flag) {
+int kbhitEx(int flag)
+{
 	struct _graph_setting * pg = &graph_setting;
 	if (pg->exit_window)
 		return grNoInitGraph;
@@ -331,8 +325,8 @@ kbhitEx(int flag) {
 	}
 }
 
-int
-getchEx(int flag) {
+int getchEx(int flag)
+{
 	struct _graph_setting * pg = &graph_setting;
 	if (pg->exit_window)
 		return grNoInitGraph;
@@ -370,18 +364,18 @@ getchEx(int flag) {
 	return 0;
 }
 
-int
-kbhit() {
+int kbhit()
+{
 	return kbhitEx(0);
 }
 
-int
-getch() {
+int getch()
+{
 	return getchEx(0);
 }
 
-key_msg
-getkey() {
+key_msg getkey()
+{
 	struct _graph_setting * pg = &graph_setting;
 	key_msg ret = {0};
 	if (pg->exit_window)
@@ -410,8 +404,8 @@ getkey() {
 	return ret;
 }
 
-void
-flushkey() {
+void flushkey()
+{
 	struct _graph_setting * pg = &graph_setting;
 	EGEMSG msg;
 	if (pg->msgkey_queue->empty()) {
@@ -425,8 +419,8 @@ flushkey() {
 	return ;
 }
 
-int
-keystate(int key) {
+int keystate(int key)
+{
 	struct _graph_setting * pg = &graph_setting;
 	if (key < 0 || key >= MAX_KEY_VCODE) {
 		return -1;
@@ -439,9 +433,8 @@ keystate(int key) {
 }
 
 /*private function*/
-static
-EGEMSG
-_getmouse(_graph_setting* pg) {
+static EGEMSG _getmouse(_graph_setting* pg)
+{
 	EGEMSG msg = {0};
 
 	while (pg->msgmouse_queue->pop(msg)) {
@@ -451,9 +444,8 @@ _getmouse(_graph_setting* pg) {
 }
 
 /*private function*/
-static
-EGEMSG
-peekmouse(_graph_setting* pg) {
+static EGEMSG peekmouse(_graph_setting* pg)
+{
 	EGEMSG msg = {0};
 
 	if (pg->msgmouse_queue->empty()) {
@@ -466,8 +458,8 @@ peekmouse(_graph_setting* pg) {
 	return msg;
 }
 
-void
-flushmouse() {
+void flushmouse()
+{
 	struct _graph_setting * pg = &graph_setting;
 	EGEMSG msg;
 	if (pg->msgmouse_queue->empty()) {
@@ -481,8 +473,8 @@ flushmouse() {
 	return ;
 }
 
-int
-mousemsg() {
+int mousemsg()
+{
 	struct _graph_setting * pg = &graph_setting;
 	if (pg->exit_window)
 		return 0;
@@ -492,8 +484,8 @@ mousemsg() {
 	return 0;
 }
 
-mouse_msg
-getmouse() {
+mouse_msg getmouse()
+{
 	struct _graph_setting * pg = &graph_setting;
 	mouse_msg mmsg = {0};
 	if (pg->exit_window)
@@ -538,8 +530,8 @@ getmouse() {
 	return mmsg;
 }
 
-MOUSEMSG
-GetMouseMsg() {
+MOUSEMSG GetMouseMsg()
+{
 	struct _graph_setting * pg = &graph_setting;
 	MOUSEMSG mmsg = {0};
 	if (pg->exit_window)
@@ -575,9 +567,8 @@ GetMouseMsg() {
 }
 
 /*private function*/
-static
-void
-setmode(int gdriver, int gmode) {
+static void setmode(int gdriver, int gmode)
+{
 	struct _graph_setting * pg = &graph_setting;
 
 	if (gdriver == TRUECOLORSIZE){
@@ -602,9 +593,8 @@ setmode(int gdriver, int gmode) {
 }
 
 /*private function*/
-static
-BOOL
-init_instance(HINSTANCE hInstance) {
+static BOOL init_instance(HINSTANCE hInstance)
+{
 	struct _graph_setting * pg = &graph_setting;
 	int dw = 0, dh = 0;
 	//WCHAR Title[256] = {0};
@@ -637,7 +627,7 @@ init_instance(HINSTANCE hInstance) {
 			);
 	} else {
 		const std::string& wndCaption = w2mb(pg->window_caption.c_str());
-		
+
 		pg->hwnd = CreateWindowExA(
 			g_windowexstyle,
 			EGE_WNDCLSNAME,
@@ -695,20 +685,13 @@ init_instance(HINSTANCE hInstance) {
 	if (!(g_initoption & INIT_HIDE))
 		SetActiveWindow(pg->hwnd);
 
-	pg->exit_window = 0;	
+	pg->exit_window = 0;
 	return TRUE;
 }
 
 /*private callback function*/
 #if !defined(UNICODE)
-BOOL
-CALLBACK
-EnumResNameProc(
-	HMODULE hModule,
-	LPCSTR lpszType,
-	LPSTR lpszName,
-	LONG_PTR lParam
-	)
+BOOL CALLBACK EnumResNameProc(HMODULE hModule, LPCSTR lpszType, LPSTR lpszName, LONG_PTR lParam)
 {
 	HICON hico = (HICON)LoadImage(hModule, lpszName, IMAGE_ICON, 0, 0, LR_DEFAULTSIZE);
 	if (hico) {
@@ -738,16 +721,15 @@ EnumResNameProc(
 }
 #endif
 
-void
-DefCloseHandler() {
+void DefCloseHandler()
+{
 	struct _graph_setting * pg = &graph_setting;
 	pg->exit_flag = 1;
 }
 
 /*private function*/
-static
-void
-on_repaint(struct _graph_setting * pg, HWND hwnd, HDC dc) {
+static void on_repaint(struct _graph_setting * pg, HWND hwnd, HDC dc)
+{
 	int page = pg->visual_page;
 	bool release = false;
 	pg->img_timer_update->copyimage(pg->img_page[page]);
@@ -763,9 +745,8 @@ on_repaint(struct _graph_setting * pg, HWND hwnd, HDC dc) {
 }
 
 /*private function*/
-static
-void
-on_timer(struct _graph_setting * pg, HWND hwnd, unsigned id) {
+static void on_timer(struct _graph_setting * pg, HWND hwnd, unsigned id)
+{
 	if (!pg->skip_timer_mark && id == RENDER_TIMER_ID) {
 		if (pg->update_mark_count <= 0) {
 			pg->update_mark_count = UPDATE_MAX_CALL;
@@ -779,9 +760,8 @@ on_timer(struct _graph_setting * pg, HWND hwnd, unsigned id) {
 }
 
 /*private function*/
-static
-void
-on_paint(struct _graph_setting * pg, HWND hwnd) {
+static void on_paint(struct _graph_setting * pg, HWND hwnd)
+{
 	if (! pg->lock_window) {
 		PAINTSTRUCT ps;
 		HDC hdc;
@@ -795,9 +775,8 @@ on_paint(struct _graph_setting * pg, HWND hwnd) {
 }
 
 /*private function*/
-static
-void
-on_destroy(struct _graph_setting * pg) {
+static void on_destroy(struct _graph_setting * pg)
+{
 	pg->exit_window = 1;
 	PostQuitMessage(0);
 	if (pg->close_manually && pg->use_force_exit) {
@@ -806,9 +785,8 @@ on_destroy(struct _graph_setting * pg) {
 }
 
 /*private function*/
-static
-void
-on_setcursor(struct _graph_setting * pg, HWND hwnd) {
+static void on_setcursor(struct _graph_setting * pg, HWND hwnd)
+{
 	if (pg->mouse_show) {
 		SetCursor(LoadCursor(NULL, IDC_ARROW));
 	} else {
@@ -826,9 +804,8 @@ on_setcursor(struct _graph_setting * pg, HWND hwnd) {
 }
 
 /*private function*/
-static
-void
-on_ime_control(struct _graph_setting * pg, HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) {
+static void on_ime_control(struct _graph_setting * pg, HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam)
+{
 	if (wparam == IMC_SETSTATUSWINDOWPOS) {
 		HIMC hImc = ImmGetContext(hwnd);
 		COMPOSITIONFORM cpf = {0};
@@ -839,9 +816,8 @@ on_ime_control(struct _graph_setting * pg, HWND hwnd, UINT message, WPARAM wpara
 }
 
 /*private function*/
-static
-void
-windowmanager(ege::_graph_setting* pg, bool create, struct msg_createwindow* msg) {
+static void windowmanager(ege::_graph_setting* pg, bool create, struct msg_createwindow* msg)
+{
 	if (create) {
 		msg->hwnd = ::CreateWindowExW(
 						msg->exstyle,
@@ -866,9 +842,8 @@ windowmanager(ege::_graph_setting* pg, bool create, struct msg_createwindow* msg
 }
 
 /*private function*/
-static
-void
-on_key(struct _graph_setting * pg, UINT message, unsigned long keycode, LPARAM keyflag) {
+static void on_key(struct _graph_setting * pg, UINT message, unsigned long keycode, LPARAM keyflag)
+{
 	unsigned msg = 0;
 	if (message == WM_KEYDOWN && keycode < MAX_KEY_VCODE) {
 		msg = 1;
@@ -899,9 +874,8 @@ on_key(struct _graph_setting * pg, UINT message, unsigned long keycode, LPARAM k
 }
 
 /*private function*/
-static
-void
-push_mouse_msg(struct _graph_setting * pg, UINT message, WPARAM wparam, LPARAM lparam) {
+static void push_mouse_msg(struct _graph_setting * pg, UINT message, WPARAM wparam, LPARAM lparam)
+{
 	EGEMSG msg ={0};
 	msg.hwnd = pg->hwnd;
 	msg.message = message;
@@ -913,10 +887,8 @@ push_mouse_msg(struct _graph_setting * pg, UINT message, WPARAM wparam, LPARAM l
 }
 
 /*private function*/
-static
-LRESULT
-CALLBACK
-wndproc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
+static LRESULT CALLBACK wndproc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
 	struct _graph_setting * pg_w = NULL;
 	struct _graph_setting * pg = &graph_setting;
 	//int wmId, wmEvent;
@@ -926,7 +898,8 @@ wndproc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
 		return DefWindowProcFunc(hWnd, message, wParam, lParam);
 	}
 
-	switch (message) {
+	switch (message)
+	{
 	case WM_TIMER:
 		if (pg == pg_w) {
 			on_timer(pg, hWnd, (unsigned int)wParam);
@@ -1052,7 +1025,7 @@ wndproc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
 	case WM_USER + 1:
 		windowmanager(pg, (wParam != 0), (struct msg_createwindow*)lParam);
 		break;
-	case WM_USER + 2: 
+	case WM_USER + 2:
 		{
 			struct msg_createwindow* msg = (struct msg_createwindow*)lParam;
 			::SetFocus(msg->hwnd);
@@ -1077,17 +1050,16 @@ wndproc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
 	return 0;
 }
 
-PVOID
-getProcfunc() {
+PVOID getProcfunc()
+{
 	return (PVOID)wndproc;
 }
 
 /*private function*/
-static
-ATOM
-register_classA(struct _graph_setting * pg, HINSTANCE hInstance) {
+static ATOM register_classA(struct _graph_setting * pg, HINSTANCE hInstance)
+{
 	WNDCLASSEXA wcex ={0};
-	
+
 	wcex.cbSize = sizeof(wcex);
 
 	wcex.style          = CS_HREDRAW | CS_VREDRAW;
@@ -1103,9 +1075,8 @@ register_classA(struct _graph_setting * pg, HINSTANCE hInstance) {
 	return RegisterClassExA(&wcex);
 }
 
-static
-ATOM
-register_classW(struct _graph_setting * pg, HINSTANCE hInstance) {
+static ATOM register_classW(struct _graph_setting * pg, HINSTANCE hInstance)
+{
 	WNDCLASSEXW wcex ={0};
 
 	wcex.cbSize = sizeof(wcex);
@@ -1124,8 +1095,8 @@ register_classW(struct _graph_setting * pg, HINSTANCE hInstance) {
 }
 
 /* private function */
-int
-graph_init(_graph_setting * pg) {
+int graph_init(_graph_setting * pg)
+{
 	pg->img_timer_update = newimage();
 	pg->msgkey_queue = new thread_queue<EGEMSG>;
 	pg->msgmouse_queue = new thread_queue<EGEMSG>;
@@ -1136,7 +1107,8 @@ graph_init(_graph_setting * pg) {
 	return 0;
 }
 
-void logoscene() {
+void logoscene()
+{
 	int nsize = getlogodatasize();
 	PIMAGE pimg = newimage();
 	int alpha = 0, b_nobreak = 1, n;
@@ -1201,8 +1173,8 @@ void logoscene() {
 	setrendermode(RENDER_AUTO);
 }
 
-inline void
-init_img_page(struct _graph_setting * pg) {
+inline void init_img_page(struct _graph_setting * pg)
+{
 	if (!pg->has_init) {
 #ifdef EGE_GDIPLUS
 		Gdiplus::GdiplusStartupInput gdiplusStartupInput;
@@ -1211,7 +1183,8 @@ init_img_page(struct _graph_setting * pg) {
 	}
 }
 
-void initicon(void) {
+void initicon(void)
+{
 	HINSTANCE hInstance = GetModuleHandle(NULL);
 	HICON hIcon = NULL;
 	struct _graph_setting * pg = &graph_setting;
@@ -1241,14 +1214,14 @@ void initicon(void) {
 	pg->window_hicon = LoadIcon(NULL, IDI_APPLICATION);
 }
 
-void
-initgraph(int *gdriver, int *gmode, const char *path) {
+void initgraph(int *gdriver, int *gmode, const char *path)
+{
 	struct _graph_setting * pg = &graph_setting;
 
 	pg->exit_flag = 0;
 	pg->exit_window = 0;
 
-	//已创建则转为改变窗口大小	
+	//已创建则转为改变窗口大小
 	if(pg->has_init) {
 		int width = (short)(*gmode & 0xFFFF);
 		int height = (short)((unsigned int)(*gmode) >> 16);
@@ -1260,7 +1233,7 @@ initgraph(int *gdriver, int *gmode, const char *path) {
 	}
 
 	//初始化环境
-	setmode(*gdriver, *gmode);	
+	setmode(*gdriver, *gmode);
 	init_img_page(pg);
 
 	pg->instance = GetModuleHandle(NULL);
@@ -1268,10 +1241,10 @@ initgraph(int *gdriver, int *gmode, const char *path) {
 	initicon();
 
 	// 注册窗口类，设置默认消息处理函数
-	if (pg->is_unicode) {	
+	if (pg->is_unicode) {
 		register_classW(pg, pg->instance);
 		DefWindowProcFunc = DefWindowProcW;
-	} else {	
+	} else {
 		register_classA(pg, pg->instance);
 		DefWindowProcFunc = DefWindowProcA;
 	}
@@ -1303,7 +1276,7 @@ initgraph(int *gdriver, int *gmode, const char *path) {
 	ScreenToClient(pg->hwnd,&pt);
 	pg->mouse_last_x = pt.x;
 	pg->mouse_last_y = pt.y;
-	
+
 	static egeControlBase _egeControlBase;
 
 	if ((g_initoption & INIT_WITHLOGO) && !(g_initoption & INIT_HIDE))
@@ -1315,34 +1288,34 @@ initgraph(int *gdriver, int *gmode, const char *path) {
 	pg->mouse_show = true;
 }
 
-void
-initgraph(int Width, int Height, int Flag) {
+void initgraph(int Width, int Height, int Flag)
+{
 	int g = TRUECOLORSIZE, m = (Width) | (Height<<16);
 	setinitmode(Flag, g_windowpos_x, g_windowpos_y);
 	initgraph(&g, &m, "");
 }
 
-void
-detectgraph(int *gdriver, int *gmode) {
+void detectgraph(int *gdriver, int *gmode)
+{
 	*gdriver = VGA;
 	*gmode = VGAHI;
 }
 
-void
-closegraph() {
+void closegraph()
+{
 	struct _graph_setting * pg = &graph_setting;
 	ShowWindow(pg->hwnd, SW_HIDE);
 }
 
-int attachHWND(HWND hWnd) {
+int attachHWND(HWND hWnd)
+{
 	g_attach_hwnd = hWnd;
 	return 0;
 }
 
 /*private function*/
-DWORD
-WINAPI
-messageloopthread(LPVOID lpParameter) {
+DWORD WINAPI messageloopthread(LPVOID lpParameter)
+{
 	_graph_setting* pg = (_graph_setting*)lpParameter;
 	MSG msg;
 	{
@@ -1395,8 +1368,8 @@ messageloopthread(LPVOID lpParameter) {
 }
 
 
-void
-setinitmode(int mode, int x, int y) {
+void setinitmode(int mode, int x, int y)
+{
 	g_initoption = mode;
 	struct _graph_setting * pg = &graph_setting;
 	if (mode & INIT_NOBORDER) {
@@ -1420,20 +1393,24 @@ setinitmode(int mode, int x, int y) {
 	g_windowpos_y = y;
 }
 
-int getinitmode() {
+int getinitmode()
+{
 	return g_initoption;
 }
 
 // 获取当前版本
-long getGraphicsVer() {
+long getGraphicsVer()
+{
 	return EGE_VERSION_NUMBER;
 }
 
-HWND getParentHWnd() {
+HWND getParentHWnd()
+{
 	return g_attach_hwnd;
 }
 
-void getParentSize(int* width, int* height) {
+void getParentSize(int* width, int* height)
+{
 	RECT rect;
 	if (g_attach_hwnd) {
 		GetClientRect(g_attach_hwnd, &rect);
@@ -1445,7 +1422,8 @@ void getParentSize(int* width, int* height) {
 	*height =rect.bottom - rect.top;
 }
 
-void EGEAPI resizewindow(int width, int height) {
+void EGEAPI resizewindow(int width, int height)
+{
 	int parentW, parentH;
 	getParentSize(&parentW, &parentH);
 
@@ -1455,24 +1433,23 @@ void EGEAPI resizewindow(int width, int height) {
 	int w = getwidth(), h = getheight();
 	if ((width == w && height == h))
 		return;
-	
+
 	setmode(TRUECOLORSIZE, width | (height<<16));
 	struct _graph_setting * pg = &graph_setting;
 
 	for (int i = 0; i < BITMAP_PAGE_SIZE; ++i) {
 		if (pg->img_page[i] != NULL) {
 			resize(pg->img_page[i], width, height);
-			
+
 			//视口调整
 			int vleft, vtop, vright, vbottom, vclip;
 			getviewport(&vleft, &vtop, &vright, &vbottom, &vclip, pg->img_page[i]);
 			if (vleft == 0 && vtop == 0 && vright == w && vbottom == h)
 				setviewport(0, 0, width, height, vclip, pg->img_page[i]);
-		}	
+		}
 	}
 	//窗口视口调整
-	window_setviewport(pg->base_x, pg->base_y, width, height);	
+	window_setviewport(pg->base_x, pg->base_y, width, height);
 }
-
 
 } // namespace ege

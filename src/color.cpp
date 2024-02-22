@@ -8,36 +8,40 @@
 #include "ege_head.h"
 #include <math.h>
 
-namespace ege {
+namespace ege
+{
 
-typedef struct COLORHSL {
+typedef struct COLORHSL
+{
 	float h;
 	float s;
 	float l;
-}COLORHSL;
+} COLORHSL;
 
-typedef struct COLORHSV {
+typedef struct COLORHSV
+{
 	float h;
 	float s;
 	float v;
-}COLORHSV;
+} COLORHSV;
 
-typedef struct COLORRGB {
+typedef struct COLORRGB
+{
 	unsigned char r;
 	unsigned char g;
 	unsigned char b;
-}COLORRGB;
+} COLORRGB;
 
 #if __cplusplus < 201103
-static inline float round(float x) {
+static inline float round(float x)
+{
 	return floor(x + 0.5f);
 }
 #endif
 
 /* private function */
-static
-COLORHSL
-EGE_PRIVATE_RGBtoHSL(int _col) {
+static COLORHSL EGE_PRIVATE_RGBtoHSL(int _col)
+{
 	COLORHSL _crCol;
 	float r, g, b;
 	float *t,*dp[3] = {&r, &g, &b};
@@ -121,9 +125,8 @@ EGE_PRIVATE_RGBtoHSL(int _col) {
 }
 
 /* private function */
-static
-int
-EGE_PRIVATE_HSLtoRGB(float _h, float _s, float _l) {
+static int EGE_PRIVATE_HSLtoRGB(float _h, float _s, float _l)
+{
 	float r, g, b;
 
 	if ( _h < 0.0f) {
@@ -183,9 +186,8 @@ EGE_PRIVATE_HSLtoRGB(float _h, float _s, float _l) {
 }
 
 /* private function */
-static
-void
-RGB_TO_HSV(const COLORRGB* input,COLORHSV* output) {
+static void RGB_TO_HSV(const COLORRGB* input,COLORHSV* output)
+{
 	float r,g,b,minRGB,maxRGB,deltaRGB;
 	r = input->r / 255.0f;
 	g = input->g / 255.0f;
@@ -221,9 +223,8 @@ RGB_TO_HSV(const COLORRGB* input,COLORHSV* output) {
 }
 
 /* private function */
-static
-void
-HSV_TO_RGB(COLORHSV* input,COLORRGB* output) {
+static void HSV_TO_RGB(COLORHSV* input,COLORRGB* output)
+{
 	float R = 0, G = 0, B = 0;
 	int k;
 	float aa,bb,cc,f;
@@ -276,8 +277,8 @@ HSV_TO_RGB(COLORHSV* input,COLORRGB* output) {
 	output->b = (unsigned char)round(B * 255);
 }
 
-color_t
-rgb2gray(color_t color) {
+color_t rgb2gray(color_t color)
+{
 	double c;
 	color_t r;
 	c = ((color>>16) & 0xFF) * 0.299;
@@ -287,21 +288,21 @@ rgb2gray(color_t color) {
 	return EGERGB(r, r, r);
 }
 
-void
-rgb2hsl(color_t rgb, float *H, float *S, float *L) {
+void rgb2hsl(color_t rgb, float *H, float *S, float *L)
+{
 	COLORHSL hsl = EGE_PRIVATE_RGBtoHSL((int)rgb);
 	*H = hsl.h * 360.0f;
 	*S = hsl.s;
 	*L = hsl.l;
 }
 
-color_t
-hsl2rgb(float H, float S, float L) {
+color_t hsl2rgb(float H, float S, float L)
+{
 	return (color_t)EGE_PRIVATE_HSLtoRGB(H / 360.0f, S, L);
 }
 
-void
-rgb2hsv(color_t rgb, float *H, float *S, float *V) {
+void rgb2hsv(color_t rgb, float *H, float *S, float *V)
+{
 	COLORRGB crgb;
 	COLORHSV chsv;
 	crgb.r = (unsigned char)EGEGET_R(rgb);
@@ -313,8 +314,8 @@ rgb2hsv(color_t rgb, float *H, float *S, float *V) {
 	*V = chsv.v;
 }
 
-color_t
-hsv2rgb(float H, float S, float V) {
+color_t hsv2rgb(float H, float S, float V)
+{
 	COLORRGB crgb;
 	if ( H < 0.0f) {
 		H += (float)(int)(-H / 360.0f + 1) * 360.0f;
@@ -327,11 +328,13 @@ hsv2rgb(float H, float S, float V) {
 	return EGERGB(crgb.r, crgb.g, crgb.b);
 }
 
-color_t alphablend(color_t dst, color_t src) {
+color_t alphablend(color_t dst, color_t src)
+{
 	return alphablend_inline(dst, src, EGEGET_A(src));
 }
 
-color_t alphablend(color_t dst, color_t src, unsigned char alpha) {
+color_t alphablend(color_t dst, color_t src, unsigned char alpha)
+{
 	return alphablend_inline(dst, src, alpha);
 }
 

@@ -8,8 +8,8 @@
 #include "ege_head.h"
 #include <time.h>
 
-namespace ege {
-
+namespace ege
+{
 
 //************************************************************************
 //  This is a slightly modified version of Equamen mersenne twister.

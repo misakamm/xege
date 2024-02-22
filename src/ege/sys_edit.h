@@ -7,37 +7,48 @@
 
 #include "egecontrolbase.h"
 
-namespace ege {
+namespace ege
+{
 
 class sys_edit : public egeControlBase
 {
 public:
-    CTL_PREINIT(sys_edit, egeControlBase) {
+    CTL_PREINIT(sys_edit, egeControlBase)
+    {
         // do sth. before sub objects' construct function call
     } CTL_PREINITEND;
-    sys_edit(CTL_DEFPARAM) : CTL_INITBASE(egeControlBase) {
+
+    sys_edit(CTL_DEFPARAM) : CTL_INITBASE(egeControlBase)
+    {
         CTL_INIT; // must be the first linef
         directdraw(true);
         m_hwnd = NULL;
     }
-    ~sys_edit() {
+
+    ~sys_edit()
+    {
         destroy();
     }
-    int create(bool multiline = false, int scrollbar = 2) {
+
+    int create(bool multiline = false, int scrollbar = 2)
+    {
         if (m_hwnd) {
             destroy();
         }
+
         msg_createwindow msg = {NULL};
         msg.hEvent = ::CreateEvent(NULL, TRUE, FALSE, NULL);
         msg.classname = L"EDIT";
         msg.id = egeControlBase::allocId();
         msg.style = WS_CHILD | WS_BORDER |
                     ES_LEFT | ES_WANTRETURN;
+
         if (multiline) {
             msg.style |= ES_MULTILINE | WS_VSCROLL;
         } else {
             msg.style |= ES_AUTOHSCROLL;
         }
+
         msg.exstyle = WS_EX_CLIENTEDGE;// | WS_EX_STATICEDGE;
         msg.param = this;
 
@@ -63,9 +74,11 @@ public:
 
         return 0;
     }
-    int destroy() {
+
+    int destroy()
+    {
         if (m_hwnd) {
-            visible(false);          	
+            visible(false);
             msg_createwindow msg = {NULL};
             msg.hwnd = m_hwnd;
             msg.hEvent = ::CreateEvent(NULL, TRUE, FALSE, NULL);
@@ -81,11 +94,15 @@ public:
         return 0;
     }
     LRESULT onMessage(UINT message, WPARAM wParam, LPARAM lParam);
-    void visible(bool bvisible) {
+
+    void visible(bool bvisible)
+    {
         egeControlBase::visible(bvisible);
         ::ShowWindow(m_hwnd, (int)bvisible);
     }
-    void setfont(int h, int w, LPCSTR fontface) {
+
+    void setfont(int h, int w, LPCSTR fontface)
+    {
         {
             LOGFONTA lf = {0};
             lf.lfHeight         = h;
@@ -110,7 +127,9 @@ public:
             }
         }
     }
-    void setfont(int h, int w, LPCWSTR fontface) {
+
+    void setfont(int h, int w, LPCWSTR fontface)
+    {
         {
             LOGFONTW lf = {0};
             lf.lfHeight         = h;
@@ -135,43 +154,64 @@ public:
             }
         }
     }
-    void move(int x, int y) {
+
+    void move(int x, int y)
+    {
         egeControlBase::move(x, y);
         ::MoveWindow(m_hwnd, m_x, m_y, m_w, m_h, TRUE);
     }
-    void size(int w, int h) {
+
+    void size(int w, int h)
+    {
         egeControlBase::size(w, h);
         ::MoveWindow(m_hwnd, m_x, m_y, m_w, m_h, TRUE);
     }
-    void settext(LPCSTR text) {
+
+    void settext(LPCSTR text)
+    {
         ::SendMessageA(m_hwnd, WM_SETTEXT, 0, (LPARAM)text);
     }
-    void settext(LPCWSTR text) {
+
+    void settext(LPCWSTR text)
+    {
         ::SendMessageW(m_hwnd, WM_SETTEXT, 0, (LPARAM)text);
     }
-    void gettext(int maxlen, LPSTR text) {
+    void gettext(int maxlen, LPSTR text)
+    {
         ::SendMessageA(m_hwnd, WM_GETTEXT, (WPARAM)maxlen, (LPARAM)text);
     }
-    void gettext(int maxlen, LPWSTR text) {
+
+    void gettext(int maxlen, LPWSTR text)
+    {
         ::SendMessageW(m_hwnd, WM_GETTEXT, (WPARAM)maxlen, (LPARAM)text);
     }
-    void setmaxlen(int maxlen) {
+
+    void setmaxlen(int maxlen)
+    {
         ::SendMessageW(m_hwnd, EM_LIMITTEXT, (WPARAM)maxlen, 0);
     }
-    void setcolor(color_t color) {
+
+    void setcolor(color_t color)
+    {
         m_color = color;
         ::InvalidateRect(m_hwnd, NULL, TRUE);
     }
-    void setbgcolor(color_t bgcolor) {
+
+    void setbgcolor(color_t bgcolor)
+    {
         m_bgcolor = bgcolor;
         //::RedrawWindow(m_hwnd, NULL, NULL, RDW_INVALIDATE);
         ::InvalidateRect(m_hwnd, NULL, TRUE);
     }
-    void setreadonly(bool readonly) {
+
+    void setreadonly(bool readonly)
+    {
         ::SendMessageW(m_hwnd, EM_SETREADONLY, (WPARAM)readonly, 0);
         ::InvalidateRect(m_hwnd, NULL, TRUE);
     }
-    void setfocus() {
+
+    void setfocus()
+    {
         msg_createwindow msg = {NULL};
         msg.hwnd = m_hwnd;
         msg.hEvent = ::CreateEvent(NULL, TRUE, FALSE, NULL);

@@ -10,54 +10,50 @@
 #endif
 
 
-namespace ege {
-
+namespace ege
+{
 
 template<typename T>
 class Array
 {
 public:
 	typedef T *iterator;
-	class reverse_iterator {
+	class reverse_iterator
+	{
 	public:
-		reverse_iterator(iterator it) {
-			_it = it;
-		}
-		reverse_iterator(const reverse_iterator &rit) {
-			_it = rit._it;
-		}
-		reverse_iterator&
-		operator ++ () {
+		reverse_iterator(iterator it) {_it = it;}
+		reverse_iterator(const reverse_iterator &rit) {_it = rit._it;}
+
+		reverse_iterator& operator ++ ()
+		{
 			--_it;
 			return *this;
 		}
-		reverse_iterator&
-		operator -- () {
+		reverse_iterator& operator -- ()
+		{
 			++_it;
 			return *this;
 		}
-		T&
-		operator* () {
-			return *_it;
-		}
-		bool
-		operator == (const reverse_iterator &rit) {
-			return _it == rit._it;
-		}
-		bool
-		operator != (const reverse_iterator &rit) {
-			return _it != rit._it;
-		}
+
+		T& operator* () {return *_it;}
+
+		bool operator == (const reverse_iterator &rit) {return _it == rit._it;}
+		bool operator != (const reverse_iterator &rit) {return _it != rit._it;}
+
 	private:
 		iterator _it;
 	};
+
 public:
-	Array() {
+	Array()
+	{
 		m_capacity = 0;
 		m_size = 0;
 		m_arr = NULL;
 	}
-	Array(const Array& arr) {
+
+	Array(const Array& arr)
+	{
 		m_capacity = arr.m_capacity;
 		m_size = arr.m_size;
 		m_arr = new T[m_size];;
@@ -65,14 +61,17 @@ public:
 			m_arr[i] = arr.m_arr[i];
 		}
 	}
-	~Array() {
+
+	~Array()
+	{
 		if (m_arr) {
 			delete m_arr;
 			m_arr = NULL;
 		}
 	}
-	void
-	resize(size_t sz, T c = T()) {
+
+	void resize(size_t sz, T c = T())
+	{
 		if (m_arr == NULL) {
 			m_arr = new T[sz];
 			for (size_t i = 0; i < sz; ++i) {
@@ -96,36 +95,20 @@ public:
 				m_size = m_capacity;
 		}
 	}
-	iterator
-	begin() {
-		return m_arr;
-	}
-	iterator
-	end() {
-		return m_arr + m_size;
-	}
-	reverse_iterator
-	rbegin() {
-		return reverse_iterator(m_arr + m_size - 1);
-	}
-	reverse_iterator
-	rend() {
-		return reverse_iterator(m_arr - 1);
-	}
-	size_t
-	size() const {
-		return m_size;
-	}
-	T&
-	front() {
-		return m_arr[0];
-	}
-	T&
-	back() {
-		return m_arr[m_size - 1];
-	}
-	Array&
-	push_back(const T& obj) {
+
+	iterator begin() { return m_arr; }
+	iterator end()   { return m_arr + m_size; }
+
+	reverse_iterator rbegin() { return reverse_iterator(m_arr + m_size - 1); }
+	reverse_iterator rend()   { return reverse_iterator(m_arr - 1);}
+
+	size_t size() const { return m_size; }
+
+	T& front() { return m_arr[0]; }
+	T& back()  { return m_arr[m_size - 1];}
+
+	Array& push_back(const T& obj)
+	{
 		if (m_arr == NULL) {
 			resize(8);
 		} else if (m_size == m_capacity) {
@@ -134,13 +117,15 @@ public:
 		m_arr[m_size++] = obj;
 		return *this;
 	}
-	void
-	pop_back() {
+
+	void pop_back()
+	{
 		if (m_size > 0)
 			--m_size;
 	}
-	iterator
-	erase ( iterator position ) {
+
+	iterator erase ( iterator position )
+	{
 		if (position == end())
 			return position;
 		iterator it = position, it2 = position;
@@ -150,8 +135,9 @@ public:
 		--m_size;
 		return position;
 	}
-	iterator
-	insert ( iterator position, const T& val ) {
+
+	iterator insert ( iterator position, const T& val )
+	{
 		size_t pos = position - m_arr;
 		if (m_arr == NULL) {
 			resize(8);
@@ -236,139 +222,105 @@ template<typename T>
 class Set
 {
 public:
-	class iterator {
+	class iterator
+	{
 	public:
-		iterator(SBT<T>& t, sbt_int_t it) {
+		iterator(SBT<T>& t, sbt_int_t it)
+		{
 			_t = &t;
 			_it = it;
 		}
-		iterator&
-		operator ++ () {
+
+		iterator& operator ++ ()
+		{
 			++_it;
 			return *this;
 		}
-		iterator
-		operator + (sbt_int_t i) {
-			return iterator(*_t, _it + i);
-		}
-		iterator
-		operator - (sbt_int_t i) {
-			return iterator(*_t, _it - i);
-		}
-		iterator&
-		operator -- () {
+
+		iterator& operator -- ()
+		{
 			--_it;
 			return *this;
 		}
-		T&
-		operator* () {
-			return _t->select(_it)->val;
-		}
-		bool
-		operator == (const iterator &it) {
-			return _t == it._t && _it == it._it;
-		}
-		bool
-		operator != (const iterator &it) {
-			return _t != it._t || _it != it._it;
-		}
-		sbt_int_t
-		index() const {
-			return _it;
-		}
-		void
-		erase() {
+
+		iterator operator + (sbt_int_t i) {return iterator(*_t, _it + i);}
+		iterator operator - (sbt_int_t i) {return iterator(*_t, _it - i);}
+
+		T& operator * () {return _t->select(_it)->val;}
+
+		bool operator == (const iterator &it) {return _t == it._t && _it == it._it;}
+		bool operator != (const iterator &it) {return _t != it._t || _it != it._it;}
+
+		sbt_int_t index() const {return _it;}
+
+		void erase()
+		{
 			if (0 <= index() && index() < _t->size()) {
 				_t->remove_select(_it);
 			}
 		}
+
 	protected:
 		sbt_int_t _it;
 		SBT<T>* _t;
 	};
-	class reverse_iterator : public iterator {
+
+	class reverse_iterator : public iterator
+	{
 	public:
-		reverse_iterator(SBT<T>& t, sbt_int_t it) : iterator(t, it) {
-		}
-		reverse_iterator&
-		operator ++ () {
+		reverse_iterator(SBT<T>& t, sbt_int_t it) : iterator(t, it) {}
+
+		reverse_iterator& operator ++ ()
+		{
 			--iterator::_it;
 			return *this;
 		}
-		reverse_iterator&
-		operator -- () {
+
+		reverse_iterator& operator -- ()
+		{
 			++iterator::_it;
 			return *this;
 		}
-		iterator
-		operator + (sbt_int_t i) {
-			return iterator(*iterator::_t, iterator::_it - i);
-		}
-		iterator
-		operator - (sbt_int_t i) {
-			return iterator(*iterator::_t, iterator::_it + i);
-		}
-		bool
-		operator == (const reverse_iterator &rit) {
-			return iterator::_t == rit._t && iterator::_it == rit._it;
-		}
-		bool
-		operator != (const reverse_iterator &rit) {
-			return iterator::_t != rit._t || iterator::_it != rit._it;
-		}
+
+		iterator operator + (sbt_int_t i) {return iterator(*iterator::_t, iterator::_it - i);}
+		iterator operator - (sbt_int_t i) {return iterator(*iterator::_t, iterator::_it + i);}
+
+		bool operator == (const reverse_iterator &rit) {return iterator::_t == rit._t && iterator::_it == rit._it;}
+		bool operator != (const reverse_iterator &rit) {return iterator::_t != rit._t || iterator::_it != rit._it;}
 	};
 public:
-	Set() : m_set() {
-	}
-	~Set() {
-	}
-	iterator
-	begin() {
-		return iterator(m_set, 0);
-	}
-	iterator
-	end() {
-		return iterator(m_set, m_set.size());
-	}
-	reverse_iterator
-	rbegin() {
-		return reverse_iterator(m_set, m_set.size() - 1);
-	}
-	reverse_iterator
-	rend() {
-		return reverse_iterator(m_set, -1);
-	}
-	iterator
-	nth(sbt_int_t n) {
-		return iterator(m_set, n);
-	}
-	sbt_int_t
-	size() const {
-		return m_set.size();
-	}
-	iterator
-	find(const T& obj) {
+	Set() : m_set() {}
+	~Set() {}
+
+	iterator begin() {return iterator(m_set, 0);}
+	iterator end() {return iterator(m_set, m_set.size());}
+
+	reverse_iterator rbegin() {return reverse_iterator(m_set, m_set.size() - 1);}
+	reverse_iterator rend() {return reverse_iterator(m_set, -1);}
+
+	iterator nth(sbt_int_t n) {return iterator(m_set, n);}
+	sbt_int_t size() const {return m_set.size();}
+
+	iterator find(const T& obj)
+	{
 		sbt_int_t i = m_set.rank(obj);
 		if (i == -1)
 			return end();
 		return nth(i);
 	}
-	void
-	insert(const T& obj) {
+
+	void insert(const T& obj)
+	{
 		sbt_int_t i = m_set.rank(obj);
 		if (i == -1)
 			m_set.insert(obj);
 	}
-	void
-	erase(iterator it) {
-		it.erase();
-	}
-	void
-	erase(reverse_iterator it) {
-		it.erase();
-	}
-	void
-	erase(const T& obj) {
+
+	void erase(iterator it) {it.erase();}
+	void erase(reverse_iterator it) {it.erase();}
+
+	void erase(const T& obj)
+	{
 		if (m_set.search(obj)) {
 			m_set.remove(obj);
 		}

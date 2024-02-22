@@ -7,7 +7,8 @@ MUSIC类的定义
 #include "ege_head.h"
 #include "mmsystem.h"
 //#include <Digitalv.h>
-typedef struct {
+typedef struct
+{
 	DWORD_PTR   dwCallback;
 	DWORD   dwItem;
 	DWORD   dwValue;
@@ -15,7 +16,9 @@ typedef struct {
 	LPSTR   lpstrAlgorithm;
 	LPSTR   lpstrQuality;
 } MCI_DGV_SETAUDIO_PARMSA;
-typedef struct {
+
+typedef struct
+{
 	DWORD_PTR   dwCallback;
 	DWORD   dwItem;
 	DWORD   dwValue;
@@ -23,6 +26,7 @@ typedef struct {
 	LPWSTR  lpstrAlgorithm;
 	LPWSTR  lpstrQuality;
 } MCI_DGV_SETAUDIO_PARMSW;
+
 #ifdef UNICODE
 typedef MCI_DGV_SETAUDIO_PARMSW MCI_DGV_SETAUDIO_PARMS;
 #else
@@ -37,30 +41,27 @@ typedef MCI_DGV_SETAUDIO_PARMSA MCI_DGV_SETAUDIO_PARMS;
 #endif
 // end of Digitalv.h
 
-namespace ege {
+namespace ege
+{
 
-//////////////////////////////////////////////////////////////////////
 // Class MUSIC Construction
-//////////////////////////////////////////////////////////////////////
-MUSIC::MUSIC() {
+MUSIC::MUSIC()
+{
 	m_DID = MUSIC_ERROR;
 	m_dwCallBack = 0;
 }
 
-//////////////////////////////////////////////////////////////////////
 // Class MUSIC Destruction
-//////////////////////////////////////////////////////////////////////
-MUSIC::~MUSIC() {
+MUSIC::~MUSIC()
+{
 	if ( m_DID != MUSIC_ERROR) {
 		Close();
 	}
 }
 
-//////////////////////////////////////////////////////////////////////
-// mciOpenFileA(LPCSTR _szStr)
 // open a music file. szStr: Path of the file
-//////////////////////////////////////////////////////////////////////
-DWORD MUSIC::OpenFile(LPCSTR _szStr) {
+DWORD MUSIC::OpenFile(LPCSTR _szStr)
+{
 	MCIERROR        mciERR  = ERROR_SUCCESS;
 	MCI_OPEN_PARMSA mci_p   = {0};
 
@@ -106,11 +107,9 @@ DWORD MUSIC::OpenFile(LPCSTR _szStr) {
 	return mciERR;
 }
 
-//////////////////////////////////////////////////////////////////////
-// mciOpenFile(LPCWSTR _szStr)
 // open a music file. szStr: Path of the file
-//////////////////////////////////////////////////////////////////////
-DWORD MUSIC::OpenFile(LPCWSTR _szStr) {
+DWORD MUSIC::OpenFile(LPCWSTR _szStr)
+{
 	MCIERROR        mciERR  = ERROR_SUCCESS;
 	MCI_OPEN_PARMSW mci_p   = {0};
 
@@ -156,11 +155,10 @@ DWORD MUSIC::OpenFile(LPCWSTR _szStr) {
 	return mciERR;
 }
 
-//////////////////////////////////////////////////////////////////////
 // mciPlay(DWORD dwFrom, DWORD dwTo, DWORD dwCallBack)
 // play the music stream.
-//////////////////////////////////////////////////////////////////////
-DWORD MUSIC::Play(DWORD dwFrom, DWORD dwTo) {
+DWORD MUSIC::Play(DWORD dwFrom, DWORD dwTo)
+{
 	ASSERT_TRUE(m_DID);
 	MCIERROR        mciERR  = ERROR_SUCCESS;
 	MCI_PLAY_PARMS  mci_p   = {0};
@@ -187,11 +185,9 @@ DWORD MUSIC::Play(DWORD dwFrom, DWORD dwTo) {
 	return mciERR;
 }
 
-//////////////////////////////////////////////////////////////////////
-// mciPause()
 // pause the music stream.
-//////////////////////////////////////////////////////////////////////
-DWORD MUSIC::Pause() {
+DWORD MUSIC::Pause()
+{
 	ASSERT_TRUE(m_DID);
 	MCIERROR            mciERR  = ERROR_SUCCESS;
 	MCI_GENERIC_PARMS   mci_p   = {0};
@@ -207,11 +203,9 @@ DWORD MUSIC::Pause() {
 	return mciERR;
 }
 
-//////////////////////////////////////////////////////////////////////
-// mciStop()
 // stop the music stream.
-//////////////////////////////////////////////////////////////////////
-DWORD MUSIC::Stop() {
+DWORD MUSIC::Stop()
+{
 	ASSERT_TRUE(m_DID);
 	MCIERROR            mciERR  = ERROR_SUCCESS;
 	MCI_GENERIC_PARMS   mci_p   = {0};
@@ -227,12 +221,13 @@ DWORD MUSIC::Stop() {
 	return mciERR;
 }
 
-DWORD MUSIC::SetVolume(float value) {
+DWORD MUSIC::SetVolume(float value)
+{
 	ASSERT_TRUE(m_DID);
 	MCIERROR                mciERR  = ERROR_SUCCESS;
 	MCI_DGV_SETAUDIO_PARMSW mci_p   = {0};
-	mci_p.dwItem = MCI_DGV_SETAUDIO_VOLUME; 
-	mci_p.dwValue = (DWORD)(value * 1000); //此处就是音量大小 (0--1000) 
+	mci_p.dwItem = MCI_DGV_SETAUDIO_VOLUME;
+	mci_p.dwValue = (DWORD)(value * 1000); //此处就是音量大小 (0--1000)
 
 	mciERR = mciSendCommandW(
 		m_DID,
@@ -243,11 +238,9 @@ DWORD MUSIC::SetVolume(float value) {
 	return mciERR;
 }
 
-//////////////////////////////////////////////////////////////////////
-// mciSeek(DWORD dwTo)
 // seek the music stream playposition to `dwTo`
-//////////////////////////////////////////////////////////////////////
-DWORD MUSIC::Seek(DWORD dwTo) {
+DWORD MUSIC::Seek(DWORD dwTo)
+{
 	ASSERT_TRUE(m_DID);
 	MCIERROR        mciERR  = ERROR_SUCCESS;
 	MCI_SEEK_PARMS  mci_p   = {0};
@@ -264,11 +257,9 @@ DWORD MUSIC::Seek(DWORD dwTo) {
 	return mciERR;
 }
 
-//////////////////////////////////////////////////////////////////////
-// mciClose()
 // close the music stream.
-//////////////////////////////////////////////////////////////////////
-DWORD MUSIC::Close() {
+DWORD MUSIC::Close()
+{
 	if(m_DID != MUSIC_ERROR) {
 		MCIERROR mciERR = ERROR_SUCCESS;
 		MCI_GENERIC_PARMS mci_p = {0};
@@ -288,11 +279,9 @@ DWORD MUSIC::Close() {
 	}
 }
 
-//////////////////////////////////////////////////////////////////////
-// mciGetPosition()
 // get the playing position. return by milliseconds
-//////////////////////////////////////////////////////////////////////
-DWORD MUSIC::GetPosition() {
+DWORD MUSIC::GetPosition()
+{
 	ASSERT_TRUE(m_DID);
 	MCI_STATUS_PARMS mci_p = {0};
 
@@ -308,11 +297,9 @@ DWORD MUSIC::GetPosition() {
 	return (DWORD)mci_p.dwReturn;
 }
 
-//////////////////////////////////////////////////////////////////////
-// mciGetLength()
 // get the length of the music stream. return by milliseconds
-//////////////////////////////////////////////////////////////////////
-DWORD MUSIC::GetLength() {
+DWORD MUSIC::GetLength()
+{
 	ASSERT_TRUE(m_DID);
 	MCI_STATUS_PARMS mci_p = {0};
 
@@ -328,7 +315,8 @@ DWORD MUSIC::GetLength() {
 	return (DWORD)mci_p.dwReturn;
 }
 
-DWORD MUSIC::GetPlayStatus() {
+DWORD MUSIC::GetPlayStatus()
+{
 	ASSERT_TRUE(m_DID);
 	MCI_STATUS_PARMS mci_p = {0};
 

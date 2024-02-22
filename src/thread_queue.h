@@ -4,15 +4,19 @@
 
 #define QUEUE_LEN 1024
 
-namespace ege {
+namespace ege
+{
 
 class Lock
 {
 public:
-	Lock(LPCRITICAL_SECTION p_) : _psection(p_) {
+	Lock(LPCRITICAL_SECTION p_) : _psection(p_)
+	{
 		::EnterCriticalSection(_psection);
 	}
-	~Lock() {
+
+	~Lock()
+	{
 		::LeaveCriticalSection(_psection);
 	}
 private:
@@ -23,15 +27,19 @@ template<typename T>
 class thread_queue
 {
 public:
-	thread_queue(void) {
+	thread_queue(void)
+	{
 		::InitializeCriticalSection(&_section);
 		_begin = _end = 0;
 	}
-	~thread_queue(void) {
+
+	~thread_queue(void)
+	{
 		::DeleteCriticalSection(&_section);
 	}
 
-	void push(const T& d_) {
+	void push(const T& d_)
+	{
 		Lock lock(&_section);
 		int w = (_end + 1) % QUEUE_LEN;
 		_queue[_end] = d_;
@@ -39,7 +47,9 @@ public:
 			_begin = (_begin + 1) % QUEUE_LEN;
 		_end = w;
 	}
-	int pop(T& d_) {
+
+	int pop(T& d_)
+	{
 		Lock lock(&_section);
 		if (_end == _begin)
 			return 0;
@@ -48,17 +58,23 @@ public:
 		_begin = (_begin + 1) % QUEUE_LEN;
 		return 1;
 	}
-	int unpop() {
+
+	int unpop()
+	{
 		Lock lock(&_section);
 		if (_begin == (_end + 1) % QUEUE_LEN)
 			return 0;
 		_begin = (_begin + QUEUE_LEN - 1) % QUEUE_LEN;
 		return 1;
 	}
-	T last() {
+
+	T last()
+	{
 		return _last;
 	}
-	void process(void (*process_func)(T&)) {
+
+	void process(void (*process_func)(T&))
+	{
 		Lock lock(&_section);
 		int r = _begin;
 		int w = _end;
@@ -70,10 +86,13 @@ public:
 			}
 		}
 	}
-	bool empty() {
+
+	bool empty()
+	{
 		Lock lock(&_section);
 		return _begin == _end;
 	}
+
 private:
 	CRITICAL_SECTION _section;
 	T _queue[QUEUE_LEN];

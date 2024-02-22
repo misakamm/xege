@@ -972,11 +972,13 @@ static unsigned char logo_res[] = {
 	160,2,138,40,160,2,138,40,160,2,138,40,160,2,138,40,
 	160,2,138,40,160,15,255,217,
 };
-unsigned long getlogodatasize() {
+unsigned long getlogodatasize()
+{
 	return sizeof(logo_res);
 }
 
-char* getlogodata() {
+char* getlogodata()
+{
 	return (char*)logo_res;
 }
 #ifdef __cplusplus

@@ -1,4 +1,4 @@
-/** 
+/**
  * @file button.h
  * @brief the EGE control:button
  * @author StudyC.cn@gmail.com
@@ -39,13 +39,15 @@ class button : public egeControlBase
          *
          * @return 0
          */
-        virtual int  onKeyDown(int key, int flag) {
+        virtual int  onKeyDown(int key, int flag)
+        {
             if((key==13)||(key==32)){
                 _pushed=true;
                 redraw();
             }
-            return 0; 
+            return 0;
         }
+
         /**
          * @brief 响应空格与回车的弹起
          *
@@ -54,7 +56,8 @@ class button : public egeControlBase
          *
          * @return 0
          */
-        virtual int  onKeyUp(int key, int flag) {
+        virtual int onKeyUp(int key, int flag)
+        {
             if(((key==13)||(key==32))&&_pushed){
                 if(_on_click){
                     if(!_on_click(callback_param)){
@@ -78,12 +81,13 @@ class button : public egeControlBase
          *
          * @return 0
          */
-        virtual int onMouse(int x, int y, int flag) {
-            if((flag&mouse_flag_left)&&(flag&mouse_msg_down)){
+        virtual int onMouse(int x, int y, int flag)
+        {
+            if((flag & mouse_flag_left) && (flag & mouse_msg_down)){
                 capmouse(true);
                 _pushed=true;
                 redraw();
-            }else if((flag&mouse_flag_left)&&(flag&mouse_msg_up)){
+            }else if((flag & mouse_flag_left) && (flag & mouse_msg_up)){
                 if(_pushed){
                     if(_on_click){
                         if(!_on_click(callback_param)){
@@ -97,56 +101,68 @@ class button : public egeControlBase
                 }
                 redraw();
             }
-            return 0; 
+            return 0;
         }
+
         /**
          * @brief 屏幕更新后会被调用，用于更新逻辑
-         *
          * @return 0
          */
-        virtual int  onUpdate() { 
+        virtual int  onUpdate()
+        {
             return 0;
         }
+
         /**
          * @brief 在要获得焦点时调用，返回值一般返回0表示获取键盘输入焦点，返回非0放弃获得输入焦点
-         *
          * @return 0
          */
-        virtual int  onGetFocus() {
+        virtual int  onGetFocus()
+        {
             return 0;
         }
+
         /**
          * @brief 失去输入焦点时调用
          */
-        virtual void onLostFocus() {
+        virtual void onLostFocus()
+        {
             _pushed=false;
             redraw();
         }
+
         // 设置尺寸前调用，自定义修正函数
-        virtual void onSizing(int *w, int *h) {
+        virtual void onSizing(int *w, int *h)
+        {
             //egeControlBase::onSizing(w,h);
         }
+
         // 响应尺寸变化函数
-        virtual void onSize(int w, int h) {
+        virtual void onSize(int w, int h)
+        {
             //egeControlBase::onSize(w,h);
             updatesidewidth();
             redraw();
         }
+
         // 重绘函数，尽量请画到pimg上，以便能控制绘画目标
-        virtual void onDraw(PIMAGE pimg) const {
-        }
+        virtual void onDraw(PIMAGE pimg) const {}
+
         // 尺寸变化时调用，用于重画过滤缓冲区内容
-        virtual void onResetFilter() {
-        }
+        virtual void onResetFilter() {}
+
         //virtual void onAddChild(egeControlBase* pChild) {}
         //virtual void onDelChild(egeControlBase* pChild) {}
         //virtual void onIdle() {} // 保留接口，未用
         // 这里以上的函数可以自行定义（注意声明要一致，不要漏掉OnDraw里的const）
         //init
-        CTL_PREINIT(button, egeControlBase) {
+        CTL_PREINIT(button, egeControlBase)
+        {
             // do sth. before sub objects' construct function call
         } CTL_PREINITEND;
-        button(CTL_DEFPARAM) : CTL_INITBASE(egeControlBase) {
+
+        button(CTL_DEFPARAM) : CTL_INITBASE(egeControlBase)
+        {
             CTL_INIT; // must be the first line
             size(64, 32);
             _font_height = 12;
@@ -167,16 +183,18 @@ class button : public egeControlBase
             //redraw();
             //blendmode(true);
         }
+
         //member functions
         /**
          * @brief 在回调函数指针为NULL或回调函数返回0时被调用
          */
-        virtual void onClick(){
-        }
+        virtual void onClick() {}
+
         /**
          * @brief 重绘控件
          */
-        virtual void redraw() const {
+        virtual void redraw() const
+        {
             PushTarget targer(buf());
             setbkcolor_f(RED);
             setcolor(RED);
@@ -225,13 +243,14 @@ class button : public egeControlBase
             setbkcolor_f(EGERGB(_alpha, _alpha, _alpha), filter());
             cleardevice(filter());
         }
+
         //attributes
         /**
          * @brief 设置alpha值
-         *
          * @param alpha 0x00 - 0xff
          */
-        void alpha(int alpha){
+        void alpha(int alpha)
+        {
             if(alpha<0){
                 _alpha=0;
             }else if(alpha>0xff){
@@ -244,22 +263,23 @@ class button : public egeControlBase
             }else{
                 blendmode(false);
             }
-
         }
+
         /**
          * @brief 返回alpha值
-         *
          * @return alpha
          */
-        int alpha() const{
+        int alpha() const
+        {
             return _alpha;
         }
+
         /**
          * @brief 设置背景色
-         *
          * @param color 背景色
          */
-        void bgcolor(COLORREF color){
+        void bgcolor(COLORREF color)
+        {
             _bg_color=color;
             redraw();
         }
@@ -268,7 +288,8 @@ class button : public egeControlBase
          *
          * @return 背景色
          */
-        COLORREF bgcolor() const{
+        COLORREF bgcolor() const
+        {
             return _bg_color;
         }
         /**
@@ -277,88 +298,103 @@ class button : public egeControlBase
          * @param fun 回调函数指针，当且仅当返回值为0时会自动调用onClick
          * @param param 附加参数，将会原样传递给回调函数
          */
-        void callback(int (*fun)(void*),void* param){
+        void callback(int (*fun)(void*),void* param)
+        {
             callback_param=param;
             _on_click=fun;
             redraw();
         }
+
         /**
          * @brief 返回回调函数指针
          *
          * @return 回调函数指针；若未设置，返回NULL
          */
         template <typename T>
-            T callback() const{
-                return _on_click;
-            }
+        T callback() const
+        {
+            return _on_click;
+        }
+
         /**
          * @brief 设置文本
-         *
          * @param text 文本
          */
-        void caption(const char* text) {
+        void caption(const char* text)
+        {
             strcpy(_caption, text);
             redraw();
         }
+
         /**
          * @brief 返回文本
-         *
          * @return 文本
          */
-        const char* caption() const{
+        const char* caption() const
+        {
             return _caption;
             //redraw();
         }
+
         /**
          * @brief 设置字体
-         *
          * @param fontface 字体名
          */
-        void font(const char* fontface) {
+        void font(const char* fontface)
+        {
             strcpy(_face, fontface);
             redraw();
         }
+
         /**
          * @brief 返回字体
-         *
          * @return 字体名
          */
-        const char* font() const{
+        const char* font() const
+        {
             return _face;
             //redraw();
         }
+
         /**
          * @brief 设置字体尺寸，待续
          *
          * @param height
          */
-        void fontsize(int height) {
+        void fontsize(int height)
+        {
             _font_height = height;
             redraw();
         }
+
         /**
          * @brief 返回字体尺寸
          *
          * @return 字体尺寸
          */
-        int fontsize() const{
+        int fontsize() const
+        {
             return _font_height;
         }
+
         /**
          * @brief 设置按钮的线条颜色
          *
          * @param color 颜色
          */
-        void linecolor(COLORREF color){
+        void linecolor(COLORREF color)
+        {
             _line_color=color;
             redraw();
         }
+
         /**
          * @brief 返回按钮线条颜色
          *
          * @return 线条颜色
          */
-        COLORREF linecolor() const{
+        COLORREF linecolor() const
+        {
             return _line_color;
         }
 #ifdef DEBUG
@@ -367,15 +403,18 @@ class button : public egeControlBase
          *
          * @param logger
          */
-        void logger(label* logger){
+        void logger(label* logger)
+        {
             _logger=logger;
         }
+
         /**
          * @brief 返回调试信息出口
          *
-         * @return 
+         * @return
          */
-        label* logger() const{
+        label* logger() const
+        {
             return _logger;
         }
 #endif
@@ -384,24 +423,29 @@ class button : public egeControlBase
          *
          * @param color 阴影颜色
          */
-        void shadowcolor(COLORREF color){
+        void shadowcolor(COLORREF color)
+        {
             _shadow_color=color;
             redraw();
         }
+
         /**
          * @brief 返回阴影颜色
          *
          * @return 阴影颜色
          */
-        COLORREF shadowcolor() const{
+        COLORREF shadowcolor() const
+        {
             return _shadow_color;
         }
+
         /**
          * @brief 设置文本颜色
          *
          * @param color 文本颜色
          */
-        void textcolor(COLORREF color){
+        void textcolor(COLORREF color)
+        {
             _text_color=color;
             redraw();
         }
@@ -410,23 +454,26 @@ class button : public egeControlBase
          *
          * @return 文本颜色
          */
-        COLORREF textcolor() const{
+        COLORREF textcolor() const
+        {
             return _text_color;
         }
+
     protected:
         /**
          * @brief 修正边的宽度
          */
-        void updatesidewidth(){
+        void updatesidewidth()
+        {
             _side_width=std::min(geth(),getw())*0.2;
         }
 #ifdef DEBUG
         /**
          * @brief 输出调试信息
-         *
          * @param msg 调试信息文本
          */
-        void logout(const char* msg){
+        void logout(const char* msg)
+        {
             if(_logger){
                 _logger->setcaption(msg);
             }

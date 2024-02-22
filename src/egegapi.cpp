@@ -37,7 +37,8 @@
 // macro to check whether hConsole is valid
 #define CHECK_CONSOLE_HANDLE(hHandle) { if(hHandle == NULL) return FALSE; }
 
-namespace ege {
+namespace ege
+{
 
 //We don't support vc6
 #ifndef EGE_COMPILERINFO_VC6
@@ -48,7 +49,8 @@ static HWND hConsoleWnd=NULL;
 static FILE fOldIn;
 static FILE fOldOut;
 
-BOOL init_console(){
+BOOL init_console()
+{
 	HMENU hMenu;
 	int hCrt;
 	FILE *hf;
@@ -61,18 +63,17 @@ BOOL init_console(){
 	if (!AllocConsole()) {
 		return FALSE;
 	}
-	hOutput=GetStdHandle(STD_OUTPUT_HANDLE);
+	hOutput = GetStdHandle(STD_OUTPUT_HANDLE);
 
 	if(INVALID_HANDLE_VALUE == hOutput) {
 		return FALSE;
 	}
-	hInput=
-		GetStdHandle(STD_INPUT_HANDLE);
+	hInput = GetStdHandle(STD_INPUT_HANDLE);
 	if(INVALID_HANDLE_VALUE == hInput) {
 		return FALSE;
 	}
 	SetConsoleTitle("EGE CONSOLE");
-	hConsoleWnd=GetConsoleWindow();
+	hConsoleWnd = GetConsoleWindow();
  	if(INVALID_HANDLE_VALUE == hConsoleWnd) {
 		return FALSE;
 	}
@@ -83,18 +84,18 @@ BOOL init_console(){
 		DrawMenuBar(hConsoleWnd);
 	}
 
-	hCrt=_open_osfhandle((intptr_t)hOutput,_O_TEXT);
-	hf=_fdopen( hCrt, "w" );
-	fOldOut=*stdout;
-	*stdout=*hf;
+	hCrt = _open_osfhandle((intptr_t)hOutput,_O_TEXT);
+	hf = _fdopen( hCrt, "w" );
+	fOldOut = *stdout;
+	*stdout = *hf;
 	setvbuf( stdout, NULL, _IONBF, 0 );
 
-	hCrt=_open_osfhandle((intptr_t)hInput,_O_TEXT);
-	hf=_fdopen(hCrt, "r");
-	fOldIn=*stdin;
-	*stdin=*hf;
+	hCrt = _open_osfhandle((intptr_t)hInput,_O_TEXT);
+	hf = _fdopen(hCrt, "r");
+	fOldIn = *stdin;
+	*stdin = *hf;
 	//setvbuf( stdin, NULL, _IONBF, 0 );
-  // test code
+	// test code
 
 
 	//SetConsoleTextAttribute(hOutput, BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED ); // white text on black bg
@@ -103,7 +104,8 @@ BOOL init_console(){
 	return TRUE;
 }
 
-void clear_console(){
+void clear_console()
+{
 	/***************************************/
 	// This code is from one of Microsoft's
 	// knowledge base articles, you can find it at
@@ -117,93 +119,101 @@ void clear_console(){
 	CONSOLE_SCREEN_BUFFER_INFO csbi; /* to get buffer info */
 	DWORD dwConSize;
 
-	if(hOutput == NULL) return; 
+	if(hOutput == NULL)
+		return;
 
 	/* get the number of character cells in the current buffer */
 
-	bSuccess = GetConsoleScreenBufferInfo( hOutput, &csbi );
-	
-	if(!bSuccess) return;
-	
+	bSuccess = GetConsoleScreenBufferInfo(hOutput, &csbi);
+
+	if(!bSuccess)
+		return;
+
 	dwConSize = csbi.dwSize.X * csbi.dwSize.Y;
 
 	/* fill the entire screen with blanks */
 
-	bSuccess = FillConsoleOutputCharacter( hOutput, (TCHAR) ' ', dwConSize, coordScreen, &cCharsWritten );
-	if(!bSuccess) return;
-		
+	bSuccess = FillConsoleOutputCharacter(hOutput, (TCHAR) ' ', dwConSize, coordScreen, &cCharsWritten);
+	if(!bSuccess)
+		return;
 
 	/* get the current text attribute */
 
-	bSuccess = GetConsoleScreenBufferInfo( hOutput, &csbi );
-	if(!bSuccess) return;
-		
+	bSuccess = GetConsoleScreenBufferInfo(hOutput, &csbi);
+	if(!bSuccess)
+		return;
 
 	/* now set the buffer's attributes accordingly */
 
-	bSuccess = FillConsoleOutputAttribute( hOutput, csbi.wAttributes, dwConSize, coordScreen, &cCharsWritten );
-	if(!bSuccess) return;
-		
+	bSuccess = FillConsoleOutputAttribute(hOutput, csbi.wAttributes, dwConSize, coordScreen, &cCharsWritten);
+	if(!bSuccess)
+		return;
 
 	/* put the cursor at (0, 0) */
 
-	bSuccess = SetConsoleCursorPosition( hOutput, coordScreen );
-	if(!bSuccess) return;
-		
+	bSuccess = SetConsoleCursorPosition(hOutput, coordScreen);
+	if(!bSuccess)
+		return;
 }
 
-BOOL show_console(){
+BOOL show_console()
+{
 	CHECK_CONSOLE_HANDLE(hConsoleWnd);
 	return ShowWindow(hConsoleWnd,SW_SHOW);
 }
 
-BOOL hide_console(){
+BOOL hide_console()
+{
 	CHECK_CONSOLE_HANDLE(hConsoleWnd);
 	return ShowWindow(hConsoleWnd,SW_HIDE);
 }
 
-BOOL close_console(){
-	if (!FreeConsole()){
-		return FALSE;		
-	}
-	hOutput=NULL;
-	hInput=NULL;
-	hConsoleWnd=NULL;
-	*stdout=fOldOut;
-	*stdin=fOldIn;
+BOOL close_console()
+{
+	if (!FreeConsole())
+		return FALSE;
+
+	hOutput = NULL;
+	hInput = NULL;
+	hConsoleWnd = NULL;
+	*stdout = fOldOut;
+	*stdin = fOldIn;
 	return TRUE;
 };
 
 #endif
 
-	
 
-int dealmessage(_graph_setting* pg, bool force_update);
-void guiupdate(_graph_setting* pg, egeControlBase* &root);
+
+int   dealmessage(_graph_setting* pg, bool force_update);
+void  guiupdate(_graph_setting* pg, egeControlBase* &root);
 float EGE_PRIVATE_GetFPS(int add);
-int getflush();
+int   getflush();
 
-std::string w2mb(const wchar_t wStr[]) {
+std::string w2mb(const wchar_t wStr[])
+{
 	int bufsize = WideCharToMultiByte(CP_ACP, 0, wStr, -1, NULL, 0, 0, 0);
 	std::string mbStr(bufsize, '\0');
 	WideCharToMultiByte(CP_ACP, 0, wStr, -1, &mbStr[0], bufsize, 0, 0);
 	return mbStr;
 }
 
-std::wstring mb2w(const char mbStr[]) {
+std::wstring mb2w(const char mbStr[])
+{
 	int bufsize = MultiByteToWideChar(CP_ACP, 0, mbStr, -1, NULL, 0);
 	std::wstring wStr(bufsize, L'\0');
 	MultiByteToWideChar(CP_ACP, 0, mbStr, -1, &wStr[0], bufsize);
 	return wStr;
 }
 
-void internal_panic(LPCWSTR errmsg) {
+void internal_panic(LPCWSTR errmsg)
+{
 	MessageBoxW(graph_setting.hwnd, errmsg, L"EGE INTERNAL ERROR", MB_ICONSTOP);
 	ExitProcess((UINT)grError);
 }
 
-double
-get_highfeq_time_ls(struct _graph_setting * pg) {
+double get_highfeq_time_ls(struct _graph_setting * pg)
+{
 	static LARGE_INTEGER llFeq = {{0}}; /* 此实为常数 */
 	LARGE_INTEGER llNow = {{0}};
 
@@ -256,19 +266,21 @@ get_highfeq_time_ls(struct _graph_setting * pg) {
 	}
 }
 
-bool
-is_run() {
+bool is_run()
+{
 	struct _graph_setting * pg = &graph_setting;
 	if (pg->exit_window || pg->exit_flag) return false;
 	return true;
 }
 
-void setcaption(LPCSTR  caption) {
+void setcaption(LPCSTR  caption)
+{
 	const std::wstring& new_caption = mb2w(caption);
 	setcaption(new_caption.c_str());
 }
 
-void setcaption(LPCWSTR caption) {
+void setcaption(LPCWSTR caption)
+{
 	struct _graph_setting * pg = &graph_setting;
 	if (pg->has_init) {
 		::SetWindowTextW(getHWnd(), caption);
@@ -278,8 +290,8 @@ void setcaption(LPCWSTR caption) {
 	pg->window_caption = caption;
 }
 
-
-void seticon(int icon_id) {
+void seticon(int icon_id)
+{
 	struct _graph_setting * pg = &graph_setting;
 	HICON hIcon = NULL;
 	HINSTANCE instance = GetModuleHandle(NULL);
@@ -301,13 +313,13 @@ void seticon(int icon_id) {
 	}
 }
 
-void movewindow(int x, int y, bool redraw) {
+void movewindow(int x, int y, bool redraw)
+{
 	::MoveWindow(getHWnd(), x, y, getwidth(), getheight(), redraw);
 }
 
-
-void
-api_sleep(long dwMilliseconds) {
+void api_sleep(long dwMilliseconds)
+{
 	if (dwMilliseconds >= 0) {
 		::timeBeginPeriod(1);
 		::Sleep(dwMilliseconds);
@@ -315,9 +327,11 @@ api_sleep(long dwMilliseconds) {
 	}
 }
 
-void
-ege_sleep(long ms) {
-	if (ms <= 0) return;
+void ege_sleep(long ms)
+{
+	if (ms <= 0)
+		return;
+
 	if (0) { // 经济模式，占CPU极少
 		::Sleep(ms);
 	} else if (0) { //精确模式，占CPU略高
@@ -335,7 +349,7 @@ ege_sleep(long ms) {
 	} else if (1) { //高精模式，占CPU更高
 		static HANDLE hTimer = ::CreateWaitableTimer(NULL, TRUE, NULL);
 		LARGE_INTEGER liDueTime;
-		
+
 		::timeBeginPeriod(1);
 		liDueTime.QuadPart = ms * (LONGLONG)-10000;
 
@@ -351,16 +365,17 @@ ege_sleep(long ms) {
 	}
 }
 
-void
-delay(long ms) {
+void delay(long ms)
+{
 	ege_sleep(ms);
 }
 
-void
-delay_ms(long ms) {
+void delay_ms(long ms)
+{
 	struct _graph_setting * pg = &graph_setting;
 	egeControlBase* &root = pg->egectrl_root;
 	pg->skip_timer_mark = true;
+
 	if (ms == 0) {
 		if (pg->update_mark_count < UPDATE_MAX_CALL) {
 			root->draw(NULL);
@@ -372,6 +387,7 @@ delay_ms(long ms) {
 		pg->skip_timer_mark = false;
 		return;
 	}
+
 	{
 		double delay_time = ms;
 		double dw = get_highfeq_time_ls(pg) * 1000.0;
@@ -380,15 +396,19 @@ delay_ms(long ms) {
 		if (ms >= 50) {
 			f = 0;
 		}
+
 		pg->delay_ms_dwLast = 0;
+
 		if (pg->delay_ms_dwLast == 0) {
 			pg->delay_ms_dwLast = get_highfeq_time_ls(pg) * 1000.0;
 		}
+
 		if (pg->delay_ms_dwLast + 200.0 > dw) {
 			dw = pg->delay_ms_dwLast;
 		}
 
 		root->draw(NULL);
+
 		while (dw + delay_time >= get_highfeq_time_ls(pg) * 1000.0) {
 			if ( f <= 0 || pg->update_mark_count < UPDATE_MAX_CALL) {
 				dealmessage(pg, FORCE_UPDATE);
@@ -398,9 +418,11 @@ delay_ms(long ms) {
 			}
 			f -= 1;
 		}
+
 		dealmessage(pg, FORCE_UPDATE);
 		dw = get_highfeq_time_ls(pg) * 1000.0;
 		guiupdate(pg, root);
+
 		if (pg->delay_ms_dwLast + 200.0 <= dw || pg->delay_ms_dwLast > dw) {
 			pg->delay_ms_dwLast = dw;
 		} else {
@@ -413,16 +435,18 @@ delay_ms(long ms) {
 /*
 延迟1/fps的时间，调用间隔不大于200ms时能保证每秒能返回fps次
 */
-void
-delay_fps(int fps) {
+void delay_fps(int fps)
+{
 	delay_fps((double)fps);
 }
-void
-delay_fps(long fps) {
+
+void delay_fps(long fps)
+{
 	delay_fps((double)fps);
 }
-void
-delay_fps(double fps) {
+
+void delay_fps(double fps)
+{
 	struct _graph_setting * pg = &graph_setting;
 	egeControlBase* &root = pg->egectrl_root;
 	pg->skip_timer_mark = true;
@@ -434,19 +458,24 @@ delay_fps(double fps) {
 	if (pg->delay_fps_dwLast == 0) {
 		pg->delay_fps_dwLast = get_highfeq_time_ls(pg) * 1000.0;
 	}
+
 	if (pg->delay_fps_dwLast + delay_time + avg_max_time > dw) {
 		dw = pg->delay_fps_dwLast;
 	}
+
 	root->draw(NULL);
+
 	for (; nloop>=0; --nloop) {
 		if ((dw + delay_time + (100.0) >= get_highfeq_time_ls(pg) * 1000.0)) {
 			do {
 				ege_sleep((int)(dw + delay_time - get_highfeq_time_ls(pg) * 1000.0));
 			} while (dw + delay_time >= get_highfeq_time_ls(pg) * 1000.0);
 		}
+
 		dealmessage(pg, FORCE_UPDATE);
 		dw = get_highfeq_time_ls(pg) * 1000.0;
 		guiupdate(pg, root);
+
 		if (pg->delay_fps_dwLast + delay_time + avg_max_time <= dw || pg->delay_fps_dwLast > dw) {
 			pg->delay_fps_dwLast = dw;
 		} else {
@@ -459,16 +488,18 @@ delay_fps(double fps) {
 /*
 延迟1/fps的时间，调用间隔不大于200ms时能保证每秒能返回fps次
 */
-void
-delay_jfps(int fps) {
+void delay_jfps(int fps)
+{
 	delay_jfps((double)fps);
 }
-void
-delay_jfps(long fps) {
+
+void delay_jfps(long fps)
+{
 	delay_jfps((double)fps);
 }
-void
-delay_jfps(double fps) {
+
+void delay_jfps(double fps)
+{
 	struct _graph_setting * pg = &graph_setting;
 	egeControlBase* &root = pg->egectrl_root;
 	pg->skip_timer_mark = true;
@@ -480,23 +511,30 @@ delay_jfps(double fps) {
 	if (pg->delay_fps_dwLast == 0) {
 		pg->delay_fps_dwLast = get_highfeq_time_ls(pg) * 1000.0;
 	}
+
 	if (pg->delay_fps_dwLast + delay_time + avg_max_time > dw) {
 		dw = pg->delay_fps_dwLast;
 	}
+
 	root->draw(NULL);
+
 	for (; nloop>=0; --nloop) {
 		int bSleep = 0;
+
 		while (dw + delay_time >= get_highfeq_time_ls(pg) * 1000.0) {
 			ege_sleep((int)(dw + delay_time - get_highfeq_time_ls(pg) * 1000.0));
 			bSleep = 1;
 		}
+
 		if (bSleep) {
 			dealmessage(pg, FORCE_UPDATE);
 		} else {
 			EGE_PRIVATE_GetFPS(-0x100);
 		}
+
 		dw = get_highfeq_time_ls(pg) * 1000.0;
 		guiupdate(pg, root);
+
 		if (pg->delay_fps_dwLast + delay_time + avg_max_time <= dw || pg->delay_fps_dwLast > dw) {
 			pg->delay_fps_dwLast = dw;
 		} else {
@@ -506,47 +544,51 @@ delay_jfps(double fps) {
 	pg->skip_timer_mark = false;
 }
 
-int showmouse(int bShow) {
+int showmouse(int bShow)
+{
 	struct _graph_setting * pg = &graph_setting;
 	int ret = pg->mouse_show;
 	pg->mouse_show = bShow;
 	return ret;
 }
 
-int
-mousepos(int *x, int *y) {
+int mousepos(int *x, int *y)
+{
 	struct _graph_setting * pg = &graph_setting;
 	*x = pg->mouse_last_x;
 	*y = pg->mouse_last_y;
 	return 0;
 }
 
-void
-setwritemode(int mode, PIMAGE pimg) {
+void setwritemode(int mode, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
 	SetROP2(img->m_hDC, mode);
 	CONVERT_IMAGE_END;
 }
 
-static inline bool in_rect(int x, int y, int w, int h) {
+static inline bool in_rect(int x, int y, int w, int h)
+{
 	return !((x < 0) || (y < 0) || (x >= w) || (y >= h));
 }
 
-color_t
-getpixel(int x, int y, PCIMAGE pimg) {
+color_t getpixel(int x, int y, PCIMAGE pimg)
+{
 	PCIMAGE img = CONVERT_IMAGE_CONST(pimg);
 	CONVERT_IMAGE_END;
 	x += img->m_vpt.left;
 	y += img->m_vpt.top;
+
 	if (in_rect(x, y, img->m_width, img->m_height)) {
 		return img->m_pBuffer[y * img->m_width + x];
 	}
+	
 	// else
 	return 0;
 }
 
-void
-putpixel(int x, int y, color_t color, PIMAGE pimg) {
+void putpixel(int x, int y, color_t color, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	x += img->m_vpt.left;
 	y += img->m_vpt.top;
@@ -556,8 +598,8 @@ putpixel(int x, int y, color_t color, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-putpixels(int nPoint, int* pPoints, PIMAGE pimg) {
+void putpixels(int nPoint, int* pPoints, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	int x, y, c;
 	PDWORD pb = &img->m_pBuffer[img->m_vpt.top * img->m_width + img->m_vpt.left];
@@ -572,8 +614,8 @@ putpixels(int nPoint, int* pPoints, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-putpixels_f(int nPoint, int* pPoints, PCIMAGE pimg) {
+void putpixels_f(int nPoint, int* pPoints, PCIMAGE pimg)
+{
 	PCIMAGE img = CONVERT_IMAGE(pimg);
 	int x, y, c;
 	int tw = img->m_width;
@@ -587,8 +629,8 @@ putpixels_f(int nPoint, int* pPoints, PCIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-color_t
-getpixel_f(int x, int y, PIMAGE pimg) {
+color_t getpixel_f(int x, int y, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE_F_CONST(pimg);
 	if (in_rect(x, y, img->m_width, img->m_height)) {
 		return img->m_pBuffer[y * img->m_width + x];
@@ -596,15 +638,16 @@ getpixel_f(int x, int y, PIMAGE pimg) {
 	return 0;
 }
 
-void
-putpixel_f(int x, int y, color_t color, PIMAGE pimg) {
+void putpixel_f(int x, int y, color_t color, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE_F(pimg);
 	if (in_rect(x, y, img->m_width, img->m_height)) {
 		img->m_pBuffer[y * img->m_width + x] = color;
 	}
 }
 
-void putpixel_withalpha(int x, int y, color_t color, PIMAGE pimg) {
+void putpixel_withalpha(int x, int y, color_t color, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	x += img->m_vpt.left;
 	y += img->m_vpt.top;
@@ -615,7 +658,8 @@ void putpixel_withalpha(int x, int y, color_t color, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void putpixel_withalpha_f(int x, int y, color_t color, PIMAGE pimg) {
+void putpixel_withalpha_f(int x, int y, color_t color, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE_F(pimg);
 	if (in_rect(x, y, img->m_width, img->m_height)) {
 		color_t& dst_color = img->m_pBuffer[y * img->m_width + x];
@@ -624,7 +668,8 @@ void putpixel_withalpha_f(int x, int y, color_t color, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void putpixel_savealpha(int x, int y, color_t color, PIMAGE pimg) {
+void putpixel_savealpha(int x, int y, color_t color, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	x += img->m_vpt.left;
 	y += img->m_vpt.top;
@@ -635,7 +680,8 @@ void putpixel_savealpha(int x, int y, color_t color, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void putpixel_savealpha_f(int x, int y, color_t color, PIMAGE pimg) {
+void putpixel_savealpha_f(int x, int y, color_t color, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE_F(pimg);
 	if (in_rect(x, y, img->m_width, img->m_height)) {
 		color_t& dst_color = img->m_pBuffer[y * img->m_width + x];
@@ -644,15 +690,15 @@ void putpixel_savealpha_f(int x, int y, color_t color, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-moveto(int x, int y, PIMAGE pimg) {
+void moveto(int x, int y, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	MoveToEx(img->m_hDC, x, y, NULL);
 	CONVERT_IMAGE_END;
 }
 
-void
-moverel(int dx, int dy, PIMAGE pimg) {
+void moverel(int dx, int dy, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	POINT pt;
 	GetCurrentPositionEx(img->m_hDC, &pt);
@@ -662,16 +708,16 @@ moverel(int dx, int dy, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-line(int x1, int y1, int x2, int y2, PIMAGE pimg) {
+void line(int x1, int y1, int x2, int y2, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	MoveToEx(img->m_hDC, x1, y1, NULL);
 	LineTo(img->m_hDC, x2, y2);
 	CONVERT_IMAGE_END;
 }
 
-void
-linerel(int dx, int dy, PIMAGE pimg) {
+void linerel(int dx, int dy, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	POINT pt;
 	GetCurrentPositionEx(img->m_hDC, &pt);
@@ -681,17 +727,16 @@ linerel(int dx, int dy, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-lineto(int x, int y, PIMAGE pimg) {
+void lineto(int x, int y, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	LineTo(img->m_hDC, x, y);
 	CONVERT_IMAGE_END;
 }
 
 /* private function */
-static
-void
-line_base(float x1, float y1, float x2, float y2, PIMAGE img) {
+static void line_base(float x1, float y1, float x2, float y2, PIMAGE img)
+{
 	int bswap = 2;
 	color_t col = getcolor(img);
 	color_t endp = 0;
@@ -788,8 +833,8 @@ line_base(float x1, float y1, float x2, float y2, PIMAGE img) {
 	}
 }
 
-void
-lineto_f(float x, float y, PIMAGE pimg) {
+void lineto_f(float x, float y, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	POINT pt;
 	GetCurrentPositionEx(img->m_hDC, &pt);
@@ -797,8 +842,8 @@ lineto_f(float x, float y, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-linerel_f(float dx, float dy, PIMAGE pimg) {
+void linerel_f(float dx, float dy, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	POINT pt;
 	GetCurrentPositionEx(img->m_hDC, &pt);
@@ -806,17 +851,16 @@ linerel_f(float dx, float dy, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-line_f(float x1, float y1, float x2, float y2, PIMAGE pimg) {
+void line_f(float x1, float y1, float x2, float y2, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	line_base(x1, y1, x2, y2, img);
 	CONVERT_IMAGE_END;
 }
 
 /*private function*/
-static
-int
-saveBrush(PIMAGE img, int save) { //此函数调用前，已经有Lock
+static int saveBrush(PIMAGE img, int save) //此函数调用前，已经有Lock
+{
 	struct _graph_setting * pg = &graph_setting;
 	if (save) {
 		LOGBRUSH lbr = {0};
@@ -838,7 +882,8 @@ saveBrush(PIMAGE img, int save) { //此函数调用前，已经有Lock
 	return 0;
 }
 
-void rectangle(int left, int top, int right, int bottom, PIMAGE pimg) {
+void rectangle(int left, int top, int right, int bottom, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (saveBrush(img, 1)) {
 		Rectangle(img->m_hDC, left, top, right, bottom);
@@ -847,8 +892,8 @@ void rectangle(int left, int top, int right, int bottom, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-color_t
-getcolor(PCIMAGE pimg) {
+color_t getcolor(PCIMAGE pimg)
+{
 	PCIMAGE img = CONVERT_IMAGE_CONST(pimg);
 
 	if (img && img->m_hDC) {
@@ -869,7 +914,8 @@ getcolor(PCIMAGE pimg) {
 // 将描述线形的位模式转换为 style 数组
 // 用于 ExtCreatePen 中。
 // 返回值为用到的数组元素数。
-static int upattern2array(unsigned short upattern, DWORD style[]) {
+static int upattern2array(unsigned short upattern, DWORD style[])
+{
 	int n, segments = 0, segmentLength = 1;
 	int state = !!(upattern & 1);
 	for (n = 1; n < 16; n++) {
@@ -898,7 +944,8 @@ static int upattern2array(unsigned short upattern, DWORD style[]) {
 	return segments;
 }
 
-static void update_pen(PIMAGE img) {
+static void update_pen(PIMAGE img)
+{
 	LOGBRUSH lbr;
 	lbr.lbColor = ARGBTOZBGR(img->m_color);
 	lbr.lbStyle = BS_SOLID;
@@ -933,8 +980,8 @@ static void update_pen(PIMAGE img) {
 
 }
 
-void
-setcolor(color_t color, PIMAGE pimg) {
+void setcolor(color_t color, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 
 	if (img && img->m_hDC) {
@@ -946,8 +993,8 @@ setcolor(color_t color, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-setfillcolor(color_t color, PIMAGE pimg) {
+void setfillcolor(color_t color, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
 	LOGBRUSH lbr = {0};
 	img->m_fillcolor = color;
@@ -963,8 +1010,8 @@ setfillcolor(color_t color, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-color_t
-getfillcolor(PCIMAGE pimg) {
+color_t getfillcolor(PCIMAGE pimg)
+{
 	PCIMAGE img = CONVERT_IMAGE_CONST(pimg);
 
 	if (img && img->m_hDC) {
@@ -975,8 +1022,8 @@ getfillcolor(PCIMAGE pimg) {
 	return 0xFFFFFFFF;
 }
 
-color_t
-getbkcolor(PCIMAGE pimg) {
+color_t getbkcolor(PCIMAGE pimg)
+{
 	PCIMAGE img = CONVERT_IMAGE_CONST(pimg);
 
 	CONVERT_IMAGE_END;
@@ -986,8 +1033,8 @@ getbkcolor(PCIMAGE pimg) {
 	return 0xFFFFFFFF;
 }
 
-void
-setbkcolor(color_t color, PIMAGE pimg) {
+void setbkcolor(color_t color, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 
 	if (img && img->m_hDC) {
@@ -1004,8 +1051,9 @@ setbkcolor(color_t color, PIMAGE pimg) {
 	}
 	CONVERT_IMAGE_END;
 }
-void
-setbkcolor_f(color_t color, PIMAGE pimg) {
+
+void setbkcolor_f(color_t color, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 
 	if (img && img->m_hDC) {
@@ -1015,7 +1063,8 @@ setbkcolor_f(color_t color, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void setfontbkcolor(color_t color, PIMAGE pimg) {
+void setfontbkcolor(color_t color, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 
 	if (img && img->m_hDC) {
@@ -1024,8 +1073,8 @@ void setfontbkcolor(color_t color, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-setbkmode(int iBkMode, PIMAGE pimg) {
+void setbkmode(int iBkMode, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
 	if (img && img->m_hDC) {
 		SetBkMode(img->m_hDC, iBkMode);
@@ -1033,11 +1082,14 @@ setbkmode(int iBkMode, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-PIMAGE gettarget() {
+PIMAGE gettarget()
+{
 	struct _graph_setting * pg = &graph_setting;
 	return pg->imgtarget_set;
 }
-int settarget(PIMAGE pbuf) {
+
+int settarget(PIMAGE pbuf)
+{
 	struct _graph_setting * pg = &graph_setting;
 	pg->imgtarget_set = pbuf;
 	if (pbuf == NULL) {
@@ -1048,8 +1100,8 @@ int settarget(PIMAGE pbuf) {
 	return 0;
 }
 
-void
-cleardevice(PIMAGE pimg) {
+void cleardevice(PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 
 	if (img && img->m_hDC) {
@@ -1064,28 +1116,28 @@ cleardevice(PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-arc(int x, int y, int stangle, int endangle, int radius, PIMAGE pimg) {
+void arc(int x, int y, int stangle, int endangle, int radius, PIMAGE pimg)
+{
 	ellipse(x, y, stangle, endangle, radius, radius, pimg);
 }
 
-void
-arcf(float x, float y, float stangle, float endangle, float radius, PIMAGE pimg) {
+void arcf(float x, float y, float stangle, float endangle, float radius, PIMAGE pimg)
+{
 	ellipsef(x, y, stangle, endangle, radius, radius, pimg);
 }
 
-void
-circle(int x, int y, int radius, PIMAGE pimg) {
+void circle(int x, int y, int radius, PIMAGE pimg)
+{
 	ellipse(x, y, 0, 360, radius, radius, pimg);
 }
 
-void
-circlef(float x, float y, float radius, PIMAGE pimg) {
+void circlef(float x, float y, float radius, PIMAGE pimg)
+{
 	ellipsef(x, y, 0.0f, 360.0f, radius, radius, pimg);
 }
 
-void
-ellipse(int x, int y, int stangle, int endangle, int xradius, int yradius, PIMAGE pimg) {
+void ellipse(int x, int y, int stangle, int endangle, int xradius, int yradius, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 
 	double sr = stangle/180.0*PI, er = endangle/180.0*PI;
@@ -1103,8 +1155,8 @@ ellipse(int x, int y, int stangle, int endangle, int xradius, int yradius, PIMAG
 	CONVERT_IMAGE_END;
 }
 
-void
-ellipsef(float x, float y, float stangle, float endangle, float xradius, float yradius, PIMAGE pimg) {
+void ellipsef(float x, float y, float stangle, float endangle, float xradius, float yradius, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 
 	double sr = stangle/180.0*PI, er = endangle/180.0*PI;
@@ -1122,18 +1174,18 @@ ellipsef(float x, float y, float stangle, float endangle, float xradius, float y
 	CONVERT_IMAGE_END;
 }
 
-void
-pieslice(int x, int y, int stangle, int endangle, int radius, PIMAGE pimg) {
+void pieslice(int x, int y, int stangle, int endangle, int radius, PIMAGE pimg)
+{
 	sector(x, y, stangle, endangle, radius, radius, pimg);
 }
 
-void
-pieslicef(float x, float y, float stangle, float endangle, float radius, PIMAGE pimg) {
+void pieslicef(float x, float y, float stangle, float endangle, float radius, PIMAGE pimg)
+{
 	sectorf(x, y, stangle, endangle, radius, radius, pimg);
 }
 
-void
-sector(int x, int y, int stangle, int endangle, int xradius, int yradius, PIMAGE pimg) {
+void sector(int x, int y, int stangle, int endangle, int xradius, int yradius, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	double sr = stangle/180.0*PI, er = endangle/180.0*PI;
 	if (img) {
@@ -1147,8 +1199,8 @@ sector(int x, int y, int stangle, int endangle, int xradius, int yradius, PIMAGE
 	CONVERT_IMAGE_END;
 }
 
-void
-sectorf(float x, float y, float stangle, float endangle, float xradius, float yradius, PIMAGE pimg) {
+void sectorf(float x, float y, float stangle, float endangle, float xradius, float yradius, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	double sr = stangle/180.0*PI, er = endangle/180.0*PI;
 	if (img) {
@@ -1162,8 +1214,8 @@ sectorf(float x, float y, float stangle, float endangle, float xradius, float yr
 	CONVERT_IMAGE_END;
 }
 
-void
-fillellipse(int x, int y, int xradius, int yradius, PIMAGE pimg) {
+void fillellipse(int x, int y, int xradius, int yradius, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
 		Ellipse(
@@ -1175,8 +1227,8 @@ fillellipse(int x, int y, int xradius, int yradius, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-fillellipsef(float x, float y, float xradius, float yradius, PIMAGE pimg) {
+void fillellipsef(float x, float y, float xradius, float yradius, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
 		Ellipse(
@@ -1188,8 +1240,8 @@ fillellipsef(float x, float y, float xradius, float yradius, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-bar(int left, int top, int right, int bottom, PIMAGE pimg) {
+void bar(int left, int top, int right, int bottom, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	RECT rect = {left, top, right, bottom};
 	HBRUSH hbr_last = (HBRUSH)GetCurrentObject(img->m_hDC, OBJ_BRUSH); //(HBRUSH)SelectObject(pg->g_hdc, hbr);
@@ -1200,17 +1252,17 @@ bar(int left, int top, int right, int bottom, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-fillroundrect(int left, int top, int right, int bottom, int xradius, int yradius, PIMAGE pimg) {
+void fillroundrect(int left, int top, int right, int bottom, int xradius, int yradius, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
-		RoundRect(img->m_hDC,left,top,right,bottom,xradius*2,yradius*2); 
+		RoundRect(img->m_hDC,left,top,right,bottom,xradius*2,yradius*2);
 	}
 	CONVERT_IMAGE_END;
 }
 
-void
-roundrect(int left, int top, int right, int bottom, int xradius, int yradius, PIMAGE pimg){
+void roundrect(int left, int top, int right, int bottom, int xradius, int yradius, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
 		LOGBRUSH lbr;
@@ -1221,25 +1273,25 @@ roundrect(int left, int top, int right, int bottom, int xradius, int yradius, PI
 		lbr.lbColor = WHITE; // ignored
 		hbr = CreateBrushIndirect(&lbr);
 		hOld=SelectObject(img->m_hDC,hbr);
-		RoundRect(img->m_hDC,left,top,right,bottom,xradius*2,yradius*2); 
-		SelectObject(img->m_hDC,hOld); 
-		DeleteObject(hbr);		
+		RoundRect(img->m_hDC,left,top,right,bottom,xradius*2,yradius*2);
+		SelectObject(img->m_hDC,hOld);
+		DeleteObject(hbr);
 	}
 	CONVERT_IMAGE_END;
 }
 
 
-void
-fillrect(int left, int top, int right, int bottom, PIMAGE pimg){
+void fillrect(int left, int top, int right, int bottom, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
-		Rectangle(img->m_hDC,left,top,right,bottom); 
+		Rectangle(img->m_hDC,left,top,right,bottom);
 	}
 	CONVERT_IMAGE_END;
 }
 
-void
-bar3d(int x1, int y1, int x2, int y2, int depth, int topflag, PIMAGE pimg) {
+void bar3d(int x1, int y1, int x2, int y2, int depth, int topflag, PIMAGE pimg)
+{
 	--x2; --y2;
 	{
 		int pt[20] = {
@@ -1264,8 +1316,8 @@ bar3d(int x1, int y1, int x2, int y2, int depth, int topflag, PIMAGE pimg) {
 	}
 }
 
-void
-drawpoly(int numpoints, const int *polypoints, PIMAGE pimg) {
+void drawpoly(int numpoints, const int *polypoints, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
 		Polyline(img->m_hDC, (POINT*)polypoints, numpoints);
@@ -1273,8 +1325,8 @@ drawpoly(int numpoints, const int *polypoints, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-drawbezier(int numpoints, const int *polypoints, PIMAGE pimg) {
+void drawbezier(int numpoints, const int *polypoints, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
 		if (numpoints % 3 != 1) {
@@ -1285,8 +1337,8 @@ drawbezier(int numpoints, const int *polypoints, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-drawlines(int numlines, const int *polypoints, PIMAGE pimg) {
+void drawlines(int numlines, const int *polypoints, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
 		DWORD* pl = (DWORD*) malloc(sizeof(DWORD) * numlines);
@@ -1297,8 +1349,8 @@ drawlines(int numlines, const int *polypoints, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-fillpoly(int numpoints, const int *polypoints, PIMAGE pimg) {
+void fillpoly(int numpoints, const int *polypoints, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 
 	if (img) {
@@ -1307,8 +1359,8 @@ fillpoly(int numpoints, const int *polypoints, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-fillpoly_gradient(int numpoints, const ege_colpoint* polypoints, PIMAGE pimg) {
+void fillpoly_gradient(int numpoints, const ege_colpoint* polypoints, PIMAGE pimg)
+{
 	if (numpoints < 3) return;
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
@@ -1339,8 +1391,8 @@ fillpoly_gradient(int numpoints, const ege_colpoint* polypoints, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-floodfill(int x, int y, int border, PIMAGE pimg) {
+void floodfill(int x, int y, int border, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
 		FloodFill(img->m_hDC, x, y, ARGBTOZBGR(border));
@@ -1348,8 +1400,8 @@ floodfill(int x, int y, int border, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-floodfillsurface(int x, int y, color_t areacolor, PIMAGE pimg) {
+void floodfillsurface(int x, int y, color_t areacolor, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
 		ExtFloodFill(img->m_hDC, x, y, ARGBTOZBGR(areacolor), FLOODFILLSURFACE);
@@ -1358,9 +1410,8 @@ floodfillsurface(int x, int y, color_t areacolor, PIMAGE pimg) {
 }
 
 /* private function */
-static
-unsigned int
-private_gettextmode(PIMAGE img) {
+static unsigned int private_gettextmode(PIMAGE img)
+{
 	UINT fMode = TA_NOUPDATECP; //TA_UPDATECP;
 	if (img->m_texttype.horiz == RIGHT_TEXT) {
 		fMode |= TA_RIGHT;
@@ -1378,9 +1429,8 @@ private_gettextmode(PIMAGE img) {
 }
 
 /* private function */
-static
-void
-private_textout (PIMAGE img, LPCSTR textstring, int x, int y, int horiz, int vert) {
+static void private_textout (PIMAGE img, LPCSTR textstring, int x, int y, int horiz, int vert)
+{
 	if (horiz >= 0 && vert >= 0) {
 		UINT fMode = TA_NOUPDATECP; //TA_UPDATECP;
 		img->m_texttype.horiz = horiz;
@@ -1425,9 +1475,8 @@ private_textout (PIMAGE img, LPCSTR textstring, int x, int y, int horiz, int ver
 }
 
 /* private function */
-static
-void
-private_textout (PIMAGE img, LPCWSTR textstring, int x, int y, int horiz, int vert) {
+static void private_textout (PIMAGE img, LPCWSTR textstring, int x, int y, int horiz, int vert)
+{
 	if (horiz >= 0 && vert >= 0) {
 		UINT fMode = TA_NOUPDATECP; //TA_UPDATECP;
 		img->m_texttype.horiz = horiz;
@@ -1470,8 +1519,8 @@ private_textout (PIMAGE img, LPCWSTR textstring, int x, int y, int horiz, int ve
 	}
 }
 
-void
-outtext(LPCSTR textstring, PIMAGE pimg) {
+void outtext(LPCSTR textstring, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 
 	if (img) {
@@ -1482,8 +1531,8 @@ outtext(LPCSTR textstring, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-outtext(LPCWSTR textstring, PIMAGE pimg) {
+void outtext(LPCWSTR textstring, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 
 	if (img) {
@@ -1494,20 +1543,20 @@ outtext(LPCWSTR textstring, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-outtext(CHAR c, PIMAGE pimg) {
+void outtext(CHAR c, PIMAGE pimg)
+{
 	CHAR str[10] = {c};
 	outtext(str, pimg);
 }
 
-void
-outtext(WCHAR c, PIMAGE pimg) {
+void outtext(WCHAR c, PIMAGE pimg)
+{
 	WCHAR str[10] = {c};
 	outtext(str, pimg);
 }
 
-void
-outtextxy(int x, int y, LPCSTR textstring, PIMAGE pimg) {
+void outtextxy(int x, int y, LPCSTR textstring, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 
 	if (img) {
@@ -1516,8 +1565,8 @@ outtextxy(int x, int y, LPCSTR textstring, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-outtextxy(int x, int y, LPCWSTR textstring, PIMAGE pimg) {
+void outtextxy(int x, int y, LPCWSTR textstring, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 
 	if (img) {
@@ -1526,20 +1575,20 @@ outtextxy(int x, int y, LPCWSTR textstring, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-outtextxy(int x, int y, CHAR c, PIMAGE pimg) {
+void outtextxy(int x, int y, CHAR c, PIMAGE pimg)
+{
 	CHAR str[10] = {c};
 	outtextxy(x, y, str, pimg);
 }
 
-void
-outtextxy(int x, int y, WCHAR c, PIMAGE pimg) {
+void outtextxy(int x, int y, WCHAR c, PIMAGE pimg)
+{
 	WCHAR str[10] = {c};
 	outtextxy(x, y, str, pimg);
 }
 
-void
-outtextrect(int x, int y, int w, int h, LPCSTR  textstring, PIMAGE pimg) {
+void outtextrect(int x, int y, int w, int h, LPCSTR  textstring, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 
 	if (img) {
@@ -1551,8 +1600,8 @@ outtextrect(int x, int y, int w, int h, LPCSTR  textstring, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-outtextrect(int x, int y, int w, int h, LPCWSTR textstring, PIMAGE pimg) {
+void outtextrect(int x, int y, int w, int h, LPCWSTR textstring, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 
 	if (img) {
@@ -1564,8 +1613,8 @@ outtextrect(int x, int y, int w, int h, LPCWSTR textstring, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-xyprintf(int x, int y, LPCSTR  fmt, ...) {
+void xyprintf(int x, int y, LPCSTR  fmt, ...)
+{
 	va_list v;
 	va_start(v, fmt);
 	{
@@ -1577,8 +1626,8 @@ xyprintf(int x, int y, LPCSTR  fmt, ...) {
 	va_end(v);
 }
 
-void
-xyprintf(int x, int y, LPCWSTR fmt, ...) {
+void xyprintf(int x, int y, LPCWSTR fmt, ...)
+{
 	va_list v;
 	va_start(v, fmt);
 	{
@@ -1590,8 +1639,8 @@ xyprintf(int x, int y, LPCWSTR fmt, ...) {
 	va_end(v);
 }
 
-void
-rectprintf(int x, int y, int w, int h, LPCSTR  fmt, ...) {
+void rectprintf(int x, int y, int w, int h, LPCSTR  fmt, ...)
+{
 	va_list v;
 	va_start(v, fmt);
 	{
@@ -1603,8 +1652,8 @@ rectprintf(int x, int y, int w, int h, LPCSTR  fmt, ...) {
 	va_end(v);
 }
 
-void
-rectprintf(int x, int y, int w, int h, LPCWSTR fmt, ...) {
+void rectprintf(int x, int y, int w, int h, LPCWSTR fmt, ...)
+{
 	va_list v;
 	va_start(v, fmt);
 	{
@@ -1616,8 +1665,8 @@ rectprintf(int x, int y, int w, int h, LPCWSTR fmt, ...) {
 	va_end(v);
 }
 
-int
-textwidth(LPCSTR textstring, PIMAGE pimg) {
+int textwidth(LPCSTR textstring, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
 	if (img) {
 		SIZE sz;
@@ -1629,8 +1678,8 @@ textwidth(LPCSTR textstring, PIMAGE pimg) {
 	return 0;
 }
 
-int
-textwidth(LPCWSTR textstring, PIMAGE pimg) {
+int textwidth(LPCWSTR textstring, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
 	if (img) {
 		SIZE sz;
@@ -1642,20 +1691,20 @@ textwidth(LPCWSTR textstring, PIMAGE pimg) {
 	return 0;
 }
 
-int
-textwidth(CHAR c, PIMAGE pimg) {
+int textwidth(CHAR c, PIMAGE pimg)
+{
 	CHAR str[2] = {c};
 	return textwidth(str, pimg);
 }
 
-int
-textwidth(WCHAR c, PIMAGE pimg) {
+int textwidth(WCHAR c, PIMAGE pimg)
+{
 	WCHAR str[2] = {c};
 	return textwidth(str, pimg);
 }
 
-int
-textheight(LPCSTR textstring, PIMAGE pimg) {
+int textheight(LPCSTR textstring, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
 	if (img) {
 		SIZE sz;
@@ -1667,8 +1716,8 @@ textheight(LPCSTR textstring, PIMAGE pimg) {
 	return 0;
 }
 
-int
-textheight(LPCWSTR textstring, PIMAGE pimg) {
+int textheight(LPCWSTR textstring, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
 	if (img) {
 		SIZE sz;
@@ -1680,20 +1729,20 @@ textheight(LPCWSTR textstring, PIMAGE pimg) {
 	return 0;
 }
 
-int
-textheight(CHAR c, PIMAGE pimg) {
+int textheight(CHAR c, PIMAGE pimg)
+{
 	CHAR str[2] = {c};
 	return textheight(str, pimg);
 }
 
-int
-textheight(WCHAR c, PIMAGE pimg) {
+int textheight(WCHAR c, PIMAGE pimg)
+{
 	WCHAR str[2] = {c};
 	return textheight(str, pimg);
 }
 
-void
-settextjustify(int horiz, int vert, PIMAGE pimg) {
+void settextjustify(int horiz, int vert, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
 	if (img) {
 		img->m_texttype.horiz = horiz;
@@ -1702,8 +1751,8 @@ settextjustify(int horiz, int vert, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-getlinestyle(int *plinestyle, unsigned short *pupattern, int *pthickness, PCIMAGE pimg) {
+void getlinestyle(int *plinestyle, unsigned short *pupattern, int *pthickness, PCIMAGE pimg)
+{
 	PCIMAGE img = CONVERT_IMAGE_CONST(pimg);
 	if (plinestyle) {
 		*plinestyle = img->m_linestyle.linestyle;
@@ -1717,8 +1766,8 @@ getlinestyle(int *plinestyle, unsigned short *pupattern, int *pthickness, PCIMAG
 	CONVERT_IMAGE_END;
 }
 
-void
-setlinestyle(int linestyle, unsigned short upattern, int thickness, PIMAGE pimg) {
+void setlinestyle(int linestyle, unsigned short upattern, int thickness, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
 
 	if (!(img && img->m_hDC)) {
@@ -1736,8 +1785,8 @@ setlinestyle(int linestyle, unsigned short upattern, int thickness, PIMAGE pimg)
 	CONVERT_IMAGE_END;
 }
 
-void
-setlinewidth(float width, PIMAGE pimg) {
+void setlinewidth(float width, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
 
 	if (img && img->m_hDC) {
@@ -1749,8 +1798,8 @@ setlinewidth(float width, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-setfillstyle(int pattern, color_t color, PIMAGE pimg) {
+void setfillstyle(int pattern, color_t color, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
 	LOGBRUSH lbr = {0};
 	img->m_fillcolor = color;
@@ -1835,8 +1884,7 @@ void setfont(int nHeight, int nWidth, LPCWSTR lpszFace, int nEscapement, int nOr
 	setfont(&lf, pimg);
 }
 
-void
-setfont(int nHeight, int nWidth, LPCSTR lpszFace, int nEscapement, int nOrientation, int nWeight,
+void setfont(int nHeight, int nWidth, LPCSTR lpszFace, int nEscapement, int nOrientation, int nWeight,
 		int bItalic, int bUnderline, int bStrikeOut, PIMAGE pimg)
 {
 	setfont(nHeight, nWidth, lpszFace, nEscapement, nOrientation, nWeight, bItalic, bUnderline, bStrikeOut,
@@ -1910,7 +1958,8 @@ void getfont(LOGFONTW *font, PCIMAGE pimg)
 	CONVERT_IMAGE_END;
 }
 
-void setrendermode(rendermode_e mode) {
+void setrendermode(rendermode_e mode)
+{
 	if (mode == RENDER_MANUAL) {
 		struct _graph_setting * pg = &graph_setting;
 		if (pg->lock_window) {
@@ -1933,8 +1982,8 @@ void setrendermode(rendermode_e mode) {
 	}
 }
 
-void
-setactivepage(int page) {
+void setactivepage(int page)
+{
 	struct _graph_setting * pg = &graph_setting;
 	if (0 <= page && page < BITMAP_PAGE_SIZE) {
 		pg->active_page = page;
@@ -1948,8 +1997,8 @@ setactivepage(int page) {
 	}
 }
 
-void
-setvisualpage(int page) {
+void setvisualpage(int page)
+{
 	struct _graph_setting * pg = &graph_setting;
 	if (0 <= page && page < BITMAP_PAGE_SIZE) {
 		pg->visual_page = page;
@@ -1960,15 +2009,15 @@ setvisualpage(int page) {
 	}
 }
 
-void
-swappage() {
+void swappage()
+{
 	struct _graph_setting * pg = &graph_setting;
 	setvisualpage(pg->active_page);
 	setactivepage(1 - pg->active_page);
 }
 
-void
-window_getviewport(struct viewporttype * viewport) {
+void window_getviewport(struct viewporttype * viewport)
+{
 	struct _graph_setting * pg = &graph_setting;
 	viewport->left   = pg->base_x;
 	viewport->top    = pg->base_y;
@@ -1976,8 +2025,8 @@ window_getviewport(struct viewporttype * viewport) {
 	viewport->bottom = pg->base_h + pg->base_y;
 }
 
-void
-window_getviewport(int* left, int* top, int* right, int* bottom) {
+void window_getviewport(int* left, int* top, int* right, int* bottom)
+{
 	struct _graph_setting * pg = &graph_setting;
 	if (left)   *left   = pg->base_x;
 	if (top)    *top    = pg->base_y;
@@ -1985,8 +2034,8 @@ window_getviewport(int* left, int* top, int* right, int* bottom) {
 	if (bottom) *bottom = pg->base_h + pg->base_y;
 }
 
-void
-window_setviewport(int left, int top, int right, int bottom) {
+void window_setviewport(int left, int top, int right, int bottom)
+{
 	struct _graph_setting * pg = &graph_setting;
 	int same_xy = 0, same_wh = 0;
 	if (pg->base_x == left && pg->base_y == top) {
@@ -2032,8 +2081,8 @@ window_setviewport(int left, int top, int right, int bottom) {
 	}
 }
 
-void
-getviewport(int *pleft, int *ptop, int *pright, int *pbottom, int *pclip, PCIMAGE pimg) {
+void getviewport(int *pleft, int *ptop, int *pright, int *pbottom, int *pclip, PCIMAGE pimg)
+{
 	PCIMAGE img = CONVERT_IMAGE_CONST(pimg);
 	if(pleft)   *pleft  = img->m_vpt.left;
 	if (ptop)   *ptop   = img->m_vpt.top;
@@ -2043,8 +2092,8 @@ getviewport(int *pleft, int *ptop, int *pright, int *pbottom, int *pclip, PCIMAG
 	CONVERT_IMAGE_END;
 }
 
-void
-setviewport(int left, int top, int right, int bottom, int clip, PIMAGE pimg) {
+void setviewport(int left, int top, int right, int bottom, int clip, PIMAGE pimg)
+{
 	//struct _graph_setting * pg = &graph_setting;
 
 	PIMAGE img = CONVERT_IMAGE(pimg);
@@ -2095,8 +2144,8 @@ setviewport(int left, int top, int right, int bottom, int clip, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-clearviewport(PIMAGE pimg) {
+void clearviewport(PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 
 	if (img && img->m_hDC) {
@@ -2114,7 +2163,8 @@ clearviewport(PIMAGE pimg) {
 }
 
 #ifdef EGE_GDIPLUS
-Gdiplus::DashStyle linestyle_to_dashstyle(int linestyle){
+Gdiplus::DashStyle linestyle_to_dashstyle(int linestyle)
+{
 	switch(linestyle){
 	case SOLID_LINE:
 		return Gdiplus::DashStyleSolid;
@@ -2128,11 +2178,11 @@ Gdiplus::DashStyle linestyle_to_dashstyle(int linestyle){
 	return Gdiplus::DashStyleSolid;
 }
 
-void
-ege_line(float x1, float y1, float x2, float y2, PIMAGE pimg) {
+void ege_line(float x1, float y1, float x2, float y2, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
-		if (img->m_linestyle.linestyle == PS_NULL) 
+		if (img->m_linestyle.linestyle == PS_NULL)
 			return;
 		Gdiplus::Graphics* graphics=img->getGraphics();
 		Gdiplus::Pen* pen=img->getPen();
@@ -2141,8 +2191,8 @@ ege_line(float x1, float y1, float x2, float y2, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-ege_drawpoly(int numpoints, ege_point* polypoints, PIMAGE pimg) {
+void ege_drawpoly(int numpoints, ege_point* polypoints, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
 		if (img->m_linestyle.linestyle == PS_NULL)
@@ -2154,8 +2204,8 @@ ege_drawpoly(int numpoints, ege_point* polypoints, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-ege_drawcurve(int numpoints, ege_point* polypoints, PIMAGE pimg) {
+void ege_drawcurve(int numpoints, ege_point* polypoints, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
 		if (img->m_linestyle.linestyle == PS_NULL)
@@ -2167,8 +2217,8 @@ ege_drawcurve(int numpoints, ege_point* polypoints, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-ege_rectangle(float x, float y, float w, float h, PIMAGE pimg) {
+void ege_rectangle(float x, float y, float w, float h, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
 		if (img->m_linestyle.linestyle == PS_NULL)
@@ -2180,8 +2230,8 @@ ege_rectangle(float x, float y, float w, float h, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-ege_ellipse(float x, float y, float w, float h, PIMAGE pimg) {
+void ege_ellipse(float x, float y, float w, float h, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
 		if (img->m_linestyle.linestyle == PS_NULL)
@@ -2193,8 +2243,8 @@ ege_ellipse(float x, float y, float w, float h, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-ege_pie(float x, float y, float w, float h, float stangle, float sweepAngle, PIMAGE pimg) {
+void ege_pie(float x, float y, float w, float h, float stangle, float sweepAngle, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
 		if (img->m_linestyle.linestyle == PS_NULL)
@@ -2206,8 +2256,8 @@ ege_pie(float x, float y, float w, float h, float stangle, float sweepAngle, PIM
 	CONVERT_IMAGE_END;
 }
 
-void
-ege_arc(float x, float y, float w, float h, float stangle, float sweepAngle, PIMAGE pimg) {
+void ege_arc(float x, float y, float w, float h, float stangle, float sweepAngle, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
 		if (img->m_linestyle.linestyle == PS_NULL)
@@ -2219,8 +2269,8 @@ ege_arc(float x, float y, float w, float h, float stangle, float sweepAngle, PIM
 	CONVERT_IMAGE_END;
 }
 
-void
-ege_bezier(int numpoints, ege_point* polypoints, PIMAGE pimg) {
+void ege_bezier(int numpoints, ege_point* polypoints, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
 		if (img->m_linestyle.linestyle == PS_NULL)
@@ -2232,15 +2282,15 @@ ege_bezier(int numpoints, ege_point* polypoints, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-ege_setpattern_none(PIMAGE pimg) {
+void ege_setpattern_none(PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	img->set_pattern(NULL);
 	CONVERT_IMAGE_END;
 }
 
-void
-ege_setpattern_lineargradient(float x1, float y1, color_t c1, float x2, float y2, color_t c2, PIMAGE pimg) {
+void ege_setpattern_lineargradient(float x1, float y1, color_t c1, float x2, float y2, color_t c2, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
 		Gdiplus::LinearGradientBrush* pbrush = new Gdiplus::LinearGradientBrush(
@@ -2254,8 +2304,7 @@ ege_setpattern_lineargradient(float x1, float y1, color_t c1, float x2, float y2
 	CONVERT_IMAGE_END;
 }
 
-void
-ege_setpattern_pathgradient(ege_point center, color_t centercolor,
+void ege_setpattern_pathgradient(ege_point center, color_t centercolor,
 	int count, ege_point* points, int colcount, color_t* pointscolor, PIMAGE pimg)
 {
 	PIMAGE img = CONVERT_IMAGE(pimg);
@@ -2273,8 +2322,7 @@ ege_setpattern_pathgradient(ege_point center, color_t centercolor,
 	CONVERT_IMAGE_END;
 }
 
-void
-ege_setpattern_ellipsegradient(ege_point center, color_t centercolor,
+void ege_setpattern_ellipsegradient(ege_point center, color_t centercolor,
 	float x, float y, float w, float h, color_t color, PIMAGE pimg)
 {
 	PIMAGE img = CONVERT_IMAGE(pimg);
@@ -2293,8 +2341,8 @@ ege_setpattern_ellipsegradient(ege_point center, color_t centercolor,
 	CONVERT_IMAGE_END;
 }
 
-void
-ege_setpattern_texture(PIMAGE srcimg, float x, float y, float w, float h, PIMAGE pimg) {
+void ege_setpattern_texture(PIMAGE srcimg, float x, float y, float w, float h, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
 		if (srcimg->m_texture) {
@@ -2308,8 +2356,8 @@ ege_setpattern_texture(PIMAGE srcimg, float x, float y, float w, float h, PIMAGE
 	CONVERT_IMAGE_END;
 }
 
-void
-ege_fillpoly(int numpoints, ege_point* polypoints, PIMAGE pimg) {
+void ege_fillpoly(int numpoints, ege_point* polypoints, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
 		Gdiplus::Graphics* graphics=img->getGraphics();
@@ -2319,8 +2367,8 @@ ege_fillpoly(int numpoints, ege_point* polypoints, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-ege_fillrect(float x, float y, float w, float h, PIMAGE pimg) {
+void ege_fillrect(float x, float y, float w, float h, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
 		Gdiplus::Graphics* graphics=img->getGraphics();
@@ -2330,8 +2378,8 @@ ege_fillrect(float x, float y, float w, float h, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-ege_fillellipse(float x, float y, float w, float h, PIMAGE pimg) {
+void ege_fillellipse(float x, float y, float w, float h, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
 		Gdiplus::Graphics* graphics=img->getGraphics();
@@ -2341,8 +2389,8 @@ ege_fillellipse(float x, float y, float w, float h, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-ege_fillpie(float x, float y, float w, float h, float stangle, float sweepAngle, PIMAGE pimg) {
+void ege_fillpie(float x, float y, float w, float h, float stangle, float sweepAngle, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
 		Gdiplus::Graphics* graphics=img->getGraphics();
@@ -2352,8 +2400,8 @@ ege_fillpie(float x, float y, float w, float h, float stangle, float sweepAngle,
 	CONVERT_IMAGE_END;
 }
 
-void
-ege_setalpha(int alpha, PIMAGE pimg) {
+void ege_setalpha(int alpha, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img && img->m_hDC) {
 		int a = alpha << 24;
@@ -2367,8 +2415,8 @@ ege_setalpha(int alpha, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-ege_gentexture(bool gen, PIMAGE pimg) {
+void ege_gentexture(bool gen, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
 		img->gentexture(gen);
@@ -2376,14 +2424,14 @@ ege_gentexture(bool gen, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-ege_puttexture(PCIMAGE srcimg, float x, float y, float w, float h, PIMAGE pimg) {
+void ege_puttexture(PCIMAGE srcimg, float x, float y, float w, float h, PIMAGE pimg)
+{
 	ege_rect dest = {x, y, w, h};
 	ege_puttexture(srcimg, dest, pimg);
 }
 
-void
-ege_puttexture(PCIMAGE srcimg, ege_rect dest, PIMAGE pimg) {
+void ege_puttexture(PCIMAGE srcimg, ege_rect dest, PIMAGE pimg)
+{
 	ege_rect src;
 	PIMAGE img = CONVERT_IMAGE_CONST(pimg);
 	if (img) {
@@ -2396,8 +2444,8 @@ ege_puttexture(PCIMAGE srcimg, ege_rect dest, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void
-ege_puttexture(PCIMAGE srcimg, ege_rect dest, ege_rect src, PIMAGE pimg) {
+void ege_puttexture(PCIMAGE srcimg, ege_rect dest, ege_rect src, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
 		if (srcimg->m_texture) {
@@ -2455,7 +2503,8 @@ static void ege_drawtext_p(LPCWSTR textstring, float x, float y, PIMAGE img) {
 	// }
 }
 
-void EGEAPI ege_drawtext(LPCSTR  textstring, float x, float y, PIMAGE pimg) {
+void EGEAPI ege_drawtext(LPCSTR  textstring, float x, float y, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img && img->m_hDC) {
 		int bufferSize = MultiByteToWideChar(CP_ACP, 0, textstring, -1, NULL, 0);
@@ -2472,7 +2521,8 @@ void EGEAPI ege_drawtext(LPCSTR  textstring, float x, float y, PIMAGE pimg) {
 }
 
 
-void EGEAPI ege_drawtext(LPCWSTR textstring, float x, float y, PIMAGE pimg) {
+void EGEAPI ege_drawtext(LPCWSTR textstring, float x, float y, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img && img->m_hDC) {
 		ege_drawtext_p(textstring, x, y, img);
@@ -2480,20 +2530,22 @@ void EGEAPI ege_drawtext(LPCWSTR textstring, float x, float y, PIMAGE pimg) {
 	CONVERT_IMAGE_END;
 }
 
-void EGEAPI ege_drawimage(PCIMAGE srcimg,int dstX, int dstY,PIMAGE pimg){
+void EGEAPI ege_drawimage(PCIMAGE srcimg,int dstX, int dstY,PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img && srcimg) {
 		Gdiplus::Graphics* graphics=img->getGraphics();
 		Gdiplus::Bitmap bitmap(srcimg->getwidth(),srcimg->getheight(),4*srcimg->getwidth(),
 			PixelFormat32bppARGB,(BYTE *)(srcimg->m_pBuffer));
-		Gdiplus::Point p(dstX,dstY); 
+		Gdiplus::Point p(dstX,dstY);
 		graphics->DrawImage(&bitmap,p);
 	}
-	CONVERT_IMAGE_END;	
-} 
+	CONVERT_IMAGE_END;
+}
 
 void EGEAPI ege_drawimage(PCIMAGE srcimg,int dstX, int dstY, int dstWidth, int dstHeight,
-		int srcX, int srcY, int srcWidth, int srcHeight,PIMAGE pimg) {
+		int srcX, int srcY, int srcWidth, int srcHeight,PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img && srcimg) {
 		Gdiplus::Graphics* graphics=img->getGraphics();
@@ -2505,45 +2557,50 @@ void EGEAPI ege_drawimage(PCIMAGE srcimg,int dstX, int dstY, int dstWidth, int d
    			Gdiplus::Point(dstX, dstY+dstHeight)};
 		graphics->DrawImage(&bitmap,destPoints,3,srcX,srcY,srcWidth,srcHeight,Gdiplus::UnitPixel,NULL,NULL,NULL);
 	}
-	CONVERT_IMAGE_END;			
+	CONVERT_IMAGE_END;
 }
 
-void EGEAPI ege_transform_rotate(float angle,PIMAGE pimg) {
+void EGEAPI ege_transform_rotate(float angle,PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
 		Gdiplus::Graphics* graphics=img->getGraphics();
-		graphics->RotateTransform(angle);		
+		graphics->RotateTransform(angle);
 	}
-	CONVERT_IMAGE_END;	
+	CONVERT_IMAGE_END;
 }
 
-void EGEAPI ege_transform_translate(float x,float y,PIMAGE pimg) {
+void EGEAPI ege_transform_translate(float x,float y,PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
 		Gdiplus::Graphics* graphics=img->getGraphics();
-		graphics->TranslateTransform(x,y);		
+		graphics->TranslateTransform(x,y);
 	}
-	CONVERT_IMAGE_END;	
+	CONVERT_IMAGE_END;
 }
 
-void EGEAPI ege_transform_scale(float scale_x, float scale_y,PIMAGE pimg) {
+void EGEAPI ege_transform_scale(float scale_x, float scale_y,PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
 		Gdiplus::Graphics* graphics=img->getGraphics();
-		graphics->ScaleTransform(scale_x,scale_y);		
+		graphics->ScaleTransform(scale_x,scale_y);
 	}
-	CONVERT_IMAGE_END;	
+	CONVERT_IMAGE_END;
 }
 
-void EGEAPI ege_transform_reset(PIMAGE pimg){
+void EGEAPI ege_transform_reset(PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
 		Gdiplus::Graphics* graphics=img->getGraphics();
 		graphics->ResetTransform();
 	}
-	CONVERT_IMAGE_END;	
+	CONVERT_IMAGE_END;
 }
-void EGEAPI ege_get_transform(ege_transform_matrix* pmatrix, PIMAGE pimg) {
+void EGEAPI ege_get_transform(ege_transform_matrix* pmatrix, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
 		Gdiplus::Graphics* graphics=img->getGraphics();
@@ -2556,26 +2613,29 @@ void EGEAPI ege_get_transform(ege_transform_matrix* pmatrix, PIMAGE pimg) {
 		pmatrix->m21 = elements[2];
 		pmatrix->m22 = elements[3];
 		pmatrix->m31 = elements[4];
-		pmatrix->m32 = elements[5];		
+		pmatrix->m32 = elements[5];
 	}
-	CONVERT_IMAGE_END;	
+	CONVERT_IMAGE_END;
 }
 
-void EGEAPI ege_set_transform(ege_transform_matrix* const pmatrix, PIMAGE pimg) {
+void EGEAPI ege_set_transform(ege_transform_matrix* const pmatrix, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	if (img) {
 		Gdiplus::Graphics* graphics=img->getGraphics();
 		Gdiplus::Matrix m(pmatrix->m11,pmatrix->m12,pmatrix->m21,pmatrix->m22,pmatrix->m31,pmatrix->m32);
 		graphics->SetTransform(&m);
 	}
-	CONVERT_IMAGE_END;		
+	CONVERT_IMAGE_END;
 }
 
-ege_point EGEAPI ege_transform_calc(ege_point p, PIMAGE pimg) {
-	return ege_transform_calc(p.x,p.y,pimg);		
+ege_point EGEAPI ege_transform_calc(ege_point p, PIMAGE pimg)
+{
+	return ege_transform_calc(p.x,p.y,pimg);
 }
 
-ege_point EGEAPI ege_transform_calc(float x, float y, PIMAGE pimg) {
+ege_point EGEAPI ege_transform_calc(float x, float y, PIMAGE pimg)
+{
 	PIMAGE img = CONVERT_IMAGE(pimg);
 	ege_point p;
 	if (img) {
@@ -2589,7 +2649,7 @@ ege_point EGEAPI ege_transform_calc(float x, float y, PIMAGE pimg) {
 		m21 = elements[2];
 		m22 = elements[3];
 		m31 = elements[4];
-		m32 = elements[5];	
+		m32 = elements[5];
 		p.x = x*m11+y*m21+m31;
 		p.y = x*m12+y*m22+m32;
 	} else {
@@ -2603,45 +2663,44 @@ ege_point EGEAPI ege_transform_calc(float x, float y, PIMAGE pimg) {
 
 #endif //EGEGDIPLUS
 
-HWND
-getHWnd() {
+HWND getHWnd()
+{
 	struct _graph_setting * pg = &graph_setting;
 	return pg->hwnd;
 }
 
-HINSTANCE
-getHInstance() {
+HINSTANCE getHInstance()
+{
 	struct _graph_setting * pg = &graph_setting;
 	return pg->instance;
 }
 
-int
-message_addkeyhandler(void* param, LPMSG_KEY_PROC func) {
+int message_addkeyhandler(void* param, LPMSG_KEY_PROC func)
+{
 	struct _graph_setting * pg = &graph_setting;
 	pg->callback_key = func;
 	pg->callback_key_param = param;
 	return grOk;
 }
 
-int
-message_addmousehandler(void* param, LPMSG_MOUSE_PROC func) {
+int message_addmousehandler(void* param, LPMSG_MOUSE_PROC func)
+{
 	struct _graph_setting * pg = &graph_setting;
 	pg->callback_mouse = func;
 	pg->callback_mouse_param = param;
 	return grOk;
 }
 
-int
-SetCloseHandler(LPCALLBACK_PROC func) {
+int SetCloseHandler(LPCALLBACK_PROC func)
+{
 	struct _graph_setting * pg = &graph_setting;
 	pg->callback_close = func;
 	return grOk;
 }
 
 /* private funcion */
-static
-void
-draw_frame(PIMAGE img, int l, int t, int r, int b, color_t lc, color_t dc) {
+static void draw_frame(PIMAGE img, int l, int t, int r, int b, color_t lc, color_t dc)
+{
 	setcolor(lc, img);
 	line(l, b, l, t, img);
 	lineto(r, t, img);
@@ -2650,8 +2709,8 @@ draw_frame(PIMAGE img, int l, int t, int r, int b, color_t lc, color_t dc) {
 	lineto(l, b, img);
 }
 
-int
-inputbox_getline(LPCSTR title, LPCSTR text, LPSTR buf, int len) {
+int inputbox_getline(LPCSTR title, LPCSTR text, LPSTR buf, int len)
+{
 	const std::wstring& title_w = mb2w(title);
 	const std::wstring& text_w = mb2w(text);
 	std::wstring buf_w(len, L'\0');
@@ -2662,8 +2721,8 @@ inputbox_getline(LPCSTR title, LPCSTR text, LPSTR buf, int len) {
 	return ret;
 }
 
-int
-inputbox_getline(LPCWSTR title, LPCWSTR text, LPWSTR buf, int len) {
+int inputbox_getline(LPCWSTR title, LPCWSTR text, LPWSTR buf, int len)
+{
 	struct _graph_setting * pg = &graph_setting;
 	IMAGE bg;
 	IMAGE window;
@@ -2681,37 +2740,45 @@ inputbox_getline(LPCWSTR title, LPCWSTR text, LPWSTR buf, int len) {
 	edit.setmaxlen(len);
 	edit.visible(true);
 	edit.setfocus();
-	
+
 	setbkcolor(EGERGB(0x80, 0xA0, 0x80), &window);
 	draw_frame(&window, 0, 0, w-1, h-1, EGERGB(0xA0, 0xC0, 0xA0), EGERGB(0x50, 0x70, 0x50));
 	setfillcolor(EGERGB(0, 0, 0xA0), &window);
+
 	for (int dy = 1; dy<24; dy++) {
 		setcolor(HSLtoRGB(240.0f, 1.0f, 0.5f + float(dy/24.0*0.3)), &window);
 		line(1, dy, w-1, dy, &window);
 	}
+
 	setcolor(0xFFFFFF, &window);
 	setbkmode(TRANSPARENT, &window);
 	setfont(18, 0, L"Tahoma", &window);
 	outtextxy(3, 3, title, &window);
 	setcolor(0x0, &window);
+
 	{
 		RECT rect = {30, 32, w-30, 128-3};
 		DrawTextW(window.m_hDC, text, -1, &rect, DT_NOPREFIX|DT_LEFT|DT_TOP|TA_NOUPDATECP|DT_WORDBREAK|DT_EDITCONTROL|DT_EXPANDTABS);
-	}	
+	}
+
 	putimage(0, 0, &bg);
 	putimage(x, y, &window);
 	delay_ms(0);
+
 	while(is_run()) {
 		key_msg msg	= getkey();
 		if (msg.key == key_enter && msg.msg == key_msg_up) {
 			break;
 		}
 	}
+
 	edit.gettext(len, buf);
 	len = lstrlenW(buf);
+
 	while (len > 0 && (buf[len - 1] == '\r' || buf[len - 1] == '\n')) {
 		buf[--len] = 0;
 	}
+
 	ret = len;
 	putimage(0, 0, &bg);
 	delay_ms(0);
@@ -2719,8 +2786,8 @@ inputbox_getline(LPCWSTR title, LPCWSTR text, LPWSTR buf, int len) {
 	return ret;
 }
 
-float
-EGE_PRIVATE_GetFPS(int add) {//获取帧数
+float EGE_PRIVATE_GetFPS(int add) //获取帧数
+{
 	static int      fps = 0;
 	static int      fps_inv = 0;
 	static double   time = 0;
@@ -2730,12 +2797,14 @@ EGE_PRIVATE_GetFPS(int add) {//获取帧数
 
 	struct _graph_setting * pg = &graph_setting;
 	double cur = get_highfeq_time_ls(pg);
+
 	if (add == 0x100) {
 		fps += 1;
 	} else if (add == -0x100) {
 		fps += 1;
 		fps_inv += 1;
 	}
+
 	if (cur - time >= 0.5) {
 		flret = fret;
 		fret = (float)(fps / (cur - time));
@@ -2744,6 +2813,7 @@ EGE_PRIVATE_GetFPS(int add) {//获取帧数
 		fps_inv = 0;
 		time = cur;
 	}
+
 	if (add >0) {
 		return (fret + flret) / 2;
 	} else {
@@ -2751,25 +2821,28 @@ EGE_PRIVATE_GetFPS(int add) {//获取帧数
 	}
 }
 
-float
-getfps() {
+float getfps()
+{
 	return EGE_PRIVATE_GetFPS(0);
 }
 
-double
-fclock() {
+double fclock()
+{
 	struct _graph_setting * pg = &graph_setting;
+
 	if (pg->fclock_start == 0) {
 		pg->fclock_start = ::GetTickCount();
 	}
+
 	return (::GetTickCount() - pg->fclock_start) / 1000.0; //get_highfeq_time_ls(pg);
 }
 
-int
-ege_compress(void *dest, unsigned long *destLen, const void *source, unsigned long sourceLen) {
+int ege_compress(void *dest, unsigned long *destLen, const void *source, unsigned long sourceLen)
+{
 	if (sourceLen == 0) {
 		return -1;
 	}
+
 	{
 		int ret = compress(
 			(Bytef*)dest + sizeof(unsigned long),
@@ -2783,11 +2856,12 @@ ege_compress(void *dest, unsigned long *destLen, const void *source, unsigned lo
 	}
 }
 
-int
-ege_compress2(void *dest, unsigned long *destLen, const void *source, unsigned long sourceLen, int level) {
+int ege_compress2(void *dest, unsigned long *destLen, const void *source, unsigned long sourceLen, int level)
+{
 	if (sourceLen == 0) {
 		return -1;
 	}
+
 	{
 		int ret = compress2(
 			(Bytef*)dest + sizeof(unsigned long),
@@ -2802,8 +2876,8 @@ ege_compress2(void *dest, unsigned long *destLen, const void *source, unsigned l
 	}
 }
 
-unsigned long
-ege_uncompress_size(const void *source, unsigned long sourceLen) {
+unsigned long ege_uncompress_size(const void *source, unsigned long sourceLen)
+{
 	if (sourceLen > sizeof(unsigned long)) {
 		return ((unsigned long *)source)[0];
 	} else {
@@ -2811,8 +2885,8 @@ ege_uncompress_size(const void *source, unsigned long sourceLen) {
 	}
 }
 
-int
-ege_uncompress(void *dest, unsigned long *destLen, const void *source, unsigned long sourceLen) {
+int ege_uncompress(void *dest, unsigned long *destLen, const void *source, unsigned long sourceLen)
+{
 	*(uLongf*)destLen = ege_uncompress_size(source, sourceLen);
 	if (*(uLongf*)destLen > 0) {
 		int ret = uncompress(
@@ -2827,9 +2901,10 @@ ege_uncompress(void *dest, unsigned long *destLen, const void *source, unsigned 
 	}
 }
 
-LRESULT sys_edit::onMessage(UINT message, WPARAM wParam, LPARAM lParam) {
+LRESULT sys_edit::onMessage(UINT message, WPARAM wParam, LPARAM lParam)
+{
 	switch(message) {
-		case WM_CTLCOLOREDIT: 
+		case WM_CTLCOLOREDIT:
 			{
 				HDC dc = (HDC)wParam;
 				HBRUSH br = ::CreateSolidBrush(ARGBTOZBGR(m_bgcolor));
