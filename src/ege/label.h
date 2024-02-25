@@ -13,16 +13,18 @@ public:
     CTL_PREINIT(label, egeControlBase)
     {
         // do sth. before sub objects' construct function call
-    } CTL_PREINITEND;
+    }
+
+    CTL_PREINITEND;
 
     label(CTL_DEFPARAM) : CTL_INITBASE(egeControlBase)
     {
         CTL_INIT; // must be the first line
         size(64, 16);
-        m_color = WHITE;
-        m_bkcolor = BLACK;
-        m_fontheight = 12;
-        m_alpha = 0xff;
+        m_color       = WHITE;
+        m_bkcolor     = BLACK;
+        m_fontheight  = 12;
+        m_alpha       = 0xff;
         m_transparent = false;
         strcpy(m_face, "simsun");
         redraw();
@@ -34,10 +36,7 @@ public:
         redraw();
     }
 
-    const char* caption() const
-    {
-        return m_caption;
-    }
+    const char* caption() const { return m_caption; }
 
     void fontsize(int height)
     {
@@ -45,10 +44,7 @@ public:
         redraw();
     }
 
-    int fontsize() const
-    {
-        return m_fontheight;
-    }
+    int fontsize() const { return m_fontheight; }
 
     void font(const char* fontface)
     {
@@ -56,10 +52,7 @@ public:
         redraw();
     }
 
-    const char* font() const
-    {
-        return m_face;
-    }
+    const char* font() const { return m_face; }
 
     void color(color_t color)
     {
@@ -67,10 +60,7 @@ public:
         redraw();
     }
 
-    color_t color() const
-    {
-        return m_color;
-    }
+    color_t color() const { return m_color; }
 
     void bkcolor(color_t color)
     {
@@ -78,10 +68,7 @@ public:
         redraw();
     }
 
-    color_t bkcolor() const
-    {
-        return m_bkcolor;
-    }
+    color_t bkcolor() const { return m_bkcolor; }
 
     void transparent(bool t)
     {
@@ -89,31 +76,31 @@ public:
         redraw();
     }
 
-    bool transparent() const
-    {
-        return m_transparent;
-    }
+    bool transparent() const { return m_transparent; }
 
     void alpha(int alpha)
     {
-        if (alpha < 0) alpha = 0;
-        if (alpha > 0xff) alpha = 0xff;
+        if (alpha < 0) {
+            alpha = 0;
+        }
+        if (alpha > 0xff) {
+            alpha = 0xff;
+        }
         m_alpha = alpha;
         redraw();
     }
 
-    int alpha() const
-    {
-        return m_alpha;
-    }
+    int alpha() const { return m_alpha; }
 
     void redraw()
     {
         PushTarget targer(buf());
 
-        if (m_alpha < 0xff || m_transparent)
+        if (m_alpha < 0xff || m_transparent) {
             blendmode(true);
-        else blendmode(false);
+        } else {
+            blendmode(false);
+        }
 
         setbkcolor_f(m_bkcolor);
         setcolor(m_color);

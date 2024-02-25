@@ -16,7 +16,9 @@ public:
     CTL_PREINIT(fps, egeControlBase)
     {
         // do sth. before sub objects' construct function call
-    } CTL_PREINITEND;
+    }
+
+    CTL_PREINITEND;
 
     fps(CTL_DEFPARAM) : CTL_INITBASE(egeControlBase)
     {
@@ -27,18 +29,24 @@ public:
 
     void onDraw(PIMAGE pimg) const
     {
-        char str[16] = "fps        ", *pstr = str;
+        char   str[16] = "fps        ", *pstr = str;
         double fps = getfps() + 0.005;
-        int a = (int)fps, b = (int)((fps - a) * 100);
-        while (*pstr) ++pstr;
-        pstr[-1] = (char)(b % 10 + '0');
-        pstr[-2] = (char)(b / 10 + '0');
-        pstr[-3] = '.';
-        pstr -= 4;
-        for ( ; a > 0; --pstr) {
-            pstr[0] = a % 10 + '0';
-            a /= 10;
+        int    a = (int)fps, b = (int)((fps - a) * 100);
+
+        while (*pstr) {
+            ++pstr;
         }
+
+        pstr[-1]  = (char)(b % 10 + '0');
+        pstr[-2]  = (char)(b / 10 + '0');
+        pstr[-3]  = '.';
+        pstr     -= 4;
+
+        for (; a > 0; --pstr) {
+            pstr[0]  = a % 10 + '0';
+            a       /= 10;
+        }
+
         setcolor(WHITE, pimg);
         setfillcolor(BLACK, pimg);
         setbkmode(OPAQUE, pimg);

@@ -16,7 +16,9 @@ public:
     CTL_PREINIT(sys_edit, egeControlBase)
     {
         // do sth. before sub objects' construct function call
-    } CTL_PREINITEND;
+    }
+
+    CTL_PREINITEND;
 
     sys_edit(CTL_DEFPARAM) : CTL_INITBASE(egeControlBase)
     {
@@ -25,10 +27,7 @@ public:
         m_hwnd = NULL;
     }
 
-    ~sys_edit()
-    {
-        destroy();
-    }
+    ~sys_edit() { destroy(); }
 
     int create(bool multiline = false, int scrollbar = 2)
     {
@@ -37,11 +36,10 @@ public:
         }
 
         msg_createwindow msg = {NULL};
-        msg.hEvent = ::CreateEvent(NULL, TRUE, FALSE, NULL);
-        msg.classname = L"EDIT";
-        msg.id = egeControlBase::allocId();
-        msg.style = WS_CHILD | WS_BORDER |
-                    ES_LEFT | ES_WANTRETURN;
+        msg.hEvent           = ::CreateEvent(NULL, TRUE, FALSE, NULL);
+        msg.classname        = L"EDIT";
+        msg.id               = egeControlBase::allocId();
+        msg.style            = WS_CHILD | WS_BORDER | ES_LEFT | ES_WANTRETURN;
 
         if (multiline) {
             msg.style |= ES_MULTILINE | WS_VSCROLL;
@@ -49,17 +47,17 @@ public:
             msg.style |= ES_AUTOHSCROLL;
         }
 
-        msg.exstyle = WS_EX_CLIENTEDGE;// | WS_EX_STATICEDGE;
-        msg.param = this;
+        msg.exstyle = WS_EX_CLIENTEDGE; // | WS_EX_STATICEDGE;
+        msg.param   = this;
 
         ::PostMessageW(getHWnd(), WM_USER + 1, 1, (LPARAM)&msg);
         ::WaitForSingleObject(msg.hEvent, INFINITE);
 
-        m_hwnd = msg.hwnd;
-        m_hFont     = NULL;
-        m_hBrush    = NULL;
-        m_color     = 0x0;
-        m_bgcolor   = 0xFFFFFF;
+        m_hwnd    = msg.hwnd;
+        m_hFont   = NULL;
+        m_hBrush  = NULL;
+        m_color   = 0x0;
+        m_bgcolor = 0xFFFFFF;
 
         ::SetWindowLongPtrW(m_hwnd, GWLP_USERDATA, (LONG_PTR)this);
         m_callback = ::GetWindowLongPtrW(m_hwnd, GWLP_WNDPROC);
@@ -80,19 +78,22 @@ public:
         if (m_hwnd) {
             visible(false);
             msg_createwindow msg = {NULL};
-            msg.hwnd = m_hwnd;
-            msg.hEvent = ::CreateEvent(NULL, TRUE, FALSE, NULL);
+            msg.hwnd             = m_hwnd;
+            msg.hEvent           = ::CreateEvent(NULL, TRUE, FALSE, NULL);
             ::SendMessage(m_hwnd, WM_SETFONT, 0, 0);
             ::DeleteObject(m_hFont);
             ::PostMessageW(getHWnd(), WM_USER + 1, 0, (LPARAM)&msg);
             ::WaitForSingleObject(msg.hEvent, INFINITE);
             ::CloseHandle(msg.hEvent);
-            if (m_hBrush) ::DeleteObject(m_hBrush);
+            if (m_hBrush) {
+                ::DeleteObject(m_hBrush);
+            }
             m_hwnd = NULL;
             return 1;
         }
         return 0;
     }
+
     LRESULT onMessage(UINT message, WPARAM wParam, LPARAM lParam);
 
     void visible(bool bvisible)
@@ -104,7 +105,7 @@ public:
     void setfont(int h, int w, LPCSTR fontface)
     {
         {
-            LOGFONTA lf = {0};
+            LOGFONTA lf         = {0};
             lf.lfHeight         = h;
             lf.lfWidth          = w;
             lf.lfEscapement     = 0;
@@ -131,7 +132,7 @@ public:
     void setfont(int h, int w, LPCWSTR fontface)
     {
         {
-            LOGFONTW lf = {0};
+            LOGFONTW lf         = {0};
             lf.lfHeight         = h;
             lf.lfWidth          = w;
             lf.lfEscapement     = 0;
@@ -167,29 +168,15 @@ public:
         ::MoveWindow(m_hwnd, m_x, m_y, m_w, m_h, TRUE);
     }
 
-    void settext(LPCSTR text)
-    {
-        ::SendMessageA(m_hwnd, WM_SETTEXT, 0, (LPARAM)text);
-    }
+    void settext(LPCSTR text) { ::SendMessageA(m_hwnd, WM_SETTEXT, 0, (LPARAM)text); }
 
-    void settext(LPCWSTR text)
-    {
-        ::SendMessageW(m_hwnd, WM_SETTEXT, 0, (LPARAM)text);
-    }
-    void gettext(int maxlen, LPSTR text)
-    {
-        ::SendMessageA(m_hwnd, WM_GETTEXT, (WPARAM)maxlen, (LPARAM)text);
-    }
+    void settext(LPCWSTR text) { ::SendMessageW(m_hwnd, WM_SETTEXT, 0, (LPARAM)text); }
 
-    void gettext(int maxlen, LPWSTR text)
-    {
-        ::SendMessageW(m_hwnd, WM_GETTEXT, (WPARAM)maxlen, (LPARAM)text);
-    }
+    void gettext(int maxlen, LPSTR text) { ::SendMessageA(m_hwnd, WM_GETTEXT, (WPARAM)maxlen, (LPARAM)text); }
 
-    void setmaxlen(int maxlen)
-    {
-        ::SendMessageW(m_hwnd, EM_LIMITTEXT, (WPARAM)maxlen, 0);
-    }
+    void gettext(int maxlen, LPWSTR text) { ::SendMessageW(m_hwnd, WM_GETTEXT, (WPARAM)maxlen, (LPARAM)text); }
+
+    void setmaxlen(int maxlen) { ::SendMessageW(m_hwnd, EM_LIMITTEXT, (WPARAM)maxlen, 0); }
 
     void setcolor(color_t color)
     {
@@ -213,18 +200,19 @@ public:
     void setfocus()
     {
         msg_createwindow msg = {NULL};
-        msg.hwnd = m_hwnd;
-        msg.hEvent = ::CreateEvent(NULL, TRUE, FALSE, NULL);
+        msg.hwnd             = m_hwnd;
+        msg.hEvent           = ::CreateEvent(NULL, TRUE, FALSE, NULL);
         ::PostMessageW(getHWnd(), WM_USER + 2, 0, (LPARAM)&msg);
         ::WaitForSingleObject(msg.hEvent, INFINITE);
     }
+
 protected:
-    HWND        m_hwnd;
-    HFONT       m_hFont;
-    HBRUSH      m_hBrush;
-    color_t     m_color;
-    color_t     m_bgcolor;
-    LONG_PTR    m_callback;
+    HWND     m_hwnd;
+    HFONT    m_hFont;
+    HBRUSH   m_hBrush;
+    color_t  m_color;
+    color_t  m_bgcolor;
+    LONG_PTR m_callback;
 };
 
 } // namespace ege
