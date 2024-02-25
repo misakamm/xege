@@ -126,7 +126,7 @@ macro(ege_add_executable name source)
   add_executable(${name} ${source})
   target_link_libraries(${name} xege)
     if (MSVC)
-      target_compile_options(${name} PRIVATE 
+      target_compile_options(${name} PRIVATE
         /utf-8
         /D_USE_MATH_DEFINES
         /D__STDC_LIMIT_MACROS
