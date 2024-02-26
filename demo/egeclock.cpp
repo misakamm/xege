@@ -35,13 +35,13 @@ void draw()
 	ege::settextjustify(ege::CENTER_TEXT, ege::CENTER_TEXT);
 	ege::setfont(24, 0, "Courier New");
 	ege::setbkmode(TRANSPARENT);
-	
+
 	ege::ege_enable_aa(true);
 	ege::setfillcolor(EGEARGB(0xff, 0x40, 0x40, 0x40));
 	ege::setcolor(EGEARGB(0xff, 0x80, 0x00, 0xf0));
 	ege::ege_fillellipse(center.x - r * 1.2f, center.y - r * 1.2f,
 		r * 1.2f * 2.0f, r * 1.2f * 2.0f);
-	
+
 	ege::setcolor(ege::WHITE);
 	for (int num = 1; num <= 12; ++num)
 	{

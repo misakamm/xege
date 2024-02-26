@@ -58,7 +58,7 @@ public:
 			obj[i].color = HSVtoRGB( myrand( 360.0f ), 1.0f, 1.0f );
 		}
 	}
-	
+
 	/**
 	 * @brief Updates the positions and velocities of the ball objects based on physics laws.
 	 */
@@ -84,7 +84,7 @@ public:
 					)
 					Crash( obj[i], obj[j] );
 	}
-	
+
 	/**
 	 * @brief Draws the ball objects on the graphics window.
 	 */
@@ -95,53 +95,53 @@ public:
 				obj[i].r * 2, obj[i].r * 2 );
 		}
 	}
-	
+
 	/**
 	 * @brief Destructor for AniObj.
 	 * Cleans up any resources associated with the AniObj object.
 	 */
 	~AniObj() {
 	}
-	
+
 private:
 	/**
 	 * @brief Updates the velocities of two colliding ball objects using the physics of elastic collision.
 	 */
 	void Crash( Obj &a, Obj &b ) {
 		float ma = a.r * a.r, mb = b.r * b.r;
-		
+
 		float sx = a.x - b.x;
 		float sy = a.y - b.y;
 		float s1x = sx / sqrt( sx*sx + sy*sy );
 		float s1y = sy / sqrt( sx*sx + sy*sy );
 		float t1x = -s1y;
 		float t1y = s1x;
-		
+
 		float vas = a.vx * s1x + a.vy * s1y;
 		float vat = a.vx * t1x + a.vy * t1y;
 		float vbs = b.vx * s1x + b.vy * s1y;
 		float vbt = b.vx * t1x + b.vy * t1y;
-		
+
 		float vasf = ( 2 * mb * vbs + vas * ( ma - mb ) ) / ( ma + mb );
 		float vbsf = ( 2 * ma * vas - vbs * ( ma - mb ) ) / ( ma + mb );
-		
+
 		float nsx = vasf * s1x;
 		float nsy = vasf * s1y;
 		float ntx = vat * t1x;
 		float nty = vat * t1y;
-		
+
 		a.vx = nsx + ntx;
 		a.vy = nsy + nty;
-		
+
 		nsx = vbsf * s1x;
 		nsy = vbsf * s1y;
 		ntx = vbt * t1x;
 		nty = vbt * t1y;
-		
+
 		b.vx = nsx + ntx;
 		b.vy = nsy + nty;
 	}
-	
+
 private:
 	Obj obj[20];
 	int n;
@@ -155,19 +155,19 @@ int main() {
 	setinitmode( INIT_ANIMATION );
 	initgraph( 640, 480 );
 	randomize(); // Initialize random seed
-	
+
 	AniObj aniobj; // Create AniObj object
 	fps f;
 	ege_enable_aa( true );
-	
+
 	for (
-		
+
 		; is_run(); delay_fps( 120 ) ) {
 		aniobj.updateobj(); // Update object positions
 		cleardevice();
 		aniobj.drawobj(); // Draw objects
 	}
-	
+
 	closegraph();
 	return 0;
 }

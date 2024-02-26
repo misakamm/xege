@@ -1,5 +1,5 @@
 /**
-  
+
   @file egearrow.cpp
   @brief 画箭头算法演示小程序
  */
@@ -7,7 +7,6 @@
 #include <math.h>
 
 /**
-  
   @brief 绘制箭头
   @param sx 起始点 x 坐标
   @param sy 起始点 y 坐标
