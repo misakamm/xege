@@ -12,16 +12,19 @@
 #include <iostream>
 #include <fstream>
 
-
 class graph : public egeControlBase
 {
 public:
-    CTL_PREINIT(graph, egeControlBase) {
+    CTL_PREINIT(graph, egeControlBase)
+    {
         int w = 40;
         size(w * 2, w * 2);
-        //enable(false);
-    } CTL_PREINITEND;
-    graph(CTL_DEFPARAM) : CTL_INITBASE(egeControlBase) {
+        // enable(false);
+    }
+    CTL_PREINITEND;
+
+    graph(CTL_DEFPARAM) : CTL_INITBASE(egeControlBase)
+    {
         CTL_INIT;
         // 初始化坐标，
         x = random(parent()->getw()), y = random(parent()->geth());
@@ -29,31 +32,44 @@ public:
         blendmode(1);
 
         {
-            int w = geth() / 2;
+            int     w   = geth() / 2;
             color_t col = ege::hsv2rgb((float)random(360), 1.0f, 1.0f);
+
             setbkcolor_f(col);
             cleardevice();
             settarget(filter());
+
             col = EGEGRAYA(0xFF, 0x7F);
+
             ege_enable_aa(true);
             setcolor(col);
             setfillcolor(col);
-            ege_fillellipse(1.0f, 1.0f, (float)(getw()-2), (float)(geth()-2));
+            ege_fillellipse(1.0f, 1.0f, (float)(getw() - 2), (float)(geth() - 2));
         }
         dx = 0.3 + randomf() * 2, dy = 0.3 + randomf() * 2;
     }
-    int onUpdate() {
-        if (dx < 0 && x < 0) dx = -dx;
-        if (dx > 0 && x + getw() > parent()->getw()) dx = -dx;
-        if (dy < 0 && y < 0) dy = -dy;
-        if (dy > 0 && y + geth() > parent()->geth()) dy = -dy;
+
+    int onUpdate()
+    {
+        if (dx < 0 && x < 0) {
+            dx = -dx;
+        }
+        if (dx > 0 && x + getw() > parent()->getw()) {
+            dx = -dx;
+        }
+        if (dy < 0 && y < 0) {
+            dy = -dy;
+        }
+        if (dy > 0 && y + geth() > parent()->geth()) {
+            dy = -dy;
+        }
         x += dx, y += dy;
         move((int)x, (int)y);
         return 0;
     }
-    void onDraw(PIMAGE pimg) const {
-        ;
-    }
+
+    void onDraw(PIMAGE pimg) const {}
+
 private:
     double dx, dy;
     double x, y;
@@ -62,22 +78,26 @@ private:
 class Window : public egeControlBase
 {
 public:
-    CTL_PREINIT(Window, egeControlBase) {
-        size(400, 300);
-    } CTL_PREINITEND;
-    Window(CTL_DEFPARAM) : CTL_INITBASE(egeControlBase) {
+    CTL_PREINIT(Window, egeControlBase) { size(400, 300); }
+
+    CTL_PREINITEND;
+
+    Window(CTL_DEFPARAM) : CTL_INITBASE(egeControlBase)
+    {
         CTL_INIT;
         blendmode(1);
-        m_col = HSVtoRGB(float(randomf() * 360), 1.0f, 0.2f);
+        m_col      = HSVtoRGB(float(randomf() * 360), 1.0f, 0.2f);
         m_capmouse = 0;
     }
-    int onMouse(int x, int y, int flag) {
+
+    int onMouse(int x, int y, int flag)
+    {
         if (m_capmouse == 0 && (flag & mouse_msg_down)) {
             if (flag & mouse_flag_left) {
                 capmouse(true);
                 m_capmouse = 1;
-                m_capx = x;
-                m_capy = y;
+                m_capx     = x;
+                m_capy     = y;
             }
         } else if ((flag & mouse_msg_up)) {
             capmouse(false);
@@ -89,16 +109,19 @@ public:
         }
         return 0;
     }
-    void onDraw(PIMAGE pimg) const {
+
+    void onDraw(PIMAGE pimg) const
+    {
         setbkcolor_f(m_col, buf());
         cleardevice(buf());
         setbkcolor_f(0xBF, filter());
         cleardevice(filter());
     }
+
 private:
-    int m_capmouse;
-    int m_capx, m_capy;
-    graph m_graph[4];
+    int     m_capmouse;
+    int     m_capx, m_capy;
+    graph   m_graph[4];
     color_t m_col;
 };
 
@@ -106,17 +129,20 @@ private:
 class Window2 : public Window
 {
 public:
-    CTL_PREINIT(Window2, Window) {
-        int a = 0;
-    } CTL_PREINITEND;
-    Window2(CTL_DEFPARAM) : CTL_INITBASE(Window) {
+    CTL_PREINIT(Window2, Window) { int a = 0; }
+
+    CTL_PREINITEND;
+
+    Window2(CTL_DEFPARAM) : CTL_INITBASE(Window)
+    {
         CTL_INIT;
         static int s_x = 0;
         move(s_x, s_x);
         s_x = (s_x + 16) % 300;
     }
+
 private:
-    //graph m_graph[4];
+    // graph m_graph[4];
 };
 
 int main()
@@ -126,13 +152,14 @@ int main()
     randomize();
 
     Window2 w[3];
-    //fps f;
+    // fps f;
     sys_edit edit;
     edit.create();
     edit.size(100, 18);
     edit.visible(true);
-    for ( ; kbhit() != -1; delay_fps(120)) {
-        //f.zorderup();
+
+    for (; kbhit() != -1; delay_fps(120)) {
+        // f.zorderup();
         {
             char str[20];
             sprintf(str, "%.2f", getfps());
@@ -140,6 +167,7 @@ int main()
         }
         cleardevice();
     }
+
     closegraph();
     return 0;
 }

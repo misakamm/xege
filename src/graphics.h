@@ -1,24 +1,24 @@
 /*********************************************************
-* EGE (Easy Graphics Engine)  20.08
-* FileName      graphics.h
-* HomePage1     http://misakamm.github.com/xege
-* HomePage2     http://misakamm.bitbucket.org/index.htm
-* teiba1        http://tieba.baidu.com/f?kw=ege
-* teiba2        http://tieba.baidu.com/f?kw=ege%C4%EF
-* Blog:         http://misakamm.com
-* E-Mail:       mailto:misakamm[at gmail com]
-*
-* FileName: graphics.h
-* 在 VC 下模拟 Borland BGI 绘图库，实现简单的绘图之余，扩展了较复杂的绘图能力
-*
-* 包含并使用本库时，不要包含conio.h头文件
-* 这些头文件不应共存，否则可能会编译错误，
-* 或者getch被conio.h内的覆盖（由包含次序决定），请注意
-* 如需共存，请使用多文件分开包含的模式使用，
-* 即不能一个cpp同时包含，但可以分开包含
-* 使用本库，必须用C++编译，可支持的编译器：
-* VC6/VC2008/VC2010/VC2012/VC2013/MinGW3.4.5/MinGW4.7.1/MinGW4.8.1
-*********************************************************/
+ * EGE (Easy Graphics Engine)  20.08
+ * FileName      graphics.h
+ * HomePage1     http://misakamm.github.com/xege
+ * HomePage2     http://misakamm.bitbucket.org/index.htm
+ * teiba1        http://tieba.baidu.com/f?kw=ege
+ * teiba2        http://tieba.baidu.com/f?kw=ege%C4%EF
+ * Blog:         http://misakamm.com
+ * E-Mail:       mailto:misakamm[at gmail com]
+ *
+ * FileName: graphics.h
+ * 在 VC 下模拟 Borland BGI 绘图库，实现简单的绘图之余，扩展了较复杂的绘图能力
+ *
+ * 包含并使用本库时，不要包含conio.h头文件
+ * 这些头文件不应共存，否则可能会编译错误，
+ * 或者getch被conio.h内的覆盖（由包含次序决定），请注意
+ * 如需共存，请使用多文件分开包含的模式使用，
+ * 即不能一个cpp同时包含，但可以分开包含
+ * 使用本库，必须用C++编译，可支持的编译器：
+ * VC6/VC2008/VC2010/VC2012/VC2013/MinGW3.4.5/MinGW4.7.1/MinGW4.8.1
+ *********************************************************/
 
 /****************************************************************************
 ** 注意事项：

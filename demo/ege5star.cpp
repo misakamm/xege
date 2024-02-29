@@ -18,7 +18,6 @@ const double fullCircleRatation = PI * 2; ///< 完整圆周角度（单位：弧
 const double starAngle = PI * 4 / 5; ///< 五角星角度
 
 /**
-  
   @brief 绘制五角星
   @param x 中心点 x 坐标
   @param y 中心点 y 坐标
@@ -45,7 +44,7 @@ int main()
 		r += rotatingSpeed;
 		if (r > fullCircleRatation)
 			r -= fullCircleRatation;
-		
+
 		cleardevice(); // 清空屏幕
 		setcolor(EGERGB(0xff, 0xff, 0xff)); // 设置绘制颜色
 		setfillcolor(EGERGB(0, 0, 0xff));

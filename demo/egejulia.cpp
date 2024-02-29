@@ -346,7 +346,7 @@ int JDraw(COMPLEX c, double fromx, double fromy, double tox, double toy, double 
 				continue;
 			}
 			COMPLEX& z = st->z;
-			
+
 			if (st->iter == 0)
 			{
 				double re = fromx + (tox - fromx) * (x / (double)g_w);
@@ -491,15 +491,15 @@ int main(int argc, char* argv[])
 	//     MessageBox(NULL, TEXT("本屏幕保护程序无配置"), TEXT("JuliaSet"), MB_OK);
 	//     return 0;
 	// }
-	
+
 	//initgraph(320, 240);
 	initgraph(-1, -1);
-	
+
 	randomize();
 	showmouse(0);
 	flushmouse();
 	while(kbhit()) getch();
-	
+
 	//InitColor();
 	InitLog();
 	g_w = getwidth(NULL);

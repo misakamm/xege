@@ -8,7 +8,7 @@ int main()
 {
 	initgraph(640, 480);
 	setbkcolor(WHITE);
-	
+
 	char buffer[BUFFER_LEN+1];
 
 	sys_edit editBox;
@@ -44,16 +44,16 @@ int main()
 			}
 		}
 	}
-	
+
 	editBox.gettext(BUFFER_LEN,buffer);
-	
+
 	xyprintf(40, 80, buffer);
-	
+
 	editBox1.gettext(BUFFER_LEN,buffer);
-	
+
 	xyprintf(40, 180, buffer);
-	
-	
+
+
 	getch();
 	closegraph();
 
