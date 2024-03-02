@@ -1306,24 +1306,15 @@ void bar3d(int x1, int y1, int x2, int y2, int depth, int topflag, PIMAGE pimg)
     --y2;
     {
         int pt[20] = {
-            x2,
-            y2,
-            x2,
-            y1,
-            x1,
-            y1,
-            x1,
-            y2,
-            x2,
-            y2,
-            x2 + depth,
-            y2 - depth,
-            x2 + depth,
-            y1 - depth,
-            x1 + depth,
-            y1 - depth,
-            x1,
-            y1,
+            x2, y2,
+            x2, y1,
+            x1, y1,
+            x1, y2,
+            x2, y2,
+            x2 + depth, y2 - depth,
+            x2 + depth, y1 - depth,
+            x1 + depth, y1 - depth,
+            x1, y1,
         };
 
         bar(x1, y1, x2, y2, pimg);
@@ -1836,7 +1827,8 @@ void setfillstyle(int pattern, color_t color, PIMAGE pimg)
     } else if (pattern == SOLID_FILL) {
         lbr.lbHatch = BS_SOLID;
     } else if (pattern < USER_FILL) { // dose not finish
-        int hatchmap[] = {HS_VERTICAL,
+        int hatchmap[] = {
+            HS_VERTICAL,
             HS_BDIAGONAL,
             HS_BDIAGONAL,
             HS_FDIAGONAL,
@@ -1845,7 +1837,9 @@ void setfillstyle(int pattern, color_t color, PIMAGE pimg)
             HS_DIAGCROSS,
             HS_VERTICAL,
             HS_DIAGCROSS,
-            HS_DIAGCROSS};
+            HS_DIAGCROSS
+        };
+
         lbr.lbStyle = BS_HATCHED;
         lbr.lbHatch = hatchmap[pattern - 2];
     } else {
@@ -2577,10 +2571,7 @@ void ege_puttexture(PCIMAGE srcimg, ege_rect dest, ege_rect src, PIMAGE pimg)
             // graphics.SetTransform();
             graphics->DrawImage((Gdiplus::Image*)srcimg->m_texture,
                 Gdiplus::RectF(dest.x, dest.y, dest.w, dest.h),
-                src.x,
-                src.y,
-                src.w,
-                src.h,
+                src.x, src.y, src.w, src.h,
                 Gdiplus::UnitPixel,
                 NULL);
         }
