@@ -741,13 +741,13 @@ struct MOUSEMSG
 
 struct msg_createwindow
 {
-    HANDLE hEvent;
-    HWND hwnd;
+    HANDLE  hEvent;
+    HWND    hwnd;
     LPCWSTR classname;
-    DWORD style;
-    DWORD exstyle;
-    size_t id;
-    LPVOID param;
+    DWORD   style;
+    DWORD   exstyle;
+    size_t  id;
+    LPVOID  param;
 };
 
 
@@ -808,13 +808,13 @@ struct VECTOR3D
 
     VECTOR3D& operator+=(const VECTOR3D& _fp);
     VECTOR3D& operator-=(const VECTOR3D& _fp);
-    VECTOR3D  operator+(const VECTOR3D& _fp) const;
-    VECTOR3D  operator-(const VECTOR3D& _fp) const;
-    VECTOR3D& operator*=(float f);                  // Ëõ·Å
-    VECTOR3D  operator*(float f) const;             // Ëõ·Å
-    float     operator*(const VECTOR3D& _fp) const; // µã³Ë
-    VECTOR3D  operator&(const VECTOR3D& _fp) const; // ²æ³Ë
-    VECTOR3D& operator&=(const VECTOR3D& _fp);      // ²æ³Ë
+    VECTOR3D  operator+ (const VECTOR3D& _fp) const;
+    VECTOR3D  operator- (const VECTOR3D& _fp) const;
+    VECTOR3D& operator*=(float f);                   // Ëõ·Å
+    VECTOR3D  operator* (float f) const;             // Ëõ·Å
+    float     operator* (const VECTOR3D& _fp) const; // µã³Ë
+    VECTOR3D  operator& (const VECTOR3D& _fp) const; // ²æ³Ë
+    VECTOR3D& operator&=(const VECTOR3D& _fp);       // ²æ³Ë
     float     GetModule() const;
 
     float GetSqrModule() const { return float(x * x + y * y + z * z); }
