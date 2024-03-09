@@ -1,43 +1,43 @@
-//ÓÃ»§½»»¥¡ª¡ªÊó±ê2
+// ç”¨æˆ·äº¤äº’â€”â€”é¼ æ ‡2
 #include <graphics.h>
 
 #include <stdio.h>
 
 int main()
 {
-	initgraph(640, 480);
+    initgraph(640, 480);
 
-	setfont(18, 0, "ËÎÌå");
+    setfont(18, 0, "å®‹ä½“");
 
-	mouse_msg msg = {0};
-	for ( ; is_run(); delay_fps(60))
-	{
-		//»ñÈ¡Êó±êÏûÏ¢£¬Õâ¸öº¯Êı»áµÈ´ı£¬µÈ´ıµ½ÓĞÏûÏ¢ÎªÖ¹
-		//ÀàËÆµØ£¬ÓĞºÍkbhit¹¦ÄÜÏà½üµÄº¯ÊıMouseHit£¬ÓÃÓÚ¼ì²âÓĞÃ»ÓĞÊó±êÏûÏ¢
-		while (mousemsg())
-		{
-			msg = getmouse();
-		}
+    mouse_msg msg = {0};
+    for ( ; is_run(); delay_fps(60))
+    {
+        // è·å–é¼ æ ‡æ¶ˆæ¯ï¼Œè¿™ä¸ªå‡½æ•°ä¼šç­‰å¾…ï¼Œç­‰å¾…åˆ°æœ‰æ¶ˆæ¯ä¸ºæ­¢
+        // ç±»ä¼¼åœ°ï¼Œæœ‰å’ŒkbhitåŠŸèƒ½ç›¸è¿‘çš„å‡½æ•°MouseHitï¼Œç”¨äºæ£€æµ‹æœ‰æ²¡æœ‰é¼ æ ‡æ¶ˆæ¯
+        while (mousemsg())
+        {
+            msg = getmouse();
+        }
 
-		//¸ñÊ½»¯Êä³öÎª×Ö·û´®£¬ÓÃÓÚºóÃæÊä³ö
-		//msgºÍflag³£ÊıÇë²Î¿¼ÎÄµµ»òÕßmouse_msg_e, mouse_flag_eµÄÉùÃ÷
+        // æ ¼å¼åŒ–è¾“å‡ºä¸ºå­—ç¬¦ä¸²ï¼Œç”¨äºåé¢è¾“å‡º
+        // msg å’Œ flag å¸¸æ•°è¯·å‚è€ƒæ–‡æ¡£æˆ–è€… mouse_msg_e, mouse_flag_e çš„å£°æ˜
 
-		cleardevice();
-		xyprintf(0, 0, "x = %10d  y = %10d",
-			msg.x, msg.y, msg.wheel);
-		xyprintf(0, 20, "move  = %d down  = %d up    = %d",
-			(int)msg.is_move(),
-			(int)msg.is_down(),
-			(int)msg.is_up());
-		xyprintf(0, 40, "left  = %d mid   = %d right = %d",
-			(int)msg.is_left(),
-			(int)msg.is_mid(),
-			(int)msg.is_right());
-		xyprintf(0, 60, "wheel = %d  wheel rotate = %d",
-			(int)msg.is_wheel(),
-			msg.wheel);
-	}
+        cleardevice();
+        xyprintf(0, 0, "x = %10d  y = %10d",
+            msg.x, msg.y, msg.wheel);
+        xyprintf(0, 20, "move  = %d down  = %d up    = %d",
+            (int)msg.is_move(),
+            (int)msg.is_down(),
+            (int)msg.is_up());
+        xyprintf(0, 40, "left  = %d mid   = %d right = %d",
+            (int)msg.is_left(),
+            (int)msg.is_mid(),
+            (int)msg.is_right());
+        xyprintf(0, 60, "wheel = %d  wheel rotate = %d",
+            (int)msg.is_wheel(),
+            msg.wheel);
+    }
 
-	closegraph();
-	return 0;
+    closegraph();
+    return 0;
 }

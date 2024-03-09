@@ -1,62 +1,62 @@
-//»ù´¡¶¯»­ËÄ£¬°ëÍ¸Ã÷µ­Èëµ­³ö
+//åŸºç¡€åŠ¨ç”»å››ï¼ŒåŠé€æ˜æ·¡å…¥æ·¡å‡º
 #include <graphics.h>
 
 void mainloop()
 {
-	// x,y¼ÇÂ¼µ±Ç°Î»ÖÃ£¬dx,dy¼ÇÂ¼ËÙ¶ÈµÄ·½Ïò£¬r¼ÇÂ¼Ô²°ë¾¶
-	int x = 0, y = 0, dx = 1, dy = 1, r = 100;
-	// alpha¼ÇÂ¼µ±Ç°alphaÖµ£¬daÎªalpha±ä»¯ÔöÁ¿
-	int alpha = 0, da = 1;
+    // x,yè®°å½•å½“å‰ä½ç½®ï¼Œdx,dyè®°å½•é€Ÿåº¦çš„æ–¹å‘ï¼Œrè®°å½•åœ†åŠå¾„
+    int x = 0, y = 0, dx = 1, dy = 1, r = 100;
+    // alphaè®°å½•å½“å‰alphaå€¼ï¼Œdaä¸ºalphaå˜åŒ–å¢é‡
+    int alpha = 0, da = 1;
 
-	// ĞèÒª½èÖúimgÊµÏÖÍ¸Ã÷°ëÍ¸Ã÷
-	PIMAGE img;
+    // éœ€è¦å€ŸåŠ©imgå®ç°é€æ˜åŠé€æ˜
+    PIMAGE img;
 
-	// img ´´½¨Îª w=r*2, h=r*2´óĞ¡
-	img = newimage(r * 2, r * 2);
+    // img åˆ›å»ºä¸º w=r*2, h=r*2å¤§å°
+    img = newimage(r * 2, r * 2);
 
-	setcolor(0x00FF00, img);
-	setfillcolor(0xFF0000, img);
-	
-	// »­ÔÚimgÉÏ
-	fillellipse(r, r, r, r, img);
+    setcolor(0x00FF00, img);
+    setfillcolor(0xFF0000, img);
 
-	setbkcolor(DARKGRAY);
+    // ç”»åœ¨imgä¸Š
+    fillellipse(r, r, r, r, img);
 
-	for ( ; is_run(); delay_fps(60) )
-	{
-		// todo: Âß¼­¸üĞÂ
-		// µ±Ç°Î»ÖÃ + ËÙ¶È
-		x += dx;
-		y += dy;
-		if (x < 0) dx = 1; //Åö×ó
-		if (y < 0) dy = 1; //ÅöÉÏ
-		if (x >= ege::getwidth()  - r * 2) dx = -1; //ÅöÓÒ
-		if (y >= ege::getheight() - r * 2) dy = -1; //ÅöÏÂ
+    setbkcolor(DARKGRAY);
 
-		// ¸Ä±äalphaÖµ£¬²ÎÊı·¶Î§Îª 0 ~ 0xFF(255)
-		alpha += da;
-		if (alpha <= 0) da = 1;
-		if (alpha >= 0xFF) da = -1;
+    for ( ; is_run(); delay_fps(60) )
+    {
+        // todo: é€»è¾‘æ›´æ–°
+        // å½“å‰ä½ç½® + é€Ÿåº¦
+        x += dx;
+        y += dy;
+        if (x < 0) dx = 1; // ç¢°å·¦
+        if (y < 0) dy = 1; // ç¢°ä¸Š
+        if (x >= ege::getwidth()  - r * 2) dx = -1; // ç¢°å³
+        if (y >= ege::getheight() - r * 2) dy = -1; // ç¢°ä¸‹
 
-		// todo: Í¼ĞÎ¸üĞÂ
-		cleardevice();
-		putimage_alphatransparent(NULL, img, x, y, BLACK, (unsigned char)alpha);
-	}
+        // æ”¹å˜alphaå€¼ï¼Œå‚æ•°èŒƒå›´ä¸º 0 ~ 0xFF(255)
+        alpha += da;
+        if (alpha <= 0) da = 1;
+        if (alpha >= 0xFF) da = -1;
 
-	// ÊÍ·Åimg
-	delimage(img);
+        // todo: å›¾å½¢æ›´æ–°
+        cleardevice();
+        putimage_alphatransparent(NULL, img, x, y, BLACK, (unsigned char)alpha);
+    }
+
+    // é‡Šæ”¾img
+    delimage(img);
 }
 
 int main(void)
 {
-	setinitmode(INIT_ANIMATION);
-	// Í¼ĞÎ³õÊ¼»¯£¬´°¿Ú³ß´ç640x480
-	initgraph(640, 480);
-	// Ëæ»úÊı³õÊ¼»¯£¬Èç¹ûĞèÒªÊ¹ÓÃËæ»úÊıµÄ»°
-	randomize();
-	// ³ÌĞòÖ÷Ñ­»·
-	mainloop();
-	// ¹Ø±Õ»æÍ¼Éè±¸
-	closegraph();
-	return 0;
+    setinitmode(INIT_ANIMATION);
+    // å›¾å½¢åˆå§‹åŒ–ï¼Œçª—å£å°ºå¯¸640x480
+    initgraph(640, 480);
+    // éšæœºæ•°åˆå§‹åŒ–ï¼Œå¦‚æœéœ€è¦ä½¿ç”¨éšæœºæ•°çš„è¯
+    randomize();
+    // ç¨‹åºä¸»å¾ªç¯
+    mainloop();
+    // å…³é—­ç»˜å›¾è®¾å¤‡
+    closegraph();
+    return 0;
 }

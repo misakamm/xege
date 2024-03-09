@@ -1,4 +1,4 @@
-//»ù´¡¶¯»­Èı£¬¸ü·á¸»µÄ±ä»¯ÓëÖ¡ÂÊ
+//åŸºç¡€åŠ¨ç”»ä¸‰ï¼Œæ›´ä¸°å¯Œçš„å˜åŒ–ä¸å¸§ç‡
 
 #include <graphics.h>
 
@@ -6,44 +6,44 @@
 
 void mainloop()
 {
-	//x,y¼ÇÂ¼µ±Ç°Î»ÖÃ£¬dx,dy¼ÇÂ¼ËÙ¶ÈÏòÁ¿£¬r¼ÇÂ¼Ô²°ë¾¶
-	int x = 0, y = 0, dx = 1, dy = 1, r = 100;
+    // x,yè®°å½•å½“å‰ä½ç½®ï¼Œdx,dyè®°å½•é€Ÿåº¦å‘é‡ï¼Œrè®°å½•åœ†åŠå¾„
+    int x = 0, y = 0, dx = 1, dy = 1, r = 100;
 
-	for ( ; is_run(); delay_fps(60) )
-	{
-		// todo: Âß¼­¸üĞÂ
-		// µ±Ç°Î»ÖÃ + ËÙ¶È
-		x += dx;
-		y += dy;
-		if (x < r) dx = 1; //Åö×ó
-		if (y < r) dy = 1; //ÅöÉÏ
-		if (x >= ege::getwidth()  - r) dx = -1; //ÅöÓÒ
-		if (y >= ege::getheight() - r) dy = -1; //ÅöÏÂ
+    for (; is_run(); delay_fps(60))
+    {
+        // todo: é€»è¾‘æ›´æ–°
+        // å½“å‰ä½ç½® + é€Ÿåº¦
+        x += dx;
+        y += dy;
+        if (x < r) dx = 1; //ç¢°å·¦
+        if (y < r) dy = 1; //ç¢°ä¸Š
+        if (x >= ege::getwidth()  - r) dx = -1; //ç¢°å³
+        if (y >= ege::getheight() - r) dy = -1; //ç¢°ä¸‹
 
-		// todo: Í¼ĞÎ¸üĞÂ
-		cleardevice();
-		setcolor(GREEN);
-		setfillcolor(BLUE);
-		fillellipse(x, y, r, r);
-		{// »­Ö¡ÂÊÎÄ×Ö
-			char str[20];
-			sprintf(str, "fps %.02f", getfps()); //µ÷ÓÃgetfpsÈ¡µÃµ±Ç°Ö¡ÂÊ
-			setcolor(WHITE);
-			outtextxy(0, 0, str);
-		}
-	}
+        // todo: å›¾å½¢æ›´æ–°
+        cleardevice();
+        setcolor(GREEN);
+        setfillcolor(BLUE);
+        fillellipse(x, y, r, r);
+        {// ç”»å¸§ç‡æ–‡å­—
+            char str[20];
+            sprintf(str, "fps %.02f", getfps()); //è°ƒç”¨getfpså–å¾—å½“å‰å¸§ç‡
+            setcolor(WHITE);
+            outtextxy(0, 0, str);
+        }
+    }
 }
 
 int main(void)
 {
-	setinitmode(INIT_ANIMATION);
-	// Í¼ĞÎ³õÊ¼»¯£¬´°¿Ú³ß´ç640x480
-	initgraph(640, 480);
-	// Ëæ»úÊı³õÊ¼»¯£¬Èç¹ûĞèÒªÊ¹ÓÃËæ»úÊıµÄ»°
-	randomize();
-	// ³ÌĞòÖ÷Ñ­»·
-	mainloop();
-	// ¹Ø±Õ»æÍ¼Éè±¸
-	closegraph();
-	return 0;
+    setinitmode(INIT_ANIMATION);
+    // å›¾å½¢åˆå§‹åŒ–ï¼Œçª—å£å°ºå¯¸640x480
+    initgraph(640, 480);
+    // éšæœºæ•°åˆå§‹åŒ–ï¼Œå¦‚æœéœ€è¦ä½¿ç”¨éšæœºæ•°çš„è¯
+    randomize();
+    // ç¨‹åºä¸»å¾ªç¯
+    mainloop();
+    // å…³é—­ç»˜å›¾è®¾å¤‡
+    closegraph();
+    return 0;
 }

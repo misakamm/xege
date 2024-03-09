@@ -1,10 +1,13 @@
-/demo
+.vs/
+*.tlog
+*.obj
+[Dd]ebug/
+[Rr]elease/
+*.VC.db
+*.user
+*.o
+.idea/
+*-build-*
 
-/include
-
-/lib
-
-/doc
-
-/vc6
-
+/build
+/temp

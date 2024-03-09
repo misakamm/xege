@@ -1,0 +1,59 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ege_drawimage</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / <a href="index.htm">图形绘制</a> / ege_drawimage</font>
+<font size="4">
+<font size="4" color="#0000FF"><strong>功能：</strong></font>
+
+这个函数用来将一个图像绘制到另一个图像或屏幕上（使用 alpha 混合方式）。
+
+<font size="4" color="#0000FF"><strong>声明：</strong></font>
+
+<pre><font color=#008000>// 绘制图像</font>
+<font color=#0000FF>void </font><font color=#008080>ege_drawimage</font>(
+    <font color=#800080>PCIMAGE </font>srcimg,        <font color=#008000>// 源图像指针</font>
+    <font color=#0000FF>int </font>dstX,              <font color=#008000>// 绘制位置的 x 坐标</font>
+    <font color=#0000FF>int </font>dstY,              <font color=#008000>// 绘制位置的 y 坐标</font>
+    <font color=#800080>PCIMAGE </font>pimg = <font color=#800080>NULL</font><font color=#008000>    //目标图像指针，NULL表示绘制到屏幕</font>
+);
+
+<font color=#008000>// 绘制图像(拉伸)</font>
+<font color=#0000FF>void </font><font color=#008080>ege_drawimage</font>(
+    <font color=#800080>PCIMAGE </font>srcimg,        <font color=#008000>// 源图像指针</font>
+    <font color=#0000FF>int </font>dstX,              <font color=#008000>// 绘制位置的 x 坐标</font>
+    <font color=#0000FF>int </font>dstY,              <font color=#008000>// 绘制位置的 y 坐标</font>
+    <font color=#0000FF>int </font>dstWidth,          <font color=#008000>// 绘制的宽度</font>
+    <font color=#0000FF>int </font>dstHeight,         <font color=#008000>// 绘制的高度</font>
+    <font color=#0000FF>int </font>srcX,              <font color=#008000>// 绘制内容在 IMAGE 对象中的左上角 x 坐标</font>
+    <font color=#0000FF>int </font>srcY,              <font color=#008000>// 绘制内容在 IMAGE 对象中的左上角 y 坐标</font>
+    <font color=#0000FF>int </font>srcWidth,          <font color=#008000>// 绘制内容在源 IMAGE 对象中的宽度</font>
+    <font color=#0000FF>int </font>srcHeight,         <font color=#008000>// 绘制内容在源 IMAGE 对象中的高度</font>
+    <font color=#800080>PCIMAGE </font>pimg = <font color=#800080>NULL</font><font color=#008000>    //目标图像指针，NULL表示绘制到屏幕</font>
+);
+</pre>
+<font size="4" color="#0000FF"><strong>参数：</strong></font>
+（详见各重载函数原型内的注释）
+
+<font size="4" color="#0000FF"><strong>返回值：</strong></font>
+
+（无）
+
+<font size="4" color="#0000FF"><strong>示例：</strong></font>
+以下局部代码读取 c:\test.png 绘制在屏幕左上角：
+<pre><font color=#800080>PIMAGE </font>img = <font color=#008080>newimage</font>();
+if (<font color=#008080>getimage</font>(img, <font color=#FF00FF>"c:\\test.png"</font>) != grOk) {
+    <font color=#008000>//读取图片文件失败</font>
+    <font color=#008080>exit</font>(-1);
+}
+<font color=#008080>ege_drawimage</font>(img, 0, 0);
+<font color=#008080>delimage</font>(img);
+
+</font>
+</pre>
+
+</body>
+

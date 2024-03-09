@@ -1,0 +1,26 @@
+*              text=auto
+
+*.cpp          text
+*.c            text
+*.h            text
+
+*.md           text
+*.txt          text
+*.yml          text
+
+*.css          text
+*.htm          text
+*.html         text
+*.js           text
+
+*.png          binary
+*.jpg          binary
+*.7z           binary
+*.gif          binary
+
+*.vcproj       text=auto
+*.vcxproj      text=auto
+*.sln          text=auto
+*.rc           text=auto
+*.bat          text=auto
+*.filters      text=auto

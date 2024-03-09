@@ -1,41 +1,57 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>setfillstyle</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
 </head>
 <body>
 
-<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">绘制图形相关函数</a>-＞setfillstyle</font>
+<pre><font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / <a href="index.htm">图形绘制</a> / setfillstyle</font>
+<font size="4">
+<font size="4" color="#0000FF"><strong>功能：</strong></font>
 
-<font size="5" color="#0000FF"><strong>功能：</strong></font>
-这个函数用于设置当前填充类型。该函数的自定义填充部分尚不支持。
+设置当前填充类型。该函数的自定义填充部分尚不支持。
 
-<font size="5" color="#0000FF"><strong>声明：</strong></font>
+<font size="4" color="#0000FF"><strong>声明：</strong></font>
 <pre><font color=#0000FF>void </font><font color=#008080>setfillstyle</font>(
     <font color=#0000FF>int </font>pattern,
     <font color=#800080>color_t </font>color,
     <font color=#800080>PIMAGE</font> pimg = <font color=#800080>NULL
 </font>);
 </pre>
+<font size="4" color="#0000FF"><strong>参数：</strong></font>
 
-<font size="5" color="#0000FF"><strong>参数：</strong></font>
 pattern
 填充类型，可以是以下宏或值：
-<table width="100%" border="1" align="center">
-<tr><td>宏</td><td>值</td><td>含义</td></tr>
-<tr><td>NULL_FILL</td><td>1</td><td>不填充</td></tr>
-<tr><td>SOLID_FILL</td><td>2</td><td>固实填充</td></tr>
-</table>
 
-pupattern
+<table>
+<tr><th>宏</th><th>值</th><th>含义</th></tr>
+<tr><td>EMPTY_FILL</td>			<td>  0</td>		<td>以背景色填充</td></tr>
+<tr><td>SOLID_FILL</td>			<td>  1</td>		<td>固实填充</td></tr>
+<tr><td>LINE_FILL</td>			<td>  2</td>		<td>--- fill</td></tr>
+<tr><td>LTSLASH_FILL</td>		<td>  3</td>		<td>/// fill</td></tr>
+<tr><td>SLASH_FILL</td>			<td>  4</td>		<td>/// fill with thick lines</td></tr>
+<tr><td>BKSLASH_FILL</td>		<td>  5</td>		<td>\\\ fill with thick lines</td></tr>
+<tr><td>LTBKSLASH_FILL</td>		<td>  6</td>		<td>\\\ fill</td></tr>
+<tr><td>HATCH_FILL</td>			<td>  7</td>		<td>light hatch fill</td></tr>
+<tr><td>XHATCH_FILL</td>		<td>  8</td>		<td>heavy cross hatch fill</td></tr>
+<tr><td>INTERLEAVE_FILL</td>	<td>  9</td>		<td>interleaving line fill</td></tr>
+<tr><td>WIDE_DOT_FILL</td>		<td> 10</td>		<td>Widely spaced dot fill </td></tr>
+<tr><td>CLOSE_DOT_FILL</td>		<td> 11</td>		<td>Closely spaced dot fill</td></tr>
+<tr><td>USER_FILL</td>			<td> 12</td>		<td>user defined fill</td></tr>
+</table>
 color
 填充颜色。
 
-指定图案填充时的样式，目前无作用。
+pimg
+设置的图像，默认为 NULL（窗口)
 
-<font size="5" color="#0000FF"><strong>返回值：</strong></font>
+
+<font size="4" color="#0000FF"><strong>返回值：</strong></font>
+
 （无）
 
-<font size="5" color="#0000FF"><strong>示例：</strong></font>
+<font size="4" color="#0000FF"><strong>示例：</strong></font>
+
 设置蓝色固实填充：
 setfillstyle(SOLID_FILL, BLUE);
 

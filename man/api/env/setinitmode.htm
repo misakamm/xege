@@ -1,44 +1,59 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>setinitmode</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
 </head>
 <body>
 
-<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">绘图环境相关函数</a>-＞setinitmode</font>
+<pre><font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / <a href="index.htm">绘图环境</a> / setinitmode</font>
+<font size="4">
+<font size="4" color="#0000FF"><strong>功能：</strong></font>
 
-<font size="5" color="#0000FF"><strong>功能：</strong></font>
-这个函数用于设置初始化图形的选项和模式。
+设置图形环境的初始化模式以及窗口位置。
 
-<font size="5" color="#0000FF"><strong>声明：</strong></font>
+<font size="4" color="#0000FF"><strong>声明：</strong></font>
 <pre><font color=#0000FF>void </font><font color=#008080>setinitmode</font>(<font color=#0000FF>int </font>mode, <font color=#0000FF>int </font>x = <font color=#800080>CW_USEDEFAULT</font>, <font color=#0000FF>int </font>y = <font color=#800080>CW_USEDEFAULT</font>);</pre>
+<font size="4" color="#0000FF"><strong>参数：</strong></font>
 
-<font size="5" color="#0000FF"><strong>参数：</strong></font>
 mode
-初始化模式，是二进制组合的值。如果为INIT_DEFAULT 表示使用默认值。
-可以使用的值的组合：
-INIT_NOBORDER 为无边框窗口
-INIT_CHILD 为子窗口（需要使用attachHWND指定要依附的父窗口，此函数不另说明）
-INIT_TOPMOST 使窗口总在最前
-INIT_RENDERMANUAL 手动更新标志，即调用delay_fps/delay_ms等会等待操作的函数时会更新窗口，否则保持窗口内容
-INIT_WITHLOGO 使initgraph的时候显示开场动画logo
-INIT_NOFORCEEXIT 使关闭窗口的时候不强制退出程序，但窗口会消失，需要配合is_run函数
-INIT_DEFAULT 默认参数，不调用本函数时即使用此参数
-INIT_ANIMATION 是INIT_DEFAULT, INIT_RENDERMANUAL, INIT_NOFORCEEXIT的组合，用于动画编写
+初始化模式，每个二进制位控制是否启用某种模式（值为 0 表示仅使用普通窗口，不启用额外的模式）
+可以由以下模式进行组合：
+
+<table>
+	<tr> <th>初始化模式</th>		<th>值</th>		<th>说明</th></tr>
+	<tr> <td>INIT_DEFAULT</td>			<td align="center">   0x0 </td>	<td>普通窗口</td></tr>
+	<tr> <td>INIT_NOBORDER</td>			<td align="center">   0x1 </td>	<td>无边框窗口</td></tr>
+	<tr> <td>INIT_CHILD</td>			<td align="center">   0x2 </td>	<td>子窗口，需配合 attachHWND() 函数</td></tr>
+	<tr> <td>INIT_TOPMOST</td>			<td align="center">   0x4 </td>	<td>顶层窗口(不会被其它窗口遮挡)</td></tr>
+	<tr> <td>INIT_RENDERMANUAL</td>		<td align="center">   0x8 </td>	<td>手动渲染模式</td></tr>
+	<tr> <td>INIT_NOFORCEEXIT</td>		<td align="center">  0x10 </td>	<td>退出时不强制结束程序，而是设置标志位，可由 is_run() 判断<br>当设置了 INIT_NOFORCEEXIT 模式后，用户进行关闭窗口操作时窗口不会关闭，程序也不会退出，此时 is_run() 返回 false。<br>同时 getch(), getmouse() 之类的阻塞性函数将不再阻塞，由于窗口没有主动关闭，所以后续需要在代码中自行做窗口关闭和程序退出的相关处理。</td></tr>
+	<tr> <td>INIT_UNICODE <font size="3" color="#82A14F" bold = "true"><strong>(ege20.08 起)</strong></font></td>		<td align="center">  0x20 </td>	<td>窗口使用 Unicode 字符集</td></tr>
+	<tr> <td>INIT_HIDE <font size="3" color="#82A14F" bold = "true"><strong>(ege dev)</strong></font></td>		<td align="center">  0x40 </td>	<td>窗口使用 Unicode 字符集</td></tr>
+	<tr> <td>INIT_WITHLOGO</td>			<td align="center"> 0x100 </td>	<td>带 EGE logo 出场动画</td></tr>
+</table>
+
+设定的组合模式：
+<table>
+	<tr><th>组合模式</th><th>说明</th></tr>
+	<tr><td>INIT_ANIMATION</td><td>INIT_RENDERMANUAL 与 INIT_NOFORCEEXIT 模式的组合，用于动画</td></tr>
+</table>
 
 x, y
-初始化时窗口左上角在屏幕的坐标，默认为系统分配。
+初始化后，窗口左上角在屏幕上的坐标，默认为系统分配。
 
-<font size="5" color="#0000FF"><strong>返回值：</strong></font>
+<font size="4" color="#0000FF"><strong>返回值：</strong></font>
+
 （无）
 
-<font size="5" color="#0000FF"><strong>说明：</strong></font>
-本函数只能在initgraph前调用。
+<font size="4" color="#0000FF"><strong>说明：</strong></font>
 
-<font size="5" color="#0000FF"><strong>示例：</strong></font>
-（无）
+本函数只在 initgraph() 前调用有效。
+
+<font size="4" color="#0000FF"><strong>示例：</strong></font>
+<font color=#008080>setinimode</font>(0, 100, 50);    //左上角在屏幕坐标(100, 50)处的普通窗口
 </pre>
 
-
+</font>
 </pre>
 
 </body>

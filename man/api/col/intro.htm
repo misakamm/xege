@@ -1,39 +1,260 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>颜色表示</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
+	<style>
+		.colorblock {
+			height: 24px;
+			width:  24px;
+			color:#abb2bf;
+			background-color: blue;
+			border-top-width: 0.1em;
+			border-right-width: 0.1em;
+			border-bottom-width: 0.1em;
+			border-left-width: 0.1em;
+			border-top-style: solid;
+			border-right-style: solid;
+			border-bottom-style: solid;
+			border-left-style: solid;
+			border-top-color: rgb(238, 238, 238);
+			border-right-color: rgb(238, 238, 238);
+			border-bottom-color: rgb(238, 238, 238);
+			border-left-color: rgb(238, 238, 238);
+		}
+	</style>
 </head>
 <body>
 
-<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">颜色表示及相关函数</a>-＞颜色表示</font>
+<pre>
+<font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / <a href="index.htm">颜色</a> / 颜色表示</font>
+<font size="4">
 设置绘图色有以下几种办法：
-1. 用 16 进制的颜色表示，形式为：
-0xrrggbb (rr=红，gg=绿，bb=蓝)
-
-2. 用预定义颜色，如下：
-
-<table width="100%" border="1" align="center">
-<tr><td bgcolor="#8080FF">常量值</td><td bgcolor="#8080FF">值</td><td bgcolor="#8080FF">颜色值</td><td bgcolor="#8080FF">常量值</td><td bgcolor="#8080FF">值</td><td bgcolor="#8080FF">颜色</td></tr>
-<tr><td>BLACK值</td><td>0值</td><td>黑值</td><td>DARKGRAY值</td><td>0x545454值</td><td>深灰</td></tr>
-<tr><td>BLUE值</td><td>0x0000A8值</td><td>蓝值</td><td>LIGHTBLUE值</td><td>0x5454FC值</td><td>亮蓝</td></tr>
-<tr><td>GREEN值</td><td>0x00A800值</td><td>绿值</td><td>LIGHTGREEN值</td><td>0x54FC54值</td><td>亮绿</td></tr>
-<tr><td>CYAN值</td><td>0x00A8A8值</td><td>青值</td><td>LIGHTCYAN值</td><td>0x54FCFC值</td><td>亮青</td></tr>
-<tr><td>RED值</td><td>0xA80000值</td><td>值</td><td>LIGHTRED值</td><td>0xFC5454值</td><td>亮红</td></tr>
-<tr><td>MAGENTA值</td><td>0xA800A8值</td><td>紫值</td><td>LIGHTMAGENTA值</td><td>0xFC54FC值</td><td>亮紫</td></tr>
-<tr><td>BROWN值</td><td>0xA8A800值</td><td>棕值</td><td>YELLOW值</td><td>0xFCFC54值</td><td>黄</td></tr>
-<tr><td>LIGHTGRAY值</td><td>0xA8A8A8值</td><td>浅灰值</td><td>WHITE值</td><td>0xFCFCFC值</td><td>白</td></tr>
+1. 用十六进制颜色码的颜色表示，形式为：
+(注：以#开头的十六进制颜色码是通用表达形式，在 C/C++ 中需要以 0x 开头的十六进制数来代替)
+<table>
+	<tr><th>颜色类型</th><th>十六进制颜色码</th><th>在 ege 对应的十六进制数值</th></tr>
+	<tr align="center"><td>RGB 颜色</td><td>#RGB</td><td>0xFFRRGGBB</td></tr>
+	<tr align="center"><td>RGB 颜色</td><td>#RRGGBB</td><td>0xFFRRGGBB</td></tr>
+	<tr align="center"><td>ARGB 颜色</td><td>#AARRGGBB</td><td>0xAARRGGBB</td></tr>
 </table>
 
-3. 用 EGERGB 宏合成颜色。详见 EGERGB。
+<table>
+	<tr><th>颜色</th><th>十六进制数值</th><th>说明</th></tr>
+	<tr><td align="center">RGB</td><td align="center">0xFFRRGGBB</td><td>RR = 红，GG = 绿，BB = 蓝</td></tr>
+	<tr><td align="center">ARGB</td><td align="center">0xAARRGGBB</td><td>AA = 透明度，RR = 红，GG = 绿，BB = 蓝</td></tr>
+</table>
 
-4. 用 hsl2rgb、hsv2rgb 转换其他色彩模型到 RGB 颜色。详见 hsl2rgb、hsv2rgb。
+如果一些绘图函数使用的是ARGB颜色，则透明度不能为0，否则看不到绘制图形。
+
+2. 用 EGERGB(), EGEARGB() 宏合成颜色。
+
+<table>
+	<tr><th>宏</th><th>对应的十六进制形式</th><th>说明</th></tr>
+	<tr><td>EGERGB(RR, GG, BB)</td><td align="center">0xFFRRGGBB</td><td>RR = 红，GG = 绿，BB = 蓝</td></tr>
+	<tr><td>EGEARGB(AA, RR, GG, BB)</td><td align="center">0xAARRGGBB</td><td>AA = 透明度，RR = 红，GG = 绿，BB = 蓝</td></tr>
+
+</table>
+
+
+3. 用 hsl2rgb、hsv2rgb 转换其他色彩模型到 RGB 颜色。详见 hsl2rgb、hsv2rgb。
+
+
+4. 用预定义颜色，如下：
+
+<center><strong>ege20.08 及之前的版本</strong></center>
+<table>
+	<tr><th>常量</th><th>值</th><th>颜色</th><th>常量</th><th>值</th><th>颜色</th></tr>
+	<tr>
+		<td align="center">BLACK</td>		<td align="center">EGERGB(0x00, 0x00, 0x00)</td>	<td align="left"><span class="colorblock" style="background-color: #000000;">&nbsp;</span>黑</td>		
+		<td align="center">DARKGRAY</td>		<td align="center">EGERGB(0x54, 0x54, 0x54)</td>		<td><span class="colorblock" style="background-color: #545454;">&nbsp;</span>深灰</td>
+	</tr>
+	<tr>
+		<td align="center">BLUE</td>		<td align="center">EGERGB(0x00, 0x00, 0xA8)</td>	<td align="left"><span class="colorblock" style="background-color: #0000A8;">&nbsp;</span>蓝</td>		
+		<td align="center">LIGHTBLUE</td>		<td align="center">EGERGB(0x54, 0x54, 0xFC)</td>		<td><span class="colorblock" style="background-color: #5454FC;">&nbsp;</span>亮蓝</td>
+	</tr>
+	<tr>
+		<td align="center">GREEN</td>		<td align="center">EGERGB(0x00, 0xA8 ,0x00)</td>	<td align="left"><span class="colorblock" style="background-color: #00A800;">&nbsp;</span>绿</td>		
+		<td align="center">LIGHTGREEN</td>		<td align="center">EGERGB(0x54, 0xFC, 0x54)</td>		<td><span class="colorblock" style="background-color: #54FC54;">&nbsp;</span>亮绿</td>
+	</tr>
+	<tr>
+		<td align="center">CYAN</td>		<td align="center">EGERGB(0x00, 0xA8, 0xA8)</td>	<td align="left"><span class="colorblock" style="background-color: #00A8A8;">&nbsp;</span>青</td>		
+		<td align="center">LIGHTCYAN</td>		<td align="center">EGERGB(0x54, 0xFC, 0xFC)</td>		<td><span class="colorblock" style="background-color: #54FCFC;">&nbsp;</span>亮青</td>
+	</tr>
+	<tr>
+		<td align="center">RED</td>			<td align="center">EGERGB(0xA8, 0x00, 0x00)</td>	<td align="left"><span class="colorblock" style="background-color: #A80000;">&nbsp;</span>红</td>			
+		<td align="center">LIGHTRED</td>		<td align="center">EGERGB(0xFC, 0x54, 0x54)</td>		<td><span class="colorblock" style="background-color: #FC5454;">&nbsp;</span>亮红</td>
+	</tr>
+	<tr>
+		<td align="center">MAGENTA</td>		<td align="center">EGERGB(0xA8, 0x00, 0xA8)</td>	<td align="left"><span class="colorblock" style="background-color: #A800A8;">&nbsp;</span>紫</td>			
+		<td align="center">LIGHTMAGENTA</td>	<td align="center">EGERGB(0xFC, 0x54, 0xFC)</td>		<td><span class="colorblock" style="background-color: #FC54FC;">&nbsp;</span>亮紫</td>
+	</tr>
+	<tr>
+		<td align="center">BROWN</td>		<td align="center">EGERGB(0xA8, 0xA8, 0x00)</td>	<td align="left"><span class="colorblock" style="background-color: #A8A800;">&nbsp;</span>棕</td>		
+		<td align="center">YELLOW</td>			<td align="center">EGERGB(0xFC, 0xFC, 0x54)</td>		<td><span class="colorblock" style="background-color: #FCFC54;">&nbsp;</span>黄</td>
+	</tr>
+	<tr>
+		<td align="center">LIGHTGRAY</td>	<td align="center">EGERGB(0xA8, 0xA8, 0xA8)</td>	<td align="left"><span class="colorblock" style="background-color: #A8A8A8;">&nbsp;</span>浅灰</td>	
+		<td align="center">WHITE</td>			<td align="center">EGERGB(0xFC, 0xFC, 0xFC)</td>		<td><span class="colorblock" style="background-color: #FCFCFC">&nbsp;</span>白</td>
+	</tr>
+</table>
+
+<center><strong>ege dev 版本</strong></center>
+<table>
+	<tr><th>常量</th><th>值</th><th>颜色</th></tr>
+	<tr><td>ALICEBLUE</td>				<td align="center">EGERGB(0xF0, 0xF8, 0xFF)</td>	<td align="center"><span class="colorblock" style="background-color:#F0F8FF">&nbsp;</span></td>	</tr>
+	<tr><td>ANTIQUEWHITE</td>			<td align="center">EGERGB(0xFA, 0xEB, 0xD7)</td>	<td align="center"><span class="colorblock" style="background-color:#FAEBD7">&nbsp;</span></td>	</tr>
+	<tr><td>AQUA</td>					<td align="center">EGERGB(0x00, 0xFF, 0xFF)</td>	<td align="center"><span class="colorblock" style="background-color:#00FFFF">&nbsp;</span></td>	</tr>
+	<tr><td>AQUAMARINE</td>				<td align="center">EGERGB(0x7F, 0xFF, 0xD4)</td>	<td align="center"><span class="colorblock" style="background-color:#7FFFD4">&nbsp;</span></td>	</tr>
+	<tr><td>AZURE</td>					<td align="center">EGERGB(0xF0, 0xFF, 0xFF)</td>	<td align="center"><span class="colorblock" style="background-color:#F0FFFF">&nbsp;</span></td>	</tr>
+	<tr><td>BEIGE</td>					<td align="center">EGERGB(0xF5, 0xF5, 0xDC)</td>	<td align="center"><span class="colorblock" style="background-color:#F5F5DC">&nbsp;</span></td>	</tr>
+	<tr><td>BEIGE</td>					<td align="center">EGERGB(0xF5, 0xF5, 0xDC)</td>	<td align="center"><span class="colorblock" style="background-color:#F5F5DC">&nbsp;</span></td>	</tr>
+	<tr><td>BISQUE</td>					<td align="center">EGERGB(0xFF, 0xE4, 0xC4)</td>	<td align="center"><span class="colorblock" style="background-color:#FFE4C4">&nbsp;</span></td>	</tr>
+	<tr><td>BLACK</td>					<td align="center">EGERGB(0x00, 0x00, 0x00)</td>	<td align="center"><span class="colorblock" style="background-color:#000000">&nbsp;</span></td>	</tr>
+	<tr><td>BLANCHEDALMOND</td>			<td align="center">EGERGB(0xFF, 0xEB, 0xCD)</td>	<td align="center"><span class="colorblock" style="background-color:#FFEBCD">&nbsp;</span></td>	</tr>
+	<tr><td>BLUE</td>					<td align="center">EGERGB(0x00, 0x00, 0xFF)</td>	<td align="center"><span class="colorblock" style="background-color:#0000FF">&nbsp;</span></td>	</tr>
+	<tr><td>BLUEVIOLET</td>				<td align="center">EGERGB(0x8A, 0x2B, 0xE2)</td>	<td align="center"><span class="colorblock" style="background-color:#8A2BE2">&nbsp;</span></td>	</tr>
+	<tr><td>BROWN</td>					<td align="center">EGERGB(0xA5, 0x2A, 0x2A)</td>	<td align="center"><span class="colorblock" style="background-color:#A52A2A">&nbsp;</span></td>	</tr>
+	<tr><td>BURLYWOOD</td>				<td align="center">EGERGB(0xDE, 0xB8, 0x87)</td>	<td align="center"><span class="colorblock" style="background-color:#DEB887">&nbsp;</span></td>	</tr>
+	<tr><td>CADETBLUE</td>				<td align="center">EGERGB(0x5F, 0x9E, 0xA0)</td>	<td align="center"><span class="colorblock" style="background-color:#5F9EA0">&nbsp;</span></td>	</tr>
+	<tr><td>CHARTREUSE</td>				<td align="center">EGERGB(0x7F, 0xFF, 0x00)</td>	<td align="center"><span class="colorblock" style="background-color:#7FFF00">&nbsp;</span></td>	</tr>
+	<tr><td>CHOCOLATE</td>				<td align="center">EGERGB(0xD2, 0x69, 0x1E)</td>	<td align="center"><span class="colorblock" style="background-color:#D2691E">&nbsp;</span></td>	</tr>
+	<tr><td>CORAL</td>					<td align="center">EGERGB(0xFF, 0x7F, 0x50)</td>	<td align="center"><span class="colorblock" style="background-color:#FF7F50">&nbsp;</span></td>	</tr>
+	<tr><td>CORNFLOWERBLUE</td>			<td align="center">EGERGB(0x64, 0x95, 0xED)</td>	<td align="center"><span class="colorblock" style="background-color:#6495ED">&nbsp;</span></td>	</tr>
+	<tr><td>CORNSILK</td>				<td align="center">EGERGB(0xFF, 0xF8, 0xDC)</td>	<td align="center"><span class="colorblock" style="background-color:#FFF8DC">&nbsp;</span></td>	</tr>
+	<tr><td>CRIMSON</td>				<td align="center">EGERGB(0xDC, 0x14, 0x3C)</td>	<td align="center"><span class="colorblock" style="background-color:#DC143C">&nbsp;</span></td>	</tr>
+	<tr><td>CYAN</td>					<td align="center">EGERGB(0x00, 0xFF, 0xFF)</td>	<td align="center"><span class="colorblock" style="background-color:#00FFFF">&nbsp;</span></td>	</tr>
+	<tr><td>DARKBLUE</td>				<td align="center">EGERGB(0x00, 0x00, 0x8B)</td>	<td align="center"><span class="colorblock" style="background-color:#00008B">&nbsp;</span></td>	</tr>
+	<tr><td>DARKCYAN</td>				<td align="center">EGERGB(0x00, 0x8B, 0x8B)</td>	<td align="center"><span class="colorblock" style="background-color:#008B8B">&nbsp;</span></td>	</tr>
+	<tr><td>DARKGOLDENROD</td>			<td align="center">EGERGB(0xB8, 0x86, 0x0B)</td>	<td align="center"><span class="colorblock" style="background-color:#B8860B">&nbsp;</span></td>	</tr>
+	<tr><td>DARKGRAY</td>				<td align="center">EGERGB(0xA9, 0xA9, 0xA9)</td>	<td align="center"><span class="colorblock" style="background-color:#A9A9A9">&nbsp;</span></td>	</tr>
+	<tr><td>DARKGREEN</td>				<td align="center">EGERGB(0x00, 0x64, 0x00)</td>	<td align="center"><span class="colorblock" style="background-color:#006400">&nbsp;</span></td>	</tr>
+	<tr><td>DARKKHAKI</td>				<td align="center">EGERGB(0xBD, 0xB7, 0x6B)</td>	<td align="center"><span class="colorblock" style="background-color:#BDB76B">&nbsp;</span></td>	</tr>
+	<tr><td>DARKMAGENTA</td>			<td align="center">EGERGB(0x8B, 0x00, 0x8B)</td>	<td align="center"><span class="colorblock" style="background-color:#8B008B">&nbsp;</span></td>	</tr>
+	<tr><td>DARKOLIVEGREEN</td>			<td align="center">EGERGB(0x55, 0x6B, 0x2F)</td>	<td align="center"><span class="colorblock" style="background-color:#556B2F">&nbsp;</span></td>	</tr>
+	<tr><td>DARKORANGE</td>				<td align="center">EGERGB(0xFF, 0x8C, 0x00)</td>	<td align="center"><span class="colorblock" style="background-color:#FF8C00">&nbsp;</span></td>	</tr>
+	<tr><td>DARKORCHID</td>				<td align="center">EGERGB(0x99, 0x32, 0xCC)</td>	<td align="center"><span class="colorblock" style="background-color:#9932CC">&nbsp;</span></td>	</tr>
+	<tr><td>DARKRED</td>				<td align="center">EGERGB(0x8B, 0x00, 0x00)</td>	<td align="center"><span class="colorblock" style="background-color:#8B0000">&nbsp;</span></td>	</tr>
+	<tr><td>DARKSALMON</td>				<td align="center">EGERGB(0xE9, 0x96, 0x7A)</td>	<td align="center"><span class="colorblock" style="background-color:#E9967A">&nbsp;</span></td>	</tr>
+	<tr><td>DARKSEAGREEN</td>			<td align="center">EGERGB(0x8F, 0xBC, 0x8F)</td>	<td align="center"><span class="colorblock" style="background-color:#8FBC8F">&nbsp;</span></td>	</tr>
+	<tr><td>DARKSLATEBLUE</td>			<td align="center">EGERGB(0x48, 0x3D, 0x8B)</td>	<td align="center"><span class="colorblock" style="background-color:#483D8B">&nbsp;</span></td>	</tr>
+	<tr><td>DARKSLATEGRAY</td>			<td align="center">EGERGB(0x2F, 0x4F, 0x4F)</td>	<td align="center"><span class="colorblock" style="background-color:#2F4F4F">&nbsp;</span></td>	</tr>
+	<tr><td>DARKTURQUOISE</td>			<td align="center">EGERGB(0x00, 0xCE, 0xD1)</td>	<td align="center"><span class="colorblock" style="background-color:#00CED1">&nbsp;</span></td>	</tr>
+	<tr><td>DARKVIOLET</td>				<td align="center">EGERGB(0x94, 0x00, 0xD3)</td>	<td align="center"><span class="colorblock" style="background-color:#9400D3">&nbsp;</span></td>	</tr>
+	<tr><td>DEEPPINK</td>				<td align="center">EGERGB(0xFF, 0x14, 0x93)</td>	<td align="center"><span class="colorblock" style="background-color:#FF1493">&nbsp;</span></td>	</tr>
+	<tr><td>DEEPSKYBLUE</td>			<td align="center">EGERGB(0x00, 0xBF, 0xFF)</td>	<td align="center"><span class="colorblock" style="background-color:#00BFFF">&nbsp;</span></td>	</tr>
+	<tr><td>DIMGRAY</td>				<td align="center">EGERGB(0x69, 0x69, 0x69)</td>	<td align="center"><span class="colorblock" style="background-color:#696969">&nbsp;</span></td>	</tr>
+	<tr><td>DODGERBLUE</td>				<td align="center">EGERGB(0x1E, 0x90, 0xFF)</td>	<td align="center"><span class="colorblock" style="background-color:#1E90FF">&nbsp;</span></td>	</tr>
+	<tr><td>FIREBRICK</td>				<td align="center">EGERGB(0xB2, 0x22, 0x22)</td>	<td align="center"><span class="colorblock" style="background-color:#B22222">&nbsp;</span></td>	</tr>
+	<tr><td>FLORALWHITE</td>			<td align="center">EGERGB(0xFF, 0xFA, 0xF0)</td>	<td align="center"><span class="colorblock" style="background-color:#FFFAF0">&nbsp;</span></td>	</tr>
+	<tr><td>FORESTGREEN</td>			<td align="center">EGERGB(0x22, 0x8B, 0x22)</td>	<td align="center"><span class="colorblock" style="background-color:#228B22">&nbsp;</span></td>	</tr>
+	<tr><td>FUCHSIA</td>				<td align="center">EGERGB(0xFF, 0x00, 0xFF)</td>	<td align="center"><span class="colorblock" style="background-color:#FF00FF">&nbsp;</span></td>	</tr>
+	<tr><td>GAINSBORO</td>				<td align="center">EGERGB(0xDC, 0xDC, 0xDC)</td>	<td align="center"><span class="colorblock" style="background-color:#DCDCDC">&nbsp;</span></td>	</tr>
+	<tr><td>GHOSTWHITE</td> 			<td align="center">EGERGB(0xF8, 0xF8, 0xFF)</td>	<td align="center"><span class="colorblock" style="background-color:#F8F8FF">&nbsp;</span></td>	</tr>
+	<tr><td>GOLD</td>					<td align="center">EGERGB(0xFF, 0xD7, 0x00)</td>	<td align="center"><span class="colorblock" style="background-color:#FFD700">&nbsp;</span></td>	</tr>
+	<tr><td>GOLDENROD</td>				<td align="center">EGERGB(0xDA, 0xA5, 0x20)</td>	<td align="center"><span class="colorblock" style="background-color:#DAA520">&nbsp;</span></td>	</tr>
+	<tr><td>GRAY</td>					<td align="center">EGERGB(0x80, 0x80, 0x80)</td>	<td align="center"><span class="colorblock" style="background-color:#808080">&nbsp;</span></td>	</tr>
+	<tr><td>GREEN</td>					<td align="center">EGERGB(0x00, 0x80, 0x00)</td>	<td align="center"><span class="colorblock" style="background-color:#008000">&nbsp;</span></td>	</tr>
+	<tr><td>GREENYELLOW</td>			<td align="center">EGERGB(0xAD, 0xFF, 0x2F)</td>	<td align="center"><span class="colorblock" style="background-color:#ADFF2F">&nbsp;</span></td>	</tr>
+	<tr><td>HONEYDEW</td>				<td align="center">EGERGB(0xF0, 0xFF, 0xF0)</td>	<td align="center"><span class="colorblock" style="background-color:#F0FFF0">&nbsp;</span></td>	</tr>
+	<tr><td>HOTPINK</td>				<td align="center">EGERGB(0xFF, 0x69, 0xB4)</td>	<td align="center"><span class="colorblock" style="background-color:#FF69B4">&nbsp;</span></td>	</tr>
+	<tr><td>INDIANRED</td>				<td align="center">EGERGB(0xCD, 0x5C, 0x5C)</td>	<td align="center"><span class="colorblock" style="background-color:#CD5C5C">&nbsp;</span></td>	</tr>
+	<tr><td>INDIGO</td>					<td align="center">EGERGB(0x4B, 0x00, 0x82)</td>	<td align="center"><span class="colorblock" style="background-color:#4B0082">&nbsp;</span></td>	</tr>
+	<tr><td>IVORY</td>					<td align="center">EGERGB(0xFF, 0xFF, 0xF0)</td>	<td align="center"><span class="colorblock" style="background-color:#FFFFF0">&nbsp;</span></td>	</tr>
+	<tr><td>KHAKI</td>					<td align="center">EGERGB(0xF0, 0xE6, 0x8C)</td>	<td align="center"><span class="colorblock" style="background-color:#F0E68C">&nbsp;</span></td>	</tr>
+	<tr><td>LAVENDER</td>				<td align="center">EGERGB(0xE6, 0xE6, 0xFA)</td>	<td align="center"><span class="colorblock" style="background-color:#E6E6FA">&nbsp;</span></td>	</tr>
+	<tr><td>LAVENDERBLUSH</td>			<td align="center">EGERGB(0xFF, 0xF0, 0xF5)</td>	<td align="center"><span class="colorblock" style="background-color:#FFF0F5">&nbsp;</span></td>	</tr>
+	<tr><td>LAWNGREEN</td>				<td align="center">EGERGB(0x7C, 0xFC, 0x00)</td>	<td align="center"><span class="colorblock" style="background-color:#7CFC00">&nbsp;</span></td>	</tr>
+	<tr><td>LEMONCHIFFON</td>			<td align="center">EGERGB(0xFF, 0xFA, 0xCD)</td>	<td align="center"><span class="colorblock" style="background-color:#FFFACD">&nbsp;</span></td>	</tr>
+	<tr><td>LIGHTBLUE</td>				<td align="center">EGERGB(0xAD, 0xD8, 0xE6)</td>	<td align="center"><span class="colorblock" style="background-color:#ADD8E6">&nbsp;</span></td>	</tr>
+	<tr><td>LIGHTCORAL</td>				<td align="center">EGERGB(0xF0, 0x80, 0x80)</td>	<td align="center"><span class="colorblock" style="background-color:#F08080">&nbsp;</span></td>	</tr>
+	<tr><td>LIGHTCYAN</td>				<td align="center">EGERGB(0xE0, 0xFF, 0xFF)</td>	<td align="center"><span class="colorblock" style="background-color:#E0FFFF">&nbsp;</span></td>	</tr>
+	<tr><td>LIGHTGOLDENRODYELLOW</td> 	<td align="center">EGERGB(0xFA, 0xFA, 0xD2)</td>	<td align="center"><span class="colorblock" style="background-color:#FAFAD2">&nbsp;</span></td>	</tr>
+	<tr><td>LIGHTGRAY</td>				<td align="center">EGERGB(0xD3, 0xD3, 0xD3)</td>	<td align="center"><span class="colorblock" style="background-color:#D3D3D3">&nbsp;</span></td>	</tr>
+	<tr><td>LIGHTGREEN</td>				<td align="center">EGERGB(0x90, 0xEE, 0x90)</td>	<td align="center"><span class="colorblock" style="background-color:#90EE90">&nbsp;</span></td>	</tr>
+	<tr><td>LIGHTPINK</td>				<td align="center">EGERGB(0xFF, 0xB6, 0xC1)</td>	<td align="center"><span class="colorblock" style="background-color:#FFB6C1">&nbsp;</span></td>	</tr>
+	<tr><td>LIGHTSALMON</td>			<td align="center">EGERGB(0xFF, 0xA0, 0x7A)</td>	<td align="center"><span class="colorblock" style="background-color:#FFA07A">&nbsp;</span></td>	</tr>
+	<tr><td>LIGHTSEAGREEN</td>			<td align="center">EGERGB(0x20, 0xB2, 0xAA)</td>	<td align="center"><span class="colorblock" style="background-color:#20B2AA">&nbsp;</span></td>	</tr>
+	<tr><td>LIGHTSKYBLUE</td>			<td align="center">EGERGB(0x87, 0xCE, 0xFA)</td>	<td align="center"><span class="colorblock" style="background-color:#87CEFA">&nbsp;</span></td>	</tr>
+	<tr><td>LIGHTSLATEGRAY</td>			<td align="center">EGERGB(0x77, 0x88, 0x99)</td>	<td align="center"><span class="colorblock" style="background-color:#778899">&nbsp;</span></td>	</tr>
+	<tr><td>LIGHTSTEELBLUE</td>			<td align="center">EGERGB(0xB0, 0xC4, 0xDE)</td>	<td align="center"><span class="colorblock" style="background-color:#B0C4DE">&nbsp;</span></td>	</tr>
+	<tr><td>LIGHTYELLOW</td>			<td align="center">EGERGB(0xFF, 0xFF, 0xE0)</td>	<td align="center"><span class="colorblock" style="background-color:#FFFFE0">&nbsp;</span></td>	</tr>
+	<tr><td>LIGHTRED</td>				<td align="center">EGERGB(0xFC, 0x54, 0x54)</td>	<td align="center"><span class="colorblock" style="background-color:#FC5454">&nbsp;</span></td>	</tr>
+	<tr><td>LIGHTMAGENTA</td>			<td align="center">EGERGB(0xFC, 0x54, 0xFC)</td>	<td align="center"><span class="colorblock" style="background-color:#FC54FC">&nbsp;</span></td>	</tr>
+	<tr><td>LIME</td>					<td align="center">EGERGB(0x00, 0xFF, 0x00)</td>	<td align="center"><span class="colorblock" style="background-color:#00FF00">&nbsp;</span></td>	</tr>
+	<tr><td>LIMEGREEN</td>				<td align="center">EGERGB(0x32, 0xCD, 0x32)</td>	<td align="center"><span class="colorblock" style="background-color:#32CD32">&nbsp;</span></td>	</tr>
+	<tr><td>LINEN</td>					<td align="center">EGERGB(0xFA, 0xF0, 0xE6)</td>	<td align="center"><span class="colorblock" style="background-color:#FAF0E6">&nbsp;</span></td>	</tr>
+	<tr><td>MAGENTA</td>				<td align="center">EGERGB(0xFF, 0x00, 0xFF)</td>	<td align="center"><span class="colorblock" style="background-color:#FF00FF">&nbsp;</span></td>	</tr>
+	<tr><td>MAROON</td>					<td align="center">EGERGB(0x80, 0x00, 0x00)</td>	<td align="center"><span class="colorblock" style="background-color:#800000">&nbsp;</span></td>	</tr>
+	<tr><td>MEDIUMAQUAMARINE</td>		<td align="center">EGERGB(0x66, 0xCD, 0xAA)</td>	<td align="center"><span class="colorblock" style="background-color:#66CDAA">&nbsp;</span></td>	</tr>
+	<tr><td>MEDIUMBLUE</td>				<td align="center">EGERGB(0x00, 0x00, 0xCD)</td>	<td align="center"><span class="colorblock" style="background-color:#0000CD">&nbsp;</span></td>	</tr>
+	<tr><td>MEDIUMORCHID</td>			<td align="center">EGERGB(0xBA, 0x55, 0xD3)</td>	<td align="center"><span class="colorblock" style="background-color:#BA55D3">&nbsp;</span></td>	</tr>
+	<tr><td>MEDIUMPURPLE</td>			<td align="center">EGERGB(0x93, 0x70, 0xDB)</td>	<td align="center"><span class="colorblock" style="background-color:#9370DB">&nbsp;</span></td>	</tr>
+	<tr><td>MEDIUMSEAGREEN</td>			<td align="center">EGERGB(0x3C, 0xB3, 0x71)</td>	<td align="center"><span class="colorblock" style="background-color:#3CB371">&nbsp;</span></td>	</tr>
+	<tr><td>MEDIUMSLATEBLUE</td>		<td align="center">EGERGB(0x7B, 0x68, 0xEE)</td>	<td align="center"><span class="colorblock" style="background-color:#7B68EE">&nbsp;</span></td>	</tr>
+	<tr><td>MEDIUMSPRINGGREEN</td>		<td align="center">EGERGB(0x00, 0xFA, 0x9A)</td>	<td align="center"><span class="colorblock" style="background-color:#00FA9A">&nbsp;</span></td>	</tr>
+	<tr><td>MEDIUMTURQUOISE</td>		<td align="center">EGERGB(0x48, 0xD1, 0xCC)</td>	<td align="center"><span class="colorblock" style="background-color:#48D1CC">&nbsp;</span></td>	</tr>
+	<tr><td>MEDIUMVIOLETRED</td>		<td align="center">EGERGB(0xC7, 0x15, 0x85)</td>	<td align="center"><span class="colorblock" style="background-color:#C71585">&nbsp;</span></td>	</tr>
+	<tr><td>MIDNIGHTBLUE</td>			<td align="center">EGERGB(0x19, 0x19, 0x70)</td>	<td align="center"><span class="colorblock" style="background-color:#191970">&nbsp;</span></td>	</tr>
+	<tr><td>MINTCREAM</td>				<td align="center">EGERGB(0xF5, 0xFF, 0xFA)</td>	<td align="center"><span class="colorblock" style="background-color:#F5FFFA">&nbsp;</span></td>	</tr>
+	<tr><td>MISTYROSE</td>				<td align="center">EGERGB(0xFF, 0xE4, 0xE1)</td>	<td align="center"><span class="colorblock" style="background-color:#FFE4E1">&nbsp;</span></td>	</tr>
+	<tr><td>MOCCASIN</td>				<td align="center">EGERGB(0xFF, 0xE4, 0xB5)</td>	<td align="center"><span class="colorblock" style="background-color:#FFE4B5">&nbsp;</span></td>	</tr>
+	<tr><td>NAVAJOWHITE</td>			<td align="center">EGERGB(0xFF, 0xDE, 0xAD)</td>	<td align="center"><span class="colorblock" style="background-color:#FFDEAD">&nbsp;</span></td>	</tr>
+	<tr><td>NAVY</td>					<td align="center">EGERGB(0x00, 0x00, 0x80)</td>	<td align="center"><span class="colorblock" style="background-color:#000080">&nbsp;</span></td>	</tr>
+	<tr><td>OLDLACE</td>				<td align="center">EGERGB(0xFD, 0xF5, 0xE6)</td>	<td align="center"><span class="colorblock" style="background-color:#FDF5E6">&nbsp;</span></td>	</tr>
+	<tr><td>OLIVE</td>					<td align="center">EGERGB(0x80, 0x80, 0x00)</td>	<td align="center"><span class="colorblock" style="background-color:#808000">&nbsp;</span></td>	</tr>
+	<tr><td>OLIVEDRAB</td>				<td align="center">EGERGB(0x6B, 0x8E, 0x23)</td>	<td align="center"><span class="colorblock" style="background-color:#6B8E23">&nbsp;</span></td>	</tr>
+	<tr><td>ORANGE</td>					<td align="center">EGERGB(0xFF, 0xA5, 0x00)</td>	<td align="center"><span class="colorblock" style="background-color:#FFA500">&nbsp;</span></td>	</tr>
+	<tr><td>ORANGERED</td>				<td align="center">EGERGB(0xFF, 0x45, 0x00)</td>	<td align="center"><span class="colorblock" style="background-color:#FF4500">&nbsp;</span></td>	</tr>
+	<tr><td>ORCHID</td>					<td align="center">EGERGB(0xDA, 0x70, 0xD6)</td>	<td align="center"><span class="colorblock" style="background-color:#DA70D6">&nbsp;</span></td>	</tr>
+	<tr><td>PALEGOLDENROD</td>			<td align="center">EGERGB(0xEE, 0xE8, 0xAA)</td>	<td align="center"><span class="colorblock" style="background-color:#EEE8AA">&nbsp;</span></td>	</tr>
+	<tr><td>PALEGREEN</td>				<td align="center">EGERGB(0x98, 0xFB, 0x98)</td>	<td align="center"><span class="colorblock" style="background-color:#98FB98">&nbsp;</span></td>	</tr>
+	<tr><td>PALETURQUOISE</td>			<td align="center">EGERGB(0xAF, 0xEE, 0xEE)</td>	<td align="center"><span class="colorblock" style="background-color:#AFEEEE">&nbsp;</span></td>	</tr>
+	<tr><td>PALEVIOLETRED</td>			<td align="center">EGERGB(0xDB, 0x70, 0x93)</td>	<td align="center"><span class="colorblock" style="background-color:#DB7093">&nbsp;</span></td>	</tr>
+	<tr><td>PAPAYAWHIP</td>				<td align="center">EGERGB(0xFF, 0xEF, 0xD5)</td>	<td align="center"><span class="colorblock" style="background-color:#FFEFD5">&nbsp;</span></td>	</tr>
+	<tr><td>PEACHPUFF</td>				<td align="center">EGERGB(0xFF, 0xDA, 0xB9)</td>	<td align="center"><span class="colorblock" style="background-color:#FFDAB9">&nbsp;</span></td>	</tr>
+	<tr><td>PERU</td>					<td align="center">EGERGB(0xCD, 0x85, 0x3F)</td>	<td align="center"><span class="colorblock" style="background-color:#CD853F">&nbsp;</span></td>	</tr>
+	<tr><td>PINK</td>					<td align="center">EGERGB(0xFF, 0xC0, 0xCB)</td>	<td align="center"><span class="colorblock" style="background-color:#FFC0CB">&nbsp;</span></td>	</tr>
+	<tr><td>PLUM</td>					<td align="center">EGERGB(0xDD, 0xA0, 0xDD)</td>	<td align="center"><span class="colorblock" style="background-color:#DDA0DD">&nbsp;</span></td>	</tr>
+	<tr><td>POWDERBLUE</td>				<td align="center">EGERGB(0xB0, 0xE0, 0xE6)</td>	<td align="center"><span class="colorblock" style="background-color:#B0E0E6">&nbsp;</span></td>	</tr>
+	<tr><td>PURPLE</td>					<td align="center">EGERGB(0x80, 0x00, 0x80)</td>	<td align="center"><span class="colorblock" style="background-color:#800080">&nbsp;</span></td>	</tr>
+	<tr><td>RED</td>					<td align="center">EGERGB(0xFF, 0x00, 0x00)</td>	<td align="center"><span class="colorblock" style="background-color:#FF0000">&nbsp;</span></td>	</tr>
+	<tr><td>ROSYBROWN</td>				<td align="center">EGERGB(0xBC, 0x8F, 0x8F)</td>	<td align="center"><span class="colorblock" style="background-color:#BC8F8F">&nbsp;</span></td>	</tr>
+	<tr><td>ROYALBLUE</td>				<td align="center">EGERGB(0x41, 0x69, 0xE1)</td>	<td align="center"><span class="colorblock" style="background-color:#4169E1">&nbsp;</span></td>	</tr>
+	<tr><td>SADDLEBROWN</td>			<td align="center">EGERGB(0x8B, 0x45, 0x13)</td>	<td align="center"><span class="colorblock" style="background-color:#8B4513">&nbsp;</span></td>	</tr>
+	<tr><td>SALMON</td>					<td align="center">EGERGB(0xFA, 0x80, 0x72)</td>	<td align="center"><span class="colorblock" style="background-color:#FA8072">&nbsp;</span></td>	</tr>
+	<tr><td>SANDYBROWN</td>				<td align="center">EGERGB(0xF4, 0xA4, 0x60)</td>	<td align="center"><span class="colorblock" style="background-color:#F4A460">&nbsp;</span></td>	</tr>
+	<tr><td>SEAGREEN</td>				<td align="center">EGERGB(0x2E, 0x8B, 0x57)</td>	<td align="center"><span class="colorblock" style="background-color:#2E8B57">&nbsp;</span></td>	</tr>
+	<tr><td>SEASHELL</td>				<td align="center">EGERGB(0xFF, 0xF5, 0xEE)</td>	<td align="center"><span class="colorblock" style="background-color:#FFF5EE">&nbsp;</span></td>	</tr>
+	<tr><td>SIENNA</td>					<td align="center">EGERGB(0xA0, 0x52, 0x2D)</td>	<td align="center"><span class="colorblock" style="background-color:#A0522D">&nbsp;</span></td>	</tr>
+	<tr><td>SILVER</td>					<td align="center">EGERGB(0xC0, 0xC0, 0xC0)</td>	<td align="center"><span class="colorblock" style="background-color:#C0C0C0">&nbsp;</span></td>	</tr>
+	<tr><td>SKYBLUE</td>				<td align="center">EGERGB(0x87, 0xCE, 0xEB)</td>	<td align="center"><span class="colorblock" style="background-color:#87CEEB">&nbsp;</span></td>	</tr>
+	<tr><td>SLATEBLUE</td>				<td align="center">EGERGB(0x6A, 0x5A, 0xCD)</td>	<td align="center"><span class="colorblock" style="background-color:#6A5ACD">&nbsp;</span></td>	</tr>
+	<tr><td>SLATEGRAY</td>				<td align="center">EGERGB(0x70, 0x80, 0x90)</td>	<td align="center"><span class="colorblock" style="background-color:#708090">&nbsp;</span></td>	</tr>
+	<tr><td>SNOW</td>					<td align="center">EGERGB(0xFF, 0xFA, 0xFA)</td>	<td align="center"><span class="colorblock" style="background-color:#FFFAFA">&nbsp;</span></td>	</tr>
+	<tr><td>SPRINGGREEN</td>			<td align="center">EGERGB(0x00, 0xFF, 0x7F)</td>	<td align="center"><span class="colorblock" style="background-color:#00FF7F">&nbsp;</span></td>	</tr>
+	<tr><td>STEELBLUE</td>				<td align="center">EGERGB(0x46, 0x82, 0xB4)</td>	<td align="center"><span class="colorblock" style="background-color:#4682B4">&nbsp;</span></td>	</tr>
+	<tr><td>TAN</td>					<td align="center">EGERGB(0xD2, 0xB4, 0x8C)</td>	<td align="center"><span class="colorblock" style="background-color:#D2B48C">&nbsp;</span></td>	</tr>
+	<tr><td>TEAL</td>					<td align="center">EGERGB(0x00, 0x80, 0x80)</td>	<td align="center"><span class="colorblock" style="background-color:#008080">&nbsp;</span></td>	</tr>
+	<tr><td>THISTLE</td>				<td align="center">EGERGB(0xD8, 0xBF, 0xD8)</td>	<td align="center"><span class="colorblock" style="background-color:#D8BFD8">&nbsp;</span></td>	</tr>
+	<tr><td>TOMATO</td>					<td align="center">EGERGB(0xFF, 0x63, 0x47)</td>	<td align="center"><span class="colorblock" style="background-color:#FF6347">&nbsp;</span></td>	</tr>
+	<tr><td>TURQUOISE</td>				<td align="center">EGERGB(0x40, 0xE0, 0xD0)</td>	<td align="center"><span class="colorblock" style="background-color:#40E0D0">&nbsp;</span></td>	</tr>
+	<tr><td>VIOLET</td>					<td align="center">EGERGB(0xEE, 0x82, 0xEE)</td>	<td align="center"><span class="colorblock" style="background-color:#EE82EE">&nbsp;</span></td>	</tr>
+	<tr><td>WHEAT</td>					<td align="center">EGERGB(0xF5, 0xDE, 0xB3)</td>	<td align="center"><span class="colorblock" style="background-color:#F5DEB3">&nbsp;</span></td>	</tr>
+	<tr><td>WHITE</td>					<td align="center">EGERGB(0xFF, 0xFF, 0xFF)</td>	<td align="center"><span class="colorblock" style="background-color:#FFFFFF">&nbsp;</span></td>	</tr>
+	<tr><td>WHITESMOKE</td>				<td align="center">EGERGB(0xF5, 0xF5, 0xF5)</td>	<td align="center"><span class="colorblock" style="background-color:#F5F5F5">&nbsp;</span></td>	</tr>
+	<tr><td>YELLOW</td>					<td align="center">EGERGB(0xFF, 0xFF, 0x00)</td>	<td align="center"><span class="colorblock" style="background-color:#FFFF00">&nbsp;</span></td>	</tr>
+	<tr><td>YELLOWGREEN</td>			<td align="center">EGERGB(0x9A, 0xCD, 0x32)</td>	<td align="center"><span class="colorblock" style="background-color:#9ACD32">&nbsp;</span></td>	</tr>
+</table>
 
 示例：
 以下是部分设置前景色的方法：
-<pre><font color=#008080>setcolor</font>(0xff0000);
+<pre><font color=#008080>setcolor</font>(0x0000FF);
 <font color=#008080>setcolor</font>(<font color=#800080>BLUE</font>);
 <font color=#008080>setcolor</font>(<font color=#800080>EGERGB</font>(0, 0, 255));
-<font color=#008080>setcolor</font>(<font color=#008080>hsl2rgb</font>(240, 1, 0.5));</pre>
+<font color=#008080>setcolor</font>(<font color=#008080>hsl2rgb</font>(240, 1, 0.5));
+</pre>
 
+</font>
 </pre>
 
 </body>

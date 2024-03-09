@@ -1,56 +1,115 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>绘制图形相关函数</title>
+    <title>图形绘制</title>
+	<link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
 </head>
+
 <body>
 
-<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞绘制图形相关函数</font>
+<pre><font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / 图形绘制</font>
+<font size="4">
 
-目录：
-<table width="100%" border="1" align="center">
-<tr><td bgcolor="#8080FF">函数或数据</td><td bgcolor="#8080FF">说明</td></tr>
-<tr><td><a href="arc.htm">arc</a></td><td>画圆弧</td></tr>
-<tr><td><a href="bar.htm">bar</a></td><td>画无边框填充矩形</td></tr>
-<tr><td><a href="bar3d.htm">bar3d</a></td><td>画有边框三维填充矩形</td></tr>
-<tr><td><a href="circle.htm">circle</a></td><td>画圆</td></tr>
-<tr><td><a href="drawbezier.htm">drawbezier</a></td><td>画bezier曲线</td></tr>
-<tr><td><a href="drawlines.htm">drawlines</a></td><td>画多条不连续线段</td></tr>
-<tr><td><a href="drawpoly.htm">drawpoly</a></td><td>画多边形</td></tr>
-<tr><td><a href="ellipse.htm">ellipse</a></td><td>画椭圆弧线</td></tr>
-<tr><td><a href="fillellipse.htm">fillellipse</a></td><td>画填充的椭圆</td></tr>
-<tr><td><a href="fillpoly.htm">fillpoly</a></td><td>画填充的多边形</td></tr>
-<tr><td><a href="floodfill.htm">floodfill</a></td><td>指定边界色填充区域</td></tr>
-<tr><td><a href="floodfillsurface.htm">floodfillsurface</a></td><td>指定区域色填充区域</td></tr>
-<tr><td><a href="getfillcolor.htm">getfillcolor</a></td><td>获取当前填充颜色</td></tr>
-<tr><td><a href="getfillstyle.htm">getfillstyle</a></td><td>获取当前填充类型（暂不支持）</td></tr>
-<tr><td><a href="getheight.htm">getheight</a></td><td>获取绘图区的高度</td></tr>
-<tr><td><a href="getlinestyle.htm">getlinestyle</a></td><td>获取当前线形</td></tr>
-<tr><td><a href="getpixel.htm">getpixel</a></td><td>获取像素点的颜色</td></tr>
-<tr><td><a href="getwidth.htm">getwidth</a></td><td>获取绘图区的宽度</td></tr>
-<tr><td><a href="getx.htm">getx</a></td><td>获取当前 x 坐标</td></tr>
-<tr><td><a href="gety.htm">gety</a></td><td>获取当前 y 坐标</td></tr>
-<tr><td><a href="line.htm">line</a></td><td>画线</td></tr>
-<tr><td><a href="linerel.htm">linerel</a></td><td>画线</td></tr>
-<tr><td><a href="lineto.htm">lineto</a></td><td>画线</td></tr>
-<tr><td><a href="moverel.htm">moverel</a></td><td>移动当前点</td></tr>
-<tr><td><a href="moveto.htm">moveto</a></td><td>移动当前点</td></tr>
-<tr><td><a href="pieslice.htm">pieslice</a></td><td>画填充圆扇形</td></tr>
-<tr><td><a href="putpixel.htm">putpixel</a></td><td>画像素点</td></tr>
-<tr><td><a href="putpixels.htm">putpixels</a></td><td>画多个像素点</td></tr>
-<tr><td><a href="rectangle.htm">rectangle</a></td><td>画空心矩形</td></tr>
-<tr><td><a href="sector.htm">sector</a></td><td>画填充椭圆扇形</td></tr>
-<tr><td><a href="setfillcolor.htm">setfillcolor</a></td><td>设置当前填充颜色</td></tr>
-<tr><td><a href="setfillstyle.htm">setfillstyle</a></td><td>设置当前填充类型（过时函数）</td></tr>
-<tr><td><a href="setlinestyle.htm">setlinestyle</a></td><td>设置当前线形</td></tr>
-<tr><td><a href="setlinewidth.htm">setlinewidth</a></td><td>设置当前线宽</td></tr>
-<tr><td><a href="setwritemode.htm">setwritemode</a></td><td>设置绘图位操作模式</td></tr>
+<font size="4" color="#0000FF"><strong>特殊说明：</strong></font>
+    以下所有函数的坐标模式为，如果以有向线段表示的量，起点能取到，终点取不到。比如 line() 函数，起点 (x1,y1)会绘制上点，终点 (x2,y2) 不会绘制。
+    请注意，类似的有 lineto(), linerel(), bar(), bar3d(), rectangle(), ellipse(), sector()，函数说明内也会对本段进行补充。
+    另外，这里每一个函数的最后一个参数均为一个 PIMAGE 的指针，是一个可选参数，如果不填或者填入 NULL，则绘制到当前绘图页。如果填上，则绘制到指定的图像。
+    关于效率，如果使用手动渲染模式（setrendermode(RENDER_MANUAL)），那以上所有函数的执行速度都会得到提升。
+
+
+<h3>普通绘图函数：</h3>
+
+<table>
+<tr><th>函数或类型</th><th>说明</th><th>最低版本要求</th></tr>
+<tr><td><a href="arc.htm">arc</a></td>							<td>绘制圆弧</td>							<td align="center"></td></tr>
+<tr><td><a href="bar.htm">bar</a></td>								<td>绘制无边框填充矩形</td>					<td align="center"></td></tr>
+<tr><td><a href="bar3d.htm">bar3d</a></td>							<td>绘制有边框三维填充矩形</td>				<td align="center"></td></tr>
+<tr><td><a href="circle.htm">circle</a></td>						<td>绘制圆</td>								<td align="center"></td></tr>
+<tr><td><a href="drawbezier.htm">drawbezier</a></td>				<td>绘制bezier曲线</td>						<td align="center"></td></tr>
+<tr><td><a href="drawlines.htm">drawlines</a></td>					<td>绘制多条不连续线段</td>					<td align="center"></td></tr>
+<tr><td><a href="drawpoly.htm">drawpoly</a></td>					<td>绘制多边形</td>							<td align="center"></td></tr>
+<tr><td><a href="ellipse.htm">ellipse</a></td>						<td>绘制椭圆弧线</td>						<td align="center"></td></tr>
+<tr><td><a href="fillcircle.htm">fillcircle</a></td>				<td>绘制填充的圆</td>						<td align="center"> ege dev </td></tr>
+<tr><td><a href="fillellipse.htm">fillellipse</a></td>				<td>绘制填充的椭圆</td>						<td align="center"></td></tr>
+<tr><td><a href="fillpoly.htm">fillpoly</a></td>					<td>绘制填充的多边形</td>					<td align="center"></td></tr>
+<tr><td><a href="fillpoly_gradient.htm">fillpoly_gradient</a></td>	<td>绘制渐变填充的多边形</td>				<td align="center"></td></tr>
+<tr><td><a href="fillrect.htm">fillrect</a></td>					<td>绘制填充的矩形</td>						<td align="center"> ege dev </td></tr>
+<tr><td><a href="fillroundrect.htm">fillroundrect</a></td>			<td>绘制填充的圆角矩形</td>					<td align="center"> ege dev </td></tr>
+<tr><td><a href="floodfill.htm">floodfill</a></td>					<td>指定边界色填充区域</td>					<td align="center"></td></tr>
+<tr><td><a href="floodfillsurface.htm">floodfillsurface</a></td>	<td>指定区域色填充区域</td>					<td align="center"></td></tr>
+<tr><td><a href="getfillcolor.htm">getfillcolor</a></td>			<td>获取当前填充颜色</td>					<td align="center"></td></tr>
+<tr><td>getfillstyle</td>			 								<td>获取当前填充类型（暂不支持）</td>		<td align="center"></td></tr>
+<tr><td><a href="getheight.htm">getheight</a></td>					<td>获取绘图区的高度</td>					<td align="center"></td></tr>
+<tr><td><a href="getlinestyle.htm">getlinestyle</a></td>			<td>获取当前线形</td>						<td align="center"></td></tr>
+<tr><td><a href="getpixel.htm">getpixel</a></td>					<td>获取像素点的颜色</td>					<td align="center"></td></tr>
+<tr><td><a href="getwidth.htm">getwidth</a></td>					<td>获取绘图区的宽度</td>					<td align="center"></td></tr>
+<tr><td><a href="getx.htm">getx</a></td>							<td>获取当前 x 坐标</td>					<td align="center"></td></tr>
+<tr><td><a href="gety.htm">gety</a></td>							<td>获取当前 y 坐标</td>					<td align="center"></td></tr>
+<tr><td><a href="line.htm">line</a></td>							<td>绘制线</td>								<td align="center"></td></tr>
+<tr><td><a href="linerel.htm">linerel</a></td>						<td>绘制线</td>								<td align="center"></td></tr>
+<tr><td><a href="lineto.htm">lineto</a></td>						<td>绘制线</td>								<td align="center"></td></tr>
+<tr><td><a href="moverel.htm">moverel</a></td>						<td>移动当前点</td>							<td align="center"></td></tr>
+<tr><td><a href="moveto.htm">moveto</a></td>						<td>移动当前点</td>							<td align="center"></td></tr>
+<tr><td><a href="pieslice.htm">pieslice</a></td>					<td>绘制填充圆扇形</td>						<td align="center"></td></tr>
+<tr><td><a href="putpixel.htm">putpixel</a></td>					<td>设置像素点的颜色</td>					<td align="center"></td></tr>
+<tr><td><a href="putpixel_savealpha.htm">putpixel_savealpha</a></td>			<td>设置像素点的颜色（同时保留原有alpha值）</td>	<td align="center">ege dev</td></tr>
+<tr><td><a href="putpixel_withalpha.htm">putpixel_withalpha</a></td>			<td>绘制像素点（根据 alpha 进行混合）</td>	        <td align="center">ege 20.08</td></tr>
+<tr><td><a href="putpixels.htm">putpixels</a></td>					<td>绘制多个像素点</td>						<td align="center"></td></tr>
+<tr><td><a href="rectangle.htm">rectangle</a></td>					<td>绘制空心矩形</td>						<td align="center"></td></tr>
+<tr><td><a href="roundrect.htm">roundrect</a></td>					<td>绘制空心圆角矩形</td>					<td align="center"></td></tr>
+<tr><td><a href="sector.htm">sector</a></td>						<td>绘制填充椭圆扇形</td>					<td align="center"></td></tr>
+<tr><td><a href="setfillcolor.htm">setfillcolor</a></td>			<td>设置当前填充颜色</td>					<td align="center"></td></tr>
+<tr><td><a href="setfillstyle.htm">setfillstyle</a></td>			<td>设置当前填充类型（过时函数）</td>		<td align="center"></td></tr>
+<tr><td><a href="setlinestyle.htm">setlinestyle</a></td>			<td>设置当前线形</td>						<td align="center"></td></tr>
+<tr><td><a href="setlinewidth.htm">setlinewidth</a></td>			<td>设置当前线宽</td>						<td align="center"></td></tr>
+<tr><td><a href="setwritemode.htm">setwritemode</a></td>			<td>设置绘图位操作模式</td>					<td align="center"></td></tr>
 </table>
 
-特殊说明：
-    以下所有函数的坐标模式为，如果以有向线段表示的量，起点能取到，终点取不到。比如line函数，起点x1,y1能画上点，终点x2,y2不会画上点，请注意。类似的有lineto, linerel, bar, bar3d, rectangle, ellipse, sector，函数说明内也会对本段进行补充。
-    另外，这里每一个函数的最后一个参数均为一个PIMAGE的指针，是一个可选参数，如果不填，则绘画到当前页。如果填上，则绘画到指定的IMAGE。
-    关于效率，如果使用手动更新模式（setrendermode），那以上所有函数的执行速度都会得到提升。
+注：最低版本要求中的 ege dev 为 GitHub 开发版本，尚未正式发布。
 
+<h3>高级绘图函数(图形可设置透明度，可带抗锯齿)：</h3>
+
+<table>
+<tr><th>函数或类型</th>		<th>说明</th>		<th>最低版本要求</th></tr>
+<tr><td><a href="ege_enable_aa.htm">ege_enable_aa</a></td>								<td>抗锯齿设置</td>		<td align="center"></td></tr>
+<tr><td><a href="ege_line.htm">ege_line</a></td>										<td>绘制线</td>					<td align="center"></td></tr>
+<tr><td><a href="ege_rectangle.htm">ege_rectangle</a></td>								<td>绘制矩形线框</td>				<td align="center"></td></tr>
+<tr><td><a href="ege_arc.htm">ege_arc</a></td>											<td>绘制圆弧</td>					<td align="center"></td></tr>
+<tr><td><a href="ege_ellipse.htm">ege_ellipse</a></td>									<td>绘制椭圆线框</td>				<td align="center"></td></tr>
+<tr><td><a href="ege_pie.htm">ege_pie</a></td>											<td>绘制扇形线框</td>				<td align="center"></td></tr>
+<tr><td><a href="ege_drawpoly.htm">ege_drawpoly</a></td>								<td>绘制多边形线框</td>			<td align="center"></td></tr>
+<tr><td><a href="ege_bezier.htm">ege_bezier</a></td>									<td>绘制贝塞尔曲线</td>			<td align="center"></td></tr>
+<tr><td><a href="ege_drawcurve.htm">ege_drawcurve</a></td>								<td>绘制拟合曲线</td>				<td align="center"></td></tr>
+
+
+<tr><td><a href="ege_fillrect.htm">ege_fillrect</a></td>								<td>绘制填充矩形</td>				<td align="center"></td></tr>
+<tr><td><a href="ege_fillpie.htm">ege_fillpie</a></td>									<td>绘制填充扇形</td>				<td align="center"></td></tr>
+<tr><td><a href="ege_fillpoly.htm">ege_fillpoly</a></td>								<td>绘制填充多边形</td>			<td align="center"></td></tr>
+<tr><td><a href="ege_fillellipse.htm">ege_fillellipse</a></td>							<td>绘制填充椭圆</td>				<td align="center"></td></tr>
+
+<tr><td><a href="ege_drawimage.htm">ege_drawimage</a></td>								<td>(alpha混合)绘制图像</td>	<td align="center">ege dev</td></tr>
+<tr><td><a href="ege_transform_rotate.htm">ege_transform_rotate</a></td>				<td>旋转坐标变换</td>			<td align="center">ege dev</td></tr>
+<tr><td><a href="ege_transform_translate.htm">ege_translate_rotate</a></td>				<td>平移坐标变换</td>			<td align="center">ege dev</td></tr>
+<tr><td><a href="ege_transform_scale.htm">ege_transform_scale</a></td>					<td>缩放坐标变换</td>			<td align="center">ege dev</td></tr>
+<tr><td><a href="ege_transform_reset.htm">ege_transform_reset</a></td>					<td>重置（清除）所有坐标变换</td>		<td align="center">ege dev</td></tr>
+<tr><td><a href="ege_get_transform.htm">ege_get_transform</a></td>						<td>获取现有坐标变换矩阵</td>	<td align="center">ege dev</td></tr>
+<tr><td><a href="ege_set_transform.htm">ege_set_transform</a></td>						<td>设置坐标变换矩阵</td>		<td align="center">ege dev</td></tr>
+
+<tr><td><a href="ege_setpattern_none.htm">ege_setpattern_none</a></td>							<td>设置为默认填充模式</td>		 <td align="center"></td></tr>
+<tr><td><a href="ege_setpattern_lineargradient.htm">ege_setpattern_lineargradient</a></td>		<td>设置为线性渐变填充模式</td>	 <td align="center"></td></tr>
+<tr><td><a href="ege_setpattern_ellipsegradient.htm">ege_setpattern_ellipsegradient</a></td>	<td>设置为椭圆渐变填充模式</td>	 <td align="center"></td></tr>
+<tr><td><a href="ege_setpattern_texture.htm">ege_setpattern_texture</a></td>					<td>设置为纹理填充模式</td>		 <td align="center"></td></tr>
+<tr><td><a href="ege_setpattern_pathgradient.htm">ege_setpattern_pathgradient</a></td>			<td>设置为路径渐变填充模式</td>	 <td align="center"></td></tr>
+
+<tr><td><a href="ege_gentexture.htm">ege_gentexture</a></td>							<td>生成纹理</td>				<td align="center"></td></tr>
+<tr><td><a href="ege_puttexture.htm">ege_puttexture</a></td>							<td>绘制纹理</td>				<td align="center"></td></tr>
+
+<tr><td><a href="ege_point.htm">ege_point 结构体</a></td>								<td>点</td>						<td align="center"></td></tr>
+<tr><td><a href="ege_rect.htm">ege_rect 结构体</a></td>									<td>矩形区域</td>				<td align="center"></td></tr>
+<tr><td><a href="ege_colpoint.htm">ege_colpoint 结构体</a></td>							<td>颜色点</td>					<td align="center"></td></tr>
+</table>
+注：最低版本要求中的 ege dev 为 GitHub 开发版本，尚未正式发布。
+
+</font>
 </pre>
 
 </body>

@@ -1,23 +1,24 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>drawpoly</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
 </head>
 <body>
 
-<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">绘制图形相关函数</a>-＞drawpoly</font>
+<pre><font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / <a href="index.htm">图形绘制</a> / drawpoly</font>
+<font size="4">
+<font size="4" color="#0000FF"><strong>功能：</strong></font>
 
-<font size="5" color="#0000FF"><strong>功能：</strong></font>
-这个函数用于画多边形。边线颜色由setcolor函数决定
+绘制多边形，边线颜色由 setcolor() 函数指定
 
-<font size="5" color="#0000FF"><strong>声明：</strong></font>
+<font size="4" color="#0000FF"><strong>声明：</strong></font>
 <pre><font color=#0000FF>void </font><font color=#008080>drawpoly</font>(
-    <font color=#0000FF>int </font>numliness,
+    <font color=#0000FF>int </font>numpoints,
     <font color=#0000FF>const int </font>*polypoints,
     <font color=#800080>PIMAGE</font> pimg = <font color=#800080>NULL
 </font>);
 </pre>
-
-<font size="5" color="#0000FF"><strong>参数：</strong></font>
+<font size="4" color="#0000FF"><strong>参数：</strong></font>
 numpoints
 多边形点的个数。
 
@@ -25,12 +26,18 @@ polypoints
 每个点的坐标（依次两个分别为x,y），数组元素个数为 numpoints * 2。
 该函数并不会自动连接多边形首尾。如果需要画封闭的多边形，请将最后一个点设置为与第一点相同。
 
-<font size="5" color="#0000FF"><strong>返回值：</strong></font>
+pimg
+绘制的目标图像，默认为 NULL（即绘制到窗口）。
+
+<font size="4" color="#0000FF"><strong>返回值：</strong></font>
+
 （无）
 
-<font size="5" color="#0000FF"><strong>示例：</strong></font>
+<font size="4" color="#0000FF"><strong>示例：</strong></font>
+
 （无）
 
+</font>
 </pre>
 
 </body>

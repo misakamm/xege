@@ -1,0 +1,144 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Load CMake Project",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-l",
+                "tasks.sh",
+                "--debug",
+                "--load"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "problemMatcher": "$gcc"
+        },
+        {
+            "label": "Reload CMake Project",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-l",
+                "tasks.sh",
+                "--debug",
+                "--reload"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "problemMatcher": "$gcc"
+        },
+        {
+            "label": "Cleanup CMake Project",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-l",
+                "tasks.sh",
+                "--clean"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "problemMatcher": "$gcc"
+        },
+        {
+            "label": "Build XEGE Library",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-l",
+                "tasks.sh",
+                "--debug",
+                "--build"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "problemMatcher": "$gcc"
+        },
+        {
+            "label": "Build Demos",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-l",
+                "tasks.sh",
+                "--debug",
+                "--target",
+                "demos",
+                "--build"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "problemMatcher": "$gcc"
+        },
+        {
+            "label": "Load And Build XEGE Library",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-l",
+                "tasks.sh",
+                "--debug",
+                "--load",
+                "--build"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "problemMatcher": "$gcc"
+        },
+        {
+            "label": "Load And Build Demos",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-l",
+                "tasks.sh",
+                "--debug",
+                "--target",
+                "demos",
+                "--load",
+                "--build"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "problemMatcher": "$gcc"
+        },
+        {
+            "label": "Run Demo - GraphicsTest",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-l",
+                "tasks.sh",
+                "--debug",
+                "--target",
+                "graphicstest",
+                "--build",
+                "--run",
+                "graphicstest.exe",
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "problemMatcher": "$gcc"
+        }
+    ]
+}

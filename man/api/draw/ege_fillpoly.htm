@@ -1,0 +1,47 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ege_fillpoly</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / <a href="index.htm">图形绘制</a> / ege_fillpoly</font>
+<font size="4">
+<font size="4" color="#0000FF"><strong>功能：</strong></font>
+
+绘制无边框的填充多边形。填充颜色由 setfillcolor() 函数指定
+
+<font size="4" color="#0000FF"><strong>声明：</strong></font>
+<pre><font color=#0000FF>void </font><font color=#008080>ege_fillpoly</font>(
+    <font color=#0000FF>int </font>numpoints,
+    <font color=#0000FF>ege_point* </font>polypoints,
+    <font color=#800080>PIMAGE</font> pimg = <font color=#800080>NULL
+</font>);
+</pre>
+
+<font size="4" color="#0000FF"><strong>注意事项：</strong></font>
+使用的是 ARGB 颜色，透明度不能为 0，否则无绘制效果。
+
+<font size="4" color="#0000FF"><strong>参数：</strong></font>
+numpoints
+多边形点的个数。
+
+polypoints
+每个点的坐标，数组元素个数为 numpoints，首尾两个点自动相连。
+
+pimg
+绘制的目标图像，默认为 NULL（即绘制到窗口）。
+
+<font size="4" color="#0000FF"><strong>返回值：</strong></font>
+
+（无）
+
+<font size="4" color="#0000FF"><strong>示例：</strong></font>
+
+（无）
+
+</font>
+</pre>
+
+</body>
+

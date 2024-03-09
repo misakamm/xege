@@ -1,0 +1,49 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>fillpoly</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / <a href="index.htm">图形绘制</a> / fillpoly_gradient</font>
+<font size="4">
+<font size="4" color="#0000FF"><strong>功能：</strong></font>
+
+绘制由渐变填充填充的多边形。
+边线颜色由 setcolor() 函数指定，根据指定点的颜色对多边形内部进行渐变填充。
+
+<font size="4" color="#0000FF"><strong>声明：</strong></font>
+<pre><font color=#0000FF>void </font><font color=#008080>fillpoly_gradient</font>(
+    <font color=#0000FF>int </font>numpoints,
+    <font color=#0000FF>const ege_colpoint </font>*polypoints,
+    <font color=#800080>PIMAGE</font> pimg = <font color=#800080>NULL
+</font>);
+</pre>
+<font size="4" color="#0000FF"><strong>参数：</strong></font>
+numpoints
+颜色点的个数。
+
+polypoints
+颜色点数组的首地址，数组元素个数为 numpoints。
+该函数会自动连接多边形首尾。
+
+pimg
+绘制的目标图像，默认为 NULL（即绘制到窗口）。
+
+<font size="4" color="#0000FF"><strong>返回值：</strong></font>
+
+（无）
+
+<font size="4" color="#0000FF"><strong>示例：</strong></font>
+
+（无）
+
+<font size="4" color="#0000FF"><strong>说明：</strong></font>
+如果这个多边形发生自相交，那么自交次数为奇数的区域则不填充，偶数次的填充，不自交就是偶数次。
+
+
+</font>
+</pre>
+
+</body>
+

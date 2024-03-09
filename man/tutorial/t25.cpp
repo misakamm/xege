@@ -1,92 +1,91 @@
-//»ù´¡¶¯»­Îå£¬¶ÔÏó·â×°£¬Ê¹´úÂë¸üÓĞÌõÀí
+// åŸºç¡€åŠ¨ç”»äº”ï¼Œå¯¹è±¡å°è£…ï¼Œä½¿ä»£ç æ›´æœ‰æ¡ç†
 #include <graphics.h>
 
-//¶¨ÒåÒ»¸öAniObj£¬¼´Ç°Ò»ÀıÀïÃæµÄÔ²£¬Ïà¹ØÊôĞÔĞ´ÔÚÕâ¸ö½á¹¹ÌåÀï
+// å®šä¹‰ä¸€ä¸ªAniObjï¼Œå³å‰ä¸€ä¾‹é‡Œé¢çš„åœ†ï¼Œç›¸å…³å±æ€§å†™åœ¨è¿™ä¸ªç»“æ„ä½“é‡Œ
 struct AniObj
 {
-	int x, y, r;
-	int dx, dy;
-	int alpha, da;
-	PIMAGE img;
+    int    x, y, r;
+    int    dx, dy;
+    int    alpha, da;
+    PIMAGE img;
 };
 
-//³õÊ¼»¯£¬ÉèÖÃ×ø±ê£¬ËÙ¶È·½Ïò£¬Í¸Ã÷¶È£¬´´½¨IMAGEµÈ
+// åˆå§‹åŒ–ï¼Œè®¾ç½®åæ ‡ï¼Œé€Ÿåº¦æ–¹å‘ï¼Œé€æ˜åº¦ï¼Œåˆ›å»ºIMAGEç­‰
 void initobj(AniObj* obj)
 {
-	obj->x = 0;
-	obj->y = 0;
-	obj->r = 100;
-	obj->dx = 1;
-	obj->dy = 1;
-	obj->alpha = 0;
-	obj->da = 1;
+    obj->x     = 0;
+    obj->y     = 0;
+    obj->r     = 100;
+    obj->dx    = 1;
+    obj->dy    = 1;
+    obj->alpha = 0;
+    obj->da    = 1;
 
-	// ³õÊ¼»¯img
-	obj->img = newimage(obj->r * 2, obj->r * 2);
+    // åˆå§‹åŒ–img
+    obj->img = newimage(obj->r * 2, obj->r * 2);
 
-	setcolor(0x00FF00, obj->img);
-	setfillcolor(0xFF0000, obj->img);
+    setcolor(0x00FF00, obj->img);
+    setfillcolor(0xFF0000, obj->img);
 
-	fillellipse(obj->r, obj->r, obj->r, obj->r, obj->img);
+    fillellipse(obj->r, obj->r, obj->r, obj->r, obj->img);
 }
 
-//¸üĞÂÎ»ÖÃµÈÏà¹ØÊôĞÔ
+// æ›´æ–°ä½ç½®ç­‰ç›¸å…³å±æ€§
 void updateobj(AniObj* obj)
 {
-	// µ±Ç°Î»ÖÃ + ËÙ¶È
-	obj->x += obj->dx;
-	obj->y += obj->dy;
-	if (obj->x < 0) obj->dx = 1; //Åö×ó
-	if (obj->y < 0) obj->dy = 1; //ÅöÉÏ
-	if (obj->x >= ege::getwidth()  - obj->r * 2) obj->dx = -1; //ÅöÓÒ
-	if (obj->y >= ege::getheight() - obj->r * 2) obj->dy = -1; //ÅöÏÂ
+    // å½“å‰ä½ç½® + é€Ÿåº¦
+    obj->x += obj->dx;
+    obj->y += obj->dy;
+    if (obj->x < 0) obj->dx = 1; // ç¢°å·¦
+    if (obj->y < 0) obj->dy = 1; // ç¢°ä¸Š
+    if (obj->x >= ege::getwidth()  - obj->r * 2) obj->dx = -1; // ç¢°å³
+    if (obj->y >= ege::getheight() - obj->r * 2) obj->dy = -1; // ç¢°ä¸‹
 
-	// ¸Ä±äalphaÖµ
-	obj->alpha += obj->da;
-	if (obj->alpha <= 0) obj->da = 1;
-	if (obj->alpha >= 0xFF) obj->da = -1;
+    // æ”¹å˜alphaå€¼
+    obj->alpha += obj->da;
+    if (obj->alpha <= 0) obj->da = 1;
+    if (obj->alpha >= 0xFF) obj->da = -1;
 }
 
-//¸ù¾İÊôĞÔÖµ»æ»­
+// æ ¹æ®å±æ€§å€¼ç»˜ç”»
 void drawobj(AniObj* obj)
 {
-	putimage_alphatransparent(NULL, obj->img, obj->x, obj->y, BLACK, (unsigned char)obj->alpha);
+    putimage_alphatransparent(NULL, obj->img, obj->x, obj->y, BLACK, (unsigned char)obj->alpha);
 }
 
-//ÊÍ·ÅÕâ¸ö¶ÔÏóÊ±µ÷ÓÃ
+// é‡Šæ”¾è¿™ä¸ªå¯¹è±¡æ—¶è°ƒç”¨
 void releaseobj(AniObj* obj)
 {
-	delimage(obj->img);
+    delimage(obj->img);
 }
 
 void mainloop()
 {
-	AniObj obj; //ÉùÃ÷AniObj¶ÔÏó
-	initobj(&obj); //³õÊ¼»¯
+    AniObj obj;    // å£°æ˜AniObjå¯¹è±¡
+    initobj(&obj); // åˆå§‹åŒ–
 
-	for ( ; is_run(); delay_fps(60) )
-	{
-		// todo: Âß¼­¸üĞÂ
-		updateobj(&obj); //¸üĞÂÎ»ÖÃ
+    for (; is_run(); delay_fps(60)) {
+        // todo: é€»è¾‘æ›´æ–°
+        updateobj(&obj); // æ›´æ–°ä½ç½®
 
-		// todo: Í¼ĞÎ¸üĞÂ
-		cleardevice();
-		drawobj(&obj); //»æ»­
-	}
+        // todo: å›¾å½¢æ›´æ–°
+        cleardevice();
+        drawobj(&obj); // ç»˜ç”»
+    }
 
-	releaseobj(&obj); //ÊÍ·Å
+    releaseobj(&obj); // é‡Šæ”¾
 }
 
 int main(void)
 {
-	setinitmode(INIT_ANIMATION);
-	// Í¼ĞÎ³õÊ¼»¯£¬´°¿Ú³ß´ç640x480
-	initgraph(640, 480);
-	// Ëæ»úÊı³õÊ¼»¯£¬Èç¹ûĞèÒªÊ¹ÓÃËæ»úÊıµÄ»°
-	randomize();
-	// ³ÌĞòÖ÷Ñ­»·
-	mainloop();
-	// ¹Ø±Õ»æÍ¼Éè±¸
-	closegraph();
-	return 0;
+    setinitmode(INIT_ANIMATION);
+    // å›¾å½¢åˆå§‹åŒ–ï¼Œçª—å£å°ºå¯¸640x480
+    initgraph(640, 480);
+    // éšæœºæ•°åˆå§‹åŒ–ï¼Œå¦‚æœéœ€è¦ä½¿ç”¨éšæœºæ•°çš„è¯
+    randomize();
+    // ç¨‹åºä¸»å¾ªç¯
+    mainloop();
+    // å…³é—­ç»˜å›¾è®¾å¤‡
+    closegraph();
+    return 0;
 }
