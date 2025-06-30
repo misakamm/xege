@@ -1,0 +1,48 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ege_path_setfillmode</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / <a href="index.htm">图形绘制</a> / ege_path_setfillmode</font>
+<font size="4">
+<font size="4" color="#0000FF"><strong>功能：</strong></font>
+
+设置路径的填充模式。
+
+<font size="4" color="#0000FF"><strong>说明：</strong></font>
+不同的填充模式决定如何确定一个点是否在区域内部，如果
+路径发生交叉、包含等，使用不同的填充模式可能会得到不同的填充结果。
+
+<font size="4" color="#0000FF"><strong>声明：</strong></font>
+<pre>
+<font color=800080>ege_point</font> <font color=#008080>ege_path_setfillmode</font>(
+    <font color=#800080>ege_path*</font> path,      <font color=#008000>// 路径</font>
+    <font color=#800080>fill_mode</font> mode       <font color=#008000>// 填充模式</font>
+);
+</pre>
+<font size="4" color="#0000FF"><strong>参数：</strong></font>
+
+<b>path</b>
+路径的指针
+
+<b>mode</b>
+填充模式，可以设置以下其中一个值：
+<table>
+    <tr><th>枚举</th><th>值</th><th>含义</th></tr>
+    <tr><td>FILLMODE_DEFAULT(默认)</td>       <td align="center">0</td><td align="left">默认，绘制时与图像设置一致，未指定图像时<br>为 FILLMODE_ALTERNATE 模式</td></tr>
+    <tr><td>FILLMODE_ALTERNATE</td>     <td align="center">1</td><td>奇偶交替模式</td></tr>
+    <tr><td>FILLMODE_WINDING</td>  <td align="center">2</td><td>缠绕模式</td></tr>
+</table>
+
+<font size="4" color="#0000FF"><strong>返回值：</strong></font>
+
+（无）
+
+<font size="4" color="#0000FF"><strong>示例：</strong></font>
+
+</pre>
+
+</body>
+

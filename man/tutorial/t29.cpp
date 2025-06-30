@@ -1,184 +1,181 @@
-//»ù´¡¶¯»­¾Å£¬Ê¹ÓÃ³¡¾°£¬¸üÁé»îµØ¿ØÖÆ¶¯»­
+//åŸºç¡€åŠ¨ç”»ä¹ï¼Œä½¿ç”¨åœºæ™¯ï¼Œæ›´çµæ´»åœ°æ§åˆ¶åŠ¨ç”»
 
-//±¾¿ÎÒª½²ÈçºÎ¿ØÖÆ¶¯»­£¬¶¯»­µÄ²¥·Å£¬ÔİÍ£
-//ÎÒÃÇ°Ñ¶¯»­·â×°ÔÚÒ»¸ö³¡¾°£¬ÓÉ³¡¾°ÀàÀ´¿ØÖÆ¶¯»­
-//µ±È»£¬ÏÖÔÚ¿ªÊ¼¾Í²»ÊÇµ¥´¿µÄ¶¯»­£¬»¹¼ÓÈëÁËÓÃ»§½»»¥µÄÊ±ºò£¬½Ó¿Ú¾ÍÒªÔö¼ÓÁË
-//±¾Ê¾ÀıÔËĞĞÊ±£¬¿ÉÒÔÊ¹ÓÃP¼üÔİÍ£»ò²¥·Å
+//æœ¬è¯¾è¦è®²å¦‚ä½•æ§åˆ¶åŠ¨ç”»ï¼ŒåŠ¨ç”»çš„æ’­æ”¾ï¼Œæš‚åœ
+//æˆ‘ä»¬æŠŠåŠ¨ç”»å°è£…åœ¨ä¸€ä¸ªåœºæ™¯ï¼Œç”±åœºæ™¯ç±»æ¥æ§åˆ¶åŠ¨ç”»
+//å½“ç„¶ï¼Œç°åœ¨å¼€å§‹å°±ä¸æ˜¯å•çº¯çš„åŠ¨ç”»ï¼Œè¿˜åŠ å…¥äº†ç”¨æˆ·äº¤äº’çš„æ—¶å€™ï¼Œæ¥å£å°±è¦å¢åŠ äº†
+//æœ¬ç¤ºä¾‹è¿è¡Œæ—¶ï¼Œå¯ä»¥ä½¿ç”¨Pé”®æš‚åœæˆ–æ’­æ”¾
 #include <ege.h>
 
 const float base_speed = 0.5f;
 const float randspeed = 1.5f;
 
-//×Ô¶¨Òåº¯Êı£¬ÓÃÀ´·µ»ØÒ»¸ö0 - mÖ®¼äµÄ¸¡µãÊı
+//è‡ªå®šä¹‰å‡½æ•°ï¼Œç”¨æ¥è¿”å›ä¸€ä¸ª0 - mä¹‹é—´çš„æµ®ç‚¹æ•°
 float myrand(float m)
 {
-	return (float)(ege::randomf() * m);
+    return (float)(ege::randomf() * m);
 }
 
-//¶¨ÒåÒ»¸öAniObjÀà£¬Õâ¸öÓëÇ°Ò»¸ö³ıÁËº¯ÊıÃû£¬ºÍupdate¼ÓÁË·µ»ØÖµÒÔÍâÃ»ÓĞ±ä»¯
+//å®šä¹‰ä¸€ä¸ªAniObjç±»ï¼Œè¿™ä¸ªä¸å‰ä¸€ä¸ªé™¤äº†å‡½æ•°åï¼Œå’ŒupdateåŠ äº†è¿”å›å€¼ä»¥å¤–æ²¡æœ‰å˜åŒ–
 class AniObj
 {
 public:
-	//³õÊ¼»¯£¬ÉèÖÃ×ø±ê£¬ËÙ¶È·½Ïò£¬Í¸Ã÷¶È£¬´´½¨IMAGEµÈ
-	AniObj()
-	{
-		_x = myrand((float)ege::getwidth());
-		_y = myrand((float)ege::getheight());
-		_r = ege::random(20) + 20;
-		_dx = myrand(randspeed) + base_speed;
-		_dy = myrand(randspeed) + base_speed;
-		_dx = _dx * float(ege::random(2) * 2.0 - 1);
-		_dy = _dy * float(ege::random(2) * 2.0 - 1);
-		_alpha = ege::random(250) + 2;
-		_da = ege::random(2) * 2 - 1;
+    //åˆå§‹åŒ–ï¼Œè®¾ç½®åæ ‡ï¼Œé€Ÿåº¦æ–¹å‘ï¼Œé€æ˜åº¦ï¼Œåˆ›å»ºIMAGEç­‰
+    AniObj()
+    {
+        _x = myrand((float)ege::getwidth());
+        _y = myrand((float)ege::getheight());
+        _r = ege::random(20) + 20;
+        _dx = myrand(randspeed) + base_speed;
+        _dy = myrand(randspeed) + base_speed;
+        _dx = _dx * float(ege::random(2) * 2.0 - 1);
+        _dy = _dy * float(ege::random(2) * 2.0 - 1);
+        _alpha = ege::random(250) + 2;
+        _da = ege::random(2) * 2 - 1;
 
-		_img = ege::newimage(_r * 2, _r * 2);
+        _img = ege::newimage(_r * 2, _r * 2);
 
-		color_t col = ege::hsv2rgb(myrand(360.0f), 1.0f, 1.0f);
-		ege::setcolor(col, _img);
-		ege::setfillcolor(col, _img);
+        color_t col = ege::hsv2rgb(myrand(360.0f), 1.0f, 1.0f);
+        ege::setcolor(col, _img);
+        ege::setfillcolor(col, _img);
 
-		ege::fillellipse(_r, _r, _r, _r, _img);
-	}
+        ege::fillellipse(_r, _r, _r, _r, _img);
+    }
 
-	//ÊÍ·ÅÕâ¸ö¶ÔÏóÊ±µ÷ÓÃ
-	~AniObj()
-	{
-		ege::delimage(_img);
-	}
+    // é‡Šæ”¾è¿™ä¸ªå¯¹è±¡æ—¶è°ƒç”¨
+    ~AniObj()
+    {
+        ege::delimage(_img);
+    }
 
-	//¸üĞÂÎ»ÖÃµÈÏà¹ØÊôĞÔ
-	int update()
-	{
-		// µ±Ç°Î»ÖÃ + ËÙ¶È
-		_x += _dx;
-		_y += _dy;
-		if (_x < 0) _dx = myrand(randspeed) + base_speed; //Åö×ó
-		if (_y < 0) _dy = myrand(randspeed) + base_speed; //ÅöÉÏ
-		if (_x >= ege::getwidth()  - _r * 2) _dx = -(myrand(randspeed) + base_speed); //ÅöÓÒ
-		if (_y >= ege::getheight() - _r * 2) _dy = -(myrand(randspeed) + base_speed); //ÅöÏÂ
+    // æ›´æ–°ä½ç½®ç­‰ç›¸å…³å±æ€§
+    int update()
+    {
+        // å½“å‰ä½ç½® + é€Ÿåº¦
+        _x += _dx;
+        _y += _dy;
 
-		// ¸Ä±äalphaÖµ
-		_alpha += _da;
-		if (_alpha <= 0)	_da = 1;
-		if (_alpha >= 0xFF) _da = -1;
-		return 0;
-	}
+        if (_x < 0)                          _dx =  myrand(randspeed) + base_speed;   // ç¢°å·¦
+        if (_y < 0)                          _dy =  myrand(randspeed) + base_speed;   // ç¢°ä¸Š
+        if (_x >= ege::getwidth()  - _r * 2) _dx = -(myrand(randspeed) + base_speed); // ç¢°å³
+        if (_y >= ege::getheight() - _r * 2) _dy = -(myrand(randspeed) + base_speed); // ç¢°ä¸‹
 
-	//¸ù¾İÊôĞÔÖµ»æ»­
-	void render()
-	{
-		ege::putimage_alphatransparent(NULL, _img, (int)_x, (int)_y, ege::BLACK, (unsigned char)_alpha);
-	}
+        // æ”¹å˜alphaå€¼
+        _alpha += _da;
+        if (_alpha <= 0)    _da = 1;
+        if (_alpha >= 0xFF) _da = -1;
+        return 0;
+    }
 
-	void onkey(int key)
-	{
-		//
-	}
+    // æ ¹æ®å±æ€§å€¼ç»˜ç”»
+    void render()
+    {
+        ege::putimage_alphatransparent(NULL, _img, (int)_x, (int)_y, ege::BLACK, (unsigned char)_alpha);
+    }
+
+    void onkey(int key)
+    {
+        //
+    }
 
 private:
-	float _x, _y;
-	int _r;
-	float _dx, _dy;
-	int _alpha, _da;
-	ege::PIMAGE _img;
+    float       _x, _y;
+    int         _r;
+    float       _dx, _dy;
+    int         _alpha, _da;
+    ege::PIMAGE _img;
 };
 
 class Scene
 {
 public:
-	//³õÊ¼»¯£¬²ÎÊıÎª¶ÔÏó¸öÊı
-	Scene(int nAniObj)
-	{
-		m_cntObj = nAniObj;
-		m_pobj = new AniObj[m_cntObj];
-		m_pause = 0;
-		m_endscene = 0;
-	}
-	~Scene()
-	{
-		delete [] m_pobj;
-	}
-	int update()
-	{
-		// ·ÇÔİÍ£×´Ì¬²Å¸üĞÂ
-		if (m_pause == 0)
-		{
-			for (int n = 0; n < m_cntObj; ++n)
-			{
-				m_pobj[n].update();
-			}
-		}
-		return m_endscene;
-	}
-	void render()
-	{
-		for (int n = 0; n < m_cntObj; ++n)
-		{
-			m_pobj[n].render();
-		}
-	}
-	void onkey(int key)
-	{
-		if (key == 'P' || key == 'p') //°´ÏÂP¼ü¾ÍÔÚ²¥·ÅÓëÔİÍ£Ö®¼ä×ª»»
-		{
-			m_pause = !m_pause;
-		}
-		if (key == VK_ESCAPE) //Èç¹ûÊÇESC¼ü£¬¾Í±ê¼ÇÎªÍË³ö³¡¾°£¬VK_ESCAPEÊÇSDK¶¨ÒåµÄºê
-		{
-			m_endscene = 1;
-		}
-	}
+    // åˆå§‹åŒ–ï¼Œå‚æ•°ä¸ºå¯¹è±¡ä¸ªæ•°
+    Scene(int nAniObj)
+    {
+        m_cntObj   = nAniObj;
+        m_pobj     = new AniObj[m_cntObj];
+        m_pause    = 0;
+        m_endscene = 0;
+    }
+
+    ~Scene() { delete[] m_pobj; }
+
+    int update()
+    {
+        // éæš‚åœçŠ¶æ€æ‰æ›´æ–°
+        if (m_pause == 0) {
+            for (int n = 0; n < m_cntObj; ++n) {
+                m_pobj[n].update();
+            }
+        }
+        return m_endscene;
+    }
+
+    void render()
+    {
+        for (int n = 0; n < m_cntObj; ++n) {
+            m_pobj[n].render();
+        }
+    }
+
+    void onkey(int key)
+    {
+        if (key == 'P' || key == 'p') // æŒ‰ä¸‹Pé”®å°±åœ¨æ’­æ”¾ä¸æš‚åœä¹‹é—´è½¬æ¢
+        {
+            m_pause = !m_pause;
+        }
+        if (key == VK_ESCAPE) // å¦‚æœæ˜¯ESCé”®ï¼Œå°±æ ‡è®°ä¸ºé€€å‡ºåœºæ™¯ï¼ŒVK_ESCAPEæ˜¯SDKå®šä¹‰çš„å®
+        {
+            m_endscene = 1;
+        }
+    }
+
 private:
-	AniObj* m_pobj;
-	int m_cntObj;
-	int m_pause;
-	int m_endscene;
+    AniObj* m_pobj;
+    int     m_cntObj;
+    int     m_pause;
+    int     m_endscene;
 };
 
 void mainloop()
 {
-	Scene scene(30); //¶¨Òå³¡¾°£¬³õÊ¼»¯²ÎÊıÎª30
+    Scene scene(30); // å®šä¹‰åœºæ™¯ï¼Œåˆå§‹åŒ–å‚æ•°ä¸º30
 
-	for ( ; ege::is_run(); ege::delay_fps(60) )
-	{
-		while (ege::kbhit())
-		{
-			int key = ege::getch();
-			scene.onkey(key); //ËùÓĞ°´¼üÏûÏ¢·¢ËÍ¸øscene
-		}
-		if (scene.update()) //Èç¹ûupdate·µ»Ø·Ç0±íÊ¾³¡¾°½áÊø£¬ÕâÊ±ÍË³öÖ÷Ñ­»·
-		{
-			break;
-		}
+    for (; ege::is_run(); ege::delay_fps(60)) {
+        while (ege::kbhit()) {
+            int key = ege::getch();
+            scene.onkey(key); // æ‰€æœ‰æŒ‰é”®æ¶ˆæ¯å‘é€ç»™scene
+        }
+        if (scene.update()) // å¦‚æœupdateè¿”å›é0è¡¨ç¤ºåœºæ™¯ç»“æŸï¼Œè¿™æ—¶é€€å‡ºä¸»å¾ªç¯
+        {
+            break;
+        }
 
-		ege::cleardevice();
-		scene.render();
-	}
+        ege::cleardevice();
+        scene.render();
+    }
 }
 
 int main(void)
 {
-	ege::setinitmode(ege::INIT_ANIMATION);
-	// Í¼ĞÎ³õÊ¼»¯£¬´°¿Ú³ß´ç640x480
-	ege::initgraph(640, 480);
-	// Ëæ»úÊı³õÊ¼»¯£¬Èç¹ûĞèÒªÊ¹ÓÃËæ»úÊıµÄ»°
-	ege::randomize();
-	// ³ÌĞòÖ÷Ñ­»·
-	mainloop();
-	// ¹Ø±Õ»æÍ¼Éè±¸
-	ege::closegraph();
-	return 0;
+    ege::setinitmode(ege::INIT_ANIMATION);
+    // å›¾å½¢åˆå§‹åŒ–ï¼Œçª—å£å°ºå¯¸640x480
+    ege::initgraph(640, 480);
+    // éšæœºæ•°åˆå§‹åŒ–ï¼Œå¦‚æœéœ€è¦ä½¿ç”¨éšæœºæ•°çš„è¯
+    ege::randomize();
+    // ç¨‹åºä¸»å¾ªç¯
+    mainloop();
+    // å…³é—­ç»˜å›¾è®¾å¤‡
+    ege::closegraph();
+    return 0;
 }
 
-//ºó¼Ç£¬scene¶ÔÏóÀï£¬ÒÑ¾­ÓĞ×Ô¼ºµÄ¶ÔÏóÁĞ±í£¬Èç¹û×ö³É¸´ÔÓÒ»µãµÄ½á¹¹£¬
-//»¹¿ÉÒÔ¶¯Ì¬¿ØÖÆ¶ÔÏóµÄ¸öÊı£¬°´¶ÔÏóµÄÊôĞÔÔÚ¸ü¸ß²ã¿ØÖÆÕâ¸ö¶ÔÏó£¬
-//±ÈÈçÒÑ¾­Ô½³öÆÁÄ»¾Í»ØÊÕÕâ¸ö¶ÔÏó£¬µ¥¶À¿ØÖÆÒ»¸ö¶ÔÏóµÄÏÔÒşµÈ£¨µ±È»ÏÔÒşÒ²¿ÉÒÔÓÉÄÇ¸ö¶ÔÏó×Ô¼º¿ØÖÆ£¬µ«³¡¾°¿ÉÒÔÇ¿ÖÆÈÃÆä²»ÏÔÊ¾¶ø²»ÓÉ¶ÔÏó±¾Éí¿ØÖÆ£©
+// åè®°ï¼Œsceneå¯¹è±¡é‡Œï¼Œå·²ç»æœ‰è‡ªå·±çš„å¯¹è±¡åˆ—è¡¨ï¼Œå¦‚æœåšæˆå¤æ‚ä¸€ç‚¹çš„ç»“æ„ï¼Œ
+// è¿˜å¯ä»¥åŠ¨æ€æ§åˆ¶å¯¹è±¡çš„ä¸ªæ•°ï¼ŒæŒ‰å¯¹è±¡çš„å±æ€§åœ¨æ›´é«˜å±‚æ§åˆ¶è¿™ä¸ªå¯¹è±¡ï¼Œ
+// æ¯”å¦‚å·²ç»è¶Šå‡ºå±å¹•å°±å›æ”¶è¿™ä¸ªå¯¹è±¡ï¼Œå•ç‹¬æ§åˆ¶ä¸€ä¸ªå¯¹è±¡çš„æ˜¾éšç­‰ï¼ˆå½“ç„¶æ˜¾éšä¹Ÿå¯ä»¥ç”±é‚£ä¸ªå¯¹è±¡è‡ªå·±æ§åˆ¶ï¼Œä½†åœºæ™¯å¯ä»¥å¼ºåˆ¶è®©å…¶ä¸æ˜¾ç¤ºè€Œä¸ç”±å¯¹è±¡æœ¬èº«æ§åˆ¶ï¼‰
 
-
-//ºó¼Ç£¬ÎªÊ²Ã´Òª¶¨Òå³¡¾°£¿³ıÁËÎªÁË¸üºÃµØ¿ØÖÆ¶¯»­Íâ£¬
-//²»Í¬³¡¾°¿ÉÒÔÓĞ²»Í¬µÄ¶¯»­£¬²»Í¬µÄÓÃ»§ÏìÓ¦£¬
-//±ÈÈçÒ»¸ö¿ª³¡¶¯»­³¡¾°£¬²Ëµ¥³¡¾°£¬ÕıÊ½ÓÎÏ·³¡¾°£¬ÕâÑù·Ö³¡¾°¹ÜÀíÆğÀ´£¬
-//±ÈÈ«²¿¼·ÔÚÒ»¸öÖ÷Ñ­»·¹ÜÀíÈ«²¿¶ÔÏó£¬»áÇåÎúºÜ¶à
-//ÕâÑùÄã¾Í¿ÉÒÔÇáËÉÊµÏÖ³ö×¨Òµ¼¶±ğµÄ¶¯»­»òÕßÓÎÏ·ÁË£¬
-//²»ÖÁÓÚ´ÓÍ·µ½Î²Ö»¿´µ½Ò»¸öÕıÊ½ÓÎÏ·½çÃæÄÇÑùµ¥´¿¿İÔïÁË
+// åè®°ï¼Œä¸ºä»€ä¹ˆè¦å®šä¹‰åœºæ™¯ï¼Ÿé™¤äº†ä¸ºäº†æ›´å¥½åœ°æ§åˆ¶åŠ¨ç”»å¤–ï¼Œ
+// ä¸åŒåœºæ™¯å¯ä»¥æœ‰ä¸åŒçš„åŠ¨ç”»ï¼Œä¸åŒçš„ç”¨æˆ·å“åº”ï¼Œ
+// æ¯”å¦‚ä¸€ä¸ªå¼€åœºåŠ¨ç”»åœºæ™¯ï¼Œèœå•åœºæ™¯ï¼Œæ­£å¼æ¸¸æˆåœºæ™¯ï¼Œè¿™æ ·åˆ†åœºæ™¯ç®¡ç†èµ·æ¥ï¼Œ
+// æ¯”å…¨éƒ¨æŒ¤åœ¨ä¸€ä¸ªä¸»å¾ªç¯ç®¡ç†å…¨éƒ¨å¯¹è±¡ï¼Œä¼šæ¸…æ™°å¾ˆå¤š
+// è¿™æ ·ä½ å°±å¯ä»¥è½»æ¾å®ç°å‡ºä¸“ä¸šçº§åˆ«çš„åŠ¨ç”»æˆ–è€…æ¸¸æˆäº†ï¼Œ
+// ä¸è‡³äºä»å¤´åˆ°å°¾åªçœ‹åˆ°ä¸€ä¸ªæ­£å¼æ¸¸æˆç•Œé¢é‚£æ ·å•çº¯æ¯ç‡¥äº†

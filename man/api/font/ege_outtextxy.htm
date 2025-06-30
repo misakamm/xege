@@ -1,0 +1,85 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ege_outtextxy</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / <a href="index.htm">文字输出</a> / ege_outtextxy</font>
+<font size="4">
+<font size="4" color="#0000FF"><strong>功能：</strong></font>
+
+在指定位置输出字符串（使用 ARGB 颜色，由 setcolor() 或 settextcolor() 指定）。
+
+<font size="4" color="#0000FF"><strong>声明：</strong></font>
+<pre><font color=#0000FF>void </font><font color=#008080>ege_outtextxy</font>(
+    <font color=#0000FF>float </font>x,
+    <font color=#0000FF>float </font>y,
+    <font color=#800080>const char* </font>text,
+    <font color=#800080>PIMAGE</font> pimg = <font color=#800080>NULL
+</font>);
+
+<font color=#0000FF>void </font><font color=#008080>ege_outtextxy</font>(
+    <font color=#0000FF>float </font>x,
+    <font color=#0000FF>float </font>y,
+    <font color=#800080>CHAR </font>c,
+    <font color=#800080>PIMAGE</font> pimg = <font color=#800080>NULL
+</font>);
+
+<font color=#0000FF>void </font><font color=#008080>ege_outtextxy</font>(
+    <font color=#0000FF>float </font>x,
+    <font color=#0000FF>float </font>y,
+    <font color=#800080>const wchar_t* </font>text,
+    <font color=#800080>PIMAGE</font> pimg = <font color=#800080>NULL
+</font>);
+
+<font color=#0000FF>void </font><font color=#008080>ege_outtextxy</font>(
+    <font color=#0000FF>float </font>x,
+    <font color=#0000FF>float </font>y,
+    <font color=#800080>wchar_t </font>c,
+    <font color=#800080>PIMAGE</font> pimg = <font color=#800080>NULL
+</font>);</pre>
+<font size="4" color="#0000FF"><strong>参数：</strong></font>
+
+x
+文本输出位置的 x 坐标(文本实际位置与文本对齐方式、文本倾斜角度等相关)。
+
+y
+文本输出位置的 y 坐标(文本实际位置与文本对齐方式、文本倾斜角度等相关)。
+
+text
+要输出的文本内容。
+
+c
+要输出的字符。
+
+pimg
+要输出文本的目标图像（如果为 NULL，则输出到窗口）。
+
+<font size="4" color="#0000FF"><strong>返回值：</strong></font>
+
+（无）
+
+<font size="4" color="#0000FF"><strong>示例：</strong></font>
+<pre><font color=#008000>// 示例1：输出固定内容的字符串
+</font><font color=#0000FF>const char* </font>s = <font color=#FF00FF>"Hello World"</font>;
+<font color=#008080>ege_outtextxy</font>(10, 20, s);
+
+<font color=#008000>// 示例2：输出字符
+</font><font color=#0000FF>char </font>c = <font color=#FF00FF>'A'</font>;
+<font color=#008080>ege_outtextxy</font>(10, 40, c);
+
+<font color=#008000>// 示例3：输出数值，先将数字格式化输出为字符串
+</font><font color=#0000FF>char </font>s[5];
+<font color=#008080>sprintf</font>(s, <font color=#FF00FF>"value:%d"</font>, 1024);
+<font color=#008080>ege_outtextxy</font>(10.0f, 60.5f,  s);
+
+<font color=#008000>// 示例3 可以直接用 ege_xyprintf 代替</font>
+<font color=#008080>ege_xyprintf</font>(10.0f, 60.5f, <font color=#FF00FF>"value:%d"</font>, 1024);
+</pre>
+
+</font>
+</pre>
+
+</body>
+

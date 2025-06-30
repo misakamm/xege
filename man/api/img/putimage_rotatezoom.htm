@@ -1,0 +1,74 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>putimage_rotatezoom</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / <a href="index.htm">图像处理</a> / putimage_rotatezoom</font>
+<font size="4">
+<font size="4" color="#0000FF"><strong>功能：</strong></font>
+
+绘制旋转后的图像。
+
+<font size="4" color="#0000FF"><strong>声明：</strong></font>
+<pre>
+ <font color=#0000FF>int </font><font color=#008080>putimage_rotatezoom</font>(
+    <font color=#800080>PIMAGE  </font>imgDest,                 <font color=#008000>// 目标 IMAGE 对象指针</font>
+    <font color=#800080>PCIMAGE </font>imgTexture,              <font color=#008000>// 纹理 IMAGE 对象指针</font>
+    <font color=#0000FF>int   </font>xDest,                     <font color=#008000>// 绘制位置的 x 坐标</font>
+    <font color=#0000FF>int   </font>yDest,                     <font color=#008000>// 绘制位置的 y 坐标</font>
+    <font color=#0000FF>float </font>xCenter,                   <font color=#008000>// 旋转中心在源图像纹理坐标系上的x坐标</font>
+    <font color=#0000FF>float </font>yCenter,                   <font color=#008000>// 旋转中心在源图像纹理坐标系上的y坐标</font>
+    <font color=#0000FF>float </font>radian,                    <font color=#008000>// 旋转弧度</font>
+    <font color=#0000FF>float </font>zoom,                      <font color=#008000>// 缩放倍数</font>
+    <font color=#0000FF>bool  </font>transparentColor = false,  <font color=#008000>// 是否使用图像透明通道</font>
+    <font color=#0000FF>int   </font>alpha = -1,                <font color=#008000>// 透明度</font>
+    <font color=#0000FF>bool  </font>smooth = false             <font color=#008000>// 是否进行平滑处理</font>
+);
+</pre>
+<font size="4" color="#0000FF"><strong>参数：</strong></font>
+
+<b>imgDest</b>
+绘制的目标图像，如果为NULL则绘制到窗口
+
+<b>imgTexture</b>
+要绘制的源图像，该操作不会改变源图像
+源图像使用纹理坐标，左上角为 (0.0, 0.0)，右下角为 (1.0, 1.0)，而不是以像素为单位
+
+<b>xDest, yDest</b>
+旋转中心在目标图像上的位置（像素坐标）
+
+<b>xCenter, certery</b>
+旋转中心在源图像纹理坐标系上的位置。
+（源图像左上角为 (0.0, 0.0)，源图像中心为 (0.5, 0.5)，右下角为 (1.0, 1.0)
+
+<b>radian</b>
+旋转的弧度，度数大于 0 时为逆时针旋转。
+
+<b>zoom</b>
+源图像绘制时的缩放倍数，1.0 为不缩放。
+
+<b>transparentColor</b>
+是否使用图像透明通道, 设置为 true 可以绘制带透明通道的纹理图像，设置为 false 时忽略图像的透明通道。
+
+<b>alpha</b>
+设置图像整体透明度，如果为 0，表示源图像完全透明，如果为 256，表示源图像完全不透明。
+-1 表示不进行透明处理，相当于完全不透明。
+
+<b>smooth</b>
+是否对图像进行平滑处理。旋转后绘制出的图像可能带有锯齿，失真，为1时
+
+<font size="4" color="#0000FF"><strong>返回值：</strong></font>
+
+成功返回 0 ，否则返回非 0 值，若 imgDest 或 imgTexture 传入错误，会引发运行时异常。
+
+<font size="4" color="#0000FF"><strong>示例：</strong></font>
+
+（无）
+
+</font>
+</pre>
+
+</body>
+

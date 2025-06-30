@@ -1,25 +1,25 @@
-//¸ß¼¶£º¸ü¶àµÄÎÄ×Ö¶ÔÆë·½Ê½ÉèÖÃ
+// é«˜çº§ï¼šæ›´å¤šçš„æ–‡å­—å¯¹é½æ–¹å¼è®¾ç½®
 #include <graphics.h>
 
 int main()
 {
-	initgraph(640, 480);
+    initgraph(640, 480);
 
-	setfont(18, 0, "ËÎÌå");
-	//settextjustify(LEFT_TEXT, TOP_TEXT); //Ä¬ÈÏÖµ
-	outtextxy(300, 0, "Hello Graphics");
+    setfont(18, 0, "å®‹ä½“");
+    // settextjustify(LEFT_TEXT, TOP_TEXT); //é»˜è®¤å€¼
+    outtextxy(300, 0, "Hello Graphics");
 
-	settextjustify(RIGHT_TEXT, TOP_TEXT);
-	outtextxy(300, 50, "Hello Graphics");
+    settextjustify(RIGHT_TEXT, TOP_TEXT);
+    outtextxy(300, 50, "Hello Graphics");
 
-	settextjustify(CENTER_TEXT, TOP_TEXT);
-	outtextxy(300, 100, "Hello Graphics");
+    settextjustify(CENTER_TEXT, TOP_TEXT);
+    outtextxy(300, 100, "Hello Graphics");
 
-	settextjustify(LEFT_TEXT, BOTTOM_TEXT);
-	outtextxy(300, 50, "Hello Graphics");
+    settextjustify(LEFT_TEXT, BOTTOM_TEXT);
+    outtextxy(300, 50, "Hello Graphics");
 
-	getch();
+    getch();
 
-	closegraph();
-	return 0;
+    closegraph();
+    return 0;
 }

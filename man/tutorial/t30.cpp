@@ -1,216 +1,221 @@
-//»ù´¡¶¯»­Ê®£¬³¡¾°¹ÜÀíÏÂµÄÊäÈëÊä³ö¿ØÖÆ
+// åŸºç¡€åŠ¨ç”»åï¼Œåœºæ™¯ç®¡ç†ä¸‹çš„è¾“å…¥è¾“å‡ºæ§åˆ¶
 
-//±¾Ê¾ÀıÔËĞĞÊ±£¬¿ÉÒÔÊ¹ÓÃP¼üÔİÍ£»ò²¥·Å
-//Ğ¡Çò»á×Ô¶¯¸ú×ÙÊó±ê
+// æœ¬ç¤ºä¾‹è¿è¡Œæ—¶ï¼Œå¯ä»¥ä½¿ç”¨Pé”®æš‚åœæˆ–æ’­æ”¾
+// å°çƒä¼šè‡ªåŠ¨è·Ÿè¸ªé¼ æ ‡
 #include <ege.h>
 
 #include <math.h>
 #include <stdlib.h>
 
 const float base_speed = 0.5f;
-const float randspeed = 4.0f;
+const float randspeed  = 4.0f;
 
-//·µ»ØÒ»¸ö¸¡µãÊıµÄ·ûºÅ
+// è¿”å›ä¸€ä¸ªæµ®ç‚¹æ•°çš„ç¬¦å·
 float sgn(float f)
 {
-	if (f > 0) return 1;
-	if (f < 0) return -1;
-	return 0;
+    if (f > 0) return  1;
+    if (f < 0) return -1;
+    return 0;
 }
-//×Ô¶¨Òåº¯Êı£¬ÓÃÀ´·µ»ØÒ»¸ö0 - mÖ®¼äµÄ¸¡µãÊı
+// è‡ªå®šä¹‰å‡½æ•°ï¼Œç”¨æ¥è¿”å›ä¸€ä¸ª0 - mä¹‹é—´çš„æµ®ç‚¹æ•°
 float myrand(float m)
 {
-	return (float)(ege::randomf() * m);
+    return (float)(ege::randomf() * m);
 }
 
-//¶¨ÒåÒ»¸öAniObjÀà£¬Õâ¸öÓëÇ°Ò»¸ö³ıÁËº¯ÊıÃû£¬ºÍupdate¼ÓÁË·µ»ØÖµÒÔÍâÃ»ÓĞ±ä»¯
+// å®šä¹‰ä¸€ä¸ªAniObjç±»ï¼Œè¿™ä¸ªä¸å‰ä¸€ä¸ªé™¤äº†å‡½æ•°åï¼Œå’ŒupdateåŠ äº†è¿”å›å€¼ä»¥å¤–æ²¡æœ‰å˜åŒ–
 class AniObj
 {
 public:
-	//³õÊ¼»¯£¬ÉèÖÃ×ø±ê£¬ËÙ¶È·½Ïò£¬Í¸Ã÷¶È£¬´´½¨IMAGEµÈ
-	AniObj()
-	{
-		_x = myrand((float)ege::getwidth());
-		_y = myrand((float)ege::getheight());
-		_r = ege::random(20) + 20;
-		_dx = myrand(randspeed) + base_speed;
-		_dy = myrand(randspeed) + base_speed;
-		_dx = _dx * float(ege::random(2) * 2.0 - 1);
-		_dy = _dy * float(ege::random(2) * 2.0 - 1);
-		_alpha = ege::random(250) + 2;
-		_da = ege::random(2) * 2 - 1;
-		_mouse_x = (int)_x;
-		_mouse_x = (int)_y;
+    // åˆå§‹åŒ–ï¼Œè®¾ç½®åæ ‡ï¼Œé€Ÿåº¦æ–¹å‘ï¼Œé€æ˜åº¦ï¼Œåˆ›å»ºIMAGEç­‰
+    AniObj()
+    {
+        _x = myrand((float)ege::getwidth());
+        _y = myrand((float)ege::getheight());
+        _r = ege::random(20) + 20;
+        _dx = myrand(randspeed) + base_speed;
+        _dy = myrand(randspeed) + base_speed;
+        _dx = _dx * float(ege::random(2) * 2.0 - 1);
+        _dy = _dy * float(ege::random(2) * 2.0 - 1);
+        _alpha = ege::random(250) + 2;
+        _da = ege::random(2) * 2 - 1;
+        _mouse_x = (int)_x;
+        _mouse_x = (int)_y;
 
-		_img = ege::newimage(_r * 2, _r * 2);
+        _img = ege::newimage(_r * 2, _r * 2);
 
-		ege::color_t col = ege::hsv2rgb(myrand(360.0f), 1.0f, 1.0f);
-		ege::setcolor(col, _img);
-		ege::setfillcolor(col, _img);
+        COLORREF col = ege::hsv2rgb(myrand(360.0f), 1.0f, 1.0f);
+        ege::setcolor(col, _img);
+        ege::setfillcolor(col, _img);
 
-		ege::fillellipse(_r, _r, _r, _r, _img);
-	}
+        ege::fillellipse(_r, _r, _r, _r, _img);
+    }
 
-	//ÊÍ·ÅÕâ¸ö¶ÔÏóÊ±µ÷ÓÃ
-	~AniObj()
-	{
-		ege::delimage(_img);
-	}
+    // é‡Šæ”¾è¿™ä¸ªå¯¹è±¡æ—¶è°ƒç”¨
+    ~AniObj()
+    {
+        ege::delimage(_img);
+    }
 
-	//¸üĞÂÎ»ÖÃµÈÏà¹ØÊôĞÔ
-	int update()
-	{
-		bool crash = false;
-		// µ±Ç°Î»ÖÃ + ËÙ¶È
-		_x += _dx;
-		_y += _dy;
-		if (_x < 0) crash = true; //Åö×ó
-		if (_y < 0) crash = true; //ÅöÉÏ
-		if (_x >= ege::getwidth()  - _r * 2) crash = true; //ÅöÓÒ
-		if (_y >= ege::getheight() - _r * 2) crash = true; //ÅöÏÂ
+    // æ›´æ–°ä½ç½®ç­‰ç›¸å…³å±æ€§
+    int update()
+    {
+        bool crash = false;
+        // å½“å‰ä½ç½® + é€Ÿåº¦
+        _x += _dx;
+        _y += _dy;
+        if (_x < 0) crash = true; // ç¢°å·¦
+        if (_y < 0) crash = true; // ç¢°ä¸Š
+        if (_x >= ege::getwidth()  - _r * 2) crash = true; // ç¢°å³
+        if (_y >= ege::getheight() - _r * 2) crash = true; // ç¢°ä¸‹
 
-		if (crash)
-		{
-			float r;
-			_dx = _mouse_x - _x;
-			_dy = _mouse_y - _y;
-			r = sqrt(_dx * _dx + _dy * _dy);
-			_dx = (_dx + sgn(_dx) * base_speed / randspeed) / r * randspeed;
-			_dy = (_dy + sgn(_dx) * base_speed / randspeed) / r * randspeed;
-		}
+        if (crash)
+        {
+            float r;
+            _dx = _mouse_x - _x;
+            _dy = _mouse_y - _y;
+            r = sqrt(_dx * _dx + _dy * _dy);
+            _dx = (_dx + sgn(_dx) * base_speed / randspeed) / r * randspeed;
+            _dy = (_dy + sgn(_dx) * base_speed / randspeed) / r * randspeed;
+        }
 
-		if (_x < 0 && _dx < 0 || _x >= ege::getwidth()	- _r * 2 && _dx > 0) _dx = -_dx;
-		if (_y < 0 && _dy < 0 || _y >= ege::getheight() - _r * 2 && _dy > 0) _dy = -_dy;
+        if (_x < 0 && _dx < 0 || _x >= ege::getwidth()  - _r * 2 && _dx > 0)
+            _dx = -_dx;
+        if (_y < 0 && _dy < 0 || _y >= ege::getheight() - _r * 2 && _dy > 0)
+            _dy = -_dy;
 
-		// ¸Ä±äalphaÖµ
-		_alpha += _da;
-		if (_alpha <= 0)	_da = 1;
-		if (_alpha >= 0xFF) _da = -1;
-		return 0;
-	}
+        // æ”¹å˜alphaå€¼
+        _alpha += _da;
+        if (_alpha <= 0)    _da = 1;
+        if (_alpha >= 0xFF) _da = -1;
+        return 0;
+    }
 
-	//¸ù¾İÊôĞÔÖµ»æ»­
-	void render()
-	{
-		ege::putimage_alphatransparent(NULL, _img, (int)_x, (int)_y, ege::BLACK, (unsigned char)_alpha);
-	}
+    //æ ¹æ®å±æ€§å€¼ç»˜ç”»
+    void render()
+    {
+        ege::putimage_alphatransparent(NULL, _img, (int)_x, (int)_y, ege::BLACK, (unsigned char)_alpha);
+    }
 
-	void onkey(int key)
-	{
-		//
-	}
+    void onkey(int key)
+    {
+        //
+    }
 
-	void onmouse(int x, int y)
-	{
-		_mouse_x = x - _r;
-		_mouse_y = y - _r;
-	}
+    void onmouse(int x, int y)
+    {
+        _mouse_x = x - _r;
+        _mouse_y = y - _r;
+    }
 
 private:
-	float _x, _y;
-	int _r;
-	float _dx, _dy;
-	int _mouse_x, _mouse_y;
-	int _alpha, _da;
-	ege::PIMAGE _img;
+    float _x, _y;
+    int _r;
+    float _dx, _dy;
+    int _mouse_x, _mouse_y;
+    int _alpha, _da;
+    ege::PIMAGE _img;
 };
 
 class Scene
 {
 public:
-	//³õÊ¼»¯£¬²ÎÊıÎª¶ÔÏó¸öÊı
-	Scene(int nAniObj)
-	{
-		m_cntObj = nAniObj;
-		m_pobj = new AniObj[m_cntObj];
-		m_pause = 0;
-		m_endscene = 0;
-	}
-	~Scene()
-	{
-		delete [] m_pobj;
-	}
-	int update()
-	{
-		// ·ÇÔİÍ£×´Ì¬²Å¸üĞÂ
-		if (m_pause == 0)
-		{
-			for (int n = 0; n < m_cntObj; ++n)
-			{
-				m_pobj[n].update();
-			}
-		}
-		return m_endscene;
-	}
-	void render()
-	{
-		for (int n = 0; n < m_cntObj; ++n)
-		{
-			m_pobj[n].render();
-		}
-	}
-	void onkey(int key)
-	{
-		if (key == 'P' || key == 'p') //°´ÏÂP¼ü¾ÍÔÚ²¥·ÅÓëÔİÍ£Ö®¼ä×ª»»
-		{
-			m_pause = !m_pause;
-		}
-		if (key == VK_ESCAPE) //Èç¹ûÊÇESC¼ü£¬¾Í±ê¼ÇÎªÍË³ö³¡¾°£¬VK_ESCAPEÊÇSDK¶¨ÒåµÄºê
-		{
-			m_endscene = 1;
-		}
-	}
-	void onmouse(int x, int y)
-	{
-		// ¹ã²¥Êó±êÏûÏ¢
-		for (int n = 0; n < m_cntObj; ++n)
-		{
-			m_pobj[n].onmouse(x, y);
-		}
-	}
+    //åˆå§‹åŒ–ï¼Œå‚æ•°ä¸ºå¯¹è±¡ä¸ªæ•°
+    Scene(int nAniObj)
+    {
+        m_cntObj = nAniObj;
+        m_pobj = new AniObj[m_cntObj];
+        m_pause = 0;
+        m_endscene = 0;
+    }
+    ~Scene()
+    {
+        delete [] m_pobj;
+    }
+    int update()
+    {
+        // éæš‚åœçŠ¶æ€æ‰æ›´æ–°
+        if (m_pause == 0)
+        {
+            for (int n = 0; n < m_cntObj; ++n)
+            {
+                m_pobj[n].update();
+            }
+        }
+        return m_endscene;
+    }
+    void render()
+    {
+        for (int n = 0; n < m_cntObj; ++n)
+        {
+            m_pobj[n].render();
+        }
+    }
+    void onkey(int key)
+    {
+        // æŒ‰ä¸‹Pé”®å°±åœ¨æ’­æ”¾ä¸æš‚åœä¹‹é—´è½¬æ¢
+        if (key == 'P' || key == 'p')
+        {
+            m_pause = !m_pause;
+        }
+
+        // å¦‚æœæ˜¯ESCé”®ï¼Œå°±æ ‡è®°ä¸ºé€€å‡ºåœºæ™¯ï¼ŒVK_ESCAPEæ˜¯SDKå®šä¹‰çš„å®
+        if (key == VK_ESCAPE)
+        {
+            m_endscene = 1;
+        }
+    }
+    void onmouse(int x, int y)
+    {
+        // å¹¿æ’­é¼ æ ‡æ¶ˆæ¯
+        for (int n = 0; n < m_cntObj; ++n)
+        {
+            m_pobj[n].onmouse(x, y);
+        }
+    }
 private:
-	AniObj* m_pobj;
-	int m_cntObj;
-	int m_pause;
-	int m_endscene;
+    AniObj* m_pobj;
+    int m_cntObj;
+    int m_pause;
+    int m_endscene;
 };
 
 void mainloop()
 {
-	Scene scene(30); //¶¨Òå³¡¾°£¬³õÊ¼»¯²ÎÊıÎª30
+    Scene scene(30); //å®šä¹‰åœºæ™¯ï¼Œåˆå§‹åŒ–å‚æ•°ä¸º30
 
-	for ( ; ege::is_run(); ege::delay_fps(60) )
-	{
-		while (ege::kbhit())
-		{
-			int key = ege::getch();
-			scene.onkey(key); //ËùÓĞ°´¼üÏûÏ¢·¢ËÍ¸øscene
-		}
-		while (ege::mousemsg())
-		{
-			ege::mouse_msg msg = ege::getmouse();
-			scene.onmouse(msg.x, msg.y);
-		}
-		if (scene.update()) //Èç¹ûupdate·µ»Ø·Ç0±íÊ¾³¡¾°½áÊø£¬ÕâÊ±ÍË³öÖ÷Ñ­»·
-		{
-			break;
-		}
+    for ( ; ege::is_run(); ege::delay_fps(60) )
+    {
+        while (ege::kbhit())
+        {
+            int key = ege::getch();
+            scene.onkey(key); //æ‰€æœ‰æŒ‰é”®æ¶ˆæ¯å‘é€ç»™scene
+        }
+        while (ege::mousemsg())
+        {
+            ege::mouse_msg msg = ege::getmouse();
+            scene.onmouse(msg.x, msg.y);
+        }
+        if (scene.update()) //å¦‚æœupdateè¿”å›é0è¡¨ç¤ºåœºæ™¯ç»“æŸï¼Œè¿™æ—¶é€€å‡ºä¸»å¾ªç¯
+        {
+            break;
+        }
 
-		ege::cleardevice();
-		scene.render();
-	}
+        ege::cleardevice();
+        scene.render();
+    }
 }
 
 int main(void)
 {
-	ege::setinitmode(ege::INIT_ANIMATION);
-	// Í¼ĞÎ³õÊ¼»¯£¬´°¿Ú³ß´ç640x480
-	ege::initgraph(640, 480);
-	// Ëæ»úÊı³õÊ¼»¯£¬Èç¹ûĞèÒªÊ¹ÓÃËæ»úÊıµÄ»°
-	ege::randomize();
-	// ³ÌĞòÖ÷Ñ­»·
-	mainloop();
-	// ¹Ø±Õ»æÍ¼Éè±¸
-	ege::closegraph();
-	return 0;
+    ege::setinitmode(ege::INIT_ANIMATION);
+    // å›¾å½¢åˆå§‹åŒ–ï¼Œçª—å£å°ºå¯¸640x480
+    ege::initgraph(640, 480);
+    // éšæœºæ•°åˆå§‹åŒ–ï¼Œå¦‚æœéœ€è¦ä½¿ç”¨éšæœºæ•°çš„è¯
+    ege::randomize();
+    // ç¨‹åºä¸»å¾ªç¯
+    mainloop();
+    // å…³é—­ç»˜å›¾è®¾å¤‡
+    ege::closegraph();
+    return 0;
 }

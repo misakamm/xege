@@ -1,0 +1,73 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ege_path_addtext</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / <a href="index.htm">图形绘制</a> / ege_path_addtext</font>
+<font size="4">
+<font size="4" color="#0000FF"><strong>功能：</strong></font>
+
+往路径中添加文本。
+
+<font size="4" color="#0000FF"><strong>说明：</strong></font>
+添加的图形为闭合图形，相当于开始一个新的图形单元然后添加图形并将其闭合。
+不会自动与上一个图形单元进行连接，也不会闭合上一个图形单元。
+
+另有接收宽字符串的函数重载。
+<font size="4" color="#0000FF"><strong>声明：</strong></font>
+<pre>
+<font color=#0000FF>void </font><font color=#008080>ege_path_addtext</font>(
+    <font color=#800080>ege_path*</font> path,               <font color=#008000>// 路径</font>
+    <font color=#0000FF>float</font> x,                      <font color=#008000>// 目标位置的 x 坐标</font>
+    <font color=#0000FF>float</font> y,                      <font color=#008000>// 目标位置的 y 坐标</font>
+    <font color=#0000FF>const char*</font> text,             <font color=#008000>// 文本字符串</font>
+    <font color=#0000FF>float</font> height,                 <font color=#008000>// 文本高度</font>
+    <font color=#0000FF>int</font> length = -1,              <font color=#008000>// 文本字符串长度</font>
+    <font color=#0000FF>const char*</font> typeface = <font color=#800080>NULL</font>,  <font color=#008000>// 字体名称</font>
+    <font color=#0000FF>int</font> fontStyle = 0             <font color=#008000>// 字体样式</font>
+);
+</pre>
+<font size="4" color="#0000FF"><strong>参数：</strong></font>
+
+<b>path</b>
+路径
+
+<b>x, y</b>
+目标位置的坐标
+
+<b>text</b>
+文本字符串
+
+<b>height</b>
+文本高度
+
+<b>length</b>
+文本字符串的长度，如果为 -1，则表示字符串以 '\0' 结尾
+
+<b>typeface</b>
+字体名称
+
+<b>fontStyle</b>
+字体样式，可设置斜体、粗体、下划线和删除线。
+可由以下值通过位或运算(|)进行组合。
+
+<table>
+    <tr><th>枚举</th><th>值</th><th>含义</th></tr>
+    <tr><td>FONTSTYLE_BOLD</td>       <td align="center">0x01</td><td>加粗</td></tr>
+    <tr><td>FONTSTYLE_ITALIC</td>     <td align="center">0x02</td><td>倾斜</td></tr>
+    <tr><td>FONTSTYLE_UNDERLINE</td>  <td align="center">0x04</td><td>下划线</td></tr>
+    <tr><td>FONTSTYLE_STRIKEOUT</td>  <td align="center">0x08</td><td>删除线</td></tr>
+</table>
+
+<font size="4" color="#0000FF"><strong>返回值：</strong></font>
+
+（无）
+
+<font size="4" color="#0000FF"><strong>示例：</strong></font>
+
+</pre>
+
+</body>
+

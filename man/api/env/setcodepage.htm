@@ -1,0 +1,41 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>setcodepage</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / <a href="index.htm">绘图环境</a> / setcodepage</font>
+<font size="4">
+<font size="4" color="#0000FF"><strong>功能：</strong></font>
+
+设置 MBCS（多字节字符集）字符串所使用的代码页。默认使用的代码页为 ANSI。
+
+<font size="4" color="#0000FF"><strong>声明：</strong></font>
+<pre><font color=#0000FF>void </font><font color=#008080>setcodepage</font>(<font color=#0000FF>unsigned int </font>codepage);</pre>
+<font size="4" color="#0000FF"><strong>参数：</strong></font>
+
+page
+代码页，与 Windows 代码页编号一致。EGE 为常用的几个代码页定义了名称。
+
+<table>
+	<tr> <th>代码页</th>		<th>值</th>		<th>对应编码</th></tr>
+	<tr> <td align="center">EGE_CODEPAGE_ANSI</td>			<td align="center">0</td>	<td align="center"> ANSI</td></tr>
+	<tr> <td align="center">EGE_CODEPAGE_GB2312</td>			<td align="center">936</td>	<td align="center">GB2312</td></tr>
+	<tr> <td align="center">EGE_CODEPAGE_UTF8</td>			<td align="center">65001</td>	<td align="center">UTF-8</td></tr>
+</table>
+
+<font size="4" color="#0000FF"><strong>返回值：</strong></font>
+
+（无）
+
+<font size="4" color="#0000FF"><strong>示例：</strong></font>
+
+（无）
+</pre>
+</font>
+
+</pre>
+
+</body>
+

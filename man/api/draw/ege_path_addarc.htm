@@ -1,0 +1,63 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ege_path_addarc</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / <a href="index.htm">图形绘制</a> / ege_path_addarc</font>
+<font size="4">
+<font size="4" color="#0000FF"><strong>功能：</strong></font>
+
+往路径当前图形单元中添加一条弧。
+
+<font size="4" color="#0000FF"><strong>说明：</strong></font>
+    如果路径中的当前图形单元没有闭合，会自动在当前图形单元的末尾点与新添加
+图形的起始点之间用一条直线连接。
+    如果不希望自动连接，可以在添加前调用 <a href="../../index.htm">ege_path_start</a> 开始新的图形单元
+
+<font size="4" color="#0000FF"><strong>声明：</strong></font>
+<pre>
+<font color=#0000FF>void </font><font color=#008080>ege_path_addarc</font>(
+    <font color=#800080>ege_path*</font> path,           <font color=#008000>// 路径</font>
+    <font color=#0000FF>float </font>x,                 <font color=#008000>// 包围矩形左上角 x 坐标</font>
+    <font color=#0000FF>float </font>y,                 <font color=#008000>// 包围矩形左上角 y 坐标</font>
+    <font color=#0000FF>float </font>width,             <font color=#008000>// 包围矩形宽度</font>
+    <font color=#0000FF>float </font>height,            <font color=#008000>// 包围矩形高度</font>
+    <font color=#0000FF>float </font>startAngle,        <font color=#008000>// 起始角(单位为角度)</font>
+    <font color=#0000FF>float </font>sweepAngle         <font color=#008000>// 扫描角(顺时针方向，单位为角度)</font>
+);
+</pre>
+<font size="4" color="#0000FF"><strong>参数：</strong></font>
+
+<b>path</b>
+路径
+
+<b>x</b>
+包围矩形左上角 x 坐标
+
+<b>y</b>
+包围矩形左上角 y 坐标
+
+<b>width</b>
+包围矩形宽度
+
+<b>height</b>
+包围矩形高度
+
+<b>startAngle</b>
+起始角(单位为角度)
+
+<b>sweepAngle</b>
+扫描角(顺时针，单位为角度)
+
+<font size="4" color="#0000FF"><strong>返回值：</strong></font>
+
+（无）
+
+<font size="4" color="#0000FF"><strong>示例：</strong></font>
+
+</pre>
+
+</body>
+

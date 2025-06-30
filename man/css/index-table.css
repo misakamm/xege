@@ -1,0 +1,21 @@
+table {
+	border-right: 1px solid #000000;
+	border-bottom: 1px solid #000000;
+	text-align: left;
+	width: 100%;
+	border-spacing: 0px;
+	font-size: 16;
+}
+
+table th {
+	font-weight: bold;
+	border-left: 1px solid #000000;
+	border-top: 1px solid #000000;
+	text-align: center;
+	background   : #8080FF
+}
+
+table td {
+	border-left: 1px solid #000000;
+	border-top: 1px solid #000000;
+}

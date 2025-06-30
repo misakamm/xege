@@ -1,32 +1,32 @@
-//ÓÃ»§½»»¥¡ª¡ª¼üÅÌ1
+// ç”¨æˆ·äº¤äº’â€”â€”é”®ç›˜1
 #include <graphics.h>
 
-//Õâ¸öÀı×ÓĞèÒªÕâ¸öÍ·ÎÄ¼ş
+// è¿™ä¸ªä¾‹å­éœ€è¦è¿™ä¸ªå¤´æ–‡ä»¶
 #include <stdio.h>
 
 int main()
 {
-	initgraph(640, 480);
+    initgraph(640, 480);
 
-	setfont(18, 0, "ËÎÌå");
-	outtextxy(0, 0, "please press any key");
+    setfont(18, 0, "å®‹ä½“");
+    outtextxy(0, 0, "please press any key");
 
-	int k = 0;
-	for ( ; k != key_esc; ) // key_escÊÇege¶¨ÒåµÄ°´¼ü³£Êı
-	{
-		char str[32];
-		//µÈ´ıÓÃ»§°´¼ü£¬²¢°ÑµÃµ½µÄ°´¼ü¸øk
-		//Èç¹ûÄã²»ÏëµÈ´ı£¬¿ÉÒÔÔÚµ÷ÓÃgetchÖ®Ç°£¬Ê¹ÓÃkbhit¼ì²âÊÇ·ñÓĞ°´¼ü°´ÏÂ
-		//Èç if ( kbhit() ) k = getch();
-		k = getch();
+    int k = 0;
+    for (; k != key_esc;) // key_escæ˜¯egeå®šä¹‰çš„æŒ‰é”®å¸¸æ•°
+    {
+        char str[32];
+        // ç­‰å¾…ç”¨æˆ·æŒ‰é”®ï¼Œå¹¶æŠŠå¾—åˆ°çš„æŒ‰é”®ç»™k
+        // å¦‚æœä½ ä¸æƒ³ç­‰å¾…ï¼Œå¯ä»¥åœ¨è°ƒç”¨getchä¹‹å‰ï¼Œä½¿ç”¨kbhitæ£€æµ‹æ˜¯å¦æœ‰æŒ‰é”®æŒ‰ä¸‹
+        // å¦‚ if ( kbhit() ) k = getch();
+        k = getch();
 
-		//¸ñÊ½»¯Êä³öÎª×Ö·û´®£¬ÓÃÓÚºóÃæÊä³ö
-		sprintf(str, "%c %3d", k, k);
+        // æ ¼å¼åŒ–è¾“å‡ºä¸ºå­—ç¬¦ä¸²ï¼Œç”¨äºåé¢è¾“å‡º
+        sprintf(str, "%c %3d", k, k);
 
-		cleardevice();
-		outtextxy(0, 0, str);
-	}
+        cleardevice();
+        outtextxy(0, 0, str);
+    }
 
-	closegraph();
-	return 0;
+    closegraph();
+    return 0;
 }

@@ -1,0 +1,54 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ege_xyprintf</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / <a href="index.htm">文字输出</a> / ege_xyprintf</font>
+<font size="4">
+<font size="4" color="#0000FF"><strong>功能：</strong></font>
+
+在指定位置格式化输出文本（使用 ARGB 颜色，由 setcolor() 或 settextcolor() 指定）。
+
+<font size="4" color="#0000FF"><strong>声明：</strong></font>
+<pre><font color=#0000FF>void </font><font color=#008080>ege_xyprintf</font>(
+    <font color=#0000FF>float </font>x,
+    <font color=#0000FF>float </font>y,
+    <font color=#800080>const char* </font>format,
+    ...
+);
+<font color=#0000FF>void </font><font color=#008080>ege_xyprintf</font>(
+    <font color=#0000FF>float </font>x,
+    <font color=#0000FF>float </font>y,
+    <font color=#800080>const wchar_t* </font>format,
+    ...
+);
+</pre>
+<font size="4" color="#0000FF"><strong>参数：</strong></font>
+
+x
+文本输出位置的 x 坐标(文本实际位置与文本对齐方式、文本倾斜角度等相关)。
+
+y
+文本输出位置的 y 坐标(文本实际位置与文本对齐方式、文本倾斜角度等相关)。
+
+format
+格式字符串。
+
+...
+要输出的内容的参数（支持多个参数，类似 printf）。
+
+<font size="4" color="#0000FF"><strong>返回值：</strong></font>
+
+（无）
+
+<font size="4" color="#0000FF"><strong>示例：</strong></font>
+
+<font color=#008080>ege_xyprintf</font>(10.0f, 60.5f, <font color=#FF00FF>"value:%d"</font>, 1024);
+
+</font>
+</pre>
+
+</body>
+

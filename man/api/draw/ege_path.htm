@@ -1,0 +1,40 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ege_path 类</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / <a href="index.htm">图形绘制</a> / ege_path 类</font>
+<font size="4">
+<font size="4" color="#0000FF"><strong>功能：</strong></font>
+
+用于保存路径信息
+
+<font size="4" color="#0000FF"><strong>声明：</strong></font>
+<pre>
+<font color=#0000FF>struct</font> <font color=#800080>ege_path</font>
+{
+<font color=#0000FF>private</font>:
+    <font color=#0000FF>void</font>* m_data;
+
+<font color=#0000FF>public</font>:
+    <font color=#008080>ege_path</font>();
+    <font color=#008080>ege_path</font>(<font color=#0000FF>const</font> <font color=#800080>ege_point</font>* points,  <font color=#0000FF>const unsigned char</font>* types, <font color=#0000FF>int</font> count);
+    <font color=#008080>ege_path</font>(<font color=#0000FF>const</font> <font color=#800080>ege_path</font>& path);
+    <font color=#0000FF>virtual</font> ~ege_path();
+
+    <font color=#0000FF>const</font> void* <font color=#008080>data</font>() <font color=#0000FF>const</font>;
+    <font color=#0000FF>void*</font> <font color=#008080>data</font>();
+    <font color=#800080>ege_path&</font> <font color=#0000FF>operator</font>=(<font color=#0000FF>const</font> <font color=#800080>ege_path&</font> path);
+};
+</pre>
+
+
+
+
+</font>
+</pre>
+
+</body>
+

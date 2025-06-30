@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EGE文档说明</title>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="marked.js"></script>
+    <link rel="stylesheet" href="tool.css">
+    <script type="text/javascript">
+        var target = window.location.search.substr(1);
+        var baseReg = new RegExp("base=([^&]*)(&|$)");
+        var base = target.match(baseReg);
+        if (base) {
+            var baseValue = base[0].replace("base=", "");
+            document.write('<base target="' + baseValue + '">');
+        }
+    </script>
+</head>
+
+<body>
+<script type="text/javascript">
+
+    var reg = new RegExp("src=([^&]*)(&|$)");
+    var src = target.match(reg)[0];
+    src = src.replace("src=", "");
+    src = src.replace("&", "");
+    var isMarkdown = src.match(/.md$/);
+
+    var req = new XMLHttpRequest();
+    req.open("GET", "../" + src, true);
+    req.onload = function (ev) {
+        if (this.status === 200 || this.status === 304) {
+            var content = this.responseText;
+            var s = isMarkdown ? marked(content) : content;
+            document.body.innerHTML = s;
+        } else {
+            console.log(ev);
+        }
+    };
+    req.send();
+
+</script>
+</body>
+</html>

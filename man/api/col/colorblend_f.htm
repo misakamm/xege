@@ -1,0 +1,56 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>colorblend_f</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / <a href="index.htm">颜色</a> / colorblend_f</font>
+<font size="4">
+<font size="4" color="#0000FF"><strong>功能：</strong></font>
+
+将两个 RGB 颜色以指定的 alpha 进行混合，混合结果保留背景色的透明通道。
+混合公式 (dst 为背景色，src 为前景色, alpha 范围映射到 0.0~1.0)：
+R = alpha * R(src) + (1.0 - alpha) * R(dst)
+G = alpha * G(src) + (1.0 - alpha) * G(dst)
+B = alpha * B(src) + (1.0 - alpha) * B(dst)
+A = A(dst)
+
+<font size="4" color="#0000FF"><strong>说明：</strong></font>
+计算较为快速但有微小误差，可正常用于颜色混合，但如果是要求混合后像素数值与标准公式
+无偏差，那么建议使用 <a href="colorblend.htm">colorblend</a> 函数。
+
+<font size="4" color="#0000FF"><strong>声明：</strong></font>
+<pre>
+<font color=#800080>color_t </font><font 8080>colorblend_f</font>(
+    <font color=#800080>color_t </font>dst,         <font color=#008000>// 背景色</font>
+    <font color=#800080>color_t </font>src,         <font color=#008000>// 前景色</font>
+    <font color=#0000FF>unsigned char </font>alpha  <font color=#008000>// 透明度</font>
+);
+</pre>
+<font size="4" color="#0000FF"><strong>参数：</strong></font>
+
+<b>dst</b>
+背景色
+
+<b>src</b>
+前景色
+
+<b>alpha</b>
+透明度，范围为 0 ~ 255，共 256 个透明度级别。数值越大，前景色在混合时所占的比例越大。
+当透明度为   0 时，前景色所占比例为   0%，混合结果等于背景色
+当透明度为 255 时，前景色所占比例为 100%，混合结果等于前景色。
+
+<font size="4" color="#0000FF"><strong>返回值：</strong></font>
+
+混合后的 ARGB 颜色 (alpha 与背景色相同)
+
+<font size="4" color="#0000FF"><strong>示例：</strong></font>
+
+（无）
+
+</font>
+</pre>
+
+</body>
+

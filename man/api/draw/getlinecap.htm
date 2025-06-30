@@ -1,0 +1,58 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>getlinecap</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / <a href="index.htm">图形绘制</a> / getlinecap</font>
+<font size="4">
+<font size="4" color="#0000FF"><strong>功能：</strong></font>
+
+获取当前设置的线条线帽样式。
+
+<font size="4" color="#0000FF"><strong>说明：</strong></font>
+    高级绘图函数可以单独控制线条头部和尾部线帽，而普通绘图函数只能将
+两端设置为同样的线帽。
+
+线帽样式，可以是以下值：
+
+<table>
+<tr><th>值</th><th>含义</th></tr>
+<tr><td>LINECAP_FLAT</td><td>平直线帽（默认）</td></tr>
+<tr><td>LINECAP_SQUARE</td><td>方形线帽</td></tr>
+<tr><td>LINECAP_ROUND</td><td>圆形线帽</td></tr>
+</table>
+
+<font size="4" color="#0000FF"><strong>声明：</strong></font>
+<pre>
+<font color=#0000FF>line_cap_type </font><font color=#008080>getlinecap</font>(
+    <font color=#800080>PIMAGE</font> pimg = <font color=#800080>NULL
+</font>);
+
+<font color=#0000FF>void </font><font color=#008080>getlinecap</font>(
+    <font color=#0000FF>line_cap_type* </font>startCap,<font color=#008000>  // 线条头部线帽样式</font>
+    <font color=#0000FF>line_cap_type* </font>endCap,  <font color=#008000>  // 线条尾部线帽样式</font>
+    <font color=#800080>PIMAGE</font> pimg = <font color=#800080>NULL
+</font>);
+</pre>
+<font size="4" color="#0000FF"><strong>参数：</strong></font>
+
+<b>startCap</b>
+line_cap_type 型变量地址，用于返回线条头部线帽样式。
+
+<b>endCap</b>
+line_cap_type 型变量地址，用于返回线条尾部线帽样式。
+
+<b>pimg</b>
+目标图像，默认为 NULL (窗口)
+
+<font size="4" color="#0000FF"><strong>返回值：</strong></font>
+线条头部线帽样式
+
+<font size="4" color="#0000FF"><strong>示例：</strong></font>
+</font>
+</pre>
+
+</body>
+

@@ -1,0 +1,56 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ege_fillpath</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / <a href="index.htm">图形绘制</a> / ege_fillpath</font>
+<font size="4">
+<font size="4" color="#0000FF"><strong>功能：</strong></font>
+
+    绘制一个填充路径(无边框)，填充颜色由 setfillcolor() 指定。
+
+<font size="4" color="#0000FF"><strong>说明：</strong></font>
+    如果路径没有闭合，则绘制出的填充图形相当于路径闭合(首尾用直线连接)后形成的图形
+    如果路径边框存在交叉，则存在一个该如何判断哪些部分是区域内部的问题。
+    <a href="ege_path_setfillmode.htm">ege_path_setfillmode()</a> 可以设置两种不同的路径填充模式，分别采用不同的方式来
+进行判断，得到的图形可能并不相同。
+
+<font size="4" color="#0000FF"><strong>声明：</strong></font>
+<pre>
+<font color=#0000FF>void </font><font color=#008080>ege_fillpath</font>(
+    <font color=#0000FF>const</font> <font color=#800080>ege_path*</font> path,  <font color=#008000>// 路径</font>
+    <font color=#800080>PCIMAGE </font>pimg = <font color=#800080>NULL</font>    <font color=#008000>// 目标图像，NULL 表示绘制到窗口</font>
+);
+
+<font color=#0000FF>void </font><font color=#008080>ege_fillpath</font>(
+    <font color=#0000FF>const</font> <font color=#800080>ege_path*</font> path,  <font color=#008000>// 路径</font>
+    <font color=#0000FF>int </font>x,                 <font color=#008000>// 目标位置的 x 坐标</font>
+    <font color=#0000FF>int </font>y,                 <font color=#008000>// 目标位置的 y 坐标</font>
+    <font color=#800080>PCIMAGE </font>pimg = <font color=#800080>NULL</font>    <font color=#008000>// 目标图像，NULL 表示绘制到窗口</font>
+);
+</pre>
+<font size="4" color="#0000FF"><strong>参数：</strong></font>
+
+path
+路径
+
+x
+目标位置的 x 坐标
+y
+目标位置的 y 坐标
+
+pimg
+目标图像（NULL 为窗口）
+
+<font size="4" color="#0000FF"><strong>返回值：</strong></font>
+
+（无）
+
+<font size="4" color="#0000FF"><strong>示例：</strong></font>
+
+</pre>
+
+</body>
+

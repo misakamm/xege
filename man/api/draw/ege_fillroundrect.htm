@@ -1,0 +1,74 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ege_fillroundrect</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / <a href="index.htm">图形绘制</a> / ege_fillroundrect</font>
+<font size="4">
+<font size="4" color="#0000FF"><strong>功能：</strong></font>
+
+绘制无边框的填充圆角矩形。填充颜色由 setfillcolor() 指定。
+
+<font size="4" color="#0000FF"><strong>声明：</strong></font>
+<pre>
+<font color=#0000FF>void </font><font color=#008080>ege_fillroundrect</font>(
+    <font color=#0000FF>float </font>x,
+    <font color=#0000FF>float </font>y,
+    <font color=#0000FF>float </font>w,
+    <font color=#0000FF>float </font>h,
+    <font color=#0000FF>float </font>radius,      <font color=#008000>// 圆角半径</font>
+    <font color=#800080>PIMAGE</font> pimg = <font color=#800080>NULL</font>
+);
+<font color=#0000FF>void </font><font color=#008080>ege_fillroundrect</font>(
+    <font color=#0000FF>float </font>x,
+    <font color=#0000FF>float </font>y,
+    <font color=#0000FF>float </font>w,
+    <font color=#0000FF>float </font>h,
+    <font color=#0000FF>float </font>radius1,     <font color=#008000>// 左上角圆角半径</font>
+    <font color=#0000FF>float </font>radius2,     <font color=#008000>// 右上角圆角半径</font>
+    <font color=#0000FF>float </font>radius3,     <font color=#008000>// 右下角圆角半径</font>
+    <font color=#0000FF>float </font>radius4,     <font color=#008000>// 左下角圆角半径</font>
+    <font color=#800080>PIMAGE</font> pimg = <font color=#800080>NULL</font>
+);
+</pre>
+
+<font size="4" color="#0000FF"><strong>注意事项：</strong></font>
+使用的是 ARGB 颜色，透明度不能为 0，否则无绘制效果。
+
+<font size="4" color="#0000FF"><strong>参数：</strong></font>
+x
+矩形左上角 x 坐标。
+
+y
+矩形左上角 y 坐标。
+
+w
+矩形宽。
+
+h
+矩形高。
+
+radius
+四个圆角的半径（四个圆角都为同样的半径，因此半径最大为矩形最短边长的一半）
+
+radius1, radius2, radius3, radious4
+从左上角开始按顺时针顺序对应的四个圆角的半径。
+圆角半径最小为 0，无法大于矩形边长，如果相邻两个圆角的半径之和大于边长，则顺序靠前的优先。
+
+pimg
+绘制的目标图像，默认为 NULL（即绘制到窗口）。
+
+<font size="4" color="#0000FF"><strong>返回值：</strong></font>
+
+（无）
+
+<font size="4" color="#0000FF"><strong>示例：</strong></font>
+
+（无）
+</font>
+</pre>
+
+</body>
+

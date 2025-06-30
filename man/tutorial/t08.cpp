@@ -1,30 +1,30 @@
-//Í¼ĞÎÊÓ¿Ú²Ã¼ô
+// å›¾å½¢è§†å£è£å‰ª
 #include <graphics.h>
 
 int main()
 {
-	initgraph(640, 480);
+    initgraph(640, 480);
 
-	//ÉèÖÃÊÓ¿Ú¾ØĞÎÇøÓòÎª(200,100) - (330, 130)
-	//×îºóÒ»¸ö²ÎÊıÎª1±íÊ¾³öÁËÕâ¸öÇøÓòµÄÍ¼ĞÎ»á±»²Ã¼ô
-	//ºóÃæËù»æ»­µÄÍ¼ĞÎµÄÔ­µã×ø±ê(0,0)£¬»áÓ³Éäµ½(200,100)
-	setviewport(200, 100, 330, 130, 1);
+    // è®¾ç½®è§†å£çŸ©å½¢åŒºåŸŸä¸º(200,100) - (330, 130)
+    // æœ€åä¸€ä¸ªå‚æ•°ä¸º1è¡¨ç¤ºå‡ºäº†è¿™ä¸ªåŒºåŸŸçš„å›¾å½¢ä¼šè¢«è£å‰ª
+    // åé¢æ‰€ç»˜ç”»çš„å›¾å½¢çš„åŸç‚¹åæ ‡(0,0)ï¼Œä¼šæ˜ å°„åˆ°(200,100)
+    setviewport(200, 100, 330, 130, 1);
 
-	//»­Ò»Ğ©ÎÄ×Ö£¬×¢ÒâÎÄ×Ö»áÒòÇøÓò±»²Ã¼ôµÄĞ§¹û
-	setcolor(EGERGB(0x0, 0xFF, 0x0));
-	setfontbkcolor(RGB(0x80, 0x00, 0x80));
-	setfont(18, 0, "ËÎÌå");
-	outtextxy(0, 0, "Hello EGE Graphics");
+    // ç”»ä¸€äº›æ–‡å­—ï¼Œæ³¨æ„æ–‡å­—ä¼šå› åŒºåŸŸè¢«è£å‰ªçš„æ•ˆæœ
+    setcolor(EGERGB(0x0, 0xFF, 0x0));
+    setfontbkcolor(EGERGB(0x80, 0x00, 0x80));
+    setfont(18, 0, "å®‹ä½“");
+    outtextxy(0, 0, "Hello EGE Graphics");
 
-	setbkmode(TRANSPARENT);
-	outtextxy(0, 20, "Hello EGE Graphics");
+    setbkmode(TRANSPARENT);
+    outtextxy(0, 20, "Hello EGE Graphics");
 
-	//»¹Ô­ÊÓ¿Ú
-	setviewport(0, 0, getwidth(), getheight(), 1);
-	outtextxy(0, 0, "Hello EGE Graphics");
+    // è¿˜åŸè§†å£
+    setviewport(0, 0, getwidth(), getheight(), 1);
+    outtextxy(0, 0, "Hello EGE Graphics");
 
-	getch();
+    getch();
 
-	closegraph();
-	return 0;
+    closegraph();
+    return 0;
 }

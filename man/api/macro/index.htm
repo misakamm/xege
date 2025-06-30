@@ -1,0 +1,29 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>预定义常量</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / 预定义常量</font>
+<font size="4">
+其他预定义常量列表
+
+<table>
+<tr><th>预定义常量（宏）</td><th>说明</th><th>最低版本要求</th></tr>
+<tr><td>EGE_FOR_AUTO_CODE_COMPLETETION_ONLY</td><td>当该常量被定义时,表示当前是 IDE 为了智能提示功能，正在解析 ege.h 文件获取相关定义。
+在这种情况下 &lt;ege.h&gt; 将不会包含 &lt;windows.h&gt;，以尽量减少出现在智能提示列表中的 Windows API 定义数量。</td><td align="center"> 24.04 </td></tr>
+<tr><td>EGE_VERSION</td><td>EGE 版本(字符串，格式为 "YY.0M.Patch"(年份.月份.修订)，当 Patch 为 0 时使用 "YY.0M"。
+（取年份后两位，月份不足两位时补 0)</td><td align="center"> 24.04 </td></tr>
+<tr><td>EGE_VERSION_MAJOR</td><td>EGE 主版本号（取年份后两位）</td><td align="center"> 24.04 </td></tr>
+<tr><td>EGE_VERSION_MINOR</td><td>EGE 次版本号（月份不足两位时补 0）</td><td align="center"> 24.04 </td></tr>
+<tr><td>EGE_VERSION_PATCH</td><td>EGE 修订版本号</td><td align="center"> 24.04 </td></tr>
+<tr><td>EGE_VERSION_NUMBER</td><td>EGE 版本号(十进制整数类型，等于 10000 * major + 100 * minor + patch)</td><td align="center"> 24.04 </td></tr>
+<tr><td>EGE_MAKE_VERSION_NUMBER(major, minor, patch)</td><td>由 major, minor, patch 生成对应的版本号</td><td align="center"> 24.04 </td></tr>
+</table>
+注：最低版本要求中的 ege dev 为 GitHub 开发版本，尚未正式发布。
+</font>
+</pre>
+
+</body>
+

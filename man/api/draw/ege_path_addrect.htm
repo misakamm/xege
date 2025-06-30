@@ -1,0 +1,51 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ege_path_addrect</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / <a href="index.htm">图形绘制</a> / ege_path_addrect</font>
+<font size="4">
+<font size="4" color="#0000FF"><strong>功能：</strong></font>
+
+往路径中添加一个矩形。
+
+<font size="4" color="#0000FF"><strong>说明：</strong></font>
+添加的图形为闭合图形，相当于开始一个新的图形单元然后添加图形并将其闭合。
+不会自动与上一个图形单元进行连接，也不会闭合上一个图形单元。
+
+<font size="4" color="#0000FF"><strong>声明：</strong></font>
+<pre>
+<font color=#0000FF>void </font><font color=#008080>ege_path_addrect</font>(
+    <font color=#800080>ege_path*</font> path,        <font color=#008000>// 路径</font>
+    <font color=#0000FF>float </font>x,               <font color=#008000>// 矩形左上角 x 坐标</font>
+    <font color=#0000FF>float </font>y,               <font color=#008000>// 矩形左上角 y 坐标</font>
+    <font color=#0000FF>float </font>width,           <font color=#008000>// 矩形宽度</font>
+    <font color=#0000FF>float </font>height           <font color=#008000>// 矩形高度</font>
+);
+</pre>
+<font size="4" color="#0000FF"><strong>参数：</strong></font>
+
+<b>path</b>
+路径
+
+<b>x, y</b>
+矩形左上角坐标
+
+<b>width</b>
+矩形的宽度
+
+<b>height</b>
+矩形的高度
+
+<font size="4" color="#0000FF"><strong>返回值：</strong></font>
+
+（无）
+
+<font size="4" color="#0000FF"><strong>示例：</strong></font>
+
+</pre>
+
+</body>
+

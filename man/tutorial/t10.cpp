@@ -1,37 +1,35 @@
-//Ê¹ÓÃIMAGE¡ª¡ªÀ­Éì
+// ä½¿ç”¨IMAGEâ€”â€”æ‹‰ä¼¸
 #include <graphics.h>
 
 int main()
 {
-	PIMAGE img;
+    PIMAGE img;
 
-	initgraph(640, 480);
+    initgraph(640, 480);
 
-	//ÏÈËæ±ã»­Ò»Ğ©¶«Î÷
-	setcolor(EGERGB(0xFF, 0xFF, 0x0));
-	setfillcolor(EGERGB(0xFF, 0x0, 0x80));
-	fillellipse(50, 50, 50, 50);
+    // å…ˆéšä¾¿ç”»ä¸€äº›ä¸œè¥¿
+    setcolor(EGERGB(0xFF, 0xFF, 0x0));
+    setfillcolor(EGERGB(0xFF, 0x0, 0x80));
+    fillellipse(50, 50, 50, 50);
 
-	img = newimage();
-	getimage(img, 0, 0, 160, 120);
+    img = newimage();
+    getimage(img, 0, 0, 160, 120);
 
-	int x, y;
-	//°ÑimgÆ½ÆÌÔÚÆÁÄ»ÉÏ£¬Ê¹ÓÃÒ»¸ö¶şÖØÑ­»·
-	for (y = 0; y < 8; ++y)
-	{
-		for (x = 0; x < 8; ++x)
-		{
-			//°ÑimgÕû¸ö£¬À­Éì»­ÔÚÖ¸¶¨µÄ¾ØĞÎÀï
-			//ĞèÒªÖ¸¶¨Ä¿±ê¾ØĞÎ£¬Ô´¾ØĞÎ
-			//Ô´¾ØĞÎ²ÎÊı²»ÄÜºöÂÔ£¬·ñÔò»áºÍÆäËü·ÇÀ­Éì¹¦ÄÜµÄÌùÍ¼º¯Êı»ìÏı
-			putimage(x * 80, y * 60, 80, 60, img, 0, 0, 160, 120);
-		}
-	}
+    int x, y;
+    // æŠŠimgå¹³é“ºåœ¨å±å¹•ä¸Šï¼Œä½¿ç”¨ä¸€ä¸ªäºŒé‡å¾ªç¯
+    for (y = 0; y < 8; ++y) {
+        for (x = 0; x < 8; ++x) {
+            // æŠŠimgæ•´ä¸ªï¼Œæ‹‰ä¼¸ç”»åœ¨æŒ‡å®šçš„çŸ©å½¢é‡Œ
+            // éœ€è¦æŒ‡å®šç›®æ ‡çŸ©å½¢ï¼ŒæºçŸ©å½¢
+            // æºçŸ©å½¢å‚æ•°ä¸èƒ½å¿½ç•¥ï¼Œå¦åˆ™ä¼šå’Œå…¶å®ƒéæ‹‰ä¼¸åŠŸèƒ½çš„è´´å›¾å‡½æ•°æ··æ·†
+            putimage(x * 80, y * 60, 80, 60, img, 0, 0, 160, 120);
+        }
+    }
 
-	getch();
+    getch();
 
-	delimage(img);
+    delimage(img);
 
-	closegraph();
-	return 0;
+    closegraph();
+    return 0;
 }

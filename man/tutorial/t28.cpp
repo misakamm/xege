@@ -1,124 +1,116 @@
-//»ù´¡¶¯»­°Ë£¬Ê¹ÓÃC++·â×°ÄãµÄ¶ÔÏó
+// åŸºç¡€åŠ¨ç”»å…«ï¼Œä½¿ç”¨C++å°è£…ä½ çš„å¯¹è±¡
 
-//¿´±¾ÎÄÕÂÇ°£¬Äã¶¼¿´ÁËÇ°¼¸ÆªÁË°É£¿¾õ²»¾õµÃËÆºõÓĞÒ»¸ö¹Ì¶¨Ä£Ê½£¿
-//Èç¹ûÄãÓĞÕâ¸ö¸Ğ¾õ£¬ËµÃ÷ÄãÕæµÄ¿´¶®ÁË
-//·â×°Ò»¸öÍ¼ĞÎ¶ÔÏó£¬ËÄ´ó±ØÒª½Ó¿Úº¯Êı£º³õÊ¼»¯£¬Âß¼­¸üĞÂ£¬»æ»­£¨äÖÈ¾£©£¬ÊÍ·Å£¨Îö¹¹£©
-//º¯ÊıÉÙÁË¾Í¾ø¶Ô²»ÕıÈ·£¬½Ó¿Úº¯Êı¶àÁË¾ÍËµÃ÷ÄãµÄ·â×°¿ÉÄÜ»¹ĞèÒªµ÷Õû
-//Ò»°ãµÄÓ¦ÓÃÏÂ£¬¾ÍÕâËÄ¸ö½Ó¿Ú¾Í×ã¹»ÁË£¬×îÉÙÒ²±ØĞëÓĞÕâËÄ¸ö£¬ÇëÄãÒ»¶¨Òª¼ÇµÃ
-//Áí£º²»ÊÇËµÕâ¸öÀàÖ»ÓĞÕâËÄ¸öº¯Êı£¬¿ÉÒÔÓĞ¸ü¶àµÄº¯Êı·½±ãÄã×Ô¼ºÊ¹ÓÃ£¬µ«¶ÔÍâ£¨¶ÔÖ÷Ñ­»·º¯Êı£©±©Â¶Ê¹ÓÃµÄÓ¦¸Ã¾ÍÕâËÄ¸ö
+// çœ‹æœ¬æ–‡ç« å‰ï¼Œä½ éƒ½çœ‹äº†å‰å‡ ç¯‡äº†å§ï¼Ÿè§‰ä¸è§‰å¾—ä¼¼ä¹æœ‰ä¸€ä¸ªå›ºå®šæ¨¡å¼ï¼Ÿ
+// å¦‚æœä½ æœ‰è¿™ä¸ªæ„Ÿè§‰ï¼Œè¯´æ˜ä½ çœŸçš„çœ‹æ‡‚äº†
+// å°è£…ä¸€ä¸ªå›¾å½¢å¯¹è±¡ï¼Œå››å¤§å¿…è¦æ¥å£å‡½æ•°ï¼šåˆå§‹åŒ–ï¼Œé€»è¾‘æ›´æ–°ï¼Œç»˜ç”»ï¼ˆæ¸²æŸ“ï¼‰ï¼Œé‡Šæ”¾ï¼ˆææ„ï¼‰
+// å‡½æ•°å°‘äº†å°±ç»å¯¹ä¸æ­£ç¡®ï¼Œæ¥å£å‡½æ•°å¤šäº†å°±è¯´æ˜ä½ çš„å°è£…å¯èƒ½è¿˜éœ€è¦è°ƒæ•´
+// ä¸€èˆ¬çš„åº”ç”¨ä¸‹ï¼Œå°±è¿™å››ä¸ªæ¥å£å°±è¶³å¤Ÿäº†ï¼Œæœ€å°‘ä¹Ÿå¿…é¡»æœ‰è¿™å››ä¸ªï¼Œè¯·ä½ ä¸€å®šè¦è®°å¾—
+// å¦ï¼šä¸æ˜¯è¯´è¿™ä¸ªç±»åªæœ‰è¿™å››ä¸ªå‡½æ•°ï¼Œå¯ä»¥æœ‰æ›´å¤šçš„å‡½æ•°æ–¹ä¾¿ä½ è‡ªå·±ä½¿ç”¨ï¼Œä½†å¯¹å¤–ï¼ˆå¯¹ä¸»å¾ªç¯å‡½æ•°ï¼‰æš´éœ²ä½¿ç”¨çš„åº”è¯¥å°±è¿™å››ä¸ª
 
-// ´Ó±¾ÎÄ¿ªÊ¼£¬¸ÄÓÃ´ËÍ·ÎÄ¼ş£¬µ÷ÓÃº¯ÊıÊ±µÄÇø±ğÊÇĞèÒªegeÕâ¸önamespace
-// ÕâÑùµÄºÃ´¦ÊÇvcµÄ×Ô¶¯ÌáÊ¾¿ÉÒÔ¸ü¾«È·£¬ÔÄ¶Á´úÂëµÄÊ±ºò¿É¶ÁĞÔ¸üºÃ£¬È±µãÊÇ±àĞ´µÄÊ±ºòÂÔÂé·³Ò»Ğ©
+// ä»æœ¬æ–‡å¼€å§‹ï¼Œæ”¹ç”¨æ­¤å¤´æ–‡ä»¶ï¼Œè°ƒç”¨å‡½æ•°æ—¶çš„åŒºåˆ«æ˜¯éœ€è¦egeè¿™ä¸ªnamespace
+// è¿™æ ·çš„å¥½å¤„æ˜¯vcçš„è‡ªåŠ¨æç¤ºå¯ä»¥æ›´ç²¾ç¡®ï¼Œé˜…è¯»ä»£ç çš„æ—¶å€™å¯è¯»æ€§æ›´å¥½ï¼Œç¼ºç‚¹æ˜¯ç¼–å†™çš„æ—¶å€™ç•¥éº»çƒ¦ä¸€äº›
 #include <ege.h>
 
 const float base_speed = 0.5f;
-const float randspeed = 1.5f;
+const float randspeed  = 1.5f;
 
-//×Ô¶¨Òåº¯Êı£¬ÓÃÀ´·µ»ØÒ»¸ö0 - mÖ®¼äµÄ¸¡µãÊı
+// è‡ªå®šä¹‰å‡½æ•°ï¼Œç”¨æ¥è¿”å›ä¸€ä¸ª0 - mä¹‹é—´çš„æµ®ç‚¹æ•°
 float myrand(float m)
 {
-	return (float)(ege::randomf() * m);
+    return (float)(ege::randomf() * m);
 }
 
-//¶¨ÒåÒ»¸öAniObjÀà
+// å®šä¹‰ä¸€ä¸ªAniObjç±»
 class AniObj
 {
 public:
-	//³õÊ¼»¯£¬ÉèÖÃ×ø±ê£¬ËÙ¶È·½Ïò£¬Í¸Ã÷¶È£¬´´½¨IMAGEµÈ
-	AniObj()
-	{
-		_x = myrand((float)ege::getwidth());
-		_y = myrand((float)ege::getheight());
-		_r = ege::random(20) + 20;
-		_dx = myrand(randspeed) + base_speed;
-		_dy = myrand(randspeed) + base_speed;
-		_dx = _dx * float(ege::random(2) * 2.0 - 1);
-		_dy = _dy * float(ege::random(2) * 2.0 - 1);
-		_alpha = ege::random(250) + 2;
-		_da = ege::random(2) * 2 - 1;
+    // åˆå§‹åŒ–ï¼Œè®¾ç½®åæ ‡ï¼Œé€Ÿåº¦æ–¹å‘ï¼Œé€æ˜åº¦ï¼Œåˆ›å»ºIMAGEç­‰
+    AniObj()
+    {
+        _x  = myrand((float)ege::getwidth());
+        _y  = myrand((float)ege::getheight());
+        _r  = ege::random(20) + 20;
+        _dx = myrand(randspeed) + base_speed;
+        _dy = myrand(randspeed) + base_speed;
+        _dx = _dx * float(ege::random(2) * 2.0 - 1);
+        _dy = _dy * float(ege::random(2) * 2.0 - 1);
+        _alpha = ege::random(250) + 2;
+        _da    = ege::random(2) * 2 - 1;
 
-		_img = ege::newimage(_r * 2, _r * 2);
+        _img = ege::newimage(_r * 2, _r * 2);
 
-		color_t col = ege::hsv2rgb(myrand(360.0f), 1.0f, 1.0f);
-		ege::setcolor(col, _img);
-		ege::setfillcolor(col, _img);
+        color_t col = ege::hsv2rgb(myrand(360.0f), 1.0f, 1.0f);
+        ege::setcolor(col, _img);
+        ege::setfillcolor(col, _img);
 
-		ege::fillellipse(_r, _r, _r, _r, _img);
-	}
+        ege::fillellipse(_r, _r, _r, _r, _img);
+    }
 
-	//¸üĞÂÎ»ÖÃµÈÏà¹ØÊôĞÔ
+    //æ›´æ–°ä½ç½®ç­‰ç›¸å…³å±æ€§
 	void update()
 	{
-		// µ±Ç°Î»ÖÃ + ËÙ¶È
+		// å½“å‰ä½ç½® + é€Ÿåº¦
 		_x += _dx;
 		_y += _dy;
-		if (_x < 0) _dx = myrand(randspeed) + base_speed; //Åö×ó
-		if (_y < 0) _dy = myrand(randspeed) + base_speed; //ÅöÉÏ
-		if (_x >= ege::getwidth()  - _r * 2) _dx = -(myrand(randspeed) + base_speed); //ÅöÓÒ
-		if (_y >= ege::getheight() - _r * 2) _dy = -(myrand(randspeed) + base_speed); //ÅöÏÂ
+		if (_x < 0) _dx = myrand(randspeed) + base_speed; //ç¢°å·¦
+		if (_y < 0) _dy = myrand(randspeed) + base_speed; //ç¢°ä¸Š
+		if (_x >= ege::getwidth()  - _r * 2) _dx = -(myrand(randspeed) + base_speed); //ç¢°å³
+		if (_y >= ege::getheight() - _r * 2) _dy = -(myrand(randspeed) + base_speed); //ç¢°ä¸‹
 
-		// ¸Ä±äalphaÖµ
+		// æ”¹å˜alphaå€¼
 		_alpha += _da;
 		if (_alpha <= 0)	_da = 1;
 		if (_alpha >= 0xFF) _da = -1;
-	}
+    }
 
-	//¸ù¾İÊôĞÔÖµ»æ»­
-	void render()
-	{
-		ege::putimage_alphatransparent(NULL, _img, (int)_x, (int)_y, ege::BLACK, (unsigned char)_alpha);
-	}
+    // æ ¹æ®å±æ€§å€¼ç»˜ç”»
+    void render()
+    {
+        ege::putimage_alphatransparent(NULL, _img, (int)_x, (int)_y, ege::BLACK, (unsigned char)_alpha);
+    }
 
-	//ÊÍ·ÅÕâ¸ö¶ÔÏóÊ±µ÷ÓÃ
-	~AniObj()
-	{
-		ege::delimage(_img);
-	}
+    // é‡Šæ”¾è¿™ä¸ªå¯¹è±¡æ—¶è°ƒç”¨
+    ~AniObj() { ege::delimage(_img); }
 
 private:
-	float _x, _y;
-	int _r;
-	float _dx, _dy;
-	int _alpha, _da;
-	ege::PIMAGE _img;
+    float       _x, _y;
+    int         _r;
+    float       _dx, _dy;
+    int         _alpha, _da;
+    ege::PIMAGE _img;
 };
-
 
 void mainloop()
 {
-	const int MAXOBJ = 30;
-	AniObj obj[MAXOBJ]; //¶¨Òå¶ÔÏóÊı×é
-	int n;
+    const int MAXOBJ = 30;
+    AniObj    obj[MAXOBJ]; // å®šä¹‰å¯¹è±¡æ•°ç»„
+    int       n;
 
-	//ÎªÊ²Ã´ÕâÀïÃ»ÓĞobj³õÊ¼»¯£¿ÒòÎªÔÚÀà¶ÔÏóÉùÃ÷µÄÊ±ºò¾Íµ÷ÓÃÁË¹¹Ôìº¯Êı³õÊ¼»¯ºÃÁË
+    // ä¸ºä»€ä¹ˆè¿™é‡Œæ²¡æœ‰objåˆå§‹åŒ–ï¼Ÿå› ä¸ºåœ¨ç±»å¯¹è±¡å£°æ˜çš„æ—¶å€™å°±è°ƒç”¨äº†æ„é€ å‡½æ•°åˆå§‹åŒ–å¥½äº†
+    for (; ege::is_run(); ege::delay_fps(60)) {
+        for (n = 0; n < MAXOBJ; ++n) {
+            obj[n].update(); // æ›´æ–°ä½ç½®
+        }
 
-	for ( ; ege::is_run(); ege::delay_fps(60) )
-	{
-		for (n = 0; n < MAXOBJ; ++n)
-		{
-			obj[n].update(); //¸üĞÂÎ»ÖÃ
-		}
+        ege::cleardevice();
+        for (n = 0; n < MAXOBJ; ++n) {
+            obj[n].render(); // ç»˜ç”»
+        }
+    }
 
-		ege::cleardevice();
-		for (n = 0; n < MAXOBJ; ++n)
-		{
-			obj[n].render(); //»æ»­
-		}
-	}
-
-	//ÎªÊ²Ã´ÕâÀïÃ»ÓĞÊÍ·Å£¿ÒòÎªobjÊÇÊı×é¶ÔÏó£¬»áÔÚ±¾¹ı³Ì½áÊøºó×Ô¶¯µ÷ÓÃÊÍ¹¹º¯Êı
+    // ä¸ºä»€ä¹ˆè¿™é‡Œæ²¡æœ‰é‡Šæ”¾ï¼Ÿå› ä¸ºobjæ˜¯æ•°ç»„å¯¹è±¡ï¼Œä¼šåœ¨æœ¬è¿‡ç¨‹ç»“æŸåè‡ªåŠ¨è°ƒç”¨é‡Šæ„å‡½æ•°
 }
 
 int main(void)
 {
-	ege::setinitmode(ege::INIT_ANIMATION);
-	// Í¼ĞÎ³õÊ¼»¯£¬´°¿Ú³ß´ç640x480
-	ege::initgraph(640, 480);
-	// Ëæ»úÊı³õÊ¼»¯£¬Èç¹ûĞèÒªÊ¹ÓÃËæ»úÊıµÄ»°
-	ege::randomize();
-	// ³ÌĞòÖ÷Ñ­»·
-	mainloop();
-	// ¹Ø±Õ»æÍ¼Éè±¸
-	ege::closegraph();
-	return 0;
+    ege::setinitmode(ege::INIT_ANIMATION);
+    // å›¾å½¢åˆå§‹åŒ–ï¼Œçª—å£å°ºå¯¸640x480
+    ege::initgraph(640, 480);
+    // éšæœºæ•°åˆå§‹åŒ–ï¼Œå¦‚æœéœ€è¦ä½¿ç”¨éšæœºæ•°çš„è¯
+    ege::randomize();
+    // ç¨‹åºä¸»å¾ªç¯
+    mainloop();
+    // å…³é—­ç»˜å›¾è®¾å¤‡
+    ege::closegraph();
+    return 0;
 }

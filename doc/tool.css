@@ -1,0 +1,42 @@
+/* by wangyang
+*  从 github 抄的， 嗯...
+*/
+
+code {
+    color: #9c2400;
+    background-color: rgba(27, 31, 35, 0.05);
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    margin: 0px;
+    font-size: 85%;
+}
+
+pre code {
+    display: inline;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    line-height: inherit;
+    word-wrap: normal;
+    background-color: transparent;
+    border: 0;
+    font-size: 12px;
+    word-break: normal;
+    white-space: pre;
+    color: #000;
+    font-family: "SFMono-Regular",Consolas,"Liberation Mono",Menlo,Courier,monospace;
+}
+
+pre {
+    background-color: #f6f8fa;
+    margin: 20px;
+    padding: 1em;
+}
+
+blockquote {
+    color: #6a737d;
+    border-left: 0.25em solid #dfe2e5;
+    font-size: 14px;
+    padding: 0 1em;
+
+}

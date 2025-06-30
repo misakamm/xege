@@ -1,0 +1,17 @@
+{
+    "files.associations": {
+        "*.cc": "cpp",
+        "*.conf": "apacheconf",
+        "*.h": "cpp",
+        "*.mat": "json",
+        "*.metamat": "json",
+        "*.SKaul": "lua",
+        "CMakeLists*.txt": "cmake",
+        "params.txt": "json",
+        "*.pch": "objective-cpp",
+        "utility": "cpp",
+        "random": "cpp",
+        "cstdlib": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "disabled",
+}

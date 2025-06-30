@@ -1,0 +1,50 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ege_path_createfrom</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / <a href="index.htm">图形绘制</a> / ege_path_createfrom</font>
+<font size="4">
+<font size="4" color="#0000FF"><strong>功能：</strong></font>
+
+从控制点数据中创建路径，并返回路径的指针。
+
+<font size="4" color="#0000FF"><strong>说明：</strong></font>
+路径的控制点数据可由 <a href="ege_path_getpathpoints.htm">ege_path_getpathpoints</a>, <a href="ege_path_getpathtypes.htm">ege_path_getpathtypes</a>
+和 <a href="ege_path_pointcount.htm">ege_path_pointcount</a> 获取
+
+<font size="4" color="#0000FF"><strong>说明：</strong></font>
+通过 ege_path_createfrom() 创建的路径为动态内存分配，因此当路径不再使用时，需要
+调用 ege_path_destroy() 进行销毁，以免发生内存泄漏。
+
+<font size="4" color="#0000FF"><strong>声明：</strong></font>
+<pre>
+<font color=800080>ege_path*</font> <font color=#008080>ege_path_createfrom</font>(
+    <font color=#0000FF>const</font> <font color=#800080>ege_point*</font> points,      <font color=#008000>// 控制点坐标数组</font>
+    <font color=#0000FF>const unsigned char*</font> types,   <font color=#008000>// 控制点类型数组</font>
+    <font color=#0000FF>int</font> count                     <font color=#008000>// 控制点个数</font>
+);
+</pre>
+<font size="4" color="#0000FF"><strong>参数：</strong></font>
+
+<b>points</b>
+控制点坐标数组
+
+<b>types</b>
+控制点类型数组
+
+<b>count</b>
+控制点个数
+
+<font size="4" color="#0000FF"><strong>返回值：</strong></font>
+
+创建的路径的指针。
+当路径不再使用时，需要调用 ege_path_destroy() 进行销毁，以免发生内存泄漏。
+
+
+</pre>
+
+</body>
+

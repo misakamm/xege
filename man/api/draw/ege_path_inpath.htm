@@ -1,0 +1,48 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ege_path_inpath</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / <a href="index.htm">图形绘制</a> / ege_path_inpath</font>
+<font size="4">
+<font size="4" color="#0000FF"><strong>功能：</strong></font>
+
+判断点是否在路径填充区域内部。
+
+<font size="4" color="#0000FF"><strong>声明：</strong></font>
+<pre>
+<font color=#0000FF>void </font><font color=#008080>ege_path_inpath</font>(
+    <font color=#800080>ege_path*</font> path,         <font color=#008000>// 路径</font>
+    <font color=#0000FF>float </font>x,                <font color=#008000>// 点的 x 坐标</font>
+    <font color=#0000FF>float </font>y                 <font color=#008000>// 点的 y 坐标</font>
+);
+
+<font color=#0000FF>void </font><font color=#008080>ege_path_inpath</font>(
+    <font color=#800080>ege_path*</font> path,         <font color=#008000>// 路径</font>
+    <font color=#0000FF>float </font>x,                <font color=#008000>// 点的 x 坐标</font>
+    <font color=#0000FF>float </font>y,                <font color=#008000>// 点的 y 坐标</font>
+    <font color=#800080>PCIMAGE</font> pimg            <font color=#008000>// 目标图像</font>
+);
+</pre>
+<font size="4" color="#0000FF"><strong>参数：</strong></font>
+
+<b>path</b>
+路径的指针
+
+<b>x, y</b>
+点的坐标
+
+<b>pimg</b>
+目标图像。路径填充区域受所设置的路径填充模式影响，因此为图像设置的不同填充
+模式可能会得到不同的结果。
+
+<font size="4" color="#0000FF"><strong>返回值：</strong></font>
+
+（无）
+
+</pre>
+
+</body>
+

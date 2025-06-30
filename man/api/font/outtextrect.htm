@@ -1,21 +1,23 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>outtextrect</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
 </head>
 <body>
 
-<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">文字输出相关函数</a>-＞outtextrect</font>
+<pre><font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / <a href="index.htm">文字输出</a> / outtextrect</font>
+<font size="4">
+<font size="4" color="#0000FF"><strong>功能：</strong></font>
 
-<font size="5" color="#0000FF"><strong>功能：</strong></font>
-这个函数用于在指定矩形范围内输出字符串。
+在指定矩形范围内输出文本。
 
-<font size="5" color="#0000FF"><strong>声明：</strong></font>
+<font size="4" color="#0000FF"><strong>声明：</strong></font>
 <pre><font color=#0000FF>void </font><font color=#008080>outtextrect</font>(
     <font color=#0000FF>int </font>x,
     <font color=#0000FF>int </font>y,
     <font color=#0000FF>int </font>w,
     <font color=#0000FF>int </font>h,
-    <font color=#800080>LPCSTR </font>textstring,
+    <font color=#800080>const char* </font>text,
     <font color=#800080>PIMAGE</font> pimg = <font color=#800080>NULL
 </font>);
 <font color=#0000FF>void </font><font color=#008080>outtextrect</font>(
@@ -23,20 +25,24 @@
     <font color=#0000FF>int </font>y,
     <font color=#0000FF>int </font>w,
     <font color=#0000FF>int </font>h,
-    <font color=#800080>LPCWSTR </font>textstring,
+    <font color=#800080>const wchar_t* </font>text,
     <font color=#800080>PIMAGE</font> pimg = <font color=#800080>NULL
 </font>);</pre>
-
-<font size="5" color="#0000FF"><strong>参数：</strong></font>
+<font size="4" color="#0000FF"><strong>参数：</strong></font>
 x, y, w, h
-要输出字符串所在的矩形区域
+指定文本所在的矩形区域
 
-textstring
-要输出的字符串的指针。 
+text
+要输出的文本内容。
 
-<font size="5" color="#0000FF"><strong>返回值：</strong></font>
+pimg
+要输出文本的目标图像（如果为 NULL，则输出到窗口）。
+
+<font size="4" color="#0000FF"><strong>返回值：</strong></font>
+
 （无）
 
+</font>
 </pre>
 
 </body>

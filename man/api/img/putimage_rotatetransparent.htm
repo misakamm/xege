@@ -1,0 +1,82 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>putimage_rotatetransparent</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / <a href="index.htm">图像处理</a> / putimage_transparent</font>
+<font size="4">
+<font size="4" color="#0000FF"><strong>功能：</strong></font>
+
+将源图像缩放旋转后绘制到目标图像上。
+
+<font size="4" color="#0000FF"><strong>声明：</strong></font>
+<pre><font color=#0000FF>int </font><font color=#008080>putimage_rotatetransparent</font>(
+    <font color=#800080>PIMAGE </font>imgDest,              <font color=#008000>// 目的图像指针, NULL表示窗口</font>
+    <font color=#800080>PCIMAGE </font>imgSrc,              <font color=#008000>// 源图像指针</font>
+    <font color=#0000FF>int </font>xCenterDest,             <font color=#008000>// 旋转中心在目的图像的x坐标 </font>
+    <font color=#0000FF>int </font>yCenterDest,             <font color=#008000>// 旋转中心在目的图像的y坐标</font>
+    <font color=#0000FF>int </font>xCenterSrc,              <font color=#008000>// 源图像旋转中心的x坐标 </font>
+    <font color=#0000FF>int </font>yCenterSrc,              <font color=#008000>// 源图像旋转中心的y坐标</font>
+    <font color=#800080>color_t </font>transparentColor,    <font color=#008000>// 源图像透明背景色</font>
+    <font color=#0000FF>float </font>radian,                <font color=#008000>// 顺时针旋转角度(弧度) </font>
+    <font color=#0000FF>float </font>zoom = 1.0f            <font color=#008000>// 缩放因子</font>
+);
+</pre>
+<pre>
+<font color=#0000FF>int </font><font color=#008080>putimage_rotatetransparent</font>(
+    <font color=#800080>PIMAGE </font>imgDest,              <font color=#008000>// 目的图像指针, NULL表示窗口</font>
+    <font color=#800080>PCIMAGE </font>imgSrc,              <font color=#008000>// 源图像指针</font>
+    <font color=#0000FF>int </font>xCenterDest,             <font color=#008000>// 旋转中心在目的图像的x坐标 </font>
+    <font color=#0000FF>int </font>yCenterDest,             <font color=#008000>// 旋转中心在目的图像的y坐标</font>
+    <font color=#0000FF>int </font>xSrc,                    <font color=#008000>// 源图像复制区域左上角x坐标 </font>
+    <font color=#0000FF>int </font>ySrc,                    <font color=#008000>// 源图像复制区域左上角y坐标</font>
+    <font color=#0000FF>int </font>widthSrc,                <font color=#008000>// 源图像复制区域宽度 </font>
+    <font color=#0000FF>int </font>heightSrc,               <font color=#008000>// 源图像复制区域高度</font>
+    <font color=#0000FF>int </font>xCenterSrc,              <font color=#008000>// 源图像旋转中心的x坐标 </font>
+    <font color=#0000FF>int </font>yCenterSrc,              <font color=#008000>// 源图像旋转中心的y坐标</font>
+    <font color=#800080>color_t </font>transparentColor,    <font color=#008000>// 源图像透明背景色</font>
+    <font color=#0000FF>float </font>radian,                <font color=#008000>// 顺时针旋转角度(弧度) </font>
+    <font color=#0000FF>float </font>zoom = 1.0f            <font color=#008000>// 缩放因子</font>
+);</pre>
+
+
+<font size="4" color="#0000FF"><strong>参数：</strong></font>
+
+<b>imgDest</b>
+目标图像，如果为 NULL 则表示窗口。
+
+<b>imgSrc</b>
+源图像。该操作不会改变源图像内容。
+
+<b>xCenterDest, yCenterDest</b>
+旋转中心在目标图像上的对应位置
+
+<b>xCenterSrc, yCenterSrc</b>
+旋转中心在源图像上的位置
+
+<b>transparentColor</b>
+源图像上视为透明的像素颜色。源图像上为该颜色值的像素，将忽略，不会改写目标图像上相应位置的像素。
+
+<b>xSrc, ySrc, widthSrc, heightSrc</b>
+源图像上要绘制的矩形区域。
+
+<b>radian</b>
+源图像绘制时的旋转角度。单位为弧度。当此值为正时，按顺时针方向旋转。
+
+<b>zoom</b>
+源图像绘制时的缩放系数。
+
+<font size="4" color="#0000FF"><strong>返回值：</strong></font>
+
+成功返回0，否则返回非0，若 imgDest 或 imgSrc 传入错误，会引发运行时异常。
+
+<font size="4" color="#0000FF"><strong>示例：</strong></font>
+
+（无）。
+</font>
+</pre>
+
+</body>
+

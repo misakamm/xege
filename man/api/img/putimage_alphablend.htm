@@ -1,49 +1,121 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>putimage_alphablend</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
 </head>
 <body>
 
-<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">图像处理相关函数</a>-＞putimage_alphablend</font>
+<pre><font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / <a href="index.htm">图像处理</a> / putimage_alphablend</font>
+<font size="4">
+<font size="4" color="#0000FF"><strong>功能：</strong></font>
 
-<font size="5" color="#0000FF"><strong>功能：</strong></font>
-这个函数用于对两张图片进行半透明混合，并把混合结果写入目标图片。
+对两张图像进行透明混合，并将混合结果写入目标图像。
 
-<font size="5" color="#0000FF"><strong>声明：</strong></font>
-<pre><font color=#0000FF>int </font><font color=#008080>putimage_alphablend</font>(
-    <font color=#800080>PIMAGE </font>imgdest,         <font color=#008000>// handle to dest
-    </font><font color=#800080>PIMAGE </font>imgsrc,          <font color=#008000>// handle to source
-    </font><font color=#0000FF>int </font>nXOriginDest,       <font color=#008000>// x-coord of destination upper-left corner
-    </font><font color=#0000FF>int </font>nYOriginDest,       <font color=#008000>// y-coord of destination upper-left corner
-    </font><font color=#0000FF>unsigned char </font>alpha,    <font color=#008000>// alpha
-    </font><font color=#0000FF>int </font>nXOriginSrc = 0,    <font color=#008000>// x-coord of source upper-left corner
-    </font><font color=#0000FF>int </font>nYOriginSrc = 0,    <font color=#008000>// y-coord of source upper-left corner
-    </font><font color=#0000FF>int </font>nWidthSrc = 0,      <font color=#008000>// width of source rectangle
-    </font><font color=#0000FF>int </font>nHeightSrc = 0      <font color=#008000>// height of source rectangle
-</font>);</pre>
+<font size="4" color="#0000FF"><strong>说明：</strong></font>
+要求两张图像像素颜色为 ARGB 或 PARGB(预乘alpha) 格式。
+混合得到的像素颜色为 PARGB 格式。
+如果源图像为 ARGB  格式，混合公式参见： <a href="../col/alphablend.htm">alphablend</a>
+如果源图像为 PARGB 格式，混合公式参见： <a href="../col/alphablend_premultiplied.htm">alphablend_premultiplied</a>
 
-<font size="5" color="#0000FF"><strong>参数：</strong></font>
-imgdest
-要进行半透明混合的目标图片，如果为NULL则表示操作窗口上的图片
+<font size="4" color="#0000FF"><strong>声明：</strong></font>
+<pre>
+<font color=#0000FF>int </font><font color=#008080>putimage_alphablend</font>(
+    <font color=#800080>PIMAGE </font>imgDest,       <font color=#008000>// 目标图像</font>
+    <font color=#800080>PCIMAGE </font>imgSrc,       <font color=#008000>// 源图像</font>
+    <font color=#0000FF>int </font>xDest,            <font color=#008000>// 绘制区域左上角在目标图像上的 x 坐标</font>
+    <font color=#0000FF>int </font>yDest,            <font color=#008000>// 绘制区域左上角在目标图像上的 y 坐标</font>
+    <font color=#0000FF>unsigned char </font>alpha,  <font color=#008000>// 图像整体透明度</font>
+    <font color=#800080>alpha_type </font>alphaType = <font color=#800080>ALPHATYPE_STRAIGHT</font>   <font color=#008000>// 源图像像素的 alpha 类型</font>
+);
 
-imgsrc
-要进行半透明混合的源图片，该操作不会改变源图片
+<font color=#0000FF>int </font><font color=#008080>putimage_alphablend</font>(
+    <font color=#800080>PIMAGE </font>imgDest,       <font color=#008000>// 目标图像</font>
+    <font color=#800080>PCIMAGE </font>imgSrc,       <font color=#008000>// 源图像</font>
+    <font color=#0000FF>int </font>xDest,            <font color=#008000>// 绘制区域左上角在目标图像上的 x 坐标</font>
+    <font color=#0000FF>int </font>yDest,            <font color=#008000>// 绘制区域左上角在目标图像上的 y 坐标</font>
+    <font color=#0000FF>unsigned char </font>alpha,  <font color=#008000>// 图像整体透明度</font>
+    <font color=#0000FF>int </font>xSrc,             <font color=#008000>// 绘制内容在源图像中的左上角 x 坐标</font>
+    <font color=#0000FF>int </font>ySrc,             <font color=#008000>// 绘制内容在源图像中的左上角 y 坐标</font>
+    <font color=#800080>alpha_type </font>alphaType = <font color=#800080>ALPHATYPE_STRAIGHT</font>   <font color=#008000>// 源图像像素的 alpha 类型</font>
+);
 
-nXOriginDest, nYOriginDest
-要开始进行混合的目标图片坐标，该坐标是混合区域的左上角
+<font color=#0000FF>int </font><font color=#008080>putimage_alphablend</font>(
+    <font color=#800080>PIMAGE </font>imgDest,       <font color=#008000>// 目标图像</font>
+    <font color=#800080>PCIMAGE </font>imgSrc,       <font color=#008000>// 源图像</font>
+    <font color=#0000FF>int </font>xDest,            <font color=#008000>// 绘制区域左上角在目标图像上的 x 坐标</font>
+    <font color=#0000FF>int </font>yDest,            <font color=#008000>// 绘制区域左上角在目标图像上的 y 坐标</font>
+    <font color=#0000FF>unsigned char </font>alpha,  <font color=#008000>// 图像整体透明度</font>
+    <font color=#0000FF>int </font>xSrc,             <font color=#008000>// 绘制内容在源图像中的左上角 x 坐标</font>
+    <font color=#0000FF>int </font>ySrc,             <font color=#008000>// 绘制内容在源图像中的左上角 y 坐标</font>
+    <font color=#0000FF>int </font>widthSrc,         <font color=#008000>// 绘制内容在源图像中的宽度</font>
+    <font color=#0000FF>int </font>heightSrc,        <font color=#008000>// 绘制内容在源图像中的高度</font>
+    <font color=#800080>alpha_type </font>alphaType = <font color=#800080>ALPHATYPE_STRAIGHT</font>   <font color=#008000>// 源图像像素的 alpha 类型</font>
+    );
 
-alpha
-透明度值，如果为0x0，表示源图片完全透明，如果为0xFF，表示源图片完全不透明。
+<font color=#0000FF>int </font><font color=#008080>putimage_alphablend</font>(
+    <font color=#800080>PIMAGE </font>imgDest,       <font color=#008000>// 目标图像</font>
+    <font color=#800080>PCIMAGE </font>imgSrc,       <font color=#008000>// 源图像</font>
+    <font color=#0000FF>int </font>xDest,            <font color=#008000>// 绘制区域左上角在目标图像上的 x 坐标</font>
+    <font color=#0000FF>int </font>yDest,            <font color=#008000>// 绘制区域左上角在目标图像上的 y 坐标</font>
+    <font color=#0000FF>int </font>widthDest,        <font color=#008000>// 绘制区域在目标图像中的宽度</font>
+    <font color=#0000FF>int </font>heightDest,       <font color=#008000>// 绘制区域在目标图像中的高度</font>
+    <font color=#0000FF>unsigned char </font>alpha,  <font color=#008000>// 图像整体透明度</font>
+    <font color=#0000FF>int </font>xSrc,             <font color=#008000>// 绘制内容在源图像中的左上角 x 坐标</font>
+    <font color=#0000FF>int </font>ySrc,             <font color=#008000>// 绘制内容在源图像中的左上角 y 坐标</font>
+    <font color=#0000FF>int </font>widthSrc,         <font color=#008000>// 绘制内容在源图像中的宽度</font>
+    <font color=#0000FF>int </font>heightSrc,        <font color=#008000>// 绘制内容在源图像中的高度</font>
+    <font color=#0000FF>bool </font><font color=#800080>smooth = false</font>,  <font color=#008000>// 是否进行平滑处理</font>
+    <font color=#800080>alpha_type </font>alphaType = <font color=#800080>ALPHATYPE_STRAIGHT</font>   <font color=#008000>// 源图像像素的 alpha 类型</font>
+    );
 
-nXOriginDest, nYOriginDest, nWidthDest, nHeightDest
-描述要进行此操作的源图矩形区域。如果nWidthDest和nHeightDest 为0，表示操作整张图片。
+</pre>
+<font size="4" color="#0000FF"><strong>参数：</strong></font>
+<b>imgDest</b>
+要进行半透明混合的目标图像，如果为 NULL 则表示窗口。
 
-<font size="5" color="#0000FF"><strong>返回值：</strong></font>
-成功返回0，否则返回非0，若imgdest或imgsrc传入错误，会引发运行时异常。
+<b>imgSrc</b>
+要进行半透明混合的源图像（该操作不会改变源图像）。
 
-<font size="5" color="#0000FF"><strong>示例：</strong></font>
+<b>xDest, yDest</b>
+目标图像上要进行混合的混合区域的左上角坐标。
+
+<b>widthDest, heightDest</b>
+目标图像上要进行混合的混合区域的宽高。
+如果为 0 ，则与源图像矩形区域的宽(或高)相等，即不缩放。
+
+<b>alpha</b>
+图像整体透明度，范围：0~255，共 256 个透明度级别。
+alpah = 0 时表示源图像完全透明，alpha = 255 时源图像透明度不变。
+
+<b>xSrc, ySrc, widthSrc, heightSrc</b>
+描述要进行此操作的源图像矩形区域（左上角的x, y 坐标，宽度width, 高度 height ）。
+如果 widthSrc 和 heightSrc 小于等于 0，则为源图像从(xSrc, ySrc) 至右下角的区域。
+
+<b>smooth</b>
+是否进行平滑处理
+
+<b>alphaType</b>
+源图像的 alpha 类型，分为以下两种：
+
+<table>
+    <tr><th>值</th><th>含义</th></tr>
+    <tr><td align="center">ALPHATYPE_STRAIGHT(默认)</td><td>使用直接 alpha 的像素格式(即最常用的 ARGB 格式)</td></tr>
+    <tr><td align="center">ALPHATYPE_PREMULTIPLIED</td><td>使用预乘 alpha 的像素格式(PARGB)</td></tr>
+</table>
+
+PARGB 颜色格式可以由 ARGB 格式通过将 RGB分量乘以 alpha 转换得到:
+ARGB:  (A, R, B, G)
+PARGM: (A, R * A/255, G * A/255, B * A/255)
+
+<font size="4" color="#0000FF"><strong>返回值：</strong></font>
+
+成功返回 0，否则返回非 0，若 imgDest 或 imgSrc 传入错误，会引发运行时异常。
+
+<font size="4" color="#0000FF"><strong>示例：</strong></font>
+
 （无）。
 
+</font>
 </pre>
 
 </body>

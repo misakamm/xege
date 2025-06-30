@@ -1,0 +1,55 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ege_path_widen</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / <a href="index.htm">图形绘制</a> / ege_path_widen</font>
+<font size="4">
+<font size="4" color="#0000FF"><strong>功能：</strong></font>
+
+扩宽路径，将原路径变成用相应线宽的笔对路径进行描边时所得到的区域的边界线。
+
+<font size="4" color="#0000FF"><strong>说明：</strong></font>
+会对路径进行平展，变成一系列的直线段。
+扩展路径后，得到的路径可能会交叉杂乱，可用 <a href="ege_path_outline.htm">ege_path_outline</a> 处理，获取其轮廓线。
+
+<font size="4" color="#0000FF"><strong>声明：</strong></font>
+<pre>
+<font color=#0000FF>void </font><font color=#008080>ege_path_widen</font>(
+    <font color=#800080>ege_path*</font> path,                             <font color=#008000>// 路径</font>
+    <font color=#800080>float</font> lineWidth,                            <font color=#008000>// 线宽</font>
+    <font color=#0000FF>const</font> <font color=#800080>ege_transform_matrix*</font> matrix = <font color=#800080>NULL</font>   <font color=#008000>// 变换矩阵</font>
+);
+<font color=#0000FF>void </font><font color=#008080>ege_path_widen</font>(
+    <font color=#800080>ege_path*</font> path,                             <font color=#008000>// 路径</font>
+    <font color=#800080>float</font> lineWidth,                            <font color=#008000>// 线宽</font>
+    <font color=#0000FF>const</font> <font color=#800080>ege_transform_matrix*</font> matrix,         <font color=#008000>// 变换矩阵</font>
+    <font color=#800080>float</font> flatness                              <font color=#008000>// 平整度</font>
+);
+</pre>
+<font size="4" color="#0000FF"><strong>参数：</strong></font>
+
+<b>path</b>
+路径的指针
+
+<b>path</b>
+线宽
+
+<b>matrix</b>
+变换矩阵，指定要对路径上的控制点进行的变换。
+如果为 NULL 则不进行变换。
+
+<b>flatness</b>
+平整度。指定路径与其平展近似值之间的最大误差。 减少平整度会增加近似值中的线段数。
+
+<font size="4" color="#0000FF"><strong>返回值：</strong></font>
+
+（无）
+
+
+</pre>
+
+</body>
+

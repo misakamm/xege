@@ -1,27 +1,35 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>setrendermode</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
 </head>
 <body>
 
-<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">绘图环境相关函数</a>-＞setrendermode</font>
+<pre><font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / <a href="index.htm">绘图环境</a> / setrendermode</font>
+<font size="4">
+<font size="4" color="#0000FF"><strong>功能：</strong></font>
 
-<font size="5" color="#0000FF"><strong>功能：</strong></font>
-这个函数用于设置更新窗口的模式，模式有两种，自动更新和手动更新
+设置渲染模式，指定更新窗口的方式：自动和手动。
 
-<font size="5" color="#0000FF"><strong>声明：</strong></font>
+<font size="4" color="#0000FF"><strong>声明：</strong></font>
 <pre><font color=#0000FF>void </font><font color=#008080>setrendermode</font>(rendermode_e mode);</pre>
-<font size="5" color="#0000FF"><strong>参数：</strong></font>
+<font size="4" color="#0000FF"><strong>参数：</strong></font>
+
 mode
-值可能为RENDER_AUTO或者RENDER_MANUAL，前者自动（默认值），后者手动
-自动模式用于简单绘图，手动模式用于制作动画或者游戏
-所谓手动模式，即需要调用delay_fps/delay_ms等带有等待特性的函数时才会更新窗口
+渲染模式，有以下两个值：
+<table>
+	<tr><th>模式</th>	<th>说明</th></tr>
+	<tr> <td>RENDER_AUTO (默认)</td>	<td>自动渲染模式，用于简单绘图，自动更新窗口</td></tr>
+	<tr> <td>RENDER_MANUAL (推荐)</td>	<td>手动渲染模式，用于复杂绘图、制作动画和游戏等，需要调用 delay_fps()/delay_ms() 等带有等待特性的函数时才会更新窗口，可减少闪烁</td></tr>
+</table>
+<font size="4" color="#0000FF"><strong>返回值：</strong></font>
 
-返回值：
 （无）
 
-示例：
-（无）
+<font size="4" color="#0000FF"><strong>示例：</strong></font>
+
+<font color=#008080>setrendermode</font>(RENDER_MANUAL);
+</font>
 </pre>
 
 </body>

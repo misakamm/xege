@@ -1,0 +1,54 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>alphablend_f</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / <a href="index.htm">颜色</a> / alphablend_f</font>
+<font size="4">
+<font size="4" color="#0000FF"><strong>功能：</strong></font>
+
+将两个 ARGB 颜色进行混合。dst 为背景色，src 为前景色。
+混合结果保留背景色 dst 的透明通道。
+
+<font size="4" color="#0000FF"><strong>说明：</strong></font>
+计算较为快速但有微小误差，可用于图像显示。
+如果是连续迭代、图层或者是精确的像素比较则建议用 <a href="alphablend.htm">alphablend</a> 替代。
+
+<font size="4" color="#0000FF"><strong>声明：</strong></font>
+<pre><font color=#800080>color_t </font><font color=#008080>alphablend_f</font>(
+    <font color=#800080>color_t </font>dst,         <font color=#008000>// 背景色</font>
+    <font color=#800080>color_t </font>src,         <font color=#008000>// 前景色（提供 alpha，取自透明通道）</font>
+);
+</pre><pre><font color=#800080>color_t </font><font color=#008080>alphablend_f</font>(
+    <font color=#800080>color_t </font>dst,         <font color=#008000>// 背景色</font>
+    <font color=#800080>color_t </font>src,         <font color=#008000>// 前景色</font>
+    <font color=#0000FF>unsigned char </font>alpha  <font color=#008000>// 透明度</font>
+);
+</pre>
+<font size="4" color="#0000FF"><strong>参数：</strong></font>
+
+<b>dst</b>
+背景色
+
+<b>src</b>
+前景色
+
+<b>alpha</b>
+范围为 0 ~ 255，共 256 个透明度级别。
+0~255 对应混合结果中前景色所占的比例 0~100%.
+
+<font size="4" color="#0000FF"><strong>返回值：</strong></font>
+
+（无）
+
+<font size="4" color="#0000FF"><strong>示例：</strong></font>
+
+（无）
+
+</font>
+</pre>
+
+</body>
+

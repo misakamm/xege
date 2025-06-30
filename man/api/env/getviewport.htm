@@ -1,15 +1,17 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>getviewport</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
 </head>
 <body>
 
-<pre><font size="4"><a href="../../index.htm">主页</a>-＞<a href="../index.htm">库函数目录</a>-＞<a href="index.htm">绘图环境相关函数</a>-＞getviewport</font>
+<pre><font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / <a href="index.htm">绘图环境</a> / getviewport</font>
+<font size="4">
+<font size="4" color="#0000FF"><strong>功能：</strong></font>
 
-<font size="5" color="#0000FF"><strong>功能：</strong></font>
-这个函数用于获取当前视图信息。
+获取当前视口区域的信息。
 
-<font size="5" color="#0000FF"><strong>声明：</strong></font>
+<font size="4" color="#0000FF"><strong>声明：</strong></font>
 <pre><font color=#0000FF>void </font><font color=#008080>getviewport</font>(
     <font color=#0000FF>int </font>*pleft,
     <font color=#0000FF>int </font>*ptop,
@@ -19,31 +21,28 @@
     <font color=#800080>PIMAGE</font> pimg = <font color=#800080>NULL
 </font>);
 </pre>
+<font size="4" color="#0000FF"><strong>参数：</strong></font>
 
-<font size="5" color="#0000FF"><strong>参数：</strong></font>
-pleft
-返回当前视图的左部 x 坐标。
+<table>
+	<tr><th>参数</th>		<th>类型</th>	<th>说明</th></tr>
+	<tr><td>pleft</td>		<td> int* </td>	<td>返回视口区域左边界的 x 坐标</td></tr>
+	<tr><td>ptop</td>		<td> int* </td>	<td>返回视口区域上边界的 y 坐标</td></tr>
+	<tr><td>pright</td>		<td> int* </td>	<td>返回视口区域右边界的 x 坐标</td></tr>
+	<tr><td>pbottom</td>	<td> int* </td>	<td>返回视口区域下边界的 y 坐标</td></tr>
+	<tr><td>pclip</td>		<td> int* </td>	<td>返回视口区域的裁剪标志。返回的值如果为 true，则超出视口区域的绘图将会被裁剪掉。false 则超出部分不做裁剪。</td></tr>
+	<tr><td>pimg</td>		<td> PIMAGE </td>	<td>所获取视口区域信息的目标图像（ NULL 为窗口）</td></tr>
+</table>
 
-ptop
-返回当前视图的上部 y 坐标。
 
-pright
-返回当前视图的右部 x 坐标。
+<font size="4" color="#0000FF"><strong>返回值：</strong></font>
 
-pbottom
-返回当前视图的下部 y 坐标。
-
-pclip
-返回当前视图的裁剪标志。
-
-pimg
-详见setviewport的说明
-
-<font size="5" color="#0000FF"><strong>返回值：</strong></font>
 （无）
 
-<font size="5" color="#0000FF"><strong>示例：</strong></font>
-参见setviewport
+<font size="4" color="#0000FF"><strong>示例：</strong></font>
+
+（无）
+
+</font>
 </pre>
 
 </body>

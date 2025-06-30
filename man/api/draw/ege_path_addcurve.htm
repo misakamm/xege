@@ -1,0 +1,57 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ege_path_addcurve</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / <a href="index.htm">图形绘制</a> / ege_path_addcurve</font>
+<font size="4">
+<font size="4" color="#0000FF"><strong>功能：</strong></font>
+
+往路径当前图形单元中添加一个基数样条曲线。
+
+<font size="4" color="#0000FF"><strong>说明：</strong></font>
+    如果路径中的当前图形单元没有闭合，会自动在当前图形单元的末尾点与新添加
+图形的起始点之间用一条直线连接。
+    如果不希望自动连接，可以在添加前调用 <a href="../../index.htm">ege_path_start</a> 开始新的图形单元
+
+<font size="4" color="#0000FF"><strong>声明：</strong></font>
+<pre>
+<font color=#0000FF>void </font><font color=#008080>ege_path_addcurve</font>(
+    <font color=#800080>ege_path*</font> path,           <font color=#008000>// 路径</font>
+    <font color=#0000FF>int</font> numOfPoints,          <font color=#008000>// 控制点个数</font>
+    <font color=#0000FF>const</font> <font color=#800080>ege_point*</font> points   <font color=#008000>// 控制点数组</font>
+);
+
+<font color=#0000FF>void </font><font color=#008080>ege_path_addcurve</font>(
+    <font color=#800080>ege_path*</font> path,           <font color=#008000>// 路径</font>
+    <font color=#0000FF>int</font> numOfPoints,          <font color=#008000>// 控制点个数</font>
+    <font color=#0000FF>const</font> <font color=#800080>ege_point*</font> points,  <font color=#008000>// 控制点数组</font>
+    <font color=#0000FF>float</font> tension             <font color=#008000>// 曲线张力</font>
+);
+</pre>
+<font size="4" color="#0000FF"><strong>参数：</strong></font>
+
+<b>path</b>
+路径
+
+<b>numOfPoints</b>
+控制点顶点个数，至少为 2
+
+<b>points</b>
+控制点顶点数组
+
+<b>tension</b>
+曲线张力，值为 0 时曲线变为直线
+
+<font size="4" color="#0000FF"><strong>返回值：</strong></font>
+
+（无）
+
+<font size="4" color="#0000FF"><strong>示例：</strong></font>
+
+</pre>
+
+</body>
+

@@ -1,0 +1,43 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ege_transform_translate</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / <a href="index.htm">图形绘制</a> / ege_transform_translate</font>
+<font size="4">
+<font size="4" color="#0000FF"><strong>功能：</strong></font>
+
+这个函数计算在当前设置的坐标变换下，一个点经过变换后得到的实际坐标。
+
+<font size="4" color="#0000FF"><strong>声明：</strong></font>
+
+<pre>
+<font color=#800080>ege_point </font><font color=#008080>ege_transform_calc</font>(
+    <font color=#0000FF>float </font>x,              <font color=#008000>// 点的 x 坐标</font>
+    <font color=#0000FF>float </font>y,              <font color=#008000>// 点的 y 坐标</font>
+    <font color=#800080>PCIMAGE </font>pimg = <font color=#800080>NULL  </font><font color=#008000>//目标图像指针，NULL表示绘制到屏幕</font>
+);
+
+<font color=#800080>ege_point </font><font color=#008080>ege_transform_calc</font>(
+    <font color=#800080>ege_point </font> point,    <font color=#008000>// 点的坐标</font>
+    <font color=#800080>PCIMAGE </font>pimg = <font color=#800080>NULL  </font><font color=#008000>//目标图像指针，NULL表示绘制到屏幕</font>
+);
+</pre>
+<font size="4" color="#0000FF"><strong>参数：</strong></font>
+
+point
+点的坐标
+
+x, y
+点的 x, y 坐标
+
+<font size="4" color="#0000FF"><strong>返回值：</strong></font>
+经过变换后的实际坐标
+
+<font size="4" color="#0000FF"><strong>示例：</strong></font>
+
+
+</body>
+

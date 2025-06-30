@@ -1,0 +1,45 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ege_path_getpathtypes</title>
+    <link rel="stylesheet" type="text/css" href="../../css/index-table.css"/>
+</head>
+<body>
+
+<pre><font size="4"><a href="../../index.htm">主页</a> / <a href="../index.htm">库函数目录</a> / <a href="index.htm">图形绘制</a> / ege_path_getpathtypes</font>
+<font size="4">
+<font size="4" color="#0000FF"><strong>功能：</strong></font>
+
+获取路径上所有控制点的类型。
+
+<font size="4" color="#0000FF"><strong>说明：</strong></font>
+
+
+<font size="4" color="#0000FF"><strong>声明：</strong></font>
+<pre>
+<font color=#0000FF>unsigned char*</font> <font color=#008080>ege_path_getpathtypes</font>(
+    <font color=#0000FF>const</font> <font color=#800080>ege_path*</font> path，             <font color=#008000>// 路径</font>
+    <font color=#0000FF>unsigned char*</font> types = <font color=#800080>NULL</font>        <font color=#008000>// 用于存储路径控制点类型的缓冲区首地址</font>
+);
+</pre>
+<font size="4" color="#0000FF"><strong>参数：</strong></font>
+
+<b>path</b>
+路径的指针
+
+<b>types</b>
+用于存储路径控制点类型的缓冲区首地址。需要能容纳所有控制点类型，缓冲区创建前可通过
+<a href="ege_path_pointcount.htm">ege_path_pointcount</a> 获取路径控制点个数。
+如果参数为 NULL，则函数会通过动态内存分配创建一个控制点类型数组，函数返回值即
+为该数组首地址，不再使用时需要释放内存。
+
+<font size="4" color="#0000FF"><strong>返回值：</strong></font>
+
+存储路径控制点类型的缓冲区首地址。如果 points 参数为 NULL，则缓冲区为函数创建，
+后续需要手动释放内存。
+
+<font size="4" color="#0000FF"><strong>示例：</strong></font>
+
+</pre>
+
+</body>
+

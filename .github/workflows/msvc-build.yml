@@ -1,0 +1,91 @@
+name: MSVC Build (2015/2017/2019/2022)
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  vs2022-build:
+    name: MSVC 2022 Build (Release)
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Visual Studio environment
+        uses: microsoft/setup-msbuild@v1.1
+
+      - name: Configure CMake
+        run: |
+          mkdir build-vs2022
+          cd build-vs2022
+          cmake .. -T v143 # vs2022
+      - name: Build
+        run: |
+          cd build-vs2022
+          cmake --build . --config Release --parallel
+
+  vs2019-build:
+    name: MSVC 2019 Build (Release)
+    runs-on: windows-2019
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Setup Visual Studio environment
+        uses: microsoft/setup-msbuild@v1.1
+
+      - name: Configure CMake
+        run: |
+          mkdir build-vs2019
+          cd build-vs2019
+          cmake .. -T v142
+      - name: Build
+        run: |
+          cd build-vs2019
+          cmake --build . --config Release --parallel
+  vs2017-build:
+    name: MSVC 2017 Build (Release)
+    runs-on: windows-2019
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Visual Studio environment
+        uses: microsoft/setup-msbuild@v1.1
+
+      - name: Configure CMake
+        run: |
+          mkdir build-vs2017
+          cd build-vs2017
+          cmake .. -T v141 # vs2017
+
+      - name: Build
+        run: |
+          cd build-vs2017
+          cmake --build . --config Release --parallel
+  vs2015-build:
+    name: MSVC 2015 Build (Release)
+    runs-on: windows-2019
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Visual Studio environment
+        uses: microsoft/setup-msbuild@v1.1
+
+      - name: Configure CMake
+        run: |
+          mkdir build-vs2015
+          cd build-vs2015
+          cmake .. -T v140 # vs2015
+
+      - name: Build
+        run: |
+          cd build-vs2015
+          cmake --build . --config Release --parallel

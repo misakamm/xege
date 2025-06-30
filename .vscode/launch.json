@@ -1,0 +1,96 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug putimage_performance_test",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/bin/Debug/putimage_performance_test.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/build/bin/Debug",
+            "environment": [],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "openOnSessionStart",
+            "preLaunchTask": "Build All"
+        },
+        {
+            "name": "Debug putimage_withalpha (isolated)",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/bin/Debug/putimage_performance_test.exe",
+            "args": [],
+            "stopAtEntry": true,
+            "cwd": "${workspaceFolder}/build/bin/Debug",
+            "environment": [],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "openOnSessionStart",
+            "preLaunchTask": "Build All"
+        },
+        {
+            "name": "Debug putimage_transparent_test",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/bin/Debug/putimage_transparent_test.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/build/bin/Debug",
+            "environment": [],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "openOnSessionStart",
+            "preLaunchTask": "Build All"
+        },
+        {
+            "name": "Debug putimage_rotate_test",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/bin/Debug/putimage_rotate_test.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/build/bin/Debug",
+            "environment": [],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "openOnSessionStart",
+            "preLaunchTask": "Build All"
+        },
+        {
+            "name": "Debug putimage_alphablend_test",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/bin/Debug/putimage_alphablend_test.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/build/bin/Debug",
+            "environment": [],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "openOnSessionStart",
+            "preLaunchTask": "Build All"
+        },
+        {
+            "name": "Debug putimage_basic_test",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/bin/Debug/putimage_basic_test.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/build/bin/Debug",
+            "environment": [],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "openOnSessionStart",
+            "preLaunchTask": "Build All"
+        },
+        {
+            "name": "Debug ege_gomoku",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/demo/Debug/egegomoku.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/build/demo/Debug",
+            "environment": [],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "openOnSessionStart",
+            "preLaunchTask": "Build All"
+        }
+    ]
+}
